@@ -24,6 +24,15 @@ class FreebaseInterface(IKbInterface):
         forward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=True)
         backward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=False)
 
+        forward_entities = forward[:2]
+        backward_entities = backward[0:]
+        new_entities = np.concatenate(forward_entities, backward_entities)
+        print(new_entities.shape)
+
+        new_entities = np.unique(new_entities)
+
+        return new_entities
+
 
 
     def retrieve_one_neighborhood_graph(self, center_vertices, limit=1000, subject=True):
@@ -50,6 +59,5 @@ class FreebaseInterface(IKbInterface):
 
 if __name__ == "__main__":
     iface = FreebaseInterface()
-    results = iface.retrieve_one_neighborhood_graph(["ns:m.014zcr", "ns:m.0q0b4"], limit=3000)
-    for result in results:
-        print(result)
+    results = iface.retrieve_one_neighborhood(["ns:m.014zcr", "ns:m.0q0b4"], limit=3000)
+    print(results.shape)
