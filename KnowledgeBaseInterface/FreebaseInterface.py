@@ -24,26 +24,21 @@ class FreebaseInterface(IKbInterface):
         forward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=True)
         backward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=False)
 
-        forward_entities = forward[:2]
-        backward_entities = backward[0:]
-        new_entities = np.concatenate(forward_entities, backward_entities)
-        print(new_entities.shape)
+        forward_entities = forward[:,2]
+        backward_entities = backward[:,0]
 
+        new_entities = np.concatenate((forward_entities, backward_entities))
         new_entities = np.unique(new_entities)
 
-        return new_entities
+        retrieved_edges = np.concatenate((forward, backward))
+
+        return new_entities, retrieved_edges
 
 
 
     def retrieve_one_neighborhood_graph(self, center_vertices, limit=1000, subject=True):
         sparql = SPARQLWrapper(self.endpoint)
-        query_string = "PREFIX ns: <" + self.prefix + ">\n"
-        query_string += "select * where {\n"
-        query_string += "?s ?r ?o .\n"
-        query_string += "FILTER (" + "?s" if subject else "?o" + "in (" + ", ".join(center_vertices) + "))\n"
-        query_string += "}\nLIMIT " + str(limit)
-
-        query_string = self.construct_neighbor_query(center_vertices, limit=limit)
+        query_string = self.construct_neighbor_query(center_vertices, limit=limit, direction="s" if subject else "o")
 
         print(query_string)
 
@@ -53,11 +48,10 @@ class FreebaseInterface(IKbInterface):
 
         tuple_results = [None]* len(results["results"]["bindings"])
         for i,result in enumerate(results["results"]["bindings"]):
-            tuple_results[i] = (result["s"]["value"], result["r"]["value"], result["o"]["value"])
+            tuple_results[i] = [result["s"]["value"], result["r"]["value"], result["o"]["value"]]
 
         return np.array(tuple_results)
 
 if __name__ == "__main__":
     iface = FreebaseInterface()
     results = iface.retrieve_one_neighborhood(["ns:m.014zcr", "ns:m.0q0b4"], limit=3000)
-    print(results.shape)
