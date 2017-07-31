@@ -44,7 +44,7 @@ class FreebaseInterface(IKbInterface):
 
         tuple_results = [None]* len(results["results"]["bindings"])
         for i,result in enumerate(results["results"]["bindings"]):
-            tuple_results = (result["s"]["value"], result["r"]["value"], result["o"]["value"])
+            tuple_results[i] = (result["s"]["value"], result["r"]["value"], result["o"]["value"])
 
         return tuple_results
 
