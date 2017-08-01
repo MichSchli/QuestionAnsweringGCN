@@ -1,0 +1,146 @@
+0 of 1
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.014zcr, ns:m.0q0b4))
+}
+LIMIT 4000
+(895, 3)
+0 of 1
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.014zcr, ns:m.0q0b4))
+}
+LIMIT 4000
+(843, 3)
+0 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:aviation.aircraft_owner, ns:aviation.airline, ns:award.award_nominee, ns:award.award_winner, ns:award.ranked_item, ns:base.academyawards.topic, ns:base.popstra.celebrity, ns:base.popstra.sww_base, ns:base.popstra.topic, ns:base.saturdaynightlive.snl_host, ns:base.saturdaynightlive.topic, ns:base.schemastaging.context_name, ns:base.schemastaging.organization_extra, ns:base.schemastaging.person_extra, ns:base.type_ontology.abstract, ns:base.type_ontology.agent, ns:base.type_ontology.animate, ns:base.type_ontology.inanimate, ns:base.type_ontology.physically_instantiable, ns:base.watches.topic, ns:book.author, ns:business.business_operation, ns:business.employer, ns:business.sponsored_recipient, ns:celebrities.celebrity, ns:common.topic, ns:fictional_universe.person_in_fiction, ns:film.actor, ns:film.director, ns:film.person_or_entity_appearing_in_film, ns:film.producer, ns:film.writer, ns:g.11b6d3g00t, ns:g.11b6nypzsl, ns:g.1256k9y7d, ns:g.125774v0s, ns:g.125_kg2nv, ns:influence.influence_node, ns:m.010b895h, ns:m.010d_wk4, ns:m.010gmjs8, ns:m.010gyc0c, ns:m.010gyc_9, ns:m.0115sh1g, ns:m.011tby_y, ns:m.011v77ys, ns:m.011x1pjx, ns:m.0121lmkt, ns:m.0123vyxj, ns:m.0131ggr_, ns:m.014zd1, ns:m.01_chtn, ns:m.01d_h8, ns:m.01nfn_, ns:m.01ngm0, ns:m.01q1_c, ns:m.01tq6zx, ns:m.01x3gb5, ns:m.01x3gbh, ns:m.01xpjyl, ns:m.01y0nlt, ns:m.021ykml, ns:m.0229hrx, ns:m.0276wfw, ns:m.027cd1t, ns:m.0288083, ns:m.02_7frv, ns:m.02hrh1q, ns:m.02hw04h, ns:m.02jknp, ns:m.02kklnl, ns:m.02krf9, ns:m.02tb4gn, ns:m.02tb6gl, ns:m.02vb5_8, ns:m.02vbjwc, ns:m.02vbznc, ns:m.02vc2g_, ns:m.02vcx1z, ns:m.02vd98p, ns:m.02vdf9s, ns:m.02z14n, ns:m.033tf_, ns:m.03bd61, ns:m.03gjzk, ns:m.03l6q5p, ns:m.03lft2j, ns:m.03lqlq6, ns:m.03lwc2p, ns:m.03lwx_9, ns:m.03mb3kl, ns:m.03pmdy4, ns:m.03s09r4, ns:m.03s6l2, ns:m.03z8mk7, ns:m.043tz0c, ns:m.047hs0h))
+}
+LIMIT 2262
+1 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.04b9_k, ns:m.04d5y1h, ns:m.04d88cd, ns:m.04d89z2, ns:m.04d8b6d, ns:m.04d96lj, ns:m.04dbzj6, ns:m.04dk8x_, ns:m.04dn010, ns:m.04g5k_1, ns:m.04g5kzb, ns:m.04g5kzn, ns:m.04g5l2c, ns:m.04g5lf4, ns:m.04g74jl, ns:m.04g74k3, ns:m.04g74rn, ns:m.04g74s3, ns:m.04g74sq, ns:m.04g74x6, ns:m.04jwly, ns:m.04lrc9s, ns:m.04m1, ns:m.04m8, ns:m.04mf174, ns:m.04nt, ns:m.04p4s8d, ns:m.04yh0h5, ns:m.058f71, ns:m.05btz63, ns:m.05cc996, ns:m.05ch98, ns:m.05gjj1, ns:m.05k7z49, ns:m.05l9kf, ns:m.05ln4bq, ns:m.05phcsz, ns:m.05pqzdg, ns:m.05v0986, ns:m.05zppz, ns:m.063g_0t, ns:m.063g_1c, ns:m.063g_2l, ns:m.063g_36, ns:m.063gfrn, ns:m.063gfy2, ns:m.063gg6c, ns:m.063ggbf, ns:m.063ggd9, ns:m.063gz_8, ns:m.063gzdb, ns:m.063gzdv, ns:m.063gzmd, ns:m.063gzt7, ns:m.063gzv2, ns:m.063gzvx, ns:m.063gzxd, ns:m.063gzyp, ns:m.06461_8, ns:m.064bhmr, ns:m.064snb1, ns:m.064snb8, ns:m.064snbh, ns:m.064zmff, ns:m.06505k9, ns:m.065273x, ns:m.0652wjl, ns:m.0652wwk, ns:m.065p9g9, ns:m.065p_sz, ns:m.065pbq1, ns:m.065pbxd, ns:m.065pc41, ns:m.065pf11, ns:m.065pf7z, ns:m.065pgls, ns:m.065pgrt, ns:m.065pgyp, ns:m.065pj13, ns:m.065pj76, ns:m.065pj7z, ns:m.065pjj1, ns:m.065pjkv, ns:m.065pjmc, ns:m.065pjnh, ns:m.065pjz2, ns:m.065pk3v, ns:m.065pkfz, ns:m.065pkl_, ns:m.065pks3, ns:m.065pl2h, ns:m.065pl2w, ns:m.065plg2, ns:m.065plg8, ns:m.065pm31, ns:m.065pm3y))
+}
+LIMIT 2262
+2 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.065pmfy, ns:m.065pnpf, ns:m.065pnq3, ns:m.065pp9s, ns:m.065prns, ns:m.065ps_6, ns:m.065ptyn, ns:m.065pv1c, ns:m.065px_m, ns:m.065pxbh, ns:m.065pxg6, ns:m.065pxpj, ns:m.065pxvv, ns:m.065pzwf, ns:m.065q4bz, ns:m.065q562, ns:m.065q5kv, ns:m.065q5q1, ns:m.065q6gg, ns:m.065q6hf, ns:m.065q6lx, ns:m.065q781, ns:m.065q823, ns:m.065q83c, ns:m.065q8dy, ns:m.065q8fx, ns:m.065qbdc, ns:m.0660b9b, ns:m.06679yl, ns:m.06h_7s8, ns:m.06h_8hr, ns:m.06j0_km, ns:m.06j1y6, ns:m.06md06x, ns:m.06v17p4, ns:m.06wfqjx, ns:m.06wft1x, ns:m.06wfthx, ns:m.06wj1sd, ns:m.06yx9wy, ns:m.0773009, ns:m.078sj4, ns:m.07_2800, ns:m.07c_tgj, ns:m.07f5v5t, ns:m.07f5vt7, ns:m.07f5vxb, ns:m.07f6_f7, ns:m.07f6_h6, ns:m.07f6z1y, ns:m.07hnbc, ns:m.07shn7n, ns:m.07shn8z, ns:m.07vn6z4, ns:m.07vzf1s, ns:m.07w8fz, ns:m.07y5ckz, ns:m.07ynq6s, ns:m.07zmwjz, ns:m.07zq8ry, ns:m.07zqys1, ns:m.08__6d_, ns:m.08wwpl2, ns:m.08wwpn3, ns:m.08wwptw, ns:m.08xcq8_, ns:m.08zw9jm, ns:m.090dkf_, ns:m.090f7_r, ns:m.090f811, ns:m.090f83h, ns:m.0929s97, ns:m.092j0ly, ns:m.093_0_h, ns:m.093_b13, ns:m.093_k1r, ns:m.093_nwn, ns:m.093_rgk, ns:m.093_w5_, ns:m.093zl00, ns:m.093zn1t, ns:m.093zysv, ns:m.0940568, ns:m.0940dcs, ns:m.0940kvq, ns:m.0940rtg, ns:m.0940s1q, ns:m.09413th, ns:m.0941_25, ns:m.0941w_k, ns:m.0941zgb, ns:m.0942c8q, ns:m.0942p6w, ns:m.0943_1p, ns:m.0943_2v, ns:m.0943cxj))
+}
+LIMIT 2262
+3 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.0943mgs, ns:m.0943y53, ns:m.0944drh, ns:m.0944gcs, ns:m.0944j3p, ns:m.0944n3h, ns:m.09455xk, ns:m.09459nr, ns:m.0945b57, ns:m.0945mth, ns:m.0945nbc, ns:m.09460wn, ns:m.09468pl, ns:m.0946d3d, ns:m.0946ln3, ns:m.094798k, ns:m.0947p6f, ns:m.09486h2, ns:m.094872v, ns:m.0948cpt, ns:m.0948ltz, ns:m.09495mv, ns:m.09497tq, ns:m.0949b0_, ns:m.0949f_2, ns:m.0949jwv, ns:m.0949l4d, ns:m.0949ldd, ns:m.094b7_p, ns:m.094bgy2, ns:m.094bmwl, ns:m.094brfq, ns:m.094bwny, ns:m.094c0tz, ns:m.094ccyy, ns:m.094clyg, ns:m.094d218, ns:m.094d_rl, ns:m.094dbvh, ns:m.094dd3p, ns:m.094djkg, ns:m.094dm_8, ns:m.094dsb7, ns:m.094f6zk, ns:m.094fc2j, ns:m.094ffyz, ns:m.094fmpd, ns:m.094g66q, ns:m.094glr0, ns:m.094gt2g, ns:m.094hbrh, ns:m.094hnl0, ns:m.094hyrw, ns:m.094j31m, ns:m.094j874, ns:m.094jdx4, ns:m.094jq2v, ns:m.094jqcl, ns:m.094js42, ns:m.094jt2x, ns:m.094k42l, ns:m.094k7zq, ns:m.094kf0y, ns:m.094kkpl, ns:m.094kwhy, ns:m.094kz0p, ns:m.094l27r, ns:m.094l3jk, ns:m.094ll5_, ns:m.094lq0c, ns:m.094m3t2, ns:m.094m497, ns:m.094m955, ns:m.094mcjp, ns:m.094mcrd, ns:m.094mj3p, ns:m.094mlcp, ns:m.094mmwg, ns:m.094my3x, ns:m.094mz68, ns:m.094nx7y, ns:m.094nxmj, ns:m.094p6h0, ns:m.094p9l2, ns:m.094phzd, ns:m.094prm0, ns:m.094pvkp, ns:m.094s375, ns:m.094t5vw, ns:m.094thmx, ns:m.094wkhk, ns:m.094wkt7, ns:m.094wl_t, ns:m.094wn5l, ns:m.095h1p9, ns:m.09c7w0))
+}
+LIMIT 2262
+4 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.09dwr_k, ns:m.09dx9kd, ns:m.09dxcyq, ns:m.09fs7kh, ns:m.09g33p9, ns:m.09k32tb, ns:m.09k35m3, ns:m.09k35mh, ns:m.09k3dqt, ns:m.09k3lyv, ns:m.09k3n_d, ns:m.09k5x_h, ns:m.09k6ztg, ns:m.09qfqt6, ns:m.09qggkx, ns:m.09rzf6c, ns:m.09sc2qf, ns:m.09sq905, ns:m.09sq912, ns:m.09sq91w, ns:m.09tg51k, ns:m.09tjrwd, ns:m.09tl0pc, ns:m.09v0ykf, ns:m.09vb271, ns:m.09vj0j7, ns:m.09vj0jk, ns:m.09vn0jr, ns:m.09vrp77, ns:m.09vrpbv, ns:m.09w0s_r, ns:m.09w6j58, ns:m.09w7dl_, ns:m.09w7q78, ns:m.09w8zwy, ns:m.09w9crn, ns:m.09w9d73, ns:m.09w9ff9, ns:m.09w9mkn, ns:m.09wbh86, ns:m.09wbrwc, ns:m.09wbvm3, ns:m.09wdlw6, ns:m.09wfll8, ns:m.09wfmzc, ns:m.09wfn4t, ns:m.09wfpy5, ns:m.09wfq0x, ns:m.09wfrj1, ns:m.09wfymv, ns:m.09wg3j6, ns:m.09wgfj1, ns:m.09wgr7z, ns:m.09wgs9y, ns:m.09wgzzt, ns:m.09wp0gs, ns:m.09wpk5j, ns:m.09wq6z7, ns:m.09wsgnm, ns:m.09wsq8t, ns:m.09wsyxb, ns:m.09wtnft, ns:m.09wxbgy, ns:m.09wxhg3, ns:m.09wy049, ns:m.09wy_gk, ns:m.09wyk5f, ns:m.09x0ffy, ns:m.09x0s92, ns:m.09x1lr3, ns:m.09x3sn6, ns:m.09x41h9, ns:m.09x4qbh, ns:m.09x4qny, ns:m.09x5j6y, ns:m.09x5q5q, ns:m.09x6q4g, ns:m.09x6rwp, ns:m.09x6s6p, ns:m.09x6vyh, ns:m.09x70c_, ns:m.09x72bp, ns:m.09x73db, ns:m.09x7z7h, ns:m.09x7zb2, ns:m.09x7zkb, ns:m.09x7zzd, ns:m.09x80ff, ns:m.09x81g1, ns:m.09x848t, ns:m.09x84vf, ns:m.09x86t8, ns:m.09x871_, ns:m.09x88jh, ns:m.09x88xq, ns:m.09x_n__))
+}
+LIMIT 2262
+5 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.09x_psm, ns:m.09x_q0d, ns:m.09x_t92, ns:m.09xgg53, ns:m.09xj4kt, ns:m.09xj4zg, ns:m.09xjdly, ns:m.09xjf08, ns:m.09xjgqy, ns:m.09xk39m, ns:m.09xk4gh, ns:m.09xkwkh, ns:m.09xl14d, ns:m.09xl18h, ns:m.09xl3pt, ns:m.09xlb7m, ns:m.09xlb8p, ns:m.09xlg4g, ns:m.09xn3kj, ns:m.09xn___, ns:m.09xpf02, ns:m.09xqg7h, ns:m.09xqwlj, ns:m.09xrkr8, ns:m.09xrljf, ns:m.09xrw5m, ns:m.09xsgbj, ns:m.09xsh4k, ns:m.09xsq05, ns:m.09xsq9t, ns:m.09xsxsz, ns:m.09xvr05, ns:m.09xy8j2, ns:m.09xymyn, ns:m.09xyzb3, ns:m.09xzxlp, ns:m.09y0wxv, ns:m.09y4r8c, ns:m.09y4z6g, ns:m.09y94g5, ns:m.09yb201, ns:m.09yb3ns, ns:m.09yb8mp, ns:m.09yc452, ns:m.09yck78, ns:m.09ycvz6, ns:m.09yf4fb, ns:m.09yf8qq, ns:m.09yf9n_, ns:m.09yht6s, ns:m.09yjp8s, ns:m.09ykb6c, ns:m.09ykvdh, ns:m.09ykwd6, ns:m.09yl21p, ns:m.09ym838, ns:m.09ymny1, ns:m.09ynkpx, ns:m.09yp1l_, ns:m.09yq8gn, ns:m.09yqkpy, ns:m.09yqzkr, ns:m.09yr_ry, ns:m.09yrhkr, ns:m.09ys3gk, ns:m.09yt5z1, ns:m.09ytf3s, ns:m.09ytfgc, ns:m.09yw71r, ns:m.09z8svz, ns:m.09zkzvl, ns:m.09zlwzh, ns:m.0_mdnjc, ns:m.0_xng4s, ns:m.0b282t, ns:m.0b3x05k, ns:m.0b454tz, ns:m.0b455np, ns:m.0b45_rf, ns:m.0b45w4f, ns:m.0b45y4s, ns:m.0b45yqq, ns:m.0b4606w, ns:m.0b46d8_, ns:m.0b46n7d, ns:m.0b46p1d, ns:m.0b46spt, ns:m.0b46x0w, ns:m.0b46x6s, ns:m.0b473tf, ns:m.0b479cx, ns:m.0b47cpz, ns:m.0b47k66, ns:m.0b47vq6, ns:m.0b489gj, ns:m.0b48npg))
+}
+LIMIT 2262
+6 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.0b48zkt, ns:m.0b4d5n4, ns:m.0b685jt, ns:m.0b69x24, ns:m.0b6rvj8, ns:m.0b7426, ns:m.0b80l2, ns:m.0b_v1z6, ns:m.0bg_8xj, ns:m.0bgmm66, ns:m.0bgmqc1, ns:m.0bgnqgk, ns:m.0bgp6w5, ns:m.0bgp_yn, ns:m.0bgpwgf, ns:m.0bgq1yp, ns:m.0bgqdrr, ns:m.0bgrm17, ns:m.0bgrtns, ns:m.0bgrygn, ns:m.0bgsgly, ns:m.0bgt2t0, ns:m.0bgthqz, ns:m.0bgtjkm, ns:m.0bgv02v, ns:m.0bgv3yz, ns:m.0bgww3t, ns:m.0bgy9sx, ns:m.0bgy_8r, ns:m.0bgzdcf, ns:m.0bhfx0p, ns:m.0bhg996, ns:m.0bmjjh7, ns:m.0bmpr3k, ns:m.0bmqpr0, ns:m.0bmrbzj, ns:m.0bms3vm, ns:m.0bmtrzc, ns:m.0bmzl9g, ns:m.0bnskzn, ns:m.0bqzd01, ns:m.0bthj25, ns:m.0bx26ph, ns:m.0bzk1rh, ns:m.0c04xvb, ns:m.0c1sml, ns:m.0c3b5x3, ns:m.0c3b5xb, ns:m.0c5jm30, ns:m.0c8wxp, ns:m.0cc2cqt, ns:m.0cc6w1j, ns:m.0cc6w1p, ns:m.0cc6x7d, ns:m.0cchk7r, ns:m.0cgn927, ns:m.0cj7c8k, ns:m.0cly8m, ns:m.0crvzt7, ns:m.0crwpjg, ns:m.0cs8jbs, ns:m.0cspmwf, ns:m.0cw72h, ns:m.0cwrv5, ns:m.0cysp_v, ns:m.0d50m64, ns:m.0d9y6, ns:m.0dkgj4y, ns:m.0dkh3nk, ns:m.0dkk5yf, ns:m.0dkkr6v, ns:m.0dkp_gz, ns:m.0dkpcfx, ns:m.0dkrlwk, ns:m.0dktslr, ns:m.0dkvqy9, ns:m.0dkxs7z, ns:m.0dl09b6, ns:m.0dxdd, ns:m.0dxtg, ns:m.0f_s2wy, ns:m.0f_t56t, ns:m.0f_t_nf, ns:m.0f_vkwz, ns:m.0f_x8h4, ns:m.0f_xrcz, ns:m.0fh694, ns:m.0fp_h06, ns:m.0g03bbx, ns:m.0g040s3, ns:m.0g04ch6, ns:m.0g069yy, ns:m.0g07k4l, ns:m.0g08k0l, ns:m.0g0c73k, ns:m.0g0jcm4))
+}
+LIMIT 2262
+7 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.0g0jgg_, ns:m.0g0lljr, ns:m.0g0ltbr, ns:m.0g5rm7s, ns:m.0g9wz_, ns:m.0gf9xyb, ns:m.0gg5qcw, ns:m.0ghkggs, ns:m.0gk8gs8, ns:m.0gl_sy8, ns:m.0glzh9l, ns:m.0glzhq6, ns:m.0gw1_c6, ns:m.0gwlcqt, ns:m.0gwlcsm, ns:m.0gwlf_8, ns:m.0gwlfz4, ns:m.0gwqmm6, ns:m.0gx9s4k, ns:m.0gx9sc7, ns:m.0gx9sdq, ns:m.0gx9sfv, ns:m.0h03fhx, ns:m.0h0wnb6, ns:m.0h10_9l, ns:m.0h10tyd, ns:m.0h4yhcg, ns:m.0h6cszq, ns:m.0h6ktsk, ns:m.0h_059b, ns:m.0hj8kk3, ns:m.0hjbfq7, ns:m.0hjp5d0, ns:m.0hk1f_z, ns:m.0hn5tn6, ns:m.0hn605h, ns:m.0hn605r, ns:m.0hnf_gf, ns:m.0hng008, ns:m.0hnjn9q, ns:m.0hnk5ky, ns:m.0hnk6kr, ns:m.0hz6lg0, ns:m.0hz8x4x, ns:m.0hzfkmj, ns:m.0hzfrkf, ns:m.0hztyp8, ns:m.0hzvqk4, ns:m.0hzzgv7, ns:m.0j8_zw2, ns:m.0j8mhl3, ns:m.0j99h2_, ns:m.0j9fx1c, ns:m.0jsd7n, ns:m.0jv293, ns:m.0jwldc, ns:m.0jwmr1, ns:m.0jy0n_, ns:m.0jyj91, ns:m.0jyklq, ns:m.0jyygh, ns:m.0k1f3p, ns:m.0k1fdd, ns:m.0k1fh0, ns:m.0k1nyn, ns:m.0k2h6b, ns:m.0k3ht1, ns:m.0k40yt, ns:m.0k5729, ns:m.0k62v1, ns:m.0k636m, ns:m.0k6nvp, ns:m.0k72w1, ns:m.0kcqd9p, ns:m.0kt32s4, ns:m.0l969cz, ns:m.0lywxb7, ns:m.0lzkny7, ns:m.0mwc30z, ns:m.0my4zl7, ns:m.0myhf8y, ns:m.0mzyvhh, ns:m.0n10dvg, ns:m.0n1zc7j, ns:m.0n22hby, ns:m.0n28nmh, ns:m.0n31lmx, ns:m.0n36j0c, ns:m.0n4dyn6, ns:m.0n4fxm7, ns:m.0n4pvy_, ns:m.0n4r_pt, ns:m.0n4rphg, ns:m.0n4rx05, ns:m.0n4rzdf, ns:m.0n4s483))
+}
+LIMIT 2262
+8 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?s in (ns:m.0n51kgc, ns:m.0n51z4z, ns:m.0n52lw7, ns:m.0n54_zl, ns:m.0n59qpb, ns:m.0n5bm6m, ns:m.0n5bm7t, ns:m.0nbbx__, ns:m.0ncyjcz, ns:m.0ndx3rt, ns:m.0ngl2jk, ns:m.0np9r, ns:m.0p4ymcw, ns:m.0p4ytly, ns:m.0pdjclm, ns:m.0pdk_vq, ns:m.0pdm58j, ns:m.0pxl_cq, ns:m.0pxwf8p, ns:m.0pxwfp7, ns:m.0pxwg2w, ns:m.0pycy9_, ns:m.0pz8z3d, ns:m.0pz8z_7, ns:m.0pz91y4, ns:m.0pz933v, ns:m.0pz94s5, ns:m.0q0bd, ns:m.0q1t64j, ns:m.0q1t7g_, ns:m.0q1wlqm, ns:m.0q1wmq7, ns:m.0q1wpkv, ns:m.0q1wq1m, ns:m.0qcths, ns:m.0qfvj94, ns:m.0qn2v, ns:m.0qs28cr, ns:m.0qw10d9, ns:m.0r5v4y6, ns:m.0rdc7vr, ns:m.0rhs98q, ns:m.0rhsb4b, ns:m.0ryhcyb, ns:m.0t5dngt, ns:m.0tl4pp2, ns:m.0tl4q9s, ns:m.0tl85bq, ns:m.0tl86ld, ns:m.0v_nq7h, ns:m.0v_nqd0, ns:m.0v_nqlj, ns:m.0v_nqz4, ns:m.0v_nr1n, ns:m.0v_nr60, ns:m.0v_nr7g, ns:m.0v_nrhh, ns:m.0v_nrqp, ns:m.0v_ns0z, ns:m.0vg8, ns:m.0vzblnd, ns:m.0w2j8wk, ns:m.0w37m97, ns:m.0w6370s, ns:m.0wbqz9f, ns:m.0wdkn5x, ns:m.0wdzpwh, ns:m.0wq8k7z, ns:m.0wqg_2_, ns:m.0ytb7_5, ns:m.0z3w81f, ns:m.0z43n48, ns:m.0z87wlr, ns:m.0z8v882, ns:m.0z8y874, ns:m.0z90m5l, ns:m.0z94_9p, ns:m.0z9j9fd, ns:m.0z9nh18, ns:m.0z9tcdv, ns:m.0zb42t5, ns:m.0zy6qcd, ns:medicine.notable_person_with_medical_condition, ns:music.artist, ns:organization.organization, ns:organization.organization_founder, ns:organization.organization_member, ns:people.measured_person, ns:people.person, ns:tv.tv_actor, ns:tv.tv_personality, ns:tv.tv_producer, ns:tv.tv_program_creator, ns:tv.tv_program_guest, ns:user.narphorium.people.nndb_person, ns:user.narphorium.people.topic))
+}
+LIMIT 2262
+(8173, 3)
+0 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:aviation.aircraft_owner, ns:aviation.airline, ns:award.award_nominee, ns:award.award_winner, ns:award.ranked_item, ns:base.academyawards.topic, ns:base.popstra.celebrity, ns:base.popstra.sww_base, ns:base.popstra.topic, ns:base.saturdaynightlive.snl_host, ns:base.saturdaynightlive.topic, ns:base.schemastaging.context_name, ns:base.schemastaging.organization_extra, ns:base.schemastaging.person_extra, ns:base.type_ontology.abstract, ns:base.type_ontology.agent, ns:base.type_ontology.animate, ns:base.type_ontology.inanimate, ns:base.type_ontology.physically_instantiable, ns:base.watches.topic, ns:book.author, ns:business.business_operation, ns:business.employer, ns:business.sponsored_recipient, ns:celebrities.celebrity, ns:common.topic, ns:fictional_universe.person_in_fiction, ns:film.actor, ns:film.director, ns:film.person_or_entity_appearing_in_film, ns:film.producer, ns:film.writer, ns:g.11b6d3g00t, ns:g.11b6nypzsl, ns:g.1256k9y7d, ns:g.125774v0s, ns:g.125_kg2nv, ns:influence.influence_node, ns:m.010b895h, ns:m.010d_wk4, ns:m.010gmjs8, ns:m.010gyc0c, ns:m.010gyc_9, ns:m.0115sh1g, ns:m.011tby_y, ns:m.011v77ys, ns:m.011x1pjx, ns:m.0121lmkt, ns:m.0123vyxj, ns:m.0131ggr_, ns:m.014zd1, ns:m.01_chtn, ns:m.01d_h8, ns:m.01nfn_, ns:m.01ngm0, ns:m.01q1_c, ns:m.01tq6zx, ns:m.01x3gb5, ns:m.01x3gbh, ns:m.01xpjyl, ns:m.01y0nlt, ns:m.021ykml, ns:m.0229hrx, ns:m.0276wfw, ns:m.027cd1t, ns:m.0288083, ns:m.02_7frv, ns:m.02hrh1q, ns:m.02hw04h, ns:m.02jknp, ns:m.02kklnl, ns:m.02krf9, ns:m.02tb4gn, ns:m.02tb6gl, ns:m.02vb5_8, ns:m.02vbjwc, ns:m.02vbznc, ns:m.02vc2g_, ns:m.02vcx1z, ns:m.02vd98p, ns:m.02vdf9s, ns:m.02z14n, ns:m.033tf_, ns:m.03bd61, ns:m.03gjzk, ns:m.03l6q5p, ns:m.03lft2j, ns:m.03lqlq6, ns:m.03lwc2p, ns:m.03lwx_9, ns:m.03mb3kl, ns:m.03pmdy4, ns:m.03s09r4, ns:m.03s6l2, ns:m.03z8mk7, ns:m.043tz0c, ns:m.047hs0h))
+}
+LIMIT 2262
+1 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.04b9_k, ns:m.04d5y1h, ns:m.04d88cd, ns:m.04d89z2, ns:m.04d8b6d, ns:m.04d96lj, ns:m.04dbzj6, ns:m.04dk8x_, ns:m.04dn010, ns:m.04g5k_1, ns:m.04g5kzb, ns:m.04g5kzn, ns:m.04g5l2c, ns:m.04g5lf4, ns:m.04g74jl, ns:m.04g74k3, ns:m.04g74rn, ns:m.04g74s3, ns:m.04g74sq, ns:m.04g74x6, ns:m.04jwly, ns:m.04lrc9s, ns:m.04m1, ns:m.04m8, ns:m.04mf174, ns:m.04nt, ns:m.04p4s8d, ns:m.04yh0h5, ns:m.058f71, ns:m.05btz63, ns:m.05cc996, ns:m.05ch98, ns:m.05gjj1, ns:m.05k7z49, ns:m.05l9kf, ns:m.05ln4bq, ns:m.05phcsz, ns:m.05pqzdg, ns:m.05v0986, ns:m.05zppz, ns:m.063g_0t, ns:m.063g_1c, ns:m.063g_2l, ns:m.063g_36, ns:m.063gfrn, ns:m.063gfy2, ns:m.063gg6c, ns:m.063ggbf, ns:m.063ggd9, ns:m.063gz_8, ns:m.063gzdb, ns:m.063gzdv, ns:m.063gzmd, ns:m.063gzt7, ns:m.063gzv2, ns:m.063gzvx, ns:m.063gzxd, ns:m.063gzyp, ns:m.06461_8, ns:m.064bhmr, ns:m.064snb1, ns:m.064snb8, ns:m.064snbh, ns:m.064zmff, ns:m.06505k9, ns:m.065273x, ns:m.0652wjl, ns:m.0652wwk, ns:m.065p9g9, ns:m.065p_sz, ns:m.065pbq1, ns:m.065pbxd, ns:m.065pc41, ns:m.065pf11, ns:m.065pf7z, ns:m.065pgls, ns:m.065pgrt, ns:m.065pgyp, ns:m.065pj13, ns:m.065pj76, ns:m.065pj7z, ns:m.065pjj1, ns:m.065pjkv, ns:m.065pjmc, ns:m.065pjnh, ns:m.065pjz2, ns:m.065pk3v, ns:m.065pkfz, ns:m.065pkl_, ns:m.065pks3, ns:m.065pl2h, ns:m.065pl2w, ns:m.065plg2, ns:m.065plg8, ns:m.065pm31, ns:m.065pm3y))
+}
+LIMIT 2262
+2 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.065pmfy, ns:m.065pnpf, ns:m.065pnq3, ns:m.065pp9s, ns:m.065prns, ns:m.065ps_6, ns:m.065ptyn, ns:m.065pv1c, ns:m.065px_m, ns:m.065pxbh, ns:m.065pxg6, ns:m.065pxpj, ns:m.065pxvv, ns:m.065pzwf, ns:m.065q4bz, ns:m.065q562, ns:m.065q5kv, ns:m.065q5q1, ns:m.065q6gg, ns:m.065q6hf, ns:m.065q6lx, ns:m.065q781, ns:m.065q823, ns:m.065q83c, ns:m.065q8dy, ns:m.065q8fx, ns:m.065qbdc, ns:m.0660b9b, ns:m.06679yl, ns:m.06h_7s8, ns:m.06h_8hr, ns:m.06j0_km, ns:m.06j1y6, ns:m.06md06x, ns:m.06v17p4, ns:m.06wfqjx, ns:m.06wft1x, ns:m.06wfthx, ns:m.06wj1sd, ns:m.06yx9wy, ns:m.0773009, ns:m.078sj4, ns:m.07_2800, ns:m.07c_tgj, ns:m.07f5v5t, ns:m.07f5vt7, ns:m.07f5vxb, ns:m.07f6_f7, ns:m.07f6_h6, ns:m.07f6z1y, ns:m.07hnbc, ns:m.07shn7n, ns:m.07shn8z, ns:m.07vn6z4, ns:m.07vzf1s, ns:m.07w8fz, ns:m.07y5ckz, ns:m.07ynq6s, ns:m.07zmwjz, ns:m.07zq8ry, ns:m.07zqys1, ns:m.08__6d_, ns:m.08wwpl2, ns:m.08wwpn3, ns:m.08wwptw, ns:m.08xcq8_, ns:m.08zw9jm, ns:m.090dkf_, ns:m.090f7_r, ns:m.090f811, ns:m.090f83h, ns:m.0929s97, ns:m.092j0ly, ns:m.093_0_h, ns:m.093_b13, ns:m.093_k1r, ns:m.093_nwn, ns:m.093_rgk, ns:m.093_w5_, ns:m.093zl00, ns:m.093zn1t, ns:m.093zysv, ns:m.0940568, ns:m.0940dcs, ns:m.0940kvq, ns:m.0940rtg, ns:m.0940s1q, ns:m.09413th, ns:m.0941_25, ns:m.0941w_k, ns:m.0941zgb, ns:m.0942c8q, ns:m.0942p6w, ns:m.0943_1p, ns:m.0943_2v, ns:m.0943cxj))
+}
+LIMIT 2262
+3 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.0943mgs, ns:m.0943y53, ns:m.0944drh, ns:m.0944gcs, ns:m.0944j3p, ns:m.0944n3h, ns:m.09455xk, ns:m.09459nr, ns:m.0945b57, ns:m.0945mth, ns:m.0945nbc, ns:m.09460wn, ns:m.09468pl, ns:m.0946d3d, ns:m.0946ln3, ns:m.094798k, ns:m.0947p6f, ns:m.09486h2, ns:m.094872v, ns:m.0948cpt, ns:m.0948ltz, ns:m.09495mv, ns:m.09497tq, ns:m.0949b0_, ns:m.0949f_2, ns:m.0949jwv, ns:m.0949l4d, ns:m.0949ldd, ns:m.094b7_p, ns:m.094bgy2, ns:m.094bmwl, ns:m.094brfq, ns:m.094bwny, ns:m.094c0tz, ns:m.094ccyy, ns:m.094clyg, ns:m.094d218, ns:m.094d_rl, ns:m.094dbvh, ns:m.094dd3p, ns:m.094djkg, ns:m.094dm_8, ns:m.094dsb7, ns:m.094f6zk, ns:m.094fc2j, ns:m.094ffyz, ns:m.094fmpd, ns:m.094g66q, ns:m.094glr0, ns:m.094gt2g, ns:m.094hbrh, ns:m.094hnl0, ns:m.094hyrw, ns:m.094j31m, ns:m.094j874, ns:m.094jdx4, ns:m.094jq2v, ns:m.094jqcl, ns:m.094js42, ns:m.094jt2x, ns:m.094k42l, ns:m.094k7zq, ns:m.094kf0y, ns:m.094kkpl, ns:m.094kwhy, ns:m.094kz0p, ns:m.094l27r, ns:m.094l3jk, ns:m.094ll5_, ns:m.094lq0c, ns:m.094m3t2, ns:m.094m497, ns:m.094m955, ns:m.094mcjp, ns:m.094mcrd, ns:m.094mj3p, ns:m.094mlcp, ns:m.094mmwg, ns:m.094my3x, ns:m.094mz68, ns:m.094nx7y, ns:m.094nxmj, ns:m.094p6h0, ns:m.094p9l2, ns:m.094phzd, ns:m.094prm0, ns:m.094pvkp, ns:m.094s375, ns:m.094t5vw, ns:m.094thmx, ns:m.094wkhk, ns:m.094wkt7, ns:m.094wl_t, ns:m.094wn5l, ns:m.095h1p9, ns:m.09c7w0))
+}
+LIMIT 2262
+4 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.09dwr_k, ns:m.09dx9kd, ns:m.09dxcyq, ns:m.09fs7kh, ns:m.09g33p9, ns:m.09k32tb, ns:m.09k35m3, ns:m.09k35mh, ns:m.09k3dqt, ns:m.09k3lyv, ns:m.09k3n_d, ns:m.09k5x_h, ns:m.09k6ztg, ns:m.09qfqt6, ns:m.09qggkx, ns:m.09rzf6c, ns:m.09sc2qf, ns:m.09sq905, ns:m.09sq912, ns:m.09sq91w, ns:m.09tg51k, ns:m.09tjrwd, ns:m.09tl0pc, ns:m.09v0ykf, ns:m.09vb271, ns:m.09vj0j7, ns:m.09vj0jk, ns:m.09vn0jr, ns:m.09vrp77, ns:m.09vrpbv, ns:m.09w0s_r, ns:m.09w6j58, ns:m.09w7dl_, ns:m.09w7q78, ns:m.09w8zwy, ns:m.09w9crn, ns:m.09w9d73, ns:m.09w9ff9, ns:m.09w9mkn, ns:m.09wbh86, ns:m.09wbrwc, ns:m.09wbvm3, ns:m.09wdlw6, ns:m.09wfll8, ns:m.09wfmzc, ns:m.09wfn4t, ns:m.09wfpy5, ns:m.09wfq0x, ns:m.09wfrj1, ns:m.09wfymv, ns:m.09wg3j6, ns:m.09wgfj1, ns:m.09wgr7z, ns:m.09wgs9y, ns:m.09wgzzt, ns:m.09wp0gs, ns:m.09wpk5j, ns:m.09wq6z7, ns:m.09wsgnm, ns:m.09wsq8t, ns:m.09wsyxb, ns:m.09wtnft, ns:m.09wxbgy, ns:m.09wxhg3, ns:m.09wy049, ns:m.09wy_gk, ns:m.09wyk5f, ns:m.09x0ffy, ns:m.09x0s92, ns:m.09x1lr3, ns:m.09x3sn6, ns:m.09x41h9, ns:m.09x4qbh, ns:m.09x4qny, ns:m.09x5j6y, ns:m.09x5q5q, ns:m.09x6q4g, ns:m.09x6rwp, ns:m.09x6s6p, ns:m.09x6vyh, ns:m.09x70c_, ns:m.09x72bp, ns:m.09x73db, ns:m.09x7z7h, ns:m.09x7zb2, ns:m.09x7zkb, ns:m.09x7zzd, ns:m.09x80ff, ns:m.09x81g1, ns:m.09x848t, ns:m.09x84vf, ns:m.09x86t8, ns:m.09x871_, ns:m.09x88jh, ns:m.09x88xq, ns:m.09x_n__))
+}
+LIMIT 2262
+5 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.09x_psm, ns:m.09x_q0d, ns:m.09x_t92, ns:m.09xgg53, ns:m.09xj4kt, ns:m.09xj4zg, ns:m.09xjdly, ns:m.09xjf08, ns:m.09xjgqy, ns:m.09xk39m, ns:m.09xk4gh, ns:m.09xkwkh, ns:m.09xl14d, ns:m.09xl18h, ns:m.09xl3pt, ns:m.09xlb7m, ns:m.09xlb8p, ns:m.09xlg4g, ns:m.09xn3kj, ns:m.09xn___, ns:m.09xpf02, ns:m.09xqg7h, ns:m.09xqwlj, ns:m.09xrkr8, ns:m.09xrljf, ns:m.09xrw5m, ns:m.09xsgbj, ns:m.09xsh4k, ns:m.09xsq05, ns:m.09xsq9t, ns:m.09xsxsz, ns:m.09xvr05, ns:m.09xy8j2, ns:m.09xymyn, ns:m.09xyzb3, ns:m.09xzxlp, ns:m.09y0wxv, ns:m.09y4r8c, ns:m.09y4z6g, ns:m.09y94g5, ns:m.09yb201, ns:m.09yb3ns, ns:m.09yb8mp, ns:m.09yc452, ns:m.09yck78, ns:m.09ycvz6, ns:m.09yf4fb, ns:m.09yf8qq, ns:m.09yf9n_, ns:m.09yht6s, ns:m.09yjp8s, ns:m.09ykb6c, ns:m.09ykvdh, ns:m.09ykwd6, ns:m.09yl21p, ns:m.09ym838, ns:m.09ymny1, ns:m.09ynkpx, ns:m.09yp1l_, ns:m.09yq8gn, ns:m.09yqkpy, ns:m.09yqzkr, ns:m.09yr_ry, ns:m.09yrhkr, ns:m.09ys3gk, ns:m.09yt5z1, ns:m.09ytf3s, ns:m.09ytfgc, ns:m.09yw71r, ns:m.09z8svz, ns:m.09zkzvl, ns:m.09zlwzh, ns:m.0_mdnjc, ns:m.0_xng4s, ns:m.0b282t, ns:m.0b3x05k, ns:m.0b454tz, ns:m.0b455np, ns:m.0b45_rf, ns:m.0b45w4f, ns:m.0b45y4s, ns:m.0b45yqq, ns:m.0b4606w, ns:m.0b46d8_, ns:m.0b46n7d, ns:m.0b46p1d, ns:m.0b46spt, ns:m.0b46x0w, ns:m.0b46x6s, ns:m.0b473tf, ns:m.0b479cx, ns:m.0b47cpz, ns:m.0b47k66, ns:m.0b47vq6, ns:m.0b489gj, ns:m.0b48npg))
+}
+LIMIT 2262
+6 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.0b48zkt, ns:m.0b4d5n4, ns:m.0b685jt, ns:m.0b69x24, ns:m.0b6rvj8, ns:m.0b7426, ns:m.0b80l2, ns:m.0b_v1z6, ns:m.0bg_8xj, ns:m.0bgmm66, ns:m.0bgmqc1, ns:m.0bgnqgk, ns:m.0bgp6w5, ns:m.0bgp_yn, ns:m.0bgpwgf, ns:m.0bgq1yp, ns:m.0bgqdrr, ns:m.0bgrm17, ns:m.0bgrtns, ns:m.0bgrygn, ns:m.0bgsgly, ns:m.0bgt2t0, ns:m.0bgthqz, ns:m.0bgtjkm, ns:m.0bgv02v, ns:m.0bgv3yz, ns:m.0bgww3t, ns:m.0bgy9sx, ns:m.0bgy_8r, ns:m.0bgzdcf, ns:m.0bhfx0p, ns:m.0bhg996, ns:m.0bmjjh7, ns:m.0bmpr3k, ns:m.0bmqpr0, ns:m.0bmrbzj, ns:m.0bms3vm, ns:m.0bmtrzc, ns:m.0bmzl9g, ns:m.0bnskzn, ns:m.0bqzd01, ns:m.0bthj25, ns:m.0bx26ph, ns:m.0bzk1rh, ns:m.0c04xvb, ns:m.0c1sml, ns:m.0c3b5x3, ns:m.0c3b5xb, ns:m.0c5jm30, ns:m.0c8wxp, ns:m.0cc2cqt, ns:m.0cc6w1j, ns:m.0cc6w1p, ns:m.0cc6x7d, ns:m.0cchk7r, ns:m.0cgn927, ns:m.0cj7c8k, ns:m.0cly8m, ns:m.0crvzt7, ns:m.0crwpjg, ns:m.0cs8jbs, ns:m.0cspmwf, ns:m.0cw72h, ns:m.0cwrv5, ns:m.0cysp_v, ns:m.0d50m64, ns:m.0d9y6, ns:m.0dkgj4y, ns:m.0dkh3nk, ns:m.0dkk5yf, ns:m.0dkkr6v, ns:m.0dkp_gz, ns:m.0dkpcfx, ns:m.0dkrlwk, ns:m.0dktslr, ns:m.0dkvqy9, ns:m.0dkxs7z, ns:m.0dl09b6, ns:m.0dxdd, ns:m.0dxtg, ns:m.0f_s2wy, ns:m.0f_t56t, ns:m.0f_t_nf, ns:m.0f_vkwz, ns:m.0f_x8h4, ns:m.0f_xrcz, ns:m.0fh694, ns:m.0fp_h06, ns:m.0g03bbx, ns:m.0g040s3, ns:m.0g04ch6, ns:m.0g069yy, ns:m.0g07k4l, ns:m.0g08k0l, ns:m.0g0c73k, ns:m.0g0jcm4))
+}
+LIMIT 2262
+7 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.0g0jgg_, ns:m.0g0lljr, ns:m.0g0ltbr, ns:m.0g5rm7s, ns:m.0g9wz_, ns:m.0gf9xyb, ns:m.0gg5qcw, ns:m.0ghkggs, ns:m.0gk8gs8, ns:m.0gl_sy8, ns:m.0glzh9l, ns:m.0glzhq6, ns:m.0gw1_c6, ns:m.0gwlcqt, ns:m.0gwlcsm, ns:m.0gwlf_8, ns:m.0gwlfz4, ns:m.0gwqmm6, ns:m.0gx9s4k, ns:m.0gx9sc7, ns:m.0gx9sdq, ns:m.0gx9sfv, ns:m.0h03fhx, ns:m.0h0wnb6, ns:m.0h10_9l, ns:m.0h10tyd, ns:m.0h4yhcg, ns:m.0h6cszq, ns:m.0h6ktsk, ns:m.0h_059b, ns:m.0hj8kk3, ns:m.0hjbfq7, ns:m.0hjp5d0, ns:m.0hk1f_z, ns:m.0hn5tn6, ns:m.0hn605h, ns:m.0hn605r, ns:m.0hnf_gf, ns:m.0hng008, ns:m.0hnjn9q, ns:m.0hnk5ky, ns:m.0hnk6kr, ns:m.0hz6lg0, ns:m.0hz8x4x, ns:m.0hzfkmj, ns:m.0hzfrkf, ns:m.0hztyp8, ns:m.0hzvqk4, ns:m.0hzzgv7, ns:m.0j8_zw2, ns:m.0j8mhl3, ns:m.0j99h2_, ns:m.0j9fx1c, ns:m.0jsd7n, ns:m.0jv293, ns:m.0jwldc, ns:m.0jwmr1, ns:m.0jy0n_, ns:m.0jyj91, ns:m.0jyklq, ns:m.0jyygh, ns:m.0k1f3p, ns:m.0k1fdd, ns:m.0k1fh0, ns:m.0k1nyn, ns:m.0k2h6b, ns:m.0k3ht1, ns:m.0k40yt, ns:m.0k5729, ns:m.0k62v1, ns:m.0k636m, ns:m.0k6nvp, ns:m.0k72w1, ns:m.0kcqd9p, ns:m.0kt32s4, ns:m.0l969cz, ns:m.0lywxb7, ns:m.0lzkny7, ns:m.0mwc30z, ns:m.0my4zl7, ns:m.0myhf8y, ns:m.0mzyvhh, ns:m.0n10dvg, ns:m.0n1zc7j, ns:m.0n22hby, ns:m.0n28nmh, ns:m.0n31lmx, ns:m.0n36j0c, ns:m.0n4dyn6, ns:m.0n4fxm7, ns:m.0n4pvy_, ns:m.0n4r_pt, ns:m.0n4rphg, ns:m.0n4rx05, ns:m.0n4rzdf, ns:m.0n4s483))
+}
+LIMIT 2262
+8 of 9
+PREFIX ns: <http://rdf.freebase.com/ns/>
+select * where {
+?s ?r ?o .
+FILTER (?o in (ns:m.0n51kgc, ns:m.0n51z4z, ns:m.0n52lw7, ns:m.0n54_zl, ns:m.0n59qpb, ns:m.0n5bm6m, ns:m.0n5bm7t, ns:m.0nbbx__, ns:m.0ncyjcz, ns:m.0ndx3rt, ns:m.0ngl2jk, ns:m.0np9r, ns:m.0p4ymcw, ns:m.0p4ytly, ns:m.0pdjclm, ns:m.0pdk_vq, ns:m.0pdm58j, ns:m.0pxl_cq, ns:m.0pxwf8p, ns:m.0pxwfp7, ns:m.0pxwg2w, ns:m.0pycy9_, ns:m.0pz8z3d, ns:m.0pz8z_7, ns:m.0pz91y4, ns:m.0pz933v, ns:m.0pz94s5, ns:m.0q0bd, ns:m.0q1t64j, ns:m.0q1t7g_, ns:m.0q1wlqm, ns:m.0q1wmq7, ns:m.0q1wpkv, ns:m.0q1wq1m, ns:m.0qcths, ns:m.0qfvj94, ns:m.0qn2v, ns:m.0qs28cr, ns:m.0qw10d9, ns:m.0r5v4y6, ns:m.0rdc7vr, ns:m.0rhs98q, ns:m.0rhsb4b, ns:m.0ryhcyb, ns:m.0t5dngt, ns:m.0tl4pp2, ns:m.0tl4q9s, ns:m.0tl85bq, ns:m.0tl86ld, ns:m.0v_nq7h, ns:m.0v_nqd0, ns:m.0v_nqlj, ns:m.0v_nqz4, ns:m.0v_nr1n, ns:m.0v_nr60, ns:m.0v_nr7g, ns:m.0v_nrhh, ns:m.0v_nrqp, ns:m.0v_ns0z, ns:m.0vg8, ns:m.0vzblnd, ns:m.0w2j8wk, ns:m.0w37m97, ns:m.0w6370s, ns:m.0wbqz9f, ns:m.0wdkn5x, ns:m.0wdzpwh, ns:m.0wq8k7z, ns:m.0wqg_2_, ns:m.0ytb7_5, ns:m.0z3w81f, ns:m.0z43n48, ns:m.0z87wlr, ns:m.0z8v882, ns:m.0z8y874, ns:m.0z90m5l, ns:m.0z94_9p, ns:m.0z9j9fd, ns:m.0z9nh18, ns:m.0z9tcdv, ns:m.0zb42t5, ns:m.0zy6qcd, ns:medicine.notable_person_with_medical_condition, ns:music.artist, ns:organization.organization, ns:organization.organization_founder, ns:organization.organization_member, ns:people.measured_person, ns:people.person, ns:tv.tv_actor, ns:tv.tv_personality, ns:tv.tv_producer, ns:tv.tv_program_creator, ns:tv.tv_program_guest, ns:user.narphorium.people.nndb_person, ns:user.narphorium.people.topic))
+}
+LIMIT 2262
+(15903, 3)
+(3,)
+(3,)

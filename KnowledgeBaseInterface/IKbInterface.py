@@ -1,3 +1,5 @@
+import numpy as np
+
 class IKbInterface:
 
     def get_neighborhood(self, vertices, edge_limit=None, hops=1):
@@ -8,7 +10,7 @@ class IKbInterface:
             remaining_edges = edge_limit-len(seen_edges)
 
             frontier, edges = self.retrieve_one_neighborhood(frontier, limit=remaining_edges)
-            seen_edges.append(edges)
+            seen_edges.extend(edges)
 
         return seen_edges
 
