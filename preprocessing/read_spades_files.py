@@ -4,6 +4,8 @@ import numpy as np
 
 class JsonReader:
 
+    output=None
+
     def __init__(self, output=None):
         self.output=output
 
@@ -11,9 +13,12 @@ class JsonReader:
         freebase_entities = np.array(json_line['answerSubset'])
         return freebase_entities
 
-    def parse_file(self, filename):
+    def parse_file(self, filename, output=None):
+        if output is None:
+            output = self.output
+
         with open(filename) as data_file:
             for line in (data_file):
                 line = json.loads(line)
-                if self.output == "gold":
-                    self.parse_json_to_gold(line)
+                if output == "gold":
+                    yield self.parse_json_to_gold(line)

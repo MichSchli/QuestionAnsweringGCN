@@ -2,6 +2,7 @@ import argparse
 import json
 import sys
 from KnowledgeBaseInterface.FreebaseInterface import FreebaseInterface
+from preprocessing.read_spades_files import JsonReader
 import numpy as np
 
 
@@ -10,11 +11,17 @@ class CandidateNeighborhoodGenerator:
     freebase_interface = None
     neighborhood_search_scope = None
     max_candidates = None
+    json_reader = None
 
-    def __init__(self, freebase_interface, neighborhood_search_scope=1, max_candidates=10000):
+    def __init__(self, freebase_interface, json_reader, neighborhood_search_scope=1, max_candidates=10000):
         self.freebase_interface = freebase_interface
         self.neighborhood_search_scope = neighborhood_search_scope
         self.max_candidates = max_candidates
+        self.json_reader = json_reader
+
+    def parse_file(self, filename):
+        for entity_set in self.json_reader.parse_file(filename, output="entities"):
+            pass
 
     def parse_json_line(self, json_line):
         freebase_entities = np.array([self.parse_json_entity(entity) for entity in json_line['entities']])
