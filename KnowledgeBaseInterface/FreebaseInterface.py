@@ -1,6 +1,7 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 import numpy as np
 from KnowledgeBaseInterface.IKbInterface import IKbInterface
+import math
 
 
 class FreebaseInterface(IKbInterface):
@@ -36,21 +37,28 @@ class FreebaseInterface(IKbInterface):
 
 
 
-    def retrieve_one_neighborhood_graph(self, center_vertices, limit=1000, subject=True):
+    def retrieve_one_neighborhood_graph(self, center_vertices, limit=1000, subject=True, entities_per_query=10):
         sparql = SPARQLWrapper(self.endpoint)
-        query_string = self.construct_neighbor_query(center_vertices, limit=limit, direction="s" if subject else "o")
-
-        print(query_string)
-
-        sparql.setQuery(query_string)
         sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
 
-        tuple_results = [None]* len(results["results"]["bindings"])
-        for i,result in enumerate(results["results"]["bindings"]):
-            tuple_results[i] = [result["s"]["value"], result["r"]["value"], result["o"]["value"]]
+        number_of_batches = math.ceil(center_vertices.shape[0] / entities_per_query)
 
-        return np.array(tuple_results)
+        result_chunks = [None]*number_of_batches
+        for i,center_vertex_batch in enumerate(np.split(center_vertices, number_of_batches)):
+            query_string = self.construct_neighbor_query(center_vertices, limit=limit, direction="s" if subject else "o")
+
+            print(query_string)
+
+            sparql.setQuery(query_string)
+            results = sparql.query().convert()
+
+            result_chunks[i] = [None]* len(results["results"]["bindings"])
+            for j,result in enumerate(results["results"]["bindings"]):
+                result_chunks[i][j] = [result["s"]["value"], result["r"]["value"], result["o"]["value"]]
+
+        results = np.concatenate(result_chunks)
+        print(results.shape)
+        return results
 
 if __name__ == "__main__":
     iface = FreebaseInterface()

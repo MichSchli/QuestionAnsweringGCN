@@ -1,7 +1,7 @@
 class IKbInterface:
 
     def get_neighborhood(self, vertices, edge_limit=None, hops=1):
-        frontier = vertices
+        frontier = np.array(vertices)
         seen_edges = []
         while len(seen_edges) < edge_limit and hops > 0:
             hops -1
