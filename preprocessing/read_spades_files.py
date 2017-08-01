@@ -13,6 +13,9 @@ class JsonReader:
         freebase_entities = np.array(json_line['answerSubset'])
         return freebase_entities
 
+    def parse_json_to_entities(self, json_line):
+        return np.array([entity["entity"] for entity in json_line['entities']])
+
     def parse_file(self, filename, output=None):
         if output is None:
             output = self.output
@@ -22,3 +25,5 @@ class JsonReader:
                 line = json.loads(line)
                 if output == "gold":
                     yield self.parse_json_to_gold(line)
+                elif output == "entities":
+                    yield self.parse_json_to_entities(line)

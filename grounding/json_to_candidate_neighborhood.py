@@ -21,7 +21,8 @@ class CandidateNeighborhoodGenerator:
 
     def parse_file(self, filename):
         for entity_set in self.json_reader.parse_file(filename, output="entities"):
-            pass
+            candidates = self.freebase_interface.get_neighborhood(entity_set, edge_limit=self.max_candidates, hops=self.neighborhood_search_scope)
+            yield candidates
 
     def parse_json_line(self, json_line):
         freebase_entities = np.array([self.parse_json_entity(entity) for entity in json_line['entities']])
