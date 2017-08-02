@@ -10,7 +10,7 @@ class OracleCandidate:
         self.candidate_neighborhood_generator = candidate_neighborhood_generator
         self.gold_generator = gold_generator
 
-    def predict(self, filename):
+    def parse_file(self, filename):
         candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
         gold_iterator = self.gold_generator.parse_file(filename, output="gold")
 
