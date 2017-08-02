@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class RandomCandidate:
+class RandomSingleCandidate:
 
     candidate_neighborhood_generator = None
 
@@ -10,4 +10,4 @@ class RandomCandidate:
 
     def parse_file(self, filename):
         for candidate_graph in self.candidate_neighborhood_generator.parse_file(filename):
-            yield np.random.choice(candidate_graph.get_candidate_vertices())
+            yield np.array([np.random.choice(candidate_graph.get_candidate_vertices())])

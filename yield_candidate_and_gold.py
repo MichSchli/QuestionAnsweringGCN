@@ -1,7 +1,7 @@
 import argparse
 
 from KnowledgeBaseInterface.FreebaseInterface import FreebaseInterface
-from baselines.random_candidate import RandomCandidate
+from baselines.random_single_candidate import RandomSingleCandidate
 from grounding.json_to_candidate_neighborhood import CandidateNeighborhoodGenerator
 from preprocessing.read_spades_files import JsonReader
 
@@ -15,7 +15,7 @@ freebase = FreebaseInterface()
 sentence_reader = JsonReader()
 candidate_generator = CandidateNeighborhoodGenerator(freebase, sentence_reader)
 
-strategy = RandomCandidate(candidate_generator)
+strategy = RandomSingleCandidate(candidate_generator)
 
 gold_iterator = gold_reader.parse_file(args.file)
 prediction_iterator = strategy.parse_file(args.file)
