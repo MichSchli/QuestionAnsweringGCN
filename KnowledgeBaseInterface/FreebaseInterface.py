@@ -24,14 +24,26 @@ class FreebaseInterface(IKbInterface):
     def retrieve_one_neighborhood(self, node_identifiers, limit=None):
         forward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=True)
         backward = self.retrieve_one_neighborhood_graph(node_identifiers, limit=limit, subject=False)
-        
-        forward_entities = forward[:,2]
-        backward_entities = backward[:,0]
+       
+        if forward.shape[0] > 0: 
+            forward_entities = forward[:,2]
+        else:
+            forward_entities = np.array([])
+
+        if backward.shape[0] > 0:
+            backward_entities = backward[:,0]
+        else:
+            backward_entities = np.array([])
 
         new_entities = np.concatenate((forward_entities, backward_entities))
         new_entities = np.unique(new_entities)
 
-        retrieved_edges = np.concatenate((forward, backward))
+        if forward.shape[0] == 0:
+            retrieved_edges = backward
+        elif backward.shape[0] == 0:
+            retrieved_edges = forward
+        else:
+            retrieved_edges = np.concatenate((forward, backward))
 
         #for edge in retrieved_edges:
         #    print(edge)
@@ -45,14 +57,14 @@ class FreebaseInterface(IKbInterface):
         sparql.setReturnFormat(JSON)
 
         number_of_batches = math.ceil(center_vertices.shape[0] / entities_per_query)
-        print(center_vertices.shape[0])
-        print(entities_per_query)
-        print(number_of_batches)
+        #print(center_vertices.shape[0])
+        #print(entities_per_query)
+        #print(number_of_batches)
 
         result_chunks = [None]*number_of_batches
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             query_string = self.construct_neighbor_query(center_vertex_batch, limit=limit, direction="s" if subject else "o")
-            print(str(i) + " of " + str(number_of_batches))
+            print("#", end='', flush=True)
             #print(query_string)
 
             sparql.setQuery(query_string)
@@ -64,7 +76,7 @@ class FreebaseInterface(IKbInterface):
                     result_chunks[i].append([result["s"]["value"], result["r"]["value"], result["o"]["value"]])
 
         results = np.concatenate(result_chunks)
-        print(results.shape)
+        print("\r" + (i+1) * " "+"\r", end="", flush=True)
         return results
 
 if __name__ == "__main__":
