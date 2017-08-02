@@ -2,7 +2,7 @@
 text_parsing/models/
 
 # Data files ignored for now:
-data/
+data/spades/
 
 # Ignore PC files
 .idea/
