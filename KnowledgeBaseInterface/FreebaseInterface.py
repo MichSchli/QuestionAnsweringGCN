@@ -61,7 +61,7 @@ class FreebaseInterface(IKbInterface):
         #print(entities_per_query)
         #print(number_of_batches)
 
-        result_chunks = [None]*number_of_batches
+        result_list = []
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             query_string = self.construct_neighbor_query(center_vertex_batch, limit=limit, direction="s" if subject else "o")
             print("#", end='', flush=True)
@@ -70,14 +70,14 @@ class FreebaseInterface(IKbInterface):
             sparql.setQuery(query_string)
             results = sparql.query().convert()
 
-            result_chunks[i] = []
+            #result_chunks[i] = []
             for j,result in enumerate(results["results"]["bindings"]):
                 if (subject and result["o"]["value"].startswith("http://rdf.freebase.com/ns/")) or (not subject and result["s"]["value"].startswith("http://rdf.freebase.com/ns/")): #("-" in result["o"]["value"] or "-" in result["s"]["value"] or "/key/" in result["r"]["value"] or "type.object.key" in result["r"]["value"] or "topic.description" in result["r"]["value"] or result["r"]["value"].endswith("label") or result["r"]["value"].endswith("name") or result["r"]["value"].endswith("alias") or result["r"]["value"].endswith("webpage")):
-                    result_chunks[i].append([result["s"]["value"], result["r"]["value"], result["o"]["value"]])
+                    result_list.append([result["s"]["value"], result["r"]["value"], result["o"]["value"]])
 
-        results = np.concatenate(result_chunks)
+        result_list = np.array(result_list)
         print("\r" + (i+1) * " "+"\r", end="", flush=True)
-        return results
+        return result_list
 
 if __name__ == "__main__":
     iface = FreebaseInterface()

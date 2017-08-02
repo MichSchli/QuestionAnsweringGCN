@@ -8,7 +8,7 @@ class IKbInterface:
         seen_edges = []
         seen_vertices = vertices
 
-        while len(seen_edges) < edge_limit and hops > 0:
+        while len(seen_edges) < edge_limit and hops > 0 and frontier.shape[0] > 0:
             hops -= 1
             
             remaining_edges = edge_limit-len(seen_edges)
