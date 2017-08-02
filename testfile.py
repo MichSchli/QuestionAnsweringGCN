@@ -20,4 +20,7 @@ jp = JsonReader()
 cng = CandidateNeighborhoodGenerator(fb, jp)
 
 if args.file is not None:
-    cng.parse_file(args.file)
+    for v, e in cng.parse_file(args.file):
+        print(v)
+        print(e)
+        print("================")
