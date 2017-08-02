@@ -45,12 +45,15 @@ class FreebaseInterface(IKbInterface):
         sparql.setReturnFormat(JSON)
 
         number_of_batches = math.ceil(center_vertices.shape[0] / entities_per_query)
+        print(center_vertices.shape[0])
+        print(entities_per_query)
+        print(number_of_batches)
 
         result_chunks = [None]*number_of_batches
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             query_string = self.construct_neighbor_query(center_vertex_batch, limit=limit, direction="s" if subject else "o")
             print(str(i) + " of " + str(number_of_batches))
-            print(query_string)
+            #print(query_string)
 
             sparql.setQuery(query_string)
             results = sparql.query().convert()

@@ -12,8 +12,11 @@ class IKbInterface:
             remaining_edges = edge_limit-len(seen_edges)
 
             frontier, edges = self.retrieve_one_neighborhood(frontier, limit=remaining_edges)
-            new_vertices = np.isin(frontier, seen_vertices)
+            new_vertices = np.isin(frontier, seen_vertices, invert=True)
+
+            print("Frontier: " + str(frontier.shape))
             frontier = frontier[new_vertices]
+            print("Frontier minus recurrent: " + str(frontier.shape))
 
             seen_vertices = np.concatenate((seen_vertices, frontier))
 
