@@ -22,5 +22,5 @@ cng = CandidateNeighborhoodGenerator(fb, jp)
 if args.file is not None:
     for g in cng.parse_file(args.file):
         print(g.vertices)
-        print(g.edges)
+        print(g.edges[0])
         print("================")
