@@ -21,7 +21,7 @@ class CandidateNeighborhoodGenerator:
         self.json_reader = json_reader
 
     def parse_file(self, filename):
-        for entity_set in self.json_reader.parse_file(filename, output="entities"):
-            candidate_edges = self.freebase_interface.get_neighborhood(entity_set, edge_limit=self.max_candidates, hops=self.neighborhood_search_scope)
-            candidate_graph = CandidateGraph(candidate_edges)
+        for sentence_entities in self.json_reader.parse_file(filename, output="entities"):
+            vertices, edges = self.freebase_interface.get_neighborhood(sentence_entities, edge_limit=self.max_candidates, hops=self.neighborhood_search_scope)
+            candidate_graph = CandidateGraph(sentence_entities, vertices, edges)
             yield candidate_graph
