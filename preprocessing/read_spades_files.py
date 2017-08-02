@@ -14,7 +14,7 @@ class JsonReader:
         return freebase_entities
 
     def parse_json_to_entities(self, json_line):
-        return np.array([entity["entity"] for entity in json_line['entities']])
+        return np.array(["http://rdf.freebase.com/ns/"+entity["entity"] for entity in json_line['entities']])
 
     def parse_file(self, filename, output=None):
         if output is None:
