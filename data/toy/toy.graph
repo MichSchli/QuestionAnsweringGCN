@@ -1,0 +1,9 @@
+Bob, founder_of, BobCorp
+Alice, owner_of, BobCorp
+Bob, sold, e
+Alice, bought, e
+BobCorp, object_of, e
+Bob, born_in, 1990
+Alice, mother_of, Carl
+Carl, owner_of, CarlCorp
+Carl, founder_of, CarlCorp
