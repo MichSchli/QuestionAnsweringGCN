@@ -10,7 +10,7 @@ class JsonReader:
         self.output=output
 
     def parse_json_to_gold(self, json_line):
-        freebase_entities = np.array(json_line['answerSubset'])
+        freebase_entities = np.array(["http://rdf.freebase.com/ns/"+e for e in json_line['answerSubset']])
         return freebase_entities
 
     def parse_json_to_entities(self, json_line):
