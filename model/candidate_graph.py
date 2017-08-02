@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class CandidateGraph:
 
     vertices = None
@@ -10,4 +13,5 @@ class CandidateGraph:
         self.edges = edges
 
     def get_candidate_vertices(self):
-        pass
+        true_candidates = np.isin(self.vertices, self.sentence_entities, invert=True)
+        return self.vertices[true_candidates]
