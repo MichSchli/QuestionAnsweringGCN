@@ -14,7 +14,7 @@ class CandidateNeighborhoodGenerator:
     max_candidates = None
     json_reader = None
 
-    def __init__(self, freebase_interface, json_reader, neighborhood_search_scope=2, max_candidates=5000):
+    def __init__(self, freebase_interface, json_reader, neighborhood_search_scope=2, max_candidates=200000):
         self.freebase_interface = freebase_interface
         self.neighborhood_search_scope = neighborhood_search_scope
         self.max_candidates = max_candidates

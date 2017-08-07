@@ -2,7 +2,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 import numpy as np
 from KnowledgeBaseInterface.IKbInterface import IKbInterface
 import math
-
+import time
 
 class FreebaseInterface(IKbInterface):
     endpoint = None
@@ -68,7 +68,15 @@ class FreebaseInterface(IKbInterface):
             #print(query_string)
 
             sparql.setQuery(query_string)
-            results = sparql.query().convert()
+           
+            retrieved = False
+            while not retrieved:
+                try:
+                    results = sparql.query().convert()
+                    retrieved = True
+                except:
+                    print("Query failed. Reattempting in 30 seconds...")
+                    time.sleep(30)
 
             #result_chunks[i] = []
             for j,result in enumerate(results["results"]["bindings"]):
