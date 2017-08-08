@@ -1,5 +1,7 @@
 import numpy as np
 
+from database_interface.search_filters.prefix_filter import PrefixFilter
+
 
 class Hypergraph:
 
@@ -19,7 +21,11 @@ class Hypergraph:
     def pop_unexpanded_hyperedges(self):
         vertex_has_name = np.isin(self.unexpanded_vertices, np.array(list(self.vertex_properties["name"].keys())))
         vertex_is_not_literal = np.array([self.vertex_properties["type"][v] != "literal" for v in self.unexpanded_vertices])
-        logically_is_hyperedge = np.logical_and(np.logical_not(vertex_has_name), vertex_is_not_literal)
+
+        freebase_filter = PrefixFilter("http://rdf.freebase.com/ns/")
+        vertex_is_freebase_element = freebase_filter.accepts(self.unexpanded_vertices)
+
+        logically_is_hyperedge = np.logical_and(np.logical_and(np.logical_not(vertex_has_name), vertex_is_not_literal), vertex_is_freebase_element)
         unexpanded_hyperedges = self.unexpanded_vertices[logically_is_hyperedge]
         self.unexpanded_vertices = self.unexpanded_vertices[np.logical_not(logically_is_hyperedge)]
 
