@@ -10,6 +10,7 @@ class Hypergraph:
     vertex_properties = None
     most_recently_added_vertices = None
     unexpanded_vertices = None
+    edge_cache = {}
 
     def __init__(self):
         self.vertices = np.array([])
@@ -17,6 +18,7 @@ class Hypergraph:
         self.edges = np.array([]).reshape((0,3))
         self.vertex_properties = {"name": {}, "type": {}}
         self.most_recently_added_vertices = np.array([])
+        self.edge_cache = {}
 
     def pop_unexpanded_hyperedges(self):
         vertex_has_name = np.isin(self.unexpanded_vertices, np.array(list(self.vertex_properties["name"].keys())))
@@ -40,8 +42,20 @@ class Hypergraph:
         return self.unexpanded_vertices
 
     def add_edges(self, edges):
-        preexisting = np.isin(edges, self.edges, invert=True, assume_unique=True)
-        self.edges = np.vstack((self.edges, edges[preexisting]))
+        novel = np.ones_like(edges, dtype=bool)
+        for i,edge in enumerate(edges):
+            if edge[0] not in self.edge_cache:
+                self.edge_cache[edge[0]] = {}
+
+            if edge[1] not in self.edge_cache[edge[0]]:
+                self.edge_cache[edge[0]][edge[1]] = []
+
+            if edge[2] not in self.edge_cache[edge[0]][edge[1]]:
+                self.edge_cache[edge[0]][edge[1]].append(edge[2])
+            else:
+                novel[i] = False
+
+        self.edges = np.vstack((self.edges, edges[novel]))
 
     def add_vertices(self, vertices):
         vertex_ids = vertices[:,0]
