@@ -28,30 +28,30 @@ class FreebaseInterface(IKbInterface):
         query_string += "select * where {\n"
         query_string += "?s " + property + " ?prop .\n"
         query_string += "FILTER (?s in (" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in vertices]) + "))\n"
-        query_string += "}\n"
+        query_string += "}"
 
         return query_string
 
     """
     Construct a query to retrieve all neighbors of a set of vertices
     """
-    def construct_neighbor_query(self, center_vertices, direction='s', limit=1000):
+    def construct_neighbor_query(self, center_vertices, direction='s'):
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
         query_string += "FILTER (?" + direction + " in (" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "))\n"
-        query_string += "}\nLIMIT " + str(limit)
+        query_string += "}"
 
         return query_string
 
     """
     Retrieve the 1-neighborhood of a set of vertices in the hypergraph
     """
-    def retrieve_one_neighborhood(self, node_identifiers, limit=None):
+    def get_adjacent_edges(self, node_identifiers, limit=None):
         edge_query_result = EdgeQueryResult()
 
-        self.retrieve_one_neighborhood_graph(node_identifiers, edge_query_result, subject=True)
-        self.retrieve_one_neighborhood_graph(node_identifiers, edge_query_result, subject=False)
+        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True)
+        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=False)
 
         return edge_query_result
 
@@ -84,7 +84,7 @@ class FreebaseInterface(IKbInterface):
     """
     Retrieve properties from DB
     """
-    def get_properties(self, vertices, property):
+    def get_property(self, vertices, property):
         db_interface = self.initialize_sparql_interface()
         number_of_batches = math.ceil(vertices.shape[0] / self.max_entities_per_query)
 
@@ -114,7 +114,7 @@ class FreebaseInterface(IKbInterface):
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
-            query_string = self.construct_neighbor_query(center_vertex_batch, limit=limit, direction="s" if subject else "o")
+            query_string = self.construct_neighbor_query(center_vertex_batch, direction="s" if subject else "o")
             print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
@@ -140,6 +140,7 @@ class FreebaseInterface(IKbInterface):
             except:
                 print("Query failed. Reattempting in 5 seconds...")
                 time.sleep(5)
+                print(query_string)
         return results
 
     def initialize_sparql_interface(self):
