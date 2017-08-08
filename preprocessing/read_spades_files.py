@@ -35,5 +35,5 @@ class JsonReader:
                 if output == "gold":
                     yield self.parse_json_to_gold(line)
                 elif output == "entities":
-                    print(self.parse_json_to_entities(line))
+                    #print(self.parse_json_to_entities(line))
                     yield self.parse_json_to_entities(line)
