@@ -15,7 +15,8 @@ class OracleCandidate:
         gold_iterator = self.gold_generator.parse_file(filename, output="gold")
 
         for candidate_graph, gold_set in zip(candidate_iterator, gold_iterator):
-            candidate_set = candidate_graph.get_candidate_vertices()
+            candidate_set = candidate_graph.vertices
+            print(candidate_set.shape)
             gold_in_candidates = np.isin(gold_set, candidate_set)
             yield gold_set[gold_in_candidates]
 

@@ -1,9 +1,16 @@
-Bob, founder_of, BobCorp
-Alice, owner_of, BobCorp
-Bob, sold, e
-Alice, bought, e
-BobCorp, object_of, e
-Bob, born_in, 1990
-Alice, mother_of, Carl
-Carl, owner_of, CarlCorp
-Carl, founder_of, CarlCorp
+Bob,founder_of,BobCorp,entity,entity
+Alice,owner_of,BobCorp,entity,entity
+Bob,sold,e,entity,entity
+Alice,bought,e,entity,entity
+BobCorp,object_of,e,entity,entity
+Bob,born_in,1990,entity,literal
+Alice,mother_of,Carl,entity,entity
+Carl,owner_of,CarlCorp,entity,entity
+Carl,founder_of,CarlCorp,entity,entity
+Carl,type,entity_person,entity,entity
+Bob,ns:type.object.name,Bob Exampleman,entity,literal
+Bob,ns:type.object.name,Bob Eksempelmand,entity,literal
+Alice,ns:type.object.name,Alice Examplewoman,entity,literal
+Carl,ns:type.object.name,Carl Exampleguy,entity,literal
+BobCorp,ns:type.object.name,Bob's Magical Corporation,entity,literal
+CarlCorp,ns:type.object.name,Carl's Magical Corporation,entity,literal
