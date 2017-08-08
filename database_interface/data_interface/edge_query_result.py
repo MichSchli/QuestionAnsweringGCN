@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class EdgeQueryResult:
 
     edges = None
@@ -12,3 +15,6 @@ class EdgeQueryResult:
 
     def append_vertex(self, vertex, type):
         self.vertices[vertex] = type
+
+    def get_edges(self):
+        return np.array(self.edges)

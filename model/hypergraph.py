@@ -10,7 +10,7 @@ class Hypergraph:
     vertex_properties = None
     most_recently_added_vertices = None
     unexpanded_vertices = None
-    edge_cache = {}
+    edge_cache = None
 
     def __init__(self):
         self.vertices = np.array([])
@@ -45,14 +45,14 @@ class Hypergraph:
         if edges.shape[0] == 0:
             return
 
-        print(edges.shape)
-        novel = np.ones_like(edges, dtype=bool)
+        #print(edges.shape)
+        novel = np.ones(edges.shape[0], dtype=bool)
         for i,edge in enumerate(edges):
             str_edge = edge[0] + edge[1] + edge[2]
             if str_edge in self.edge_cache:
                 novel[i] = False
             else:
-                self.edge_cache.add[str_edge]
+                self.edge_cache.add(str_edge)
 
             #if edge[0] not in self.edge_cache:
             #    self.edge_cache[edge[0]] = {}
@@ -65,15 +65,19 @@ class Hypergraph:
             #else:
             #    novel[i] = False
 
-        print(edges[novel].shape)
+        #print(edges[novel].shape)
         self.edges = np.vstack((self.edges, edges[novel]))
 
     def add_vertices(self, vertices):
+        if vertices.shape[0] == 0:
+            return
+
         vertex_ids = vertices[:,0]
         vertex_types = vertices[:,1]
-
-        unseen_vertices = vertex_ids[np.isin(vertex_ids, self.vertices, invert=True)]
-        unseen_vertex_types = vertex_types[np.isin(vertex_ids, self.vertices, invert=True)]
+        
+        new_vertex_ids = np.isin(vertex_ids, self.vertices, invert=True, assume_unique=True)
+        unseen_vertices = vertex_ids[new_vertex_ids]
+        unseen_vertex_types = vertex_types[new_vertex_ids]
 
         for v, t in zip(unseen_vertices, unseen_vertex_types):
             self.vertex_properties['type'][v] = t
