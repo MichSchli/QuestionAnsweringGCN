@@ -12,4 +12,9 @@ class PrefixFilter:
         self.prefix = prefix
 
     def accepts(self, elements):
-        return np.array([e.startswith(self.prefix) for e in elements])
+        acceptance = np.array([e.startswith(self.prefix) for e in elements])
+
+        #for v1, v2 in zip(elements, acceptance):
+        #    print("accept " + str(v1)+": "+str(v2))
+
+        return acceptance

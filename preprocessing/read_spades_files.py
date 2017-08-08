@@ -5,11 +5,11 @@ import numpy as np
 class JsonReader:
 
     output=None
-    entity_prefix=""
+    entity_prefix="http://rdf.freebase.com/ns/"
 
     def __init__(self, output=None, entity_prefix=""):
         self.output=output
-        self.entity_prefix = entity_prefix
+        #self.entity_prefix = entity_prefix
 
     def parse_json_to_gold(self, json_line):
         freebase_entities = np.array([self.entity_prefix+e for e in json_line['answerSubset']])
@@ -35,4 +35,5 @@ class JsonReader:
                 if output == "gold":
                     yield self.parse_json_to_gold(line)
                 elif output == "entities":
+                    print(self.parse_json_to_entities(line))
                     yield self.parse_json_to_entities(line)
