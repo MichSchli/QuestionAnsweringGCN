@@ -40,7 +40,8 @@ class Hypergraph:
         return self.unexpanded_vertices
 
     def add_edges(self, edges):
-        self.edges = np.unique(np.vstack((self.edges, np.array(edges))), axis=0)
+        preexisting = np.isin(edges, self.edges, invert=True, assume_unique=True)
+        self.edges = np.vstack((self.edges, edges[preexisting]))
 
     def add_vertices(self, vertices):
         vertex_ids = vertices[:,0]
@@ -54,7 +55,6 @@ class Hypergraph:
 
         self.vertices = np.concatenate((self.vertices, unseen_vertices))
         self.unexpanded_vertices = np.concatenate((self.unexpanded_vertices, unseen_vertices))
-
 
     def set_vertex_properties(self, property_dict):
         for k,v in property_dict.items():
