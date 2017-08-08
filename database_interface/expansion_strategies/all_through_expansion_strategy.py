@@ -9,4 +9,5 @@ class AllThroughExpansionStrategy:
         self.filter = PrefixFilter("http://rdf.freebase.com/ns/")
 
     def get_frontier(self, vertices):
-        return vertices
+        pass_vertices = vertices[self.filter.accepts(vertices)]
+        return pass_vertices

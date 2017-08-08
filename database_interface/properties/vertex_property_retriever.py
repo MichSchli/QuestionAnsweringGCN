@@ -10,5 +10,6 @@ class VertexPropertyRetriever:
         self.filter = PrefixFilter("http://rdf.freebase.com/ns/")
 
     def retrieve_properties(self, vertices):
-        name_properties = self.data_interface.get_property(vertices, "ns:type.object.name")
+        pass_vertices = vertices[self.filter.accepts(vertices)]
+        name_properties = self.data_interface.get_property(pass_vertices, "ns:type.object.name")
         return {"name": name_properties}
