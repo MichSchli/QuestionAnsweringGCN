@@ -138,9 +138,9 @@ class FreebaseInterface(IKbInterface):
                 results = db_interface.query().convert()
                 retrieved = True
             except:
-                print("Query failed. Reattempting in 5 seconds...")
+                print("Query failed. Reattempting in 5 seconds...\n")
                 time.sleep(5)
-                print(query_string)
+                #print(query_string)
         return results
 
     def initialize_sparql_interface(self):
