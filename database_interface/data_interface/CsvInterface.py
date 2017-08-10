@@ -1,11 +1,10 @@
 import numpy as np
 
-from database_interface.IKbInterface import IKbInterface
 from database_interface.data_interface.edge_query_result import EdgeQueryResult
 from database_interface.search_filters.prefix_filter import PrefixFilter
 
 
-class CsvInterface(IKbInterface):
+class CsvInterface:
 
     edges = None
 
@@ -16,7 +15,6 @@ class CsvInterface(IKbInterface):
             edges.append(edge)
 
         self.edges = np.array(edges)
-
 
     def get_property(self, vertices, property):
         if vertices.shape[0] == 0:

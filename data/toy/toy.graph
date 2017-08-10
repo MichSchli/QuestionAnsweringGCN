@@ -1,16 +1,15 @@
-Bob,founder_of,BobCorp,entity,entity
-Alice,owner_of,BobCorp,entity,entity
-Bob,sold,e,entity,entity
-Alice,bought,e,entity,entity
-BobCorp,object_of,e,entity,entity
-Bob,born_in,1990,entity,literal
-Alice,mother_of,Carl,entity,entity
-Carl,owner_of,CarlCorp,entity,entity
-Carl,founder_of,CarlCorp,entity,entity
-Carl,type,entity_person,entity,entity
-Bob,ns:type.object.name,Bob Exampleman,entity,literal
-Bob,ns:type.object.name,Bob Eksempelmand,entity,literal
-Alice,ns:type.object.name,Alice Examplewoman,entity,literal
-Carl,ns:type.object.name,Carl Exampleguy,entity,literal
-BobCorp,ns:type.object.name,Bob's Magical Corporation,entity,literal
-CarlCorp,ns:type.object.name,Carl's Magical Corporation,entity,literal
+http://rdf.freebase.com/ns/Bob,founder_of,http://rdf.freebase.com/ns/BobCorp,entity,entity
+http://rdf.freebase.com/ns/Alice,owner_of,http://rdf.freebase.com/ns/BobCorp,entity,entity
+http://rdf.freebase.com/ns/Bob,sold,http://rdf.freebase.com/ns/e,entity,entity
+http://rdf.freebase.com/ns/Alice,bought,http://rdf.freebase.com/ns/e,entity,entity
+http://rdf.freebase.com/ns/BobCorp,object_of,http://rdf.freebase.com/ns/e,entity,entity
+http://rdf.freebase.com/ns/Bob,born_in,1990,entity,literal
+http://rdf.freebase.com/ns/Alice,mother_of,http://rdf.freebase.com/ns/Carl,entity,entity
+http://rdf.freebase.com/ns/Carl,owner_of,http://rdf.freebase.com/ns/CarlCorp,entity,entity
+http://rdf.freebase.com/ns/Carl,founder_of,http://rdf.freebase.com/ns/CarlCorp,entity,entity
+http://rdf.freebase.com/ns/Bob,ns:type.object.name,Bob Exampleman,entity,literal
+http://rdf.freebase.com/ns/Bob,ns:type.object.name,Bob Eksempelmand,entity,literal
+http://rdf.freebase.com/ns/Alice,ns:type.object.name,Alice Examplewoman,entity,literal
+http://rdf.freebase.com/ns/Carl,ns:type.object.name,Carl Exampleguy,entity,literal
+http://rdf.freebase.com/ns/BobCorp,ns:type.object.name,Bob's Magical Corporation,entity,literal
+http://rdf.freebase.com/ns/CarlCorp,ns:type.object.name,Carl's Magical Corporation,entity,literal

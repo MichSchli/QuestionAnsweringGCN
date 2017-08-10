@@ -5,11 +5,11 @@ import numpy as np
 class JsonReader:
 
     output=None
-    entity_prefix="http://rdf.freebase.com/ns/"
+    entity_prefix=None
 
-    def __init__(self, output=None, entity_prefix=""):
+    def __init__(self, output=None, entity_prefix="http://rdf.freebase.com/ns/"):
         self.output=output
-        #self.entity_prefix = entity_prefix
+        self.entity_prefix = entity_prefix
 
     def parse_json_to_gold(self, json_line):
         freebase_entities = np.array([self.entity_prefix+e for e in json_line['answerSubset']])

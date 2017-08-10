@@ -16,7 +16,6 @@ class OracleCandidate:
 
         for candidate_graph, gold_set in zip(candidate_iterator, gold_iterator):
             candidate_set = candidate_graph.vertices
-            #print(candidate_set.shape)
             gold_in_candidates = np.isin(gold_set, candidate_set)
             yield gold_set[gold_in_candidates]
 

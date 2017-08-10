@@ -20,18 +20,35 @@ class Hypergraph:
         self.most_recently_added_vertices = np.array([])
         self.edge_cache = set([])
 
+    def get_edges(self):
+        return self.edges
+
+    def get_hypergraph_vertices(self):
+        logically_is_hyperedge = self.find_hypergraph_edges(self.vertices)
+        return self.vertices[logically_is_hyperedge]
+
+    #get non hypergraph vertices
+    def get_entity_vertices(self):
+        logically_is_hyperedge = self.find_hypergraph_edges(self.vertices)
+        return self.vertices[np.logical_not(logically_is_hyperedge)]
+
     def pop_unexpanded_hyperedges(self):
-        vertex_has_name = np.isin(self.unexpanded_vertices, np.array(list(self.vertex_properties["name"].keys())))
-        vertex_is_not_literal = np.array([self.vertex_properties["type"][v] != "literal" for v in self.unexpanded_vertices])
-
-        freebase_filter = PrefixFilter("http://rdf.freebase.com/ns/")
-        vertex_is_freebase_element = freebase_filter.accepts(self.unexpanded_vertices)
-
-        logically_is_hyperedge = np.logical_and(np.logical_and(np.logical_not(vertex_has_name), vertex_is_not_literal), vertex_is_freebase_element)
+        logically_is_hyperedge = self.find_hypergraph_edges(self.unexpanded_vertices)
         unexpanded_hyperedges = self.unexpanded_vertices[logically_is_hyperedge]
         self.unexpanded_vertices = self.unexpanded_vertices[np.logical_not(logically_is_hyperedge)]
 
         return unexpanded_hyperedges
+
+    def find_hypergraph_edges(self, entities):
+        vertex_has_name = np.isin(entities, np.array(list(self.vertex_properties["name"].keys())))
+        vertex_is_not_literal = np.array(
+            [self.vertex_properties["type"][v] != "literal" for v in entities])
+
+        freebase_filter = PrefixFilter("http://rdf.freebase.com/ns/")
+        vertex_is_freebase_element = freebase_filter.accepts(entities)
+        logically_is_hyperedge = np.logical_and(np.logical_and(np.logical_not(vertex_has_name), vertex_is_not_literal),
+                                                vertex_is_freebase_element)
+        return logically_is_hyperedge
 
     def pop_all_unexpanded_vertices(self):
         unexpanded_vertices = self.unexpanded_vertices

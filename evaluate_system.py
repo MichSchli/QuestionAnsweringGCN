@@ -1,8 +1,7 @@
 import argparse
 
+from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
-from baselines.oracle_candidate import OracleCandidate
-from baselines.random_single_candidate import RandomSingleCandidate
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
 from database_interface.properties.vertex_property_retriever import VertexPropertyRetriever

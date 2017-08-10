@@ -1,6 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 import numpy as np
-from database_interface.IKbInterface import IKbInterface
 import math
 import time
 
@@ -9,7 +8,7 @@ from database_interface.search_filters.prefix_filter import PrefixFilter
 from model.hypergraph import Hypergraph
 
 
-class FreebaseInterface(IKbInterface):
+class FreebaseInterface:
     endpoint = None
     prefix = None
     max_entities_per_query = 100
