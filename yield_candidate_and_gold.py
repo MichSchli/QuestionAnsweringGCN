@@ -8,6 +8,8 @@ from database_interface.data_interface.FreebaseInterface import FreebaseInterfac
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
 from database_interface.properties.vertex_property_retriever import VertexPropertyRetriever
+from facts.database_facts.csv_facts import CsvFacts
+from facts.database_facts.freebase_facts import FreebaseFacts
 from grounding.json_to_candidate_neighborhood import CandidateNeighborhoodGenerator
 from preprocessing.read_spades_files import JsonReader
 
@@ -17,6 +19,9 @@ args = parser.parse_args()
 
 gold_reader = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
 
+#facts = FreebaseFacts()
+facts = CsvFacts("data/toy/toy.graph")
+
 #database_interface = FreebaseInterface()
 database_interface = CsvInterface("data/toy/toy.graph")
 database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), VertexPropertyRetriever(database_interface))
@@ -24,8 +29,8 @@ sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1)
 
 gold_reader_for_training = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
-model = CandidateGcnOnlyModel()
-strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training)
+model = CandidateGcnOnlyModel(facts)
+strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
 
 gold_iterator = gold_reader.parse_file(args.file)
 prediction_iterator = strategy.parse_file(args.file)
