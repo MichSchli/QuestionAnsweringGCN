@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
-from candidate_selection.models.components.graph_encoders.GCN_basis_concat import GCNBasisConcat
+from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
 from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
@@ -24,14 +24,14 @@ class CandidateGcnOnlyModel:
     entity_indexer = None
     relation_indexer = None
 
-    def __init__(self, facts, dimension=5):
+    def __init__(self, facts, dimension=6):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
         self.variables = TensorflowVariablesHolder()
 
         self.embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
-        self.gcn_encoder = GCNBasisConcat(facts, self.variables, self.dimension)
+        self.gcn_encoder = GcnConcatMessagePasser(facts, self.variables, self.dimension)
         self.decoder = SoftmaxDecoder(self.variables)
 
         self.entity_indexer = LazyIndexer()
@@ -164,7 +164,7 @@ class CandidateGcnOnlyModel:
     def handle_variable_assignment(self, preprocessed_batch):
         self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
         self.embedding.handle_variable_assignment(preprocessed_batch[2])
-        self.gcn_encoder.handle_variable_assignment(*preprocessed_batch[3:])
+        self.gcn_encoder.handle_variable_assignment(*preprocessed_batch[3:5])
 
         return self.variables.get_assignment_dict()
         #return [self.variables.vertex_lookup_matrix, self.variables.vertex_count_per_hypergraph, self.variables.number_of_elements_in_batch]
@@ -174,7 +174,7 @@ class CandidateGcnOnlyModel:
 
     def get_prediction_graph(self):
         entity_vertex_embeddings = self.embedding.get_representations()
-        event_vertex_embeddings = tf.stack([[1.0,1.0,1.0,1.0,1.0], [1.0,1.0,1.0,1.0,1.0]])
+        event_vertex_embeddings = tf.stack([[1.0,1.0,1.0,1.0,1.0, 1.0], [1.0,1.0,1.0,1.0,1.0, 1.0]])
         entity_vertex_embeddings = self.gcn_encoder.apply(entity_vertex_embeddings, event_vertex_embeddings)
 
         # TODO skips GCN
