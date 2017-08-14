@@ -5,6 +5,7 @@ from candidate_selection.models.components.decoders.softmax_decoder import Softm
 from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
 from candidate_selection.models.lazy_indexer import LazyIndexer
+from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 
 
@@ -31,7 +32,11 @@ class CandidateGcnOnlyModel:
         self.variables = TensorflowVariablesHolder()
 
         self.embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
-        self.gcn_encoder = GcnConcatMessagePasser(facts, self.variables, self.dimension)
+
+        self.gcn_encoder_ev_to_en = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="ev_to_en", senders="events", receivers="entities")
+        self.gcn_encoder_en_to_ev = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_ev", senders="entities", receivers="events")
+        self.gcn_encoder_en_to_en = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_en", senders="entities", receivers="entities")
+
         self.decoder = SoftmaxDecoder(self.variables)
 
         self.entity_indexer = LazyIndexer()
@@ -39,7 +44,9 @@ class CandidateGcnOnlyModel:
 
     def prepare_variables(self):
         self.embedding.prepare_variables()
-        self.gcn_encoder.prepare_variables()
+        self.gcn_encoder_ev_to_en.prepare_variables()
+        self.gcn_encoder_en_to_ev.prepare_variables()
+        self.gcn_encoder_en_to_en.prepare_variables()
         self.decoder.prepare_variables()
 
     def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
@@ -164,7 +171,9 @@ class CandidateGcnOnlyModel:
     def handle_variable_assignment(self, preprocessed_batch):
         self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
         self.embedding.handle_variable_assignment(preprocessed_batch[2])
-        self.gcn_encoder.handle_variable_assignment(*preprocessed_batch[3:5])
+        self.gcn_encoder_ev_to_en.handle_variable_assignment(*preprocessed_batch[3:5])
+        self.gcn_encoder_en_to_ev.handle_variable_assignment(*preprocessed_batch[5:7])
+        self.gcn_encoder_en_to_en.handle_variable_assignment(*preprocessed_batch[7:9])
 
         return self.variables.get_assignment_dict()
         #return [self.variables.vertex_lookup_matrix, self.variables.vertex_count_per_hypergraph, self.variables.number_of_elements_in_batch]
@@ -173,9 +182,13 @@ class CandidateGcnOnlyModel:
         return [self.entity_dict[entity_index]]
 
     def get_prediction_graph(self):
-        entity_vertex_embeddings = self.embedding.get_representations()
-        event_vertex_embeddings = tf.stack([[1.0,1.0,1.0,1.0,1.0, 1.0], [1.0,1.0,1.0,1.0,1.0, 1.0]])
-        entity_vertex_embeddings = self.gcn_encoder.apply(entity_vertex_embeddings, event_vertex_embeddings)
+        hypergraph = TensorflowHypergraphRepresentation()
+        hypergraph.entity_vertex_embeddings = self.embedding.get_representations()
+        hypergraph.event_vertex_embeddings = tf.stack([[1.0,1.0,1.0,1.0,1.0, 1.0], [1.0,1.0,1.0,1.0,1.0, 1.0]])
+
+        hypergraph.event_vertex_embeddings = self.gcn_encoder_en_to_ev.get_update(hypergraph)
+        hypergraph.entity_vertex_embeddings = self.gcn_encoder_ev_to_en.get_update(hypergraph)
+        entity_vertex_embeddings = self.gcn_encoder_en_to_en.get_update(hypergraph)
 
         # TODO skips GCN
         entity_scores = tf.reduce_sum(entity_vertex_embeddings,1)
