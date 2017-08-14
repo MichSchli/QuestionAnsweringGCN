@@ -2,7 +2,9 @@ import numpy as np
 import tensorflow as tf
 
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
+from candidate_selection.models.components.graph_encoders.GCN_basis_concat import GCNBasisConcat
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
+from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 
 
@@ -19,8 +21,8 @@ class CandidateGcnOnlyModel:
 
     embeddings = None
 
-    vertex_dict = None
-    vertex_counter = None
+    entity_indexer = None
+    relation_indexer = None
 
     def __init__(self, facts, dimension=5):
         self.dimension = dimension
@@ -29,14 +31,15 @@ class CandidateGcnOnlyModel:
         self.variables = TensorflowVariablesHolder()
 
         self.embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
+        self.gcn_encoder = GCNBasisConcat(facts, self.variables, self.dimension)
         self.decoder = SoftmaxDecoder(self.variables)
-        #self.gcn_encoder = SimpleGcn(self.variables)
 
-        self.vertex_dict = {}
-        self.vertex_counter = 0
+        self.entity_indexer = LazyIndexer()
+        self.relation_indexer = LazyIndexer()
 
     def prepare_variables(self):
         self.embedding.prepare_variables()
+        self.gcn_encoder.prepare_variables()
         self.decoder.prepare_variables()
 
     def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
@@ -56,6 +59,9 @@ class CandidateGcnOnlyModel:
         event_to_entity_edges = np.empty((0,2), dtype=np.int32)
         entity_to_event_edges = np.empty((0,2), dtype=np.int32)
         entity_to_entity_edges = np.empty((0,2), dtype=np.int32)
+        event_to_entity_types = np.empty((0,), dtype=np.int32)
+        entity_to_event_types = np.empty((0,), dtype=np.int32)
+        entity_to_entity_types = np.empty((0,), dtype=np.int32)
 
         entity_map = np.empty(0, dtype=np.int32)
 
@@ -68,12 +74,15 @@ class CandidateGcnOnlyModel:
 
             if phg[2]:
                 event_to_entity_edges = np.concatenate((event_to_entity_edges, phg[2]))
+                event_to_entity_types = np.concatenate((event_to_entity_types, phg[3]))
 
             if phg[4]:
                 entity_to_event_edges = np.concatenate((entity_to_event_edges, phg[4]))
+                entity_to_event_types = np.concatenate((entity_to_event_types, phg[5]))
 
             if phg[6]:
                 entity_to_entity_edges = np.concatenate((entity_to_entity_edges, phg[6]))
+                entity_to_entity_types = np.concatenate((entity_to_entity_types, phg[7]))
 
             entity_map = np.concatenate((entity_map, phg[8]))
 
@@ -84,10 +93,16 @@ class CandidateGcnOnlyModel:
 
         #TODO this is complete crap
         #entity_map = np.array([0,1,2,3,4,5,6,0,1,2,3,4,5,6,7])
-        print(entity_map)
-        print(self.entity_dict)
 
-        return entity_vertex_matrix, entity_vertex_slices, entity_map, event_to_entity_edges, entity_to_event_edges, entity_to_entity_edges
+        return entity_vertex_matrix, \
+               entity_vertex_slices, \
+               entity_map, \
+               event_to_entity_edges, \
+               event_to_entity_types, \
+               entity_to_event_edges, \
+               entity_to_event_types, \
+               entity_to_entity_edges, \
+               entity_to_entity_types
 
     def get_padded_vertex_lookup_matrix(self, entity_vertex_slices, hypergraph_batch):
         max_vertices = np.max(entity_vertex_slices)
@@ -102,16 +117,7 @@ class CandidateGcnOnlyModel:
         event_vertices = hypergraph.get_hypergraph_vertices()
         other_vertices = hypergraph.get_entity_vertices()
 
-        vertex_map = np.empty(other_vertices.shape, dtype=np.int32)
-
-        for i,vertex in enumerate(other_vertices):
-            if vertex in self.vertex_dict:
-                vertex_map[i] = self.vertex_dict[vertex]
-            else:
-                self.vertex_dict[vertex] = self.vertex_counter
-                vertex_map[i] = self.vertex_counter
-                self.vertex_counter += 1
-
+        vertex_map = self.entity_indexer.index(other_vertices)
 
         event_indexes = {k:v+event_start_index for v, k in enumerate(event_vertices)}
         entity_indexes = {k:v+entity_start_index for v, k in enumerate(other_vertices)}
@@ -127,6 +133,9 @@ class CandidateGcnOnlyModel:
         entity_to_event_types = []
         entity_to_entity_edges = []
         entity_to_entity_types = []
+
+        edges = hypergraph.get_edges()
+        edges[:,1] = self.relation_indexer.index(edges[:,1])
 
         for edge in hypergraph.get_edges():
             if edge[0] in event_vertices and not edge[2] in event_vertices:
@@ -155,6 +164,7 @@ class CandidateGcnOnlyModel:
     def handle_variable_assignment(self, preprocessed_batch):
         self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
         self.embedding.handle_variable_assignment(preprocessed_batch[2])
+        self.gcn_encoder.handle_variable_assignment(*preprocessed_batch[3:])
 
         return self.variables.get_assignment_dict()
         #return [self.variables.vertex_lookup_matrix, self.variables.vertex_count_per_hypergraph, self.variables.number_of_elements_in_batch]
@@ -163,10 +173,9 @@ class CandidateGcnOnlyModel:
         return [self.entity_dict[entity_index]]
 
     def get_prediction_graph(self):
-        self.facts.number_of_elements_in_batch = 15
-        #vertex_lookup_matrix = internal_representation[0]
-        # TODO randomly initializes vertex embeddings
         entity_vertex_embeddings = self.embedding.get_representations()
+        event_vertex_embeddings = tf.stack([[1.0,1.0,1.0,1.0,1.0], [1.0,1.0,1.0,1.0,1.0]])
+        entity_vertex_embeddings = self.gcn_encoder.apply(entity_vertex_embeddings, event_vertex_embeddings)
 
         # TODO skips GCN
         entity_scores = tf.reduce_sum(entity_vertex_embeddings,1)
