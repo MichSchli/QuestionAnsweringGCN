@@ -3,6 +3,8 @@ import tensorflow as tf
 
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
+from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
+    HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
 from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
@@ -16,7 +18,7 @@ class CandidateGcnOnlyModel:
 
     dimension = None
     decoder = None
-    gcn_encoder = None
+    hypergraph_gcn_propagation_units = None
     facts = None
     variables = None
 
@@ -25,7 +27,7 @@ class CandidateGcnOnlyModel:
     entity_indexer = None
     relation_indexer = None
 
-    def __init__(self, facts, dimension=6):
+    def __init__(self, facts, layers=2, dimension=6):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
@@ -36,12 +38,9 @@ class CandidateGcnOnlyModel:
 
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
 
-        self.gcn_encoder_ev_to_en = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="ev_to_en", senders="events", receivers="entities")
-        self.gcn_encoder_en_to_ev = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_ev", senders="entities", receivers="events")
-        self.gcn_encoder_en_to_en = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_en", senders="entities", receivers="entities")
-        self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="ev_to_en", senders="events", receivers="entities", inverse_edges=True)
-        self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_ev", senders="entities", receivers="events", inverse_edges=True)
-        self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(facts, self.variables, self.dimension, variable_prefix="en_to_en", senders="entities", receivers="entities", inverse_edges=True)
+        self.hypergraph_gcn_propagation_units = [None]*layers
+        for layer in range(layers):
+            self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_"+str(layer), facts, self.variables, dimension, self.hypergraph)
 
         self.decoder = SoftmaxDecoder(self.variables)
 
@@ -52,13 +51,10 @@ class CandidateGcnOnlyModel:
         self.hypergraph.prepare_variables()
         self.entity_embedding.prepare_variables()
         self.event_embedding.prepare_variables()
-        self.gcn_encoder_ev_to_en.prepare_variables()
-        self.gcn_encoder_en_to_ev.prepare_variables()
-        self.gcn_encoder_en_to_en.prepare_variables()
-        self.gcn_encoder_ev_to_en_invert.prepare_variables()
-        self.gcn_encoder_en_to_ev_invert.prepare_variables()
-        self.gcn_encoder_en_to_en_invert.prepare_variables()
         self.decoder.prepare_variables()
+
+        for hgpu in self.hypergraph_gcn_propagation_units:
+            hgpu.prepare_variables()
 
     def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
         pass
@@ -109,9 +105,6 @@ class CandidateGcnOnlyModel:
 
         n_entities = np.max(entity_vertex_matrix)
         n_events = np.sum(vertex_list_slices[:,0])
-
-        #TODO this is complete crap
-        #entity_map = np.array([0,1,2,3,4,5,6,0,1,2,3,4,5,6,7])
 
         return entity_vertex_matrix, \
                entity_vertex_slices, \
@@ -197,18 +190,14 @@ class CandidateGcnOnlyModel:
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
         self.hypergraph.event_vertex_embeddings = self.event_embedding.get_representations()
 
-        # Propagate information to events:
-        self.hypergraph.event_vertex_embeddings = self.gcn_encoder_en_to_ev.get_update(self.hypergraph) \
-                                                  + self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
+        for hgpu in self.hypergraph_gcn_propagation_units[:-1]:
+            hgpu.propagate()
+            self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
+            self.hypergraph.event_vertex_embeddings = tf.nn.relu(self.hypergraph.event_vertex_embeddings)
 
-        # Propagate information to vertices:
-        entity_vertex_embeddings = self.gcn_encoder_ev_to_en.get_update(self.hypergraph) \
-                                                   + self.gcn_encoder_ev_to_en_invert.get_update(self.hypergraph)
-        entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph) \
-                                   + self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
-        self.hypergraph.entity_vertex_embeddings = entity_vertex_embeddings
+        self.hypergraph_gcn_propagation_units[-1].propagate()
 
-        entity_scores = tf.reduce_sum(entity_vertex_embeddings,1)
+        entity_scores = tf.reduce_sum(self.hypergraph.entity_vertex_embeddings,1)
         return self.decoder.decode_to_prediction(entity_scores)
 
 
