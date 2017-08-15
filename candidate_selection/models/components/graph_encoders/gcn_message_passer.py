@@ -15,8 +15,9 @@ class GcnConcatMessagePasser:
 
     senders = None
     receivers = None
+    inverse_edges = None
 
-    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities"):
+    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False):
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
@@ -27,17 +28,15 @@ class GcnConcatMessagePasser:
 
         self.senders = senders
         self.receivers = receivers
+        self.use_inverse_edges_instead = inverse_edges
 
     def get_update(self, hypergraph):
-        edges = self.variables.get_variable(self.variable_prefix + "edges")
-        types = self.variables.get_variable(self.variable_prefix + "edge_types")
+        sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.inverse_edges)
+        types = hypergraph.get_edge_types(senders=self.senders, receivers=self.receivers, inverse_edges=self.inverse_edges)
 
+        sender_embeddings = hypergraph.get_embeddings(self.senders)
+        receiver_embeddings = hypergraph.get_embeddings(self.receivers)
 
-        sender_embeddings = hypergraph.get_embeddings(self.senders) #event_vertex_embeddings
-        receiver_embeddings = hypergraph.get_embeddings(self.receivers) #entity_vertex_embeddings
-
-        sender_indices = edges[:,0]
-        receiver_indices = edges[:,1]
         event_to_entity_matrix = self.get_locally_normalized_incidence_matrix(receiver_indices,
                                                                               types,
                                                                               tf.shape(receiver_embeddings)[0])
@@ -72,13 +71,6 @@ class GcnConcatMessagePasser:
         return tf.sparse_reduce_sum_sparse(tensor, 0)
 
     def prepare_variables(self):
-        self.variables.add_variable(self.variable_prefix + "edges", tf.placeholder(tf.int32, name=self.variable_prefix + "edges"))
-        self.variables.add_variable(self.variable_prefix + "edge_types", tf.placeholder(tf.int32, name=self.variable_prefix + "edge_types"))
-
-        #TODO: W is total crap
+        #TODO: W initializer is total crap. Also no bias.
         initializer = np.random.normal(0, 1, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
         self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
-
-    def handle_variable_assignment(self, event_to_entity_edges, event_to_entity_message_types):
-        self.variables.assign_variable(self.variable_prefix + "edges", event_to_entity_edges)
-        self.variables.assign_variable(self.variable_prefix + "edge_types", event_to_entity_message_types)
