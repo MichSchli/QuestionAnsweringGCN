@@ -1,7 +1,9 @@
 import argparse
 
+from additional_graphs.toy_additional_graphs import ToyAdditionalGraphs
 from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from candidate_selection.models.candidate_GCN_only import CandidateGcnOnlyModel
+from candidate_selection.models.candidate_and_aux_GCN import CandidateAndAuxGcnModel
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
@@ -30,7 +32,8 @@ sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1)
 
 gold_reader_for_training = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
-model = CandidateGcnOnlyModel(facts)
+aux_iterator = ToyAdditionalGraphs().produce_additional_graphs()
+model = CandidateAndAuxGcnModel(facts, aux_iterator)
 strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
 
 gold_iterator = gold_reader.parse_file(args.file)

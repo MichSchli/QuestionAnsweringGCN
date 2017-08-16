@@ -24,7 +24,7 @@ class GcnConcatMessagePasser:
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
-            self.variable_prefix + "_"
+            self.variable_prefix += "_"
 
         self.senders = senders
         self.receivers = receivers

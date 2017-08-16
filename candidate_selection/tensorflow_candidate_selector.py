@@ -33,10 +33,13 @@ class TensorflowCandidateSelector:
         if index != 0:
             yield batch[:index]
 
-
     def parse_file(self, filename):
         candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
         batch_iterator = self.iterate_in_batches(candidate_iterator)
+
+        aux_iterators = self.model.get_aux_iterators()
+        aux_batch_iterators = [self.iterate_in_batches(i) for i in aux_iterators]
+        all_iterators = [batch_iterator] + aux_batch_iterators
 
         self.model.prepare_variables()
 
@@ -46,12 +49,10 @@ class TensorflowCandidateSelector:
 
         with tf.Session() as sess:
             sess.run(init_op)
-            for candidate_graph_batch in batch_iterator:
-                preprocessed_batch = self.model.preprocess(candidate_graph_batch)
+            for batch in zip(*all_iterators):
+                preprocessed_batch = self.model.preprocess(batch)
                 assignment_dict = self.model.handle_variable_assignment(preprocessed_batch)
-                #predictions = self.model.predict(preprocessed_batch)
                 predictions = sess.run(model_prediction, feed_dict=assignment_dict)
-
 
                 for prediction in predictions:
                     best_prediction = np.argmax(prediction)

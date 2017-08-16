@@ -11,8 +11,12 @@ class TensorflowHypergraphRepresentation:
 
     variables = None
 
-    def __init__(self, variables):
+    def __init__(self, variables, variable_prefix=""):
         self.variables = variables
+
+        self.variable_prefix = variable_prefix
+        if self.variable_prefix != "":
+            self.variable_prefix += "_"
 
     def update_entity_embeddings(self, embeddings, dimension):
         self.entity_vertex_embeddings = embeddings
@@ -42,25 +46,25 @@ class TensorflowHypergraphRepresentation:
             variable_name = senders + "_to_" + receivers + "_" + suffix
         else:
             variable_name = receivers + "_to_" + senders + "_" + suffix
-        return variable_name
+        return self.variable_prefix + variable_name
 
     """
     Defining and assigning graph-related variables:
     """
 
     def prepare_variables(self):
-        self.prepare_variable_set("events_to_entities")
-        self.prepare_variable_set("entities_to_events")
-        self.prepare_variable_set("entities_to_entities")
+        self.prepare_variable_set(self.variable_prefix + "events_to_entities")
+        self.prepare_variable_set(self.variable_prefix + "entities_to_events")
+        self.prepare_variable_set(self.variable_prefix + "entities_to_entities")
 
     def prepare_variable_set(self, prefix):
         self.variables.add_variable(prefix+"_edges", tf.placeholder(tf.int32, name=prefix+"_edges"))
         self.variables.add_variable(prefix+"_edge_types", tf.placeholder(tf.int32, name=prefix+"_edge_types"))
 
     def handle_variable_assignment(self, edge_and_type_sets):
-        self.handle_variable_set_assignment("events_to_entities", edge_and_type_sets[0], edge_and_type_sets[1])
-        self.handle_variable_set_assignment("entities_to_events", edge_and_type_sets[2], edge_and_type_sets[3])
-        self.handle_variable_set_assignment("entities_to_entities", edge_and_type_sets[4], edge_and_type_sets[5])
+        self.handle_variable_set_assignment(self.variable_prefix + "events_to_entities", edge_and_type_sets[0], edge_and_type_sets[1])
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_events", edge_and_type_sets[2], edge_and_type_sets[3])
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", edge_and_type_sets[4], edge_and_type_sets[5])
 
     def handle_variable_set_assignment(self, prefix, edges, types):
         self.variables.assign_variable(prefix + "_edges", edges)
