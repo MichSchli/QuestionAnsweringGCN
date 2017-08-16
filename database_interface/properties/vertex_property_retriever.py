@@ -1,4 +1,5 @@
 from database_interface.search_filters.prefix_filter import PrefixFilter
+import numpy as np
 
 
 class VertexPropertyRetriever:
@@ -9,9 +10,9 @@ class VertexPropertyRetriever:
         self.data_interface = data_interface
         self.filter = PrefixFilter("http://rdf.freebase.com/ns/")
 
-    def retrieve_properties(self, vertices):
+    def retrieve_properties(self, vertices, types):
         if vertices.shape[0] == 0:
-            return {}
+            return {"name": np.empty((0,2))}
         #print(self.filter.accepts(vertices))
         #print(vertices)
         pass_vertices = vertices[self.filter.accepts(vertices)]

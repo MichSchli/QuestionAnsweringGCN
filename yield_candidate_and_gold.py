@@ -7,6 +7,7 @@ from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
+from database_interface.properties.hypergraph_vertex_property_retriever import HypergraphPropertyRetriever
 from database_interface.properties.vertex_property_retriever import VertexPropertyRetriever
 from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
@@ -24,7 +25,7 @@ facts = CsvFacts("data/toy/toy.graph")
 
 #database_interface = FreebaseInterface()
 database_interface = CsvInterface("data/toy/toy.graph")
-database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), VertexPropertyRetriever(database_interface))
+database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), HypergraphPropertyRetriever(VertexPropertyRetriever(database_interface)))
 sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1)
 

@@ -40,23 +40,24 @@ class Hypergraph:
         return unexpanded_hyperedges
 
     def find_hypergraph_edges(self, entities):
-        vertex_has_name = np.isin(entities, np.array(list(self.vertex_properties["name"].keys())))
-        vertex_is_not_literal = np.array(
-            [self.vertex_properties["type"][v] != "literal" for v in entities])
+        return np.array([self.vertex_properties["type"][v] == "event" for v in entities])
 
-        freebase_filter = PrefixFilter("http://rdf.freebase.com/ns/")
-        vertex_is_freebase_element = freebase_filter.accepts(entities)
-        logically_is_hyperedge = np.logical_and(np.logical_and(np.logical_not(vertex_has_name), vertex_is_not_literal),
-                                                vertex_is_freebase_element)
-        return logically_is_hyperedge
-
-    def pop_all_unexpanded_vertices(self):
+    def pop_all_unexpanded_vertices(self, include_types=False):
         unexpanded_vertices = self.unexpanded_vertices
         self.unexpanded_vertices = np.array([])
-        return unexpanded_vertices
 
-    def get_all_unexpanded_vertices(self):
-        return self.unexpanded_vertices
+        if include_types:
+            types = np.array([self.vertex_properties["type"][v] for v in unexpanded_vertices])
+            return unexpanded_vertices, types
+        else:
+            return unexpanded_vertices
+
+    def get_all_unexpanded_vertices(self, include_types=False):
+        if include_types:
+            types = np.array([self.vertex_properties["type"][v] for v in self.unexpanded_vertices])
+            return self.unexpanded_vertices, types
+        else:
+            return self.unexpanded_vertices
 
     def add_edges(self, edges):
         if edges.shape[0] == 0:
@@ -107,6 +108,9 @@ class Hypergraph:
             self.set_vertex_property(v, k)
 
     def set_vertex_property(self, values, property_name):
+        if values.shape[0] == 0:
+            return
+
         if property_name not in self.vertex_properties.keys():
             self.vertex_properties[property_name] = {}
 
@@ -117,5 +121,9 @@ class Hypergraph:
         not_present = np.isin(self.vertices, np.array(self.vertex_properties[property_name].keys()), invert=True)
         return self.vertices[not_present]
 
-    def get_most_recently_added_vertices(self):
-        return self.most_recently_added_vertices
+    def get_most_recently_added_vertices(self, include_types=True):
+        if include_types:
+            types = np.array([self.vertex_properties["type"][v] for v in self.most_recently_added_vertices])
+            return self.most_recently_added_vertices, types
+        else:
+            return self.most_recently_added_vertices

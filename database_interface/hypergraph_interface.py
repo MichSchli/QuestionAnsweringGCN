@@ -17,7 +17,7 @@ class HypergraphInterface:
         hypergraph = Hypergraph()
         hypergraph.add_vertices(np.array([[v,"entity"] for v in vertices]))
 
-        properties = self.vertex_property_retriever.retrieve_properties(vertices)
+        properties = self.vertex_property_retriever.retrieve_properties(vertices, np.array(["entity" for _ in vertices]))
         hypergraph.set_vertex_properties(properties)
 
         for i in range(hops):
@@ -33,8 +33,8 @@ class HypergraphInterface:
         hypergraph.add_edges(edge_query_result.get_edges())
         hypergraph.add_vertices(np.array(list(edge_query_result.vertices.items())))
 
-        vertices_lacking_properties = hypergraph.get_all_unexpanded_vertices()
-        properties = self.vertex_property_retriever.retrieve_properties(vertices_lacking_properties)
+        vertices_lacking_properties, types = hypergraph.get_all_unexpanded_vertices(include_types=True)
+        properties = self.vertex_property_retriever.retrieve_properties(vertices_lacking_properties, types)
         hypergraph.set_vertex_properties(properties)
         
         unexpanded_hyperedges = hypergraph.pop_unexpanded_hyperedges()
@@ -43,6 +43,6 @@ class HypergraphInterface:
             hypergraph.add_edges(additional_edges.get_edges())
             hypergraph.add_vertices(np.array(list(additional_edges.vertices.items())))
 
-            vertices_lacking_properties = hypergraph.get_most_recently_added_vertices()
-            properties = self.vertex_property_retriever.retrieve_properties(vertices_lacking_properties)
+            vertices_lacking_properties, types = hypergraph.get_most_recently_added_vertices(include_types=True)
+            properties = self.vertex_property_retriever.retrieve_properties(vertices_lacking_properties, types)
             hypergraph.set_vertex_properties(properties)
