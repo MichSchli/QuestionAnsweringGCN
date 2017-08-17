@@ -14,6 +14,9 @@ class Predicate:
 class SivaAdditionalGraphs:
 
     def to_predicate(self, string):
+        if string.endswith(")"):
+            string = string[:-1]
+
         br = string.index("(")
 
         predicate = Predicate()
