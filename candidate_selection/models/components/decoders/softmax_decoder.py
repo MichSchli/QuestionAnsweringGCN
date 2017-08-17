@@ -14,7 +14,7 @@ class SoftmaxDecoder:
 
         def map_function(x):
             vals = tf.nn.softmax(x[0][:x[1]])
-            zeros_needed = 8 - x[1]
+            zeros_needed = tf.reduce_max(self.variables.get_variable("vertex_count_per_hypergraph")) - x[1]
             mask = tf.zeros((1, zeros_needed), dtype=tf.float32)
             return tf.concat((tf.expand_dims(vals, 0), mask), 1)
 
