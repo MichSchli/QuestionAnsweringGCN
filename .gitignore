@@ -1,6 +1,9 @@
 # Ignore models
 text_parsing/models/
 
+# Don't upload Siva's parser
+siva-parser/
+
 # Data files ignored for now:
 data/spades/
 
