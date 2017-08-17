@@ -42,7 +42,7 @@ class SivaAdditionalGraphs:
 
                 hypergraph = Hypergraph()
                 for graph_pred in graph_preds:
-                    hypergraph.add_vertices(np.array([[p, ("event" if p[-1] == "e" else "entity")] for p in graph_pred.params]))
+                    hypergraph.add_vertices(np.unique(np.array([[p, ("event" if p[-1] == "e" else "entity")] for p in graph_pred.params])))
 
                     if len(graph_pred.params) == 1:
                         hypergraph.add_vertices(np.array([[graph_pred.head, "special"]]))
