@@ -52,7 +52,8 @@ class SivaAdditionalGraphs:
                         print(str(graph_pred))
                         exit()
                     else:
-                        hypergraph.add_edges(np.array([[graph_pred.params[0], graph_pred.head, graph_pred.params[1]]]))
+                        if not (graph_pred.params[0][-1] == "e" and graph_pred.params[1][-1] == "e"):
+                            hypergraph.add_edges(np.array([[graph_pred.params[0], graph_pred.head, graph_pred.params[1]]]))
 
                 graph_string = next(sys.stdin)
                 hypergraphs.append(hypergraph)
