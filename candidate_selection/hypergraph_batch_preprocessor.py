@@ -128,6 +128,7 @@ class HypergraphBatchPreprocessor:
                 entity_to_entity_types.append(edge_type)
             else:
                 print("Encountered an event to event edge. Ignoring it.")
+                print(edge)
 
         self.graph_counter += 1
 
