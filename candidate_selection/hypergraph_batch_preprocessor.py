@@ -34,12 +34,15 @@ class HypergraphBatchPreprocessor:
 
         entity_map = np.empty(0, dtype=np.int32)
 
+        event_start_index = 0
+        entity_start_index = 0
         for i,hypergraph in enumerate(hypergraph_batch):
-            phg = self.preprocess_single_hypergraph(hypergraph,
-                                                    0 if i == 0 else vertex_list_slices[i-1][0],
-                                                    0 if i == 0 else vertex_list_slices[i-1][1])
+            phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
             vertex_list_slices[i][0] = phg[0]
             vertex_list_slices[i][1] = phg[1]
+
+            event_start_index += phg[0]
+            entity_start_index += phg[1]
 
             if phg[2]:
                 event_to_entity_edges = np.concatenate((event_to_entity_edges, phg[2]))
