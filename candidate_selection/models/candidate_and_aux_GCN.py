@@ -107,6 +107,7 @@ class CandidateAndAuxGcnModel:
             gold_matrix = np.zeros_like(prp[0], dtype=np.float32)
             shitty_counter = 0
             for i, golds in enumerate(batch[-1]):
+                print(batch[0][i].centroids)
                 gold_indexes = np.array([self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,gold) for gold in golds])
                 gold_matrix[i][gold_indexes - shitty_counter] = 1
                 shitty_counter = np.max(prp[0][i])

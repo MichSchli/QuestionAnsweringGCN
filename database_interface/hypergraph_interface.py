@@ -16,6 +16,7 @@ class HypergraphInterface:
     def get_neighborhood_hypergraph(self, vertices, hops=1):
         hypergraph = Hypergraph()
         hypergraph.add_vertices(np.array([[v,"entity"] for v in vertices]))
+        hypergraph.centroids = vertices
 
         properties = self.vertex_property_retriever.retrieve_properties(vertices, np.array(["entity" for _ in vertices]))
         hypergraph.set_vertex_properties(properties)
