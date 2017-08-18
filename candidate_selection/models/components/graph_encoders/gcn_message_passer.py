@@ -10,8 +10,8 @@ class GcnConcatMessagePasser:
     dimension = None
     variable_prefix = None
 
-    n_coefficients = 10
-    submatrix_d = 5
+    n_coefficients = 2
+    submatrix_d = None
 
     senders = None
     receivers = None
@@ -21,6 +21,7 @@ class GcnConcatMessagePasser:
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
+        self.submatrix_d = int(dimension / self.n_coefficients)
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
