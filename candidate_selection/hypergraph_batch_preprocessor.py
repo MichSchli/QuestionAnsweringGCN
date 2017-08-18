@@ -111,18 +111,18 @@ class HypergraphBatchPreprocessor:
         entity_to_entity_types = []
 
         edges = hypergraph.get_edges()
-        edges[:,1] = self.relation_indexer.index(edges[:,1])
+        edge_types = self.relation_indexer.index(edges[:,1])
 
-        for edge in hypergraph.get_edges():
+        for edge, edge_type in zip(hypergraph.get_edges(), edge_types):
             if edge[0] in event_vertices and not edge[2] in event_vertices:
                 event_to_entity_edges.append([event_indexes[edge[0]], entity_indexes[edge[2]]])
-                event_to_entity_types.append(edge[1])
+                event_to_entity_types.append(edge_type)
             elif edge[2] in event_vertices and not edge[0] in event_vertices:
                 entity_to_event_edges.append([entity_indexes[edge[0]], event_indexes[edge[2]]])
-                entity_to_event_types.append(edge[1])
+                entity_to_event_types.append(edge_type)
             elif not edge[0] in event_vertices and not edge[2] in event_vertices:
                 entity_to_entity_edges.append([entity_indexes[edge[0]], entity_indexes[edge[2]]])
-                entity_to_entity_types.append(edge[1])
+                entity_to_entity_types.append(edge_type)
             else:
                 print("Encountered an event to event edge. Shutting down.")
                 exit()

@@ -44,3 +44,6 @@ class VertexEmbedding:
             self.variables.assign_variable(self.variable_prefix+"number_of_elements_in_batch", variable)
         else:
             self.variables.assign_variable(self.variable_prefix+"element_indices", variable)
+
+    def get_optimizable_parameters(self):
+        return [self.W]

@@ -31,7 +31,7 @@ class CandidateAndAuxGcnModel:
 
     aux_iterator = None
 
-    def __init__(self, facts, aux_iterator, layers=2, dimension=6):
+    def __init__(self, facts, aux_iterator, layers=2, dimension=50):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
@@ -69,9 +69,9 @@ class CandidateAndAuxGcnModel:
         self.relation_indexer = LazyIndexer()
 
     def get_aux_iterators(self):
-        return [self.aux_iterator]
+        return [self.aux_iterator.produce_additional_graphs()]
 
-    def prepare_variables(self):
+    def prepare_variables(self, mode='predict'):
         self.aux_mapper.prepare_variables()
         self.hypergraph.prepare_variables()
         self.entity_embedding.prepare_variables()
@@ -81,7 +81,7 @@ class CandidateAndAuxGcnModel:
         self.aux_entity_embedding.prepare_variables()
         self.aux_event_embedding.prepare_variables()
 
-        self.decoder.prepare_variables()
+        self.decoder.prepare_variables(mode=mode)
 
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.prepare_variables()
@@ -92,7 +92,7 @@ class CandidateAndAuxGcnModel:
     def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
         pass
 
-    def preprocess(self, batch):
+    def preprocess(self, batch, mode='test'):
         prp = self.hypergraph_batch_preprocessor.preprocess(batch[0])
         prp_aux = self.aux_hypergraph_batch_preprocessor.preprocess([k[0] for k in batch[1]])
 
@@ -101,14 +101,28 @@ class CandidateAndAuxGcnModel:
             transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
                          ,self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,v)] for k,v in element[1].items()]))
 
-        return [prp, prp_aux, transform]
+        preprocessed = [prp, prp_aux, transform]
 
-    def handle_variable_assignment(self, o_preprocessed_batch):
+        if mode == 'train':
+            gold_matrix = np.zeros_like(prp[0], dtype=np.float32)
+            shitty_counter = 0
+            for i, golds in enumerate(batch[-1]):
+                gold_indexes = np.array([self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,gold) for gold in golds])
+                gold_matrix[i][gold_indexes - shitty_counter] = 1
+                shitty_counter = np.max(prp[0][i])
+            preprocessed += [gold_matrix]
+
+        return preprocessed
+
+    def get_optimizable_parameters(self):
+        return self.entity_embedding.get_optimizable_parameters()
+
+    def handle_variable_assignment(self, o_preprocessed_batch, mode="predict"):
         preprocessed_batch = o_preprocessed_batch[0]
-        self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
         self.event_embedding.handle_variable_assignment(preprocessed_batch[9])
         self.entity_embedding.handle_variable_assignment(preprocessed_batch[2])
         self.hypergraph.handle_variable_assignment(preprocessed_batch[3:9])
+        self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
 
         a_preprocessed_batch = o_preprocessed_batch[1]
         self.aux_event_embedding.handle_variable_assignment(a_preprocessed_batch[9])
@@ -117,35 +131,44 @@ class CandidateAndAuxGcnModel:
 
         self.aux_mapper.handle_variable_assignment(o_preprocessed_batch[2][:,0], o_preprocessed_batch[2][:,1], a_preprocessed_batch[10], preprocessed_batch[10])
 
+        if mode == 'train':
+            self.decoder.assign_gold_variable(o_preprocessed_batch[3])
+
         return self.variables.get_assignment_dict()
 
     def retrieve_entities(self, entity_index):
         return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(entity_index)]
 
+    def get_loss_graph(self):
+        entity_scores = self.compute_entity_scores()
+        return self.decoder.decode_to_loss(entity_scores)
+
     def get_prediction_graph(self):
+        entity_scores = self.compute_entity_scores()
+        return self.decoder.decode_to_prediction(entity_scores)
+
+    def compute_entity_scores(self):
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
         self.hypergraph.event_vertex_embeddings = self.event_embedding.get_representations()
-
         self.aux_hypergraph.entity_vertex_embeddings = self.aux_entity_embedding.get_representations()
         self.aux_hypergraph.event_vertex_embeddings = self.aux_event_embedding.get_representations()
-
-        for hgpu, a_hgpu in zip(self.hypergraph_gcn_propagation_units[:-1], self.aux_hypergraph_gcn_propagation_units[:-1]):
+        for hgpu, a_hgpu in zip(self.hypergraph_gcn_propagation_units[:-1],
+                                self.aux_hypergraph_gcn_propagation_units[:-1]):
             a_hgpu.propagate()
             self.aux_hypergraph.entity_vertex_embeddings = tf.nn.relu(self.aux_hypergraph.entity_vertex_embeddings)
             self.aux_hypergraph.event_vertex_embeddings = tf.nn.relu(self.aux_hypergraph.event_vertex_embeddings)
 
-            self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(self.aux_hypergraph.entity_vertex_embeddings)
+            self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(
+                self.aux_hypergraph.entity_vertex_embeddings)
 
             hgpu.propagate()
             self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
             self.hypergraph.event_vertex_embeddings = tf.nn.relu(self.hypergraph.event_vertex_embeddings)
-
         self.aux_hypergraph_gcn_propagation_units[-1].propagate()
-        self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(self.aux_hypergraph.entity_vertex_embeddings)
+        self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(
+            self.aux_hypergraph.entity_vertex_embeddings)
         self.hypergraph_gcn_propagation_units[-1].propagate()
-
-        entity_scores = tf.reduce_sum(self.hypergraph.entity_vertex_embeddings,1)
-        return self.decoder.decode_to_prediction(entity_scores)
-
+        entity_scores = tf.reduce_sum(self.hypergraph.entity_vertex_embeddings, 1)
+        return entity_scores
 
 

@@ -4,7 +4,7 @@ import numpy as np
 class LazyIndexer:
 
     global_map = None
-    counter = 0
+    counter = None
 
     def __init__(self):
         self.global_map = {}

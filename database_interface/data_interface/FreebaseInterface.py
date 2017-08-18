@@ -90,7 +90,6 @@ class FreebaseInterface:
         result_list = []
         for i,center_vertex_batch in enumerate(np.array_split(vertices, number_of_batches)):
             query_string = self.construct_property_query(center_vertex_batch, property)
-            print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
 
@@ -101,7 +100,6 @@ class FreebaseInterface:
                 )
 
         result_list = np.array(result_list)
-        print("\r" + (i+1) * " "+"\r", end="", flush=True)
         return result_list
 
     """

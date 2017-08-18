@@ -33,14 +33,15 @@ sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1)
 
 gold_reader_for_training = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
-#aux_iterator = ToyAdditionalGraphs().produce_additional_graphs()
+aux_iterator = ToyAdditionalGraphs()
 #reader_for_mapping = JsonReader(output="mapping", entity_prefix="http://rdf.freebase.com/ns/").parse_file(args.file)
-aux_iterator = SivaAdditionalGraphs().produce_additional_graphs()
+#aux_iterator = SivaAdditionalGraphs().produce_additional_graphs()
 model = CandidateAndAuxGcnModel(facts, aux_iterator)
 strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
 
 gold_iterator = gold_reader.parse_file(args.file)
-prediction_iterator = strategy.parse_file(args.file)
+strategy.train(args.file)
+prediction_iterator = strategy.predict(args.file)
 
 for pred, gold in zip(prediction_iterator, gold_iterator):
     print("Made prediction: " + str(pred) + " || Gold: "+ str(gold))

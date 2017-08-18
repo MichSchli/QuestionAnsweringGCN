@@ -10,8 +10,8 @@ class GcnConcatMessagePasser:
     dimension = None
     variable_prefix = None
 
-    n_coefficients = 2
-    submatrix_d = 3
+    n_coefficients = 10
+    submatrix_d = 5
 
     senders = None
     receivers = None
@@ -37,9 +37,10 @@ class GcnConcatMessagePasser:
         sender_embeddings = hypergraph.get_embeddings(self.senders)
         receiver_embeddings = hypergraph.get_embeddings(self.receivers)
 
-        event_to_entity_matrix = self.get_locally_normalized_incidence_matrix(receiver_indices,
-                                                                              types,
-                                                                              tf.shape(receiver_embeddings)[0])
+        event_to_entity_matrix = self.get_unnormalized_incidence_matrix(receiver_indices, tf.shape(receiver_embeddings)[0])
+        #event_to_entity_matrix = self.get_locally_normalized_incidence_matrix(receiver_indices,
+        #                                                                      types,
+        #                                                                      tf.shape(receiver_embeddings)[0])
 
         #For now just add event embeddings to entity embeddings
         messages = tf.nn.embedding_lookup(sender_embeddings, sender_indices)
@@ -48,11 +49,26 @@ class GcnConcatMessagePasser:
         transformations = tf.nn.embedding_lookup(self.W, types)
         reshape_embeddings = tf.reshape(messages, [-1, self.n_coefficients, self.submatrix_d])
         transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
-        transformed_messages = tf.reshape(transformed_messages, [-1, 6])
+        transformed_messages = tf.reshape(transformed_messages, [-1, self.dimension])
         ###
 
         sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, transformed_messages)
         return sent_messages
+
+    def get_unnormalized_incidence_matrix(self, receiver_indices, number_of_receivers):
+        mtr_values = tf.to_float(tf.ones_like(receiver_indices))
+
+        message_count = tf.shape(receiver_indices)[0]
+        message_indices = tf.range(message_count, dtype=tf.int32)
+
+        mtr_indices = tf.to_int64(tf.transpose(tf.stack([receiver_indices, message_indices])))
+        mtr_shape = tf.to_int64(tf.stack([number_of_receivers, message_count]))
+
+        tensor = tf.SparseTensor(indices=mtr_indices,
+                                 values=mtr_values,
+                                 dense_shape=mtr_shape)
+
+        return tensor
 
     def get_locally_normalized_incidence_matrix(self, receiver_indices, message_types, number_of_receivers):
         mtr_values = tf.to_float(tf.ones_like(receiver_indices))
