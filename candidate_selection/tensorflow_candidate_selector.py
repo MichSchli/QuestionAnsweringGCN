@@ -19,12 +19,19 @@ class TensorflowCandidateSelector:
         self.model = model
         self.facts = facts
 
-    def iterate_in_batches(self, iterator):
-        batch = [None]*self.batch_size
+    def valid_example(self, elements):
+        return self.model.validate_example(elements)
+
+    def iterate_in_batches(self, iterators, validate_batches=True):
+        batch = [[None]*self.batch_size for _ in iterators]
 
         index = 0
-        for element in iterator:
-            batch[index] = element
+        for elements in zip(*iterators):
+            if validate_batches and not self.valid_example(elements):
+                continue
+
+            for j, element in enumerate(elements):
+                batch[j][index] = element
             index += 1
 
             if index == self.batch_size:
@@ -50,17 +57,14 @@ class TensorflowCandidateSelector:
             print("Starting epoch: "+str(epoch))
 
             candidate_iterator = self.candidate_neighborhood_generator.parse_file(training_file)
-            batch_candidate_iterator = self.iterate_in_batches(candidate_iterator)
-
             aux_iterators = self.model.get_aux_iterators()
-            aux_batch_iterators = [self.iterate_in_batches(i) for i in aux_iterators]
-
             label_iterator = self.gold_generator.parse_file(training_file)
-            batch_label_iterator = self.iterate_in_batches(label_iterator)
 
-            all_iterators = [batch_candidate_iterator] + aux_batch_iterators + [batch_label_iterator]
+            all_iterators = [candidate_iterator] + aux_iterators + [label_iterator]
 
-            for batch in zip(*all_iterators):
+            batch_iterator = self.iterate_in_batches(all_iterators)
+
+            for batch in batch_iterator:
                 preprocessed_batch = self.model.preprocess(batch, mode='train')
                 assignment_dict = self.model.handle_variable_assignment(preprocessed_batch, mode='train')
                 result = self.sess.run([optimize_func, model_loss], feed_dict=assignment_dict)
@@ -69,17 +73,15 @@ class TensorflowCandidateSelector:
 
     def predict(self, filename):
         candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
-        batch_iterator = self.iterate_in_batches(candidate_iterator)
-
         aux_iterators = self.model.get_aux_iterators()
-        aux_batch_iterators = [self.iterate_in_batches(i) for i in aux_iterators]
-        all_iterators = [batch_iterator] + aux_batch_iterators
+        all_iterators = [candidate_iterator] + aux_iterators
+        batch_iterator = self.iterate_in_batches(all_iterators, validate_batches=False)
 
         #self.model.prepare_variables(mode='predict')
 
         model_prediction = self.model.get_prediction_graph()
 
-        for batch in zip(*all_iterators):
+        for batch in batch_iterator:
             preprocessed_batch = self.model.preprocess(batch, mode='predict')
             assignment_dict = self.model.handle_variable_assignment(preprocessed_batch, mode='predict')
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)

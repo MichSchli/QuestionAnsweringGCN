@@ -92,6 +92,14 @@ class CandidateAndAuxGcnModel:
     def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
         pass
 
+    def validate_example(self, batch):
+        candidates = batch[0].get_entity_vertices()
+        target_vertices = batch[-1]
+
+        # For now, eliminate all batches without 100 % overlap
+        target_vertices_in_candidates = np.isin(target_vertices, candidates)
+        return target_vertices_in_candidates.all()
+
     def preprocess(self, batch, mode='test'):
         prp = self.hypergraph_batch_preprocessor.preprocess(batch[0])
         prp_aux = self.aux_hypergraph_batch_preprocessor.preprocess([k[0] for k in batch[1]])
@@ -107,7 +115,6 @@ class CandidateAndAuxGcnModel:
             gold_matrix = np.zeros_like(prp[0], dtype=np.float32)
             shitty_counter = 0
             for i, golds in enumerate(batch[-1]):
-                print(batch[0][i].centroids)
                 gold_indexes = np.array([self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,gold) for gold in golds])
                 gold_matrix[i][gold_indexes - shitty_counter] = 1
                 shitty_counter = np.max(prp[0][i])
