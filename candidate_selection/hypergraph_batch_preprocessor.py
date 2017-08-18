@@ -127,8 +127,7 @@ class HypergraphBatchPreprocessor:
                 entity_to_entity_edges.append([entity_indexes[edge[0]], entity_indexes[edge[2]]])
                 entity_to_entity_types.append(edge_type)
             else:
-                print("Encountered an event to event edge. Shutting down.")
-                exit()
+                print("Encountered an event to event edge. Ignoring it.")
 
         self.graph_counter += 1
 
