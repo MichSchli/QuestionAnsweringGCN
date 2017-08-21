@@ -1,5 +1,5 @@
 import argparse
-from preprocessing.read_spades_files import JsonReader
+from preprocessing.read_json_files import JsonReader
 
 parser = argparse.ArgumentParser(description='Yields gold entities to stdout.')
 parser.add_argument('--file', type=str, help='The location of the .json-file to be parsed')

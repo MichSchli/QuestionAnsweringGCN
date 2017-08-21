@@ -72,18 +72,6 @@ class Hypergraph:
             else:
                 self.edge_cache.add(str_edge)
 
-            #if edge[0] not in self.edge_cache:
-            #    self.edge_cache[edge[0]] = {}
-
-            #if edge[1] not in self.edge_cache[edge[0]]:
-            #    self.edge_cache[edge[0]][edge[1]] = []
-
-            #if edge[2] not in self.edge_cache[edge[0]][edge[1]]:
-            #    self.edge_cache[edge[0]][edge[1]].append(edge[2])
-            #else:
-            #    novel[i] = False
-
-        #print(edges[novel].shape)
         self.edges = np.vstack((self.edges, edges[novel]))
 
     def add_vertices(self, vertices):

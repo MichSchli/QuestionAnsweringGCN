@@ -1,15 +1,13 @@
-import numpy as np
 import tensorflow as tf
 
-from candidate_selection.hypergraph_batch_preprocessor import HypergraphBatchPreprocessor
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
-from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
 from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
+from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 
 
 class CandidateGcnOnlyModel:
@@ -34,7 +32,7 @@ class CandidateGcnOnlyModel:
         self.facts = facts
         self.variables = TensorflowVariablesHolder()
 
-        self.hypergraph_batch_preprocessor = HypergraphBatchPreprocessor()
+        self.hypergraph_batch_preprocessor = HypergraphPreprocessor()
 
         self.entity_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
         self.event_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=True)

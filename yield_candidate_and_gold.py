@@ -15,7 +15,7 @@ from database_interface.properties.vertex_property_retriever import VertexProper
 from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
 from grounding.json_to_candidate_neighborhood import CandidateNeighborhoodGenerator
-from preprocessing.read_spades_files import JsonReader
+from preprocessing.read_json_files import JsonReader
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--file', type=str, help='The location of the .json-file to be parsed')

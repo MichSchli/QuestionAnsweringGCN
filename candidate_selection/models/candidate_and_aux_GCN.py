@@ -1,16 +1,15 @@
 import numpy as np
 import tensorflow as tf
 
-from candidate_selection.hypergraph_batch_preprocessor import HypergraphBatchPreprocessor
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.extras.embedding_mapper import EmbeddingMapper
-from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
 from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
+from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 
 
 class CandidateAndAuxGcnModel:
@@ -45,8 +44,8 @@ class CandidateAndAuxGcnModel:
 
         self.aux_mapper = EmbeddingMapper(self.variables)
 
-        self.hypergraph_batch_preprocessor = HypergraphBatchPreprocessor()
-        self.aux_hypergraph_batch_preprocessor = HypergraphBatchPreprocessor()
+        self.hypergraph_batch_preprocessor = HypergraphPreprocessor()
+        self.aux_hypergraph_batch_preprocessor = HypergraphPreprocessor()
 
         self.entity_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
         self.event_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=True)
@@ -101,23 +100,23 @@ class CandidateAndAuxGcnModel:
         return target_vertices_in_candidates.all()
 
     def preprocess(self, batch, mode='test'):
-        prp = self.hypergraph_batch_preprocessor.preprocess(batch[0])
-        prp_aux = self.aux_hypergraph_batch_preprocessor.preprocess([k[0] for k in batch[1]])
+        hypergraph_input_model = self.hypergraph_batch_preprocessor.preprocess(batch[0])
+        aux_hypergraph_input_model = self.aux_hypergraph_batch_preprocessor.preprocess([k[0] for k in batch[1]])
 
         transform = np.empty((0,2))
         for i,element in enumerate(batch[1]):
             transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
                          ,self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,v)] for k,v in element[1].items()]))
 
-        preprocessed = [prp, prp_aux, transform]
+        preprocessed = [hypergraph_input_model, aux_hypergraph_input_model, transform]
 
         if mode == 'train':
-            gold_matrix = np.zeros_like(prp[0], dtype=np.float32)
+            gold_matrix = np.zeros_like(hypergraph_input_model.entity_vertex_matrix, dtype=np.float32)
             shitty_counter = 0
             for i, golds in enumerate(batch[-1]):
                 gold_indexes = np.array([self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,gold) for gold in golds])
                 gold_matrix[i][gold_indexes - shitty_counter] = 1
-                shitty_counter = np.max(prp[0][i])
+                shitty_counter = np.max(hypergraph_input_model.entity_vertex_matrix[i])
             preprocessed += [gold_matrix]
 
         return preprocessed
@@ -126,18 +125,21 @@ class CandidateAndAuxGcnModel:
         return self.entity_embedding.get_optimizable_parameters()
 
     def handle_variable_assignment(self, o_preprocessed_batch, mode="predict"):
-        preprocessed_batch = o_preprocessed_batch[0]
-        self.event_embedding.handle_variable_assignment(preprocessed_batch[9])
-        self.entity_embedding.handle_variable_assignment(preprocessed_batch[2])
-        self.hypergraph.handle_variable_assignment(preprocessed_batch[3:9])
-        self.decoder.handle_variable_assignment(preprocessed_batch[0], preprocessed_batch[1])
+        hypergraph_input_model = o_preprocessed_batch[0]
+        self.event_embedding.handle_variable_assignment(hypergraph_input_model.n_events)
+        self.entity_embedding.handle_variable_assignment(hypergraph_input_model.entity_map)
+        self.hypergraph.handle_variable_assignment(hypergraph_input_model)
+        self.decoder.handle_variable_assignment(hypergraph_input_model.entity_vertex_matrix, hypergraph_input_model.entity_vertex_slices)
 
-        a_preprocessed_batch = o_preprocessed_batch[1]
-        self.aux_event_embedding.handle_variable_assignment(a_preprocessed_batch[9])
-        self.aux_entity_embedding.handle_variable_assignment(a_preprocessed_batch[2])
-        self.aux_hypergraph.handle_variable_assignment(a_preprocessed_batch[3:9])
+        aux_hypergraph_input_model = o_preprocessed_batch[1]
+        self.aux_event_embedding.handle_variable_assignment(aux_hypergraph_input_model.n_events)
+        self.aux_entity_embedding.handle_variable_assignment(aux_hypergraph_input_model.entity_map)
+        self.aux_hypergraph.handle_variable_assignment(aux_hypergraph_input_model)
 
-        self.aux_mapper.handle_variable_assignment(o_preprocessed_batch[2][:,0], o_preprocessed_batch[2][:,1], a_preprocessed_batch[10], preprocessed_batch[10])
+        self.aux_mapper.handle_variable_assignment(o_preprocessed_batch[2][:,0],
+                                                   o_preprocessed_batch[2][:,1],
+                                                   aux_hypergraph_input_model.n_entities,
+                                                   hypergraph_input_model.n_entities)
 
         if mode == 'train':
             self.decoder.assign_gold_variable(o_preprocessed_batch[3])
