@@ -19,23 +19,27 @@ from preprocessing.read_json_files import JsonReader
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--file', type=str, help='The location of the .json-file to be parsed')
+parser.add_argument('--backend', type=str, help='The backend DB to use')
 args = parser.parse_args()
 
 gold_reader = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
 
-#facts = FreebaseFacts()
-facts = CsvFacts("data/toy/toy.graph")
+if args.backend == "freebase":
+    facts = FreebaseFacts()
+    database_interface = FreebaseInterface()
+    aux_iterator = SivaAdditionalGraphs().produce_additional_graphs()
+else:
+    facts = CsvFacts("data/toy/toy.graph")
+    database_interface = CsvInterface("data/toy/toy.graph")
+    aux_iterator = ToyAdditionalGraphs()
 
-#database_interface = FreebaseInterface()
-database_interface = CsvInterface("data/toy/toy.graph")
+
 database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), HypergraphPropertyRetriever(VertexPropertyRetriever(database_interface)))
 sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1)
 
 gold_reader_for_training = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/ns/")
-aux_iterator = ToyAdditionalGraphs()
-#reader_for_mapping = JsonReader(output="mapping", entity_prefix="http://rdf.freebase.com/ns/").parse_file(args.file)
-#aux_iterator = SivaAdditionalGraphs().produce_additional_graphs()
+
 model = CandidateAndAuxGcnModel(facts, aux_iterator)
 strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
 
