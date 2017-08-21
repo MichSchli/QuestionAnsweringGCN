@@ -21,6 +21,7 @@ class HypergraphPreprocessor:
         self.graph_counter = 0
 
     def preprocess(self, hypergraph_batch):
+        print("Beginning preprocessing...")
         self.in_batch_indices = {}
         self.in_batch_labels = {}
         self.graph_counter = 0
@@ -38,6 +39,7 @@ class HypergraphPreprocessor:
         event_start_index = 0
         entity_start_index = 0
         for i,hypergraph in enumerate(hypergraph_batch):
+            print("Element started")
             phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
             vertex_list_slices[i][0] = phg[0]
             vertex_list_slices[i][1] = phg[1]
@@ -60,6 +62,7 @@ class HypergraphPreprocessor:
             entity_map = np.concatenate((entity_map, phg[8]))
 
         entity_vertex_slices = vertex_list_slices[:,1]
+        print("Getting vertex lookup matrix")
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
 
         n_entities = np.max(entity_vertex_matrix)
@@ -96,8 +99,10 @@ class HypergraphPreprocessor:
         return self.in_batch_labels[entity_index]
 
     def preprocess_single_hypergraph(self, hypergraph, event_start_index, entity_start_index):
+        print("Sorting vertices")
         event_vertices = hypergraph.get_hypergraph_vertices()
         other_vertices = hypergraph.get_entity_vertices()
+        print("doner")
 
         vertex_map = self.entity_indexer.index(other_vertices)
 
