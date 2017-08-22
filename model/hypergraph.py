@@ -20,6 +20,8 @@ class Hypergraph:
         self.most_recently_added_vertices = np.array([])
         self.edge_cache = set([])
 
+        self.already_expanded = np.array([])
+
     def get_edges(self):
         return self.edges
 
@@ -58,6 +60,24 @@ class Hypergraph:
             return self.unexpanded_vertices, types
         else:
             return self.unexpanded_vertices
+
+    def expand_forward(self, edges, expanding_from):
+        if edges.shape[0] == 0:
+            return
+
+        novel = np.isin(edges[:,2], self.already_expanded, invert=True)
+        self.edges = np.vstack((self.edges, edges[novel]))
+
+    def expand_backward(self, edges, expanding_from):
+        if edges.shape[0] == 0:
+            return
+
+        novel = np.logical_and(np.isin(edges[:,0], self.already_expanded, invert=True),
+                               np.isin(edges[:,0], expanding_from, invert=True))
+        self.edges = np.vstack((self.edges, edges[novel]))
+
+    def mark_expanded(self, vertices):
+        self.already_expanded = np.concatenate((self.already_expanded, vertices))
 
     def add_edges(self, edges):
         if edges.shape[0] == 0:

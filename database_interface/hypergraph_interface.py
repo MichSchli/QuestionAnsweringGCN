@@ -31,7 +31,11 @@ class HypergraphInterface:
         frontier = self.expansion_algorithm.get_frontier(candidates_for_expansion)
 
         edge_query_result = self.data_interface.get_adjacent_edges(frontier)
-        hypergraph.add_edges(edge_query_result.get_edges())
+
+        hypergraph.expand_forward(edge_query_result.get_forward_edges(), expanding_from=candidates_for_expansion)
+        hypergraph.expand_backward(edge_query_result.get_backward_edges(), expanding_from=candidates_for_expansion)
+        hypergraph.mark_expanded(frontier)
+
         hypergraph.add_vertices(np.array(list(edge_query_result.vertices.items())))
 
         vertices_lacking_properties, types = hypergraph.get_all_unexpanded_vertices(include_types=True)
@@ -41,7 +45,11 @@ class HypergraphInterface:
         unexpanded_hyperedges = hypergraph.pop_unexpanded_hyperedges()
         if unexpanded_hyperedges.shape[0] > 0:
             additional_edges = self.data_interface.get_adjacent_edges(unexpanded_hyperedges)
-            hypergraph.add_edges(additional_edges.get_edges())
+
+            hypergraph.expand_forward(additional_edges.get_forward_edges(), expanding_from=candidates_for_expansion)
+            hypergraph.expand_backward(additional_edges.get_backward_edges(), expanding_from=candidates_for_expansion)
+            hypergraph.mark_expanded(unexpanded_hyperedges)
+
             hypergraph.add_vertices(np.array(list(additional_edges.vertices.items())))
 
             vertices_lacking_properties, types = hypergraph.get_most_recently_added_vertices(include_types=True)

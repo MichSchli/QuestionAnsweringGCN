@@ -33,8 +33,12 @@ class CsvInterface:
         edges = EdgeQueryResult()
 
         for edge in self.edges:
-            if edge[0] in node_identifiers or edge[2] in node_identifiers:
-                edges.append_edge(edge[:3])
+            if edge[0] in node_identifiers:
+                edges.append_edge(edge[:3], forward=True)
+                edges.append_vertex(edge[0], edge[3])
+                edges.append_vertex(edge[2], edge[4])
+            elif edge[2] in node_identifiers:
+                edges.append_edge(edge[:3], forward=False)
                 edges.append_vertex(edge[0], edge[3])
                 edges.append_vertex(edge[2], edge[4])
 

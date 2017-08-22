@@ -120,10 +120,12 @@ class FreebaseInterface:
                 edge_query_result.append_edge([
                     result["s"]["value"],
                     result["r"]["value"],
-                    result["o"]["value"]]
+                    result["o"]["value"]], forward=subject
                 )
-                edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
-                edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
+                if subject:
+                    edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
+                else:
+                    edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
 
         print("\r" + (i+1) * " "+"\r", end="", flush=True)
 
