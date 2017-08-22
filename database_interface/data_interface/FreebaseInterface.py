@@ -35,9 +35,15 @@ class FreebaseInterface:
     Construct a query to retrieve all neighbors of a set of vertices
     """
     def construct_neighbor_query(self, center_vertices, direction='s'):
+        property_list = ["ns:type.object.name"]
+        opposite_direction = "o" if direction == "s" else "s"
+
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
+
+        query_string += "\n".join(["?" + opposite_direction + " " + prop + " ?prop" for prop in property_list])
+
         query_string += "FILTER (?" + direction + " in (" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "))\n"
         query_string += "}"
 
@@ -115,6 +121,8 @@ class FreebaseInterface:
             print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
+            print(results)
+            exit()
 
             for j,result in enumerate(results["results"]["bindings"]):
                 edge_query_result.append_edge([
