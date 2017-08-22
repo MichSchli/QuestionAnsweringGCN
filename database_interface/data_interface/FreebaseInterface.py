@@ -123,9 +123,9 @@ class FreebaseInterface:
                     result["o"]["value"]], forward=subject
                 )
                 if subject:
-                    edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
-                else:
                     edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
+                else:
+                    edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
 
         print("\r" + (i+1) * " "+"\r", end="", flush=True)
 
