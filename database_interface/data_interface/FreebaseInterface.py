@@ -32,9 +32,33 @@ class FreebaseInterface:
         return query_string
 
     """
+    Construct a query to retrieve all neighbors of a set of vertices.
+
+     - hyperedges: If true, retrieve event neighbors. If false, retrieve entity neighbors.
+     - forward: If true, retrieve edges where the centroids are the subject. If false, retrieve edges where the centroids are the object.
+    """
+    def construct_neighbor_query(self, center_vertices, hyperedges=True, forward=True):
+        center = "s" if forward else "o"
+        other = "o" if forward else "s"
+
+        query_string = "PREFIX ns: <" + self.prefix + ">\n"
+        query_string += "select * where {\n"
+        query_string += "?s ?r ?o .\n"
+        query_string += "values ?" + center + " {" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
+        query_string += "filter "
+
+        if hyperedges:
+            query_string += "not "
+
+        query_string += "exists { ?" + other + " ns:type.object.name ?name }\n"
+        query_string += "}"
+
+        return query_string
+
+    """
     Construct a query to retrieve all neighbors of a set of vertices
     """
-    def construct_neighbor_query(self, center_vertices, direction='s'):
+    def construct_neighbor_query_old(self, center_vertices, direction='s'):
         property_list = ["ns:type.object.name"]
         opposite_direction = "o" if direction == "s" else "s"
 
@@ -117,14 +141,25 @@ class FreebaseInterface:
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
-            query_string = self.construct_neighbor_query(center_vertex_batch, direction="s" if subject else "o")
+            entity_query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
+            event_query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
             print("#", end='', flush=True)
 
-            results = self.execute_query(db_interface, query_string)
-            print(results)
-            exit()
+            entity_results = self.execute_query(db_interface, entity_query_string)
+            event_results = self.execute_query(db_interface, event_query_string)
 
-            for j,result in enumerate(results["results"]["bindings"]):
+            for j,result in enumerate(entity_results["results"]["bindings"]):
+                edge_query_result.append_edge([
+                    result["s"]["value"],
+                    result["r"]["value"],
+                    result["o"]["value"]], forward=subject
+                )
+                if subject:
+                    edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
+                else:
+                    edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
+
+            for j,result in enumerate(event_results["results"]["bindings"]):
                 edge_query_result.append_edge([
                     result["s"]["value"],
                     result["r"]["value"],
