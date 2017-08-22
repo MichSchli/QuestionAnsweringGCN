@@ -27,7 +27,7 @@ gold_reader = JsonReader(output="gold", entity_prefix="http://rdf.freebase.com/n
 if args.backend == "freebase":
     facts = FreebaseFacts()
     database_interface = FreebaseInterface()
-    aux_iterator = SivaAdditionalGraphs().produce_additional_graphs()
+    aux_iterator = SivaAdditionalGraphs() #.produce_additional_graphs()
 else:
     facts = CsvFacts("data/toy/toy.graph")
     database_interface = CsvInterface("data/toy/toy.graph")
