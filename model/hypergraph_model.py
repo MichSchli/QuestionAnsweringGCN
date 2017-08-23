@@ -14,6 +14,9 @@ class HypergraphModel:
     entity_to_event_edges = None
     entity_to_entity_edges = None
 
+    discovered_entities = None
+    discovered_events = None
+
     def __init__(self):
         self.event_vertices = np.empty(0)
         self.entity_vertices = np.empty(0)
@@ -26,6 +29,9 @@ class HypergraphModel:
         self.entity_to_event_edges = np.empty((0,3))
         self.entity_to_entity_edges = np.empty((0,3))
 
+        self.discovered_entities = np.empty(0)
+        self.discovered_events = np.empty(0)
+
     """
     Add vertices to the graph, guaranteeing uniqueness.
     """
@@ -36,11 +42,18 @@ class HypergraphModel:
         unique_vertices = vertices[np.isin(vertices, previous, invert=True)]
 
         if type == "entities":
-            self.entity_vertices = np.concatenate((previous, unique_vertices))
-            self.expandable_entity_vertices = np.concatenate((self.expandable_entity_vertices, unique_vertices))
+            self.discovered_entities = np.concatenate((self.discovered_entities, unique_vertices))
         else:
-            self.event_vertices = np.concatenate((previous, unique_vertices))
-            self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, unique_vertices))
+            self.discovered_events = np.concatenate((self.discovered_events, unique_vertices))
+
+    def populate_discovered(self, type="entities"):
+        if type == "entities":
+            self.entity_vertices = np.concatenate((self.entity_vertices, self.discovered_entities))
+            self.expandable_entity_vertices = np.concatenate((self.expandable_entity_vertices, self.discovered_entities))
+        else:
+            self.event_vertices = np.concatenate((self.event_vertices, self.discovered_events))
+            self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, self.discovered_events))
+
 
     """
     Get all seen vertices of a given type.
@@ -53,12 +66,19 @@ class HypergraphModel:
 
     """
     Get all expandable vertices of a given type.
+    Allows "popping" where returned elements are removed from the list of expandable elements.
     """
-    def get_expandable_vertices(self, type="entities"):
+    def get_expandable_vertices(self, type="entities", pop=False):
         if type == "entities":
-            return self.expandable_entity_vertices
+            elements = self.expandable_entity_vertices
+            if pop:
+                self.expandable_entity_vertices = np.empty(0)
         else:
-            return self.expandable_event_vertices
+            elements = self.expandable_event_vertices
+            if pop:
+                self.expandable_event_vertices = np.empty(0)
+
+        return elements
 
     """
     Get all seen vertices of a given type.
@@ -74,10 +94,8 @@ class HypergraphModel:
     """
     def mark_expanded(self, vertices, type="entities"):
         if type == "entities":
-            self.expandable_entity_vertices = np.empty(0)
             self.expanded_entity_vertices = np.concatenate((self.expanded_entity_vertices, vertices))
         else:
-            self.expandable_event_vertices = np.empty(0)
             self.expanded_event_vertices = np.concatenate((self.expanded_event_vertices, vertices))
 
 
@@ -88,29 +106,25 @@ class HypergraphModel:
                   and we always know target from which freebase method we executed.
 
     """
-    def expand(self, frontier, forward_edges, backward_edges, sources="entities", targets="events"):
-        # We first expand in the forward direction:
+    def expand(self, forward_edges, backward_edges, sources="entities", targets="events"):
         self.expand_forward(forward_edges, sources=sources, targets=targets)
-
-        # Then we expand in the backward direction:
         self.expand_backward(backward_edges, sources=sources, targets=targets)
 
-        # Then we add all new vertices and mark EXPANDABLE when appropriate:
-        self.add_vertices(forward_edges[:,2], type=targets)
-        self.add_vertices(backward_edges[:,0], type=targets)
+    def add_discovered_vertices(self, forward_edges, backward_edges, type="entities"):
+        if forward_edges.shape[0] > 0:
+            self.add_vertices(forward_edges[:,2], type=type)
 
-    """
-    Clear expandables, mark frontier expanded
-    """
-    def clear_expandable_vertices(self, frontier, type="entities"):
-        # Finally we mark the frontier as expanded:
-        self.mark_expanded(frontier, type=type)
+        if backward_edges.shape[0] > 0:
+            self.add_vertices(backward_edges[:,0], type=type)
 
 
     """
     Expand a set of (source->target) edges from the sources. Allows edges within the frontier.
     """
     def expand_forward(self, edges, sources="entities", targets="events"):
+        if not edges.shape[0] > 0:
+            return
+
         target = edges[:,2]
         unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
@@ -120,6 +134,9 @@ class HypergraphModel:
     Expand a set of (target->source) edges from the sources. Disallows edges within the frontier.
     """
     def expand_backward(self, edges, sources="entities", targets="events"):
+        if not edges.shape[0] > 0:
+            return
+
         target = edges[:, 0]
         unseen_targets = np.isin(target, self.get_seen_vertices(targets), invert=True)
 
@@ -133,6 +150,6 @@ class HypergraphModel:
         if sources == "entities" and targets == "events":
             self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, edges))
         elif sources == "events" and targets == "entities":
-            self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, edges))
+            self.event_to_entity_edges = np.concatenate((self.event_to_entity_edges, edges))
         elif sources == "entities" and targets == "entities":
             self.entity_to_entity_edges = np.concatenate((self.entity_to_entity_edges, edges))
