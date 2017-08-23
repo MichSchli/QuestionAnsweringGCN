@@ -32,7 +32,6 @@ class SivaAdditionalGraphs:
         target_sentence = next(sys.stdin)
         #for line, mapping in zip(sys.stdin, self.json_iterator_for_mapping):
         for line in sys.stdin:
-            print("making graph...")
             graph_string = next(sys.stdin)
             hypergraphs = []
             while not " [main] DEBUG: " in graph_string and not graph_string.strip() == "END":

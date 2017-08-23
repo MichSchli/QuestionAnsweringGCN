@@ -48,9 +48,10 @@ class FreebaseInterface:
         query_string += "filter "
 
         if hyperedges:
-            query_string += "not "
+            query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") )\n"
+        else:
+            query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ") )\n"
 
-        query_string += "exists { ?" + other + " ns:type.object.name ?name }\n"
         query_string += "}"
 
         return query_string
