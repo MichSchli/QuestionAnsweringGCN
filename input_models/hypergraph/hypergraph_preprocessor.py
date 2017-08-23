@@ -65,6 +65,7 @@ class HypergraphPreprocessor:
         print("Getting vertex lookup matrix")
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
 
+        print(entity_vertex_slices)
         print(entity_vertex_matrix.shape)
 
         n_entities = np.max(entity_vertex_matrix)
