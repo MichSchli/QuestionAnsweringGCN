@@ -71,7 +71,7 @@ class SivaAdditionalGraphs:
             # TODO: Chooses first hypergraph at random
             chosen_hypergraph = hypergraphs[0]
             mapping = {}
-            for vertex in chosen_hypergraph.get_entity_vertices():
+            for vertex in chosen_hypergraph.get_vertices(type="entities"):
                 if ":m." in vertex:
                     mapping[vertex] = "http://rdf.freebase.com/ns/" + vertex[vertex.index(":m.")+1:]
 
