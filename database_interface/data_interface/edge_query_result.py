@@ -26,3 +26,7 @@ class EdgeQueryResult:
 
     def get_backward_edges(self):
         return np.array(self.backward_edges)
+
+    def __str__(self):
+        return "Forward: " + str(self.get_forward_edges()) +\
+               " Backward: " + str(self.get_backward_edges())

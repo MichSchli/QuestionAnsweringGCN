@@ -28,18 +28,17 @@ class CsvInterface:
 
         return np.array(props)
 
-
-    def get_adjacent_edges(self, node_identifiers):
+    def get_adjacent_edges(self, node_identifiers, target="entities"):
         edges = EdgeQueryResult()
 
+        target_types = ["entity", "literal"] if target == "entities" else ["event"]
+
         for edge in self.edges:
-            if edge[0] in node_identifiers:
+            if edge[0] in node_identifiers and edge[4] in target_types:
                 edges.append_edge(edge[:3], forward=True)
-                edges.append_vertex(edge[0], edge[3])
                 edges.append_vertex(edge[2], edge[4])
-            elif edge[2] in node_identifiers:
+            elif edge[2] in node_identifiers and edge[3] in target_types:
                 edges.append_edge(edge[:3], forward=False)
                 edges.append_vertex(edge[0], edge[3])
-                edges.append_vertex(edge[2], edge[4])
 
         return edges

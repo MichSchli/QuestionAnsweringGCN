@@ -1,8 +1,8 @@
 http://rdf.freebase.com/ns/Bob,founder_of,http://rdf.freebase.com/ns/BobCorp,entity,entity
 http://rdf.freebase.com/ns/Alice,owner_of,http://rdf.freebase.com/ns/BobCorp,entity,entity
-http://rdf.freebase.com/ns/Bob,sold,http://rdf.freebase.com/ns/e,entity,entity
-http://rdf.freebase.com/ns/Alice,bought,http://rdf.freebase.com/ns/e,entity,entity
-http://rdf.freebase.com/ns/BobCorp,object_of,http://rdf.freebase.com/ns/e,entity,entity
+http://rdf.freebase.com/ns/Bob,sold,http://rdf.freebase.com/ns/e,entity,event
+http://rdf.freebase.com/ns/Alice,bought,http://rdf.freebase.com/ns/e,entity,event
+http://rdf.freebase.com/ns/BobCorp,object_of,http://rdf.freebase.com/ns/e,entity,event
 http://rdf.freebase.com/ns/Bob,born_in,1990,entity,literal
 http://rdf.freebase.com/ns/Alice,mother_of,http://rdf.freebase.com/ns/Carl,entity,entity
 http://rdf.freebase.com/ns/Carl,owner_of,http://rdf.freebase.com/ns/CarlCorp,entity,entity
@@ -13,4 +13,4 @@ http://rdf.freebase.com/ns/Alice,ns:type.object.name,Alice Examplewoman,entity,l
 http://rdf.freebase.com/ns/Carl,ns:type.object.name,Carl Exampleguy,entity,literal
 http://rdf.freebase.com/ns/BobCorp,ns:type.object.name,Bob's Magical Corporation,entity,literal
 http://rdf.freebase.com/ns/CarlCorp,ns:type.object.name,Carl's Magical Corporation,entity,literal
-http://rdf.freebase.com/ns/e,primary_object,http://rdf.freebase.com/ns/BobCorp,entity,entity
+http://rdf.freebase.com/ns/e,primary_object,http://rdf.freebase.com/ns/BobCorp,event,entity

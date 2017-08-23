@@ -6,6 +6,9 @@ class HypergraphModel:
     event_vertices = None
     entity_vertices = None
 
+    expandable_event_vertices = None
+    expandable_entity_vertices = None
+
     event_to_entity_edges = None
     event_to_event_edges = None
     entity_to_event_edges = None
@@ -14,6 +17,10 @@ class HypergraphModel:
     def __init__(self):
         self.event_vertices = np.empty(0)
         self.entity_vertices = np.empty(0)
+        self.expandable_event_vertices = np.empty(0)
+        self.expandable_entity_vertices = np.empty(0)
+        self.expanded_event_vertices = np.empty(0)
+        self.expanded_entity_vertices = np.empty(0)
         self.event_to_entity_edges = np.empty((0,3))
         self.event_to_event_edges = np.empty((0,3))
         self.entity_to_event_edges = np.empty((0,3))
@@ -26,16 +33,14 @@ class HypergraphModel:
         previous = self.entity_vertices if type == "entities" else self.event_vertices
 
         vertices = np.unique(vertices)
-        unique_vertices = vertices[np.isin(vertices, previous)]
+        unique_vertices = vertices[np.isin(vertices, previous, invert=True)]
 
         if type == "entities":
             self.entity_vertices = np.concatenate((previous, unique_vertices))
-            self.expandable_entity_vertices = np.concatenate((previous, unique_vertices))
+            self.expandable_entity_vertices = np.concatenate((self.expandable_entity_vertices, unique_vertices))
         else:
             self.event_vertices = np.concatenate((previous, unique_vertices))
-            self.expandable_event_vertices = np.concatenate((previous, unique_vertices))
-
-
+            self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, unique_vertices))
 
     """
     Get all seen vertices of a given type.
@@ -45,6 +50,15 @@ class HypergraphModel:
             return self.entity_vertices
         else:
             return self.event_vertices
+
+    """
+    Get all expandable vertices of a given type.
+    """
+    def get_expandable_vertices(self, type="entities"):
+        if type == "entities":
+            return self.expandable_entity_vertices
+        else:
+            return self.expandable_event_vertices
 
     """
     Get all seen vertices of a given type.
@@ -60,8 +74,10 @@ class HypergraphModel:
     """
     def mark_expanded(self, vertices, type="entities"):
         if type == "entities":
+            self.expandable_entity_vertices = np.empty(0)
             self.expanded_entity_vertices = np.concatenate((self.expanded_entity_vertices, vertices))
         else:
+            self.expandable_event_vertices = np.empty(0)
             self.expanded_event_vertices = np.concatenate((self.expanded_event_vertices, vertices))
 
 
@@ -83,8 +99,12 @@ class HypergraphModel:
         self.add_vertices(forward_edges[:,2], type=targets)
         self.add_vertices(backward_edges[:,0], type=targets)
 
+    """
+    Clear expandables, mark frontier expanded
+    """
+    def clear_expandable_vertices(self, frontier, type="entities"):
         # Finally we mark the frontier as expanded:
-        self.mark_expanded(frontier, type=sources)
+        self.mark_expanded(frontier, type=type)
 
 
     """
@@ -94,7 +114,7 @@ class HypergraphModel:
         target = edges[:,2]
         unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
-        self.append_edges(unseen_or_frontier_targets, sources=sources, targets=targets)
+        self.append_edges(edges[unseen_or_frontier_targets], sources=sources, targets=targets)
 
     """
     Expand a set of (target->source) edges from the sources. Disallows edges within the frontier.
@@ -103,7 +123,7 @@ class HypergraphModel:
         target = edges[:, 0]
         unseen_targets = np.isin(target, self.get_seen_vertices(targets), invert=True)
 
-        self.append_edges(unseen_targets, sources=targets, targets=sources)
+        self.append_edges(edges[unseen_targets], sources=targets, targets=sources)
 
 
     """
@@ -111,4 +131,8 @@ class HypergraphModel:
     """
     def append_edges(self, edges, sources="entities", targets="events"):
         if sources == "entities" and targets == "events":
-            self.entity_to_event_edges = np.concatenate((self.entity_to_entity_edges, edges))
+            self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, edges))
+        elif sources == "events" and targets == "entities":
+            self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, edges))
+        elif sources == "entities" and targets == "entities":
+            self.entity_to_entity_edges = np.concatenate((self.entity_to_entity_edges, edges))
