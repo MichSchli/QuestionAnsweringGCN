@@ -52,7 +52,7 @@ class SivaAdditionalGraphs:
 
                     if len(graph_pred.params) == 1:
                         hypergraph.add_vertices(np.array([graph_pred.head]), type="entity")
-                        hypergraph.add_edges(np.array([[graph_pred.head, graph_pred.head, graph_pred.params[0]]]),
+                        hypergraph.append_edges(np.array([[graph_pred.head, graph_pred.head, graph_pred.params[0]]]),
                                              sources="entities",
                                              targets="event" if graph_pred.params[0][-1] == "e" else "entity")
                     elif len(graph_pred.params) != 2:
@@ -61,7 +61,7 @@ class SivaAdditionalGraphs:
                         exit()
                     else:
                         if not (graph_pred.params[0][-1] == "e" and graph_pred.params[1][-1] == "e"):
-                            hypergraph.add_edges(np.array([[graph_pred.params[0], graph_pred.head, graph_pred.params[1]]]),
+                            hypergraph.append_edges(np.array([[graph_pred.params[0], graph_pred.head, graph_pred.params[1]]]),
                                                  sources="event" if graph_pred.params[0][-1] == "e" else "entity",
                                                  targets="event" if graph_pred.params[1][-1] == "e" else "entity")
 
