@@ -20,8 +20,6 @@ class HypergraphInterface:
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
 
-        hops=3
-
         for i in range(hops):
             self.expand_hypergraph_to_one_neighborhood(hypergraph)
 
