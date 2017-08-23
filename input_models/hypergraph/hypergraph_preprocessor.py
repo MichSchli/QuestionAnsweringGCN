@@ -48,10 +48,6 @@ class HypergraphPreprocessor:
             entity_start_index += phg[1]
 
             if phg[2].shape[0] > 0:
-                print(event_to_entity_types.shape)
-                print(phg[3].shape)
-                print(event_to_entity_edges.shape)
-                print(phg[2].shape)
                 event_to_entity_edges = np.concatenate((event_to_entity_edges, phg[2]))
                 event_to_entity_types = np.concatenate((event_to_entity_types, phg[3]))
 
@@ -68,6 +64,8 @@ class HypergraphPreprocessor:
         entity_vertex_slices = vertex_list_slices[:,1]
         print("Getting vertex lookup matrix")
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
+
+        print(entity_vertex_matrix.shape)
 
         n_entities = np.max(entity_vertex_matrix)
         n_events = np.sum(vertex_list_slices[:,0])
@@ -124,10 +122,6 @@ class HypergraphPreprocessor:
         entity_to_event_types = self.relation_indexer.index(entity_to_event_edges[:,1])
         entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities")
         entity_to_entity_types = self.relation_indexer.index(entity_to_entity_edges[:,1])
-
-        print(event_to_entity_edges.shape)
-        print(entity_to_event_edges.shape)
-        print(entity_to_entity_edges.shape)
 
         ev_to_en_2 = np.empty((event_to_entity_edges.shape[0], 2))
         en_to_ev_2 = np.empty((entity_to_event_edges.shape[0], 2))
