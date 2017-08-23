@@ -48,15 +48,16 @@ class SivaAdditionalGraphs:
                 hypergraph = HypergraphModel()
                 for graph_pred in graph_preds:
                     for v in np.unique(graph_pred.params):
-                        hypergraph.add_vertices(np.array([v]), type="event" if v[-1] == "e" else "entity")
-                        hypergraph.populate_discovered()
+                        hypergraph.add_vertices(np.array([v]), type="events" if v[-1] == "e" else "entities")
+                        hypergraph.populate_discovered(type="entities")
+                        hypergraph.populate_discovered(type="events")
 
                     if len(graph_pred.params) == 1:
-                        hypergraph.add_vertices(np.array([graph_pred.head]), type="entity")
-                        hypergraph.populate_discovered()
+                        hypergraph.add_vertices(np.array([graph_pred.head]), type="entities")
+                        hypergraph.populate_discovered(type="entities")
                         hypergraph.append_edges(np.array([[graph_pred.head, graph_pred.head, graph_pred.params[0]]]),
                                              sources="entities",
-                                             targets="event" if graph_pred.params[0][-1] == "e" else "entity")
+                                             targets="events" if graph_pred.params[0][-1] == "e" else "entities")
                     elif len(graph_pred.params) != 2:
                         print("HOLY FUCKING SHIT")
                         print(str(graph_pred))
@@ -64,8 +65,8 @@ class SivaAdditionalGraphs:
                     else:
                         if not (graph_pred.params[0][-1] == "e" and graph_pred.params[1][-1] == "e"):
                             hypergraph.append_edges(np.array([[graph_pred.params[0], graph_pred.head, graph_pred.params[1]]]),
-                                                 sources="event" if graph_pred.params[0][-1] == "e" else "entity",
-                                                 targets="event" if graph_pred.params[1][-1] == "e" else "entity")
+                                                 sources="events" if graph_pred.params[0][-1] == "e" else "entities",
+                                                 targets="events" if graph_pred.params[1][-1] == "e" else "entities")
 
                 graph_string = next(sys.stdin)
                 hypergraphs.append(hypergraph)
