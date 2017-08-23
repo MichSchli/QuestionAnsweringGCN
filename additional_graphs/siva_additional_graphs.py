@@ -49,9 +49,11 @@ class SivaAdditionalGraphs:
                 for graph_pred in graph_preds:
                     for v in np.unique(graph_pred.params):
                         hypergraph.add_vertices(np.array([v]), type="event" if v[-1] == "e" else "entity")
+                        hypergraph.populate_discovered()
 
                     if len(graph_pred.params) == 1:
                         hypergraph.add_vertices(np.array([graph_pred.head]), type="entity")
+                        hypergraph.populate_discovered()
                         hypergraph.append_edges(np.array([[graph_pred.head, graph_pred.head, graph_pred.params[0]]]),
                                              sources="entities",
                                              targets="event" if graph_pred.params[0][-1] == "e" else "entity")
