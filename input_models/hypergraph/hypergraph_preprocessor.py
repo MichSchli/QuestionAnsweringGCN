@@ -105,6 +105,8 @@ class HypergraphPreprocessor:
         print("Preprocessing hgraph")
         event_vertices = hypergraph.get_vertices(type="events")
         entity_vertices = hypergraph.get_vertices(type="entities")
+        print(event_vertices)
+        print(entity_vertices)
 
         vertex_map = self.entity_indexer.index(entity_vertices)
 
