@@ -44,7 +44,7 @@ class FreebaseInterface:
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
-        query_string += "values ?" + center + " {" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
+        query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
         query_string += "filter "
 
         if hyperedges:
