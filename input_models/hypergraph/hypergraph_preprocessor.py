@@ -103,48 +103,27 @@ class HypergraphPreprocessor:
         return self.in_batch_labels[entity_index]
 
     def preprocess_single_hypergraph(self, hypergraph, event_start_index, entity_start_index):
-        print("Sorting vertices")
-        event_vertices = hypergraph.get_hypergraph_vertices()
-        other_vertices = hypergraph.get_entity_vertices()
-        print("doner")
+        print("Preprocessing hgraph")
+        event_vertices = hypergraph.get_vertices(type="events")
+        entity_vertices = hypergraph.get_vertices(type="entities")
 
-        vertex_map = self.entity_indexer.index(other_vertices)
+        vertex_map = self.entity_indexer.index(entity_vertices)
 
         event_indexes = {k:v+event_start_index for v, k in enumerate(event_vertices)}
-        entity_indexes = {k:v+entity_start_index for v, k in enumerate(other_vertices)}
+        entity_indexes = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
 
-        self.in_batch_labels.update({v+entity_start_index:k for v, k in enumerate(other_vertices)})
-        self.in_batch_indices[self.graph_counter] = {k:v+entity_start_index for v, k in enumerate(other_vertices)}
+        self.in_batch_labels.update({v+entity_start_index:k for v, k in enumerate(entity_vertices)})
+        self.in_batch_indices[self.graph_counter] = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
 
         n_event_vertices = event_vertices.shape[0]
-        n_entity_vertices = other_vertices.shape[0]
+        n_entity_vertices = entity_vertices.shape[0]
 
-        event_to_entity_edges = []
-        event_to_entity_types = []
-        entity_to_event_edges = []
-        entity_to_event_types = []
-        entity_to_entity_edges = []
-        entity_to_entity_types = []
-
-        edges = hypergraph.get_edges()
-        edge_types = self.relation_indexer.index(edges[:,1])
-
-        print("fast alternative")
-        event_subject = np.isin(edges[:,0], event_vertices)
-        event_object = np.isin(edges[:,2], event_vertices)
-
-        event_to_entity_bool = np.logical_and(event_subject, np.logical_not(event_object))
-        entity_to_event_bool = np.logical_and(np.logical_not(event_subject), event_object)
-        entity_to_entity_bool = np.logical_not(np.logical_or(event_subject, event_object))
-
-        event_to_entity_edges = edges[event_to_entity_bool]
-        event_to_entity_types = edge_types[event_to_entity_bool]
-
-        entity_to_event_edges = edges[entity_to_event_bool]
-        entity_to_event_types = edge_types[entity_to_event_bool]
-
-        entity_to_entity_edges = edges[entity_to_entity_bool]
-        entity_to_entity_types = edge_types[entity_to_entity_bool]
+        event_to_entity_edges = hypergraph.get_edges(sources="events", targets="entities")
+        event_to_entity_types = self.relation_indexer.index(event_to_entity_edges[:,1])
+        entity_to_event_edges = hypergraph.get_edges(sources="entities", targets="events")
+        entity_to_event_types = self.relation_indexer.index(entity_to_event_edges[:,1])
+        entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities")
+        entity_to_entity_types = self.relation_indexer.index(entity_to_entity_edges[:,1])
 
         ev_to_en_2 = np.empty((event_to_entity_edges.shape[0], 2))
         en_to_ev_2 = np.empty((entity_to_event_edges.shape[0], 2))
@@ -161,23 +140,8 @@ class HypergraphPreprocessor:
         for i, edge in enumerate(entity_to_entity_edges):
             en_to_en_2[i][0] = entity_indexes[edge[0]]
             en_to_en_2[i][1] = entity_indexes[edge[2]]
-        
-        #print("entering slow section")
-        #for edge, edge_type in zip(hypergraph.get_edges(), edge_types):
-        #    if edge[0] in event_vertices and not edge[2] in event_vertices:
-        #        event_to_entity_edges.append([event_indexes[edge[0]], entity_indexes[edge[2]]])
-        #        event_to_entity_types.append(edge_type)
-        #    elif edge[2] in event_vertices and not edge[0] in event_vertices:
-        #        entity_to_event_edges.append([entity_indexes[edge[0]], event_indexes[edge[2]]])
-        #        entity_to_event_types.append(edge_type)
-        #    elif not edge[0] in event_vertices and not edge[2] in event_vertices:
-        #        entity_to_entity_edges.append([entity_indexes[edge[0]], entity_indexes[edge[2]]])
-        #        entity_to_entity_types.append(edge_type)
-        #    else:
-        #        print("Encountered an event to event edge. Ignoring it.")
-        #        print(edge)
 
-        print("exiting slow section")
+        print("Doner")
 
         self.graph_counter += 1
 

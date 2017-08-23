@@ -10,7 +10,6 @@ class HypergraphModel:
     expandable_entity_vertices = None
 
     event_to_entity_edges = None
-    event_to_event_edges = None
     entity_to_event_edges = None
     entity_to_entity_edges = None
 
@@ -25,7 +24,6 @@ class HypergraphModel:
         self.expanded_event_vertices = np.empty(0)
         self.expanded_entity_vertices = np.empty(0)
         self.event_to_entity_edges = np.empty((0,3))
-        self.event_to_event_edges = np.empty((0,3))
         self.entity_to_event_edges = np.empty((0,3))
         self.entity_to_entity_edges = np.empty((0,3))
 
@@ -58,11 +56,19 @@ class HypergraphModel:
     """
     Get all seen vertices of a given type.
     """
-    def get_seen_vertices(self, type="entities"):
+    def get_vertices(self, type="entities"):
         if type == "entities":
             return self.entity_vertices
         else:
             return self.event_vertices
+
+    def get_edges(self, sources="entities", targets="events"):
+        if sources == "entities" and targets == "events":
+            return self.entity_to_event_edges
+        elif sources == "events" and targets == "entities":
+            return self.event_to_entity_edges
+        elif sources == "entities" and targets == "entities":
+            return self.entity_to_entity_edges
 
     """
     Get all expandable vertices of a given type.
@@ -138,7 +144,7 @@ class HypergraphModel:
             return
 
         target = edges[:, 0]
-        unseen_targets = np.isin(target, self.get_seen_vertices(targets), invert=True)
+        unseen_targets = np.isin(target, self.get_vertices(targets), invert=True)
 
         self.append_edges(edges[unseen_targets], sources=targets, targets=sources)
 

@@ -92,7 +92,7 @@ class CandidateAndAuxGcnModel:
         pass
 
     def validate_example(self, batch):
-        candidates = batch[0].get_entity_vertices()
+        candidates = batch[0].get_vertices(type="entities")
         target_vertices = batch[-1]
 
         # For now, eliminate all batches without 100 % overlap
