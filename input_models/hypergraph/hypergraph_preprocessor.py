@@ -125,6 +125,10 @@ class HypergraphPreprocessor:
         entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities")
         entity_to_entity_types = self.relation_indexer.index(entity_to_entity_edges[:,1])
 
+        print(event_to_entity_edges.shape)
+        print(entity_to_event_edges.shape)
+        print(entity_to_entity_edges.shape)
+
         ev_to_en_2 = np.empty((event_to_entity_edges.shape[0], 2))
         en_to_ev_2 = np.empty((entity_to_event_edges.shape[0], 2))
         en_to_en_2 = np.empty((entity_to_entity_edges.shape[0], 2))
