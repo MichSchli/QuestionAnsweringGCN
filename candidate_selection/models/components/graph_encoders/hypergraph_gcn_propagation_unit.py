@@ -43,4 +43,4 @@ class HypergraphGcnPropagationUnit:
                                    + self.gcn_encoder_ev_to_en_invert.get_update(self.hypergraph)
         entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph) \
                                     + self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
-        self.hypergraph.entity_vertex_embeddings = entity_vertex_embeddings
+        self.hypergraph.entity_vertex_embeddings += entity_vertex_embeddings

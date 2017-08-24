@@ -39,13 +39,13 @@ class TensorflowCandidateSelector:
                 index = 0
 
         if index != 0:
-            yield batch[:index]
+            yield [b[:index] for b in batch]
 
     def train(self, training_file):
         self.model.prepare_variables(mode='train')
         model_loss = self.model.get_loss_graph()
         parameters_to_optimize = self.model.get_optimizable_parameters()
-        opt_func = tf.train.AdamOptimizer(learning_rate=0.001)
+        opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
         grad_func = tf.gradients(model_loss, parameters_to_optimize)
         optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
         init_op = tf.global_variables_initializer()
@@ -87,6 +87,7 @@ class TensorflowCandidateSelector:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for prediction in predictions:
+                print(prediction)
                 best_prediction = np.argmax(prediction)
                 output = self.model.retrieve_entities(best_prediction)
                 yield output

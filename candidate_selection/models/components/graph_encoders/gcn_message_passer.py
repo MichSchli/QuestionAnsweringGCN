@@ -89,5 +89,5 @@ class GcnConcatMessagePasser:
 
     def prepare_variables(self):
         #TODO: W initializer is total crap. Also no bias.
-        initializer = np.random.normal(0, 1, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
+        initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
         self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")

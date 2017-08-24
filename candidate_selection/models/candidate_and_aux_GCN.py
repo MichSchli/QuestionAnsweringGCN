@@ -3,6 +3,7 @@ import tensorflow as tf
 
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.extras.embedding_mapper import EmbeddingMapper
+from candidate_selection.models.components.extras.target_comparator import TargetComparator
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
@@ -30,7 +31,7 @@ class CandidateAndAuxGcnModel:
 
     aux_iterator = None
 
-    def __init__(self, facts, aux_iterator, layers=2, dimension=6):
+    def __init__(self, facts, aux_iterator, layers=1, dimension=6):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
@@ -56,6 +57,8 @@ class CandidateAndAuxGcnModel:
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
         self.aux_hypergraph = TensorflowHypergraphRepresentation(self.variables, variable_prefix="aux")
 
+        self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_aux")
+
         self.hypergraph_gcn_propagation_units = [None]*layers
         self.aux_hypergraph_gcn_propagation_units = [None]*layers
         for layer in range(layers):
@@ -79,6 +82,7 @@ class CandidateAndAuxGcnModel:
         self.aux_hypergraph.prepare_variables()
         self.aux_entity_embedding.prepare_variables()
         self.aux_event_embedding.prepare_variables()
+        self.target_comparator.prepare_variables()
 
         self.decoder.prepare_variables(mode=mode)
 
@@ -87,9 +91,6 @@ class CandidateAndAuxGcnModel:
 
         for hgpu in self.aux_hypergraph_gcn_propagation_units:
             hgpu.prepare_variables()
-
-    def train(self, hypergraph_batch, sentence_batch, gold_prediction_batch):
-        pass
 
     def validate_example(self, batch):
         candidates = batch[0].get_vertices(type="entities")
@@ -104,13 +105,16 @@ class CandidateAndAuxGcnModel:
         aux_hypergraph_input_model = self.aux_hypergraph_batch_preprocessor.preprocess([k[0] for k in batch[1]])
 
         transform = np.empty((0,2))
+        targets = np.empty(0)
         for i,element in enumerate(batch[1]):
-            if len(element[1].items()) == 0:
-                continue
-            transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
+            if len(element[1].items()) > 0:
+                transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
                          ,self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,v)] for k,v in element[1].items()]))
+            target_v = self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,element[2])
+            num_potential_answers = batch[0][i].get_vertices("entities").shape[0]
+            targets = np.concatenate((targets, np.repeat(target_v, num_potential_answers)))
 
-        preprocessed = [hypergraph_input_model, aux_hypergraph_input_model, transform]
+        preprocessed = [hypergraph_input_model, aux_hypergraph_input_model, transform, targets]
 
         if mode == 'train':
             gold_matrix = np.zeros_like(hypergraph_input_model.entity_vertex_matrix, dtype=np.float32)
@@ -143,8 +147,10 @@ class CandidateAndAuxGcnModel:
                                                    aux_hypergraph_input_model.n_entities,
                                                    hypergraph_input_model.n_entities)
 
+        self.target_comparator.handle_variable_assignment(o_preprocessed_batch[3])
+
         if mode == 'train':
-            self.decoder.assign_gold_variable(o_preprocessed_batch[3])
+            self.decoder.assign_gold_variable(o_preprocessed_batch[-1])
 
         return self.variables.get_assignment_dict()
 
@@ -164,6 +170,8 @@ class CandidateAndAuxGcnModel:
         self.hypergraph.event_vertex_embeddings = self.event_embedding.get_representations()
         self.aux_hypergraph.entity_vertex_embeddings = self.aux_entity_embedding.get_representations()
         self.aux_hypergraph.event_vertex_embeddings = self.aux_event_embedding.get_representations()
+
+        """
         for hgpu, a_hgpu in zip(self.hypergraph_gcn_propagation_units[:-1],
                                 self.aux_hypergraph_gcn_propagation_units[:-1]):
             a_hgpu.propagate()
@@ -176,11 +184,19 @@ class CandidateAndAuxGcnModel:
             hgpu.propagate()
             self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
             self.hypergraph.event_vertex_embeddings = tf.nn.relu(self.hypergraph.event_vertex_embeddings)
+
+        """
+
         self.aux_hypergraph_gcn_propagation_units[-1].propagate()
+
         self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(
             self.aux_hypergraph.entity_vertex_embeddings)
+
         self.hypergraph_gcn_propagation_units[-1].propagate()
-        entity_scores = tf.reduce_sum(self.hypergraph.entity_vertex_embeddings, 1)
+
+        entity_scores = self.target_comparator.get_comparison_scores(self.aux_hypergraph.entity_vertex_embeddings,
+                                                                     self.hypergraph.entity_vertex_embeddings) #tf.reduce_sum(self.hypergraph.entity_vertex_embeddings, 1)
+
         return entity_scores
 
 
