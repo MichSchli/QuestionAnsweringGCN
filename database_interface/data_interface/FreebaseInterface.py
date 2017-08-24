@@ -11,7 +11,7 @@ from model.hypergraph import Hypergraph
 class FreebaseInterface:
     endpoint = None
     prefix = None
-    max_entities_per_query = 100
+    max_entities_per_query = 400
 
     def __init__(self):
         self.endpoint = "http://localhost:8890/sparql"
@@ -78,11 +78,13 @@ class FreebaseInterface:
     Retrieve the 1-neighborhood of a set of vertices in the hypergraph
     """
     def get_adjacent_edges(self, node_identifiers, target="entities"):
+        print("retrieving")
         edge_query_result = EdgeQueryResult()
 
         self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True, target=target)
         self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=False, target=target)
 
+        print("done")
         return edge_query_result
 
 
@@ -146,7 +148,7 @@ class FreebaseInterface:
                 query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
             else:
                 query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
-            print("#", end='', flush=True)
+            #print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
 
@@ -161,7 +163,7 @@ class FreebaseInterface:
                 else:
                     edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
 
-        print("\r" + (i+1) * " "+"\r", end="", flush=True)
+        #print("\r" + (i+1) * " "+"\r", end="", flush=True)
 
     def execute_query(self, db_interface, query_string):
         #print(query_string)

@@ -28,12 +28,13 @@ class SivaAdditionalGraphs:
         return predicate
 
     def produce_additional_graphs(self):
-        print("starting...")
+        #print("starting...")
         target_sentence = next(sys.stdin)
         #for line, mapping in zip(sys.stdin, self.json_iterator_for_mapping):
         for line in sys.stdin:
             graph_string = next(sys.stdin)
             hypergraphs = []
+            print("reading siva graphs")
             while not " [main] DEBUG: " in graph_string and not graph_string.strip() == "END":
                 s_index = graph_string.index("[")
                 graph_string = graph_string[s_index+1:-2]
@@ -44,7 +45,7 @@ class SivaAdditionalGraphs:
 
                 graph_parts = graph_string.split("), ")
                 graph_preds = [self.to_predicate(gp) for gp in graph_parts]
-
+                
                 hypergraph = HypergraphModel()
                 for graph_pred in graph_preds:
                     for v in np.unique(graph_pred.params):
@@ -79,4 +80,5 @@ class SivaAdditionalGraphs:
                     mapping[vertex] = "http://rdf.freebase.com/ns/" + vertex[vertex.index(":m.")+1:]
 
             target_sentence = graph_string
+            print("yield")
             yield chosen_hypergraph, mapping

@@ -21,7 +21,7 @@ class HypergraphPreprocessor:
         self.graph_counter = 0
 
     def preprocess(self, hypergraph_batch):
-        print("Beginning preprocessing...")
+        #print("Beginning preprocessing...")
         self.in_batch_indices = {}
         self.in_batch_labels = {}
         self.graph_counter = 0
@@ -39,7 +39,7 @@ class HypergraphPreprocessor:
         event_start_index = 0
         entity_start_index = 0
         for i,hypergraph in enumerate(hypergraph_batch):
-            print("Element started")
+            #print("Element started")
             phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
             vertex_list_slices[i][0] = phg[0]
             vertex_list_slices[i][1] = phg[1]
@@ -62,11 +62,11 @@ class HypergraphPreprocessor:
             entity_map = np.concatenate((entity_map, phg[8]))
 
         entity_vertex_slices = vertex_list_slices[:,1]
-        print("Getting vertex lookup matrix")
+        #print("Getting vertex lookup matrix")
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
 
-        print(entity_vertex_slices)
-        print(entity_vertex_matrix.shape)
+        #print(entity_vertex_slices)
+        #print(entity_vertex_matrix.shape)
 
         n_entities = np.max(entity_vertex_matrix)
         n_events = np.sum(vertex_list_slices[:,0])
@@ -102,11 +102,11 @@ class HypergraphPreprocessor:
         return self.in_batch_labels[entity_index]
 
     def preprocess_single_hypergraph(self, hypergraph, event_start_index, entity_start_index):
-        print("Preprocessing hgraph")
+        #print("Preprocessing hgraph")
         event_vertices = hypergraph.get_vertices(type="events")
         entity_vertices = hypergraph.get_vertices(type="entities")
-        print(event_vertices)
-        print(entity_vertices)
+        #print(event_vertices)
+        #print(entity_vertices)
 
         vertex_map = self.entity_indexer.index(entity_vertices)
 
@@ -142,7 +142,7 @@ class HypergraphPreprocessor:
             en_to_en_2[i][0] = entity_indexes[edge[0]]
             en_to_en_2[i][1] = entity_indexes[edge[2]]
 
-        print("Doner")
+        #print("Doner")
 
         self.graph_counter += 1
 
