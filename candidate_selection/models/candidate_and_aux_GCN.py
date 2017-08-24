@@ -105,6 +105,8 @@ class CandidateAndAuxGcnModel:
 
         transform = np.empty((0,2))
         for i,element in enumerate(batch[1]):
+            if len(element[1].items()) == 0:
+                continue
             transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
                          ,self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,v)] for k,v in element[1].items()]))
 

@@ -34,7 +34,7 @@ class SivaAdditionalGraphs:
         for line in sys.stdin:
             graph_string = next(sys.stdin)
             hypergraphs = []
-            print("reading siva graphs")
+            #print("reading siva graphs")
             while not " [main] DEBUG: " in graph_string and not graph_string.strip() == "END":
                 s_index = graph_string.index("[")
                 graph_string = graph_string[s_index+1:-2]
@@ -80,5 +80,5 @@ class SivaAdditionalGraphs:
                     mapping[vertex] = "http://rdf.freebase.com/ns/" + vertex[vertex.index(":m.")+1:]
 
             target_sentence = graph_string
-            print("yield")
+            #print("yield")
             yield chosen_hypergraph, mapping
