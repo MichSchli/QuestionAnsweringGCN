@@ -40,18 +40,21 @@ class HypergraphModel:
         unique_vertices = vertices[np.isin(vertices, previous, invert=True)]
 
         if type == "entities":
+            unique_vertices = unique_vertices[np.isin(unique_vertices, self.discovered_entities, invert=True)]
             self.discovered_entities = np.concatenate((self.discovered_entities, unique_vertices))
         else:
+            unique_vertices = unique_vertices[np.isin(unique_vertices, self.discovered_events, invert=True)]
             self.discovered_events = np.concatenate((self.discovered_events, unique_vertices))
 
     def populate_discovered(self, type="entities"):
         if type == "entities":
             self.entity_vertices = np.concatenate((self.entity_vertices, self.discovered_entities))
             self.expandable_entity_vertices = np.concatenate((self.expandable_entity_vertices, self.discovered_entities))
+            self.discovered_entities = np.empty(0)
         else:
             self.event_vertices = np.concatenate((self.event_vertices, self.discovered_events))
             self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, self.discovered_events))
-
+            self.discovered_events = np.empty(0)
 
     """
     Get all seen vertices of a given type.
