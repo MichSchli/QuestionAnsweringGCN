@@ -164,6 +164,7 @@ class FreebaseInterface:
         print("\r" + (i+1) * " "+"\r", end="", flush=True)
 
     def execute_query(self, db_interface, query_string):
+        #print(query_string)
         db_interface.setQuery(query_string)
         retrieved = False
         while not retrieved:
@@ -173,7 +174,6 @@ class FreebaseInterface:
             except:
                 print("Query failed. Reattempting in 5 seconds...\n")
                 time.sleep(5)
-                #print(query_string)
         return results
 
     def initialize_sparql_interface(self):
