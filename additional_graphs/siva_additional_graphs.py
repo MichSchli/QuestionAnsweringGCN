@@ -76,9 +76,10 @@ class SivaAdditionalGraphs:
             chosen_hypergraph = hypergraphs[0]
             mapping = {}
             for vertex in chosen_hypergraph.get_vertices(type="entities"):
+                print(vertex)
                 if ":m." in vertex:
                     mapping[vertex] = "http://rdf.freebase.com/ns/" + vertex[vertex.index(":m.")+1:]
 
             target_sentence = graph_string
             #print("yield")
-            yield chosen_hypergraph, mapping
+            yield chosen_hypergraph, mapping, target_entity
