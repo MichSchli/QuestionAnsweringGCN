@@ -75,7 +75,7 @@ class SivaAdditionalGraphs:
             # TODO: Chooses last hypergraph completely
             done = False
             for hypergraph in hypergraphs:
-                for vertex in hypergraph.get_entity_vertices(type="entities"):
+                for vertex in hypergraph.get_vertices(type="entities"):
                     if "-blank-" in vertex:
                         chosen_hypergraph = hypergraph
                         target_entity = vertex
