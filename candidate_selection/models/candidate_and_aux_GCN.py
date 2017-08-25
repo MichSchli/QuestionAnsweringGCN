@@ -31,7 +31,7 @@ class CandidateAndAuxGcnModel:
 
     aux_iterator = None
 
-    def __init__(self, facts, aux_iterator, layers=1, dimension=18):
+    def __init__(self, facts, aux_iterator, layers=1, dimension=6):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
