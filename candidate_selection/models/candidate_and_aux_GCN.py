@@ -52,7 +52,7 @@ class CandidateAndAuxGcnModel:
         self.event_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=True)
 
         self.aux_entity_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=True, variable_prefix="aux")
-        self.aux_event_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=True, variable_prefix="aux")
+        self.aux_event_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=True, variable_prefix="aux_event")
 
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
         self.aux_hypergraph = TensorflowHypergraphRepresentation(self.variables, variable_prefix="aux")
