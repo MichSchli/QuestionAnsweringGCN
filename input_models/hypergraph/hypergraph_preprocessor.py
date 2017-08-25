@@ -98,8 +98,8 @@ class HypergraphPreprocessor:
     def retrieve_entity_indexes_in_batch(self, graph_index, entity_label):
         return self.in_batch_indices[graph_index][entity_label]
 
-    def retrieve_entity_labels_in_batch(self, entity_index):
-        return self.in_batch_labels[entity_index]
+    def retrieve_entity_labels_in_batch(self, graph_index, entity_index):
+        return self.in_batch_labels[graph_index][entity_index]
 
     def preprocess_single_hypergraph(self, hypergraph, event_start_index, entity_start_index):
         #print("Preprocessing hgraph")
@@ -113,7 +113,7 @@ class HypergraphPreprocessor:
         event_indexes = {k:v+event_start_index for v, k in enumerate(event_vertices)}
         entity_indexes = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
 
-        self.in_batch_labels.update({v+entity_start_index:k for v, k in enumerate(entity_vertices)})
+        self.in_batch_labels[self.graph_counter] = {v:k for v, k in enumerate(entity_vertices)}
         self.in_batch_indices[self.graph_counter] = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
 
         n_event_vertices = event_vertices.shape[0]

@@ -10,7 +10,7 @@ class GcnConcatMessagePasser:
     dimension = None
     variable_prefix = None
 
-    n_coefficients = 2
+    n_coefficients = 3
     submatrix_d = None
 
     senders = None
@@ -86,6 +86,9 @@ class GcnConcatMessagePasser:
                                                    dense_shape=mtr_shape))
 
         return tf.sparse_reduce_sum_sparse(tensor, 0)
+
+    def get_optimizable_parameters(self):
+        return [self.W]
 
     def prepare_variables(self):
         #TODO: W initializer is total crap. Also no bias.

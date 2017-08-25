@@ -22,7 +22,7 @@ class SoftmaxDecoder:
         alternate = tf.map_fn(map_function, elems, dtype=tf.float32)
         return alternate
 
-    def decode_to_loss(self, entity_scores):
+    def decode_to_loss(self, entity_scores, sum_examples=True):
         entity_vertex_scores = tf.concat((tf.constant([0], dtype=tf.float32), entity_scores), 0)
         entity_vertex_scores_distributed = tf.nn.embedding_lookup(entity_vertex_scores,
                                                                   self.variables.get_variable("vertex_lookup_matrix"))
@@ -35,7 +35,11 @@ class SoftmaxDecoder:
 
         elems = (entity_vertex_scores_distributed, self.variables.get_variable("vertex_count_per_hypergraph"), gold_scores)
         alternate = tf.map_fn(map_function, elems, dtype=tf.float32)
-        return tf.reduce_sum(alternate)
+
+        if sum_examples:
+            return tf.reduce_sum(alternate)
+        else:
+            return alternate
 
     def prepare_variables(self, mode='predict'):
         self.variables.add_variable("vertex_lookup_matrix", tf.placeholder(tf.int32))

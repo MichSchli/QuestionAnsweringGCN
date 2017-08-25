@@ -31,7 +31,7 @@ class CandidateAndAuxGcnModel:
 
     aux_iterator = None
 
-    def __init__(self, facts, aux_iterator, layers=1, dimension=6):
+    def __init__(self, facts, aux_iterator, layers=1, dimension=18):
         self.dimension = dimension
         self.entity_dict = {}
         self.facts = facts
@@ -51,7 +51,7 @@ class CandidateAndAuxGcnModel:
         self.entity_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=False)
         self.event_embedding = VertexEmbedding(facts, self.variables, self.dimension,random=True)
 
-        self.aux_entity_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=False, variable_prefix="aux")
+        self.aux_entity_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=True, variable_prefix="aux")
         self.aux_event_embedding = VertexEmbedding(aux_facts, self.variables, self.dimension, random=True, variable_prefix="aux")
 
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
@@ -128,7 +128,15 @@ class CandidateAndAuxGcnModel:
         return preprocessed
 
     def get_optimizable_parameters(self):
-        return self.entity_embedding.get_optimizable_parameters()
+        optimizable_vars = self.entity_embedding.get_optimizable_parameters() #+ self.aux_entity_embedding.get_optimizable_parameters()
+
+        for hgpu in self.hypergraph_gcn_propagation_units:
+            optimizable_vars += hgpu.get_optimizable_parameters()
+
+        for hgpu in self.aux_hypergraph_gcn_propagation_units:
+            optimizable_vars += hgpu.get_optimizable_parameters()
+
+        return optimizable_vars
 
     def handle_variable_assignment(self, o_preprocessed_batch, mode="predict"):
         hypergraph_input_model = o_preprocessed_batch[0]
@@ -139,7 +147,7 @@ class CandidateAndAuxGcnModel:
 
         aux_hypergraph_input_model = o_preprocessed_batch[1]
         self.aux_event_embedding.handle_variable_assignment(aux_hypergraph_input_model.n_events)
-        self.aux_entity_embedding.handle_variable_assignment(aux_hypergraph_input_model.entity_map)
+        self.aux_entity_embedding.handle_variable_assignment(aux_hypergraph_input_model.n_entities)
         self.aux_hypergraph.handle_variable_assignment(aux_hypergraph_input_model)
 
         self.aux_mapper.handle_variable_assignment(o_preprocessed_batch[2][:,0],
@@ -154,16 +162,22 @@ class CandidateAndAuxGcnModel:
 
         return self.variables.get_assignment_dict()
 
-    def retrieve_entities(self, entity_index):
-        return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(entity_index)]
+    def retrieve_entities(self, graph_index, entity_index):
+        return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(graph_index, entity_index)]
 
-    def get_loss_graph(self):
-        entity_scores = self.compute_entity_scores()
-        return self.decoder.decode_to_loss(entity_scores)
+    entity_scores=None
+
+    def get_loss_graph(self, sum_examples=True):
+        if self.entity_scores is None:
+            self.entity_scores = self.compute_entity_scores()
+
+        return self.decoder.decode_to_loss(self.entity_scores, sum_examples=sum_examples)
 
     def get_prediction_graph(self):
-        entity_scores = self.compute_entity_scores()
-        return self.decoder.decode_to_prediction(entity_scores)
+        if self.entity_scores is None:
+            self.entity_scores = self.compute_entity_scores()
+
+        return self.decoder.decode_to_prediction(self.entity_scores)
 
     def compute_entity_scores(self):
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
@@ -188,10 +202,22 @@ class CandidateAndAuxGcnModel:
         """
 
         self.aux_hypergraph_gcn_propagation_units[-1].propagate()
+        self.aux_hypergraph.entity_vertex_embeddings = tf.nn.relu(self.aux_hypergraph.entity_vertex_embeddings)
+        self.aux_hypergraph_gcn_propagation_units[-1].propagate()
+        self.aux_hypergraph.entity_vertex_embeddings = tf.nn.relu(self.aux_hypergraph.entity_vertex_embeddings)
+        self.aux_hypergraph_gcn_propagation_units[-1].propagate()
+        self.aux_hypergraph.entity_vertex_embeddings = tf.nn.relu(self.aux_hypergraph.entity_vertex_embeddings)
+        self.aux_hypergraph_gcn_propagation_units[-1].propagate()
 
         self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(
             self.aux_hypergraph.entity_vertex_embeddings)
 
+        self.hypergraph_gcn_propagation_units[-1].propagate()
+        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
+        self.hypergraph_gcn_propagation_units[-1].propagate()
+        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
+        self.hypergraph_gcn_propagation_units[-1].propagate()
+        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
         self.hypergraph_gcn_propagation_units[-1].propagate()
 
         entity_scores = self.target_comparator.get_comparison_scores(self.aux_hypergraph.entity_vertex_embeddings,

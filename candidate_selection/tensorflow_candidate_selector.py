@@ -80,14 +80,17 @@ class TensorflowCandidateSelector:
         #self.model.prepare_variables(mode='predict')
 
         model_prediction = self.model.get_prediction_graph()
+        model_loss = self.model.get_loss_graph(sum_examples=False)
 
         for batch in batch_iterator:
             preprocessed_batch = self.model.preprocess(batch, mode='predict')
             assignment_dict = self.model.handle_variable_assignment(preprocessed_batch, mode='predict')
-            predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
+            predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
 
-            for prediction in predictions:
+            print("Loss was: " + str(loss))
+
+            for i, prediction in enumerate(predictions):
                 print(prediction)
                 best_prediction = np.argmax(prediction)
-                output = self.model.retrieve_entities(best_prediction)
+                output = self.model.retrieve_entities(i, best_prediction)
                 yield output
