@@ -110,6 +110,9 @@ class CandidateAndAuxGcnModel:
             if len(element[1].items()) > 0:
                 transform = np.concatenate((transform, [[self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,k)
                          ,self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,v)] for k,v in element[1].items()]))
+
+            print(element[0].get_vertices("entities"))
+
             target_v = self.aux_hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,element[2])
             num_potential_answers = batch[0][i].get_vertices("entities").shape[0]
             targets = np.concatenate((targets, np.repeat(target_v, num_potential_answers)))
