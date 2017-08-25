@@ -72,8 +72,18 @@ class SivaAdditionalGraphs:
                 graph_string = next(sys.stdin)
                 hypergraphs.append(hypergraph)
 
-            # TODO: Chooses first hypergraph at random
-            chosen_hypergraph = hypergraphs[0]
+            # TODO: Chooses last hypergraph completely
+            done = False
+            for hypergraph in hypergraphs:
+                for vertex in hypergraph.get_entity_vertices(type="entities"):
+                    if "-blank-" in vertex:
+                        chosen_hypergraph = hypergraph
+                        target_entity = vertex
+                        done = True
+                        break
+                if done:
+                    break
+
             mapping = {}
             for vertex in chosen_hypergraph.get_vertices(type="entities"):
                 if ":m." in vertex:
