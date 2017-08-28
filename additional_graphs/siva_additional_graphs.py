@@ -96,4 +96,8 @@ class SivaAdditionalGraphs:
             print(chosen_hypergraph.get_vertices(type="entities"))
             target_sentence = graph_string
             #print("yield")
-            yield chosen_hypergraph, mapping, target_entity
+
+            if chosen_hypergraph is None:
+                yield None
+            else:
+                yield chosen_hypergraph, mapping, target_entity
