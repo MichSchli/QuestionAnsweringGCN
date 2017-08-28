@@ -97,6 +97,7 @@ class CandidateAndAuxGcnModel:
         target_vertices = batch[-1]
 
         # For now, eliminate all batches without 100 % overlap
+        # Remember: This is also executed at test time, so will need refactoring
         target_vertices_in_candidates = np.isin(target_vertices, candidates)
         return target_vertices_in_candidates.all()
 
