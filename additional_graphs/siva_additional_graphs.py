@@ -85,6 +85,12 @@ class SivaAdditionalGraphs:
                 if done:
                     break
 
+            print(target_sentence)
+
+            if chosen_hypergraph is None:
+                yield None
+                continue
+
             mapping = {}
             for vertex in chosen_hypergraph.get_vertices(type="entities"):
                 if ":m." in vertex:
@@ -92,12 +98,8 @@ class SivaAdditionalGraphs:
                 elif "-blank-" in vertex:
                     target_entity = vertex
 
-            print(target_sentence)
             print(chosen_hypergraph.get_vertices(type="entities"))
             target_sentence = graph_string
             #print("yield")
 
-            if chosen_hypergraph is None:
-                yield None
-            else:
-                yield chosen_hypergraph, mapping, target_entity
+            yield chosen_hypergraph, mapping, target_entity
