@@ -28,7 +28,7 @@ class TensorflowCandidateSelector:
         index = 0
         for elements in zip(*iterators):
             if validate_batches and not self.valid_example(elements):
-                print("invalidated ")+str(index)
+                print("invalidated "+str(index))
                 continue
 
             for j, element in enumerate(elements):
