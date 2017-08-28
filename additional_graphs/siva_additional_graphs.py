@@ -74,6 +74,7 @@ class SivaAdditionalGraphs:
 
             # TODO: Chooses last hypergraph completely randomly
             done = False
+            chosen_hypergraph = None
             for hypergraph in hypergraphs:
                 for vertex in hypergraph.get_vertices(type="entities"):
                     if "-blank-" in vertex:
