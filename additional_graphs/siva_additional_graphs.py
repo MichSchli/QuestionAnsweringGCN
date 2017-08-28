@@ -72,7 +72,7 @@ class SivaAdditionalGraphs:
                 graph_string = next(sys.stdin)
                 hypergraphs.append(hypergraph)
 
-            # TODO: Chooses last hypergraph completely
+            # TODO: Chooses last hypergraph completely randomly
             done = False
             for hypergraph in hypergraphs:
                 for vertex in hypergraph.get_vertices(type="entities"):
@@ -91,6 +91,7 @@ class SivaAdditionalGraphs:
                 elif "-blank-" in vertex:
                     target_entity = vertex
 
+            print(target_sentence)
             target_sentence = graph_string
             #print("yield")
             yield chosen_hypergraph, mapping, target_entity
