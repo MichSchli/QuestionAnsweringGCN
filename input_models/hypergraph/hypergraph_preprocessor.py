@@ -113,8 +113,8 @@ class HypergraphPreprocessor:
         event_indexes = {k:v+event_start_index for v, k in enumerate(event_vertices)}
         entity_indexes = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
 
-        print(self.graph_counter)
-        print(entity_vertices[:3])
+        #print(self.graph_counter)
+        #print(entity_vertices[:3])
 
         self.in_batch_labels[self.graph_counter] = {v:k for v, k in enumerate(entity_vertices)}
         self.in_batch_indices[self.graph_counter] = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}

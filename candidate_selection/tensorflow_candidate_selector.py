@@ -27,6 +27,9 @@ class TensorflowCandidateSelector:
 
         index = 0
         for elements in zip(*iterators):
+            print(index)
+            print(elements[0].get_vertices(type="entities")[:3])
+            print(elements[0].get_vertices(type="entities")[:3])
             if validate_batches and not self.valid_example(elements):
                 print("invalidated "+str(index))
                 continue
