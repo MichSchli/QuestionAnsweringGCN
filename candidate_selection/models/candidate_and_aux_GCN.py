@@ -92,13 +92,19 @@ class CandidateAndAuxGcnModel:
         for hgpu in self.aux_hypergraph_gcn_propagation_units:
             hgpu.prepare_variables()
 
-    def validate_example(self, batch):
-        candidates = batch[0].get_vertices(type="entities")
-        target_vertices = batch[-1]
+    def validate_example(self, example):
+        # For now, eleminate all elements with null aux graphs == no target vertex in any aux graph
+        # Remember: Also executed at test time
+        if example[1] is None:
+            return False
 
-        # For now, eliminate all batches without 100 % overlap
+        candidates = example[0].get_vertices(type="entities")
+        target_vertices = example[-1]
+
+        # For now, eliminate all elements without 100 % overlap
         # Remember: This is also executed at test time, so will need refactoring
         target_vertices_in_candidates = np.isin(target_vertices, candidates)
+
         return target_vertices_in_candidates.all()
 
     def preprocess(self, batch, mode='test'):
