@@ -93,7 +93,8 @@ class SivaAdditionalGraphs:
 
             mapping = {}
             for vertex in chosen_hypergraph.get_vertices(type="entities"):
-                if ":m." in vertex:
+                # Ensure the vertex is an entitity and not the literal "m." (occurs once in training data)
+                if ":m." in vertex and not vertex.endswith("m."):
                     mapping[vertex] = "http://rdf.freebase.com/ns/" + vertex[vertex.index(":m.")+1:]
                 elif "-blank-" in vertex:
                     target_entity = vertex
