@@ -5,7 +5,7 @@ text_parsing/models/
 siva-parser/
 
 # Data files ignored for now:
-data/spades/
+#data/spades/
 
 # Ignore PC files
 .idea/
