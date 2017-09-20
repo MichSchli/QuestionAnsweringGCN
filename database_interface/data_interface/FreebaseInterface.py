@@ -53,6 +53,8 @@ class FreebaseInterface:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
 
         query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
+        # Take out all schemastaging for now. Might consider putting some parts back in later:
+        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/type.object.key\" )"
