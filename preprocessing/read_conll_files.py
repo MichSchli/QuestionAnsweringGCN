@@ -37,7 +37,7 @@ class ConllReader:
                         sentence_entities = np.unique(np.array([self.entity_prefix + entity for entity in sentence_entities]))
                         yield sentence_entities
                     elif output == "gold":
-                        gold_entities = [e[0] if e[0] != "_" else e[1] for e in gold_matrix]
+                        gold_entities = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
                         yield gold_entities
                     else:
                         yield sentence_matrix, gold_matrix

@@ -175,6 +175,7 @@ class FreebaseInterface:
                 retrieved = True
             except:
                 print("Query failed. Reattempting in 5 seconds...\n")
+                print(query_string)
                 time.sleep(5)
         return results
 

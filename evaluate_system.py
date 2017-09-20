@@ -20,7 +20,7 @@ database_interface = FreebaseInterface()
 #database_interface = CsvInterface("data/toy/toy.graph")
 database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), VertexPropertyRetriever(database_interface))
 sentence_reader = ConllReader()
-candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader)
+candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=2)
 gold_reader_for_oracle = ConllReader(output="gold")
 
 strategy = OracleCandidate(candidate_generator, gold_reader_for_oracle)
