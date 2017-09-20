@@ -52,6 +52,7 @@ class FreebaseInterface:
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
 
+        query_string += "\n&& lang(?" + other + ") = 'en'"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/type.object.key\" )"
@@ -59,6 +60,7 @@ class FreebaseInterface:
         query_string += " )\n"
 
         query_string += "}"
+
 
         return query_string
 
