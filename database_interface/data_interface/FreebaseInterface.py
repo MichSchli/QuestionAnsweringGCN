@@ -48,9 +48,14 @@ class FreebaseInterface:
         query_string += "filter "
 
         if hyperedges:
-            query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\"))\n"
+            query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
         else:
-            query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ") )\n"
+            query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
+
+        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
+        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
+        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/type.object.key\" )"
+        query_string += " )\n"
 
         query_string += "}"
 
