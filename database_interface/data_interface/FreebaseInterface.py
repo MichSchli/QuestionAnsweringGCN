@@ -140,6 +140,7 @@ class FreebaseInterface:
     """
     def retrieve_edges_in_one_direction(self, center_vertices, edge_query_result, subject=True, target="entities"):
         db_interface = self.initialize_sparql_interface()
+        print("retrieval...")
 
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
