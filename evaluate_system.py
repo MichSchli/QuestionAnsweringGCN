@@ -3,6 +3,7 @@ import argparse
 from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
+from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
 from database_interface.properties.vertex_property_retriever import VertexPropertyRetriever
 from evaluation.python_evaluator import Evaluator
@@ -18,7 +19,7 @@ gold_reader = ConllReader(output="gold")
 
 database_interface = FreebaseInterface()
 #database_interface = CsvInterface("data/toy/toy.graph")
-database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), VertexPropertyRetriever(database_interface))
+database = HypergraphInterface(database_interface, OnlyFreebaseExpansionStrategy(), VertexPropertyRetriever(database_interface))
 sentence_reader = ConllReader()
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=2)
 gold_reader_for_oracle = ConllReader(output="gold")
