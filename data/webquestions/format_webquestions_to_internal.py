@@ -41,7 +41,7 @@ for i,line in enumerate(sentences):
 
         for w in range(words_before, words_before + words_in):
             sentence_matrix[w][5] = "I"
-            sentence_matrix[w][6] = entity_line[4][1:].replace("/", ".") if sentence_matrix[w][6] == "_" else (sentence_matrix[w][6] +"," + entity_line[4].replace("/", "."))
+            sentence_matrix[w][6] = entity_line[4][1:].replace("/", ".") if sentence_matrix[w][6] == "_" else (sentence_matrix[w][6] +"," + entity_line[4][1:].replace("/", "."))
             sentence_matrix[w][7] = entity_line[6] if sentence_matrix[w][7] == "_" else (sentence_matrix[w][7] +"," + entity_line[6])
 
         sentence_matrix[words_before][5] = "B"
