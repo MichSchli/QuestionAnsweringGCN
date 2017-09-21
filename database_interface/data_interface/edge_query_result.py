@@ -7,10 +7,15 @@ class EdgeQueryResult:
     backward_edges = None
     vertices = None
 
+    finalized_forward = None
+    finalized_backward = None
+
     def __init__(self):
         self.forward_edges = []
         self.backward_edges = []
         self.vertices = {}
+        self.finalized_forward = False
+        self.finalized_backward = False
 
     def append_edge(self, edge, forward=True):
         if forward:
@@ -22,10 +27,23 @@ class EdgeQueryResult:
         self.vertices[vertex] = type
 
     def get_forward_edges(self):
-        return np.array(self.forward_edges)
+        print(len(self.forward_edges))
+        #for edge in self.forward_edges:
+        #    print(edge)
+
+        # Avoid allocating more arrays than strictly necessary:
+        if not self.finalized_forward:
+            self.forward_edges = np.array(self.forward_edges)
+            self.finalized_forward = True
+
+        return self.forward_edges
 
     def get_backward_edges(self):
-        return np.array(self.backward_edges)
+        if not self.finalized_backward:
+            self.backward_edges = np.array(self.backward_edges)
+            self.finalized_backward = True
+
+        return self.backward_edges
 
     def __str__(self):
         return "Forward: " + str(self.get_forward_edges()) +\
