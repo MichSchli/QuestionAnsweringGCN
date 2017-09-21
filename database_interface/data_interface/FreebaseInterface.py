@@ -49,12 +49,14 @@ class FreebaseInterface:
 
         if literals_only:
             query_string += "( isLiteral(?" + other + ")"
+            query_string += "\n&& lang(?" + other + ") = 'en')"
         elif hyperedges:
             query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
+            query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
+            query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
 
-        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
