@@ -65,6 +65,8 @@ class HypergraphInterface:
             return
 
         self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "entities", literals_only=True)
+        hypergraph.mark_expanded(candidates_for_expansion, "entities")
+        hypergraph.populate_discovered("entities")
 
     def expand_hypergraph_from_data_interface(self,
                                               frontier,
