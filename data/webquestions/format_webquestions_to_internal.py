@@ -26,25 +26,26 @@ for i,line in enumerate(sentences):
     words = utterance.split(" ")
     char_counter = 0
     for word_counter,word in enumerate(words):
-        word_vector = ["_"] * 8
+        word_vector = ["_"] * 5
         word_vector[0] = str(word_counter)
         word_vector[1] = word
-        word_vector[5] = "O"
 
         word_counter += 1
         sentence_matrix.append(word_vector)
 
+    entity_matrix = []
     while entity_line[0].endswith(str(i)):
         entity_words = line["utterance"][int(entity_line[2]):int(entity_line[2])+int(entity_line[3])]
         words_before = line["utterance"][:int(entity_line[2])].count(" ")
-        words_in = entity_words.count(" ") + 1
+        words_in = entity_words.count(" ")
 
-        for w in range(words_before, words_before + words_in):
-            sentence_matrix[w][5] = "I"
-            sentence_matrix[w][6] = entity_line[4][1:].replace("/", ".") if sentence_matrix[w][6] == "_" else (sentence_matrix[w][6] +"," + entity_line[4][1:].replace("/", "."))
-            sentence_matrix[w][7] = entity_line[6] if sentence_matrix[w][7] == "_" else (sentence_matrix[w][7] +"," + entity_line[6])
+        entity_vector = ["_"]*4
+        entity_vector[0] = str(words_before)
+        entity_vector[1] = str(words_before + words_in)
+        entity_vector[2] = entity_line[4][1:].replace("/", ".")
+        entity_vector[3] = entity_line[6]
 
-        sentence_matrix[words_before][5] = "B"
+        entity_matrix.append(entity_vector)
 
         entity_line = entities.readline().strip().split('\t')
 
@@ -60,5 +61,7 @@ for i,line in enumerate(sentences):
         print("")
 
     print("\n".join(["\t".join(line) for line in sentence_matrix]))
+    print("")
+    print("\n".join(["\t".join(line) for line in entity_matrix]))
     print("")
     print("\n".join(["\t".join(line) for line in answer_matrix]))

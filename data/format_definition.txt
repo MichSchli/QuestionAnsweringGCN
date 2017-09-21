@@ -1,4 +1,7 @@
-word_id	word	lemma	pos	ner	entity	linked_entities_csv	entity_link_scores_csv
+word_id	word	lemma	pos	ner
+...
+
+entity_start_id	entity_end_id	entity_mid	entity_score
 ...
 
 answer_entity_mid	answer_entity_description
