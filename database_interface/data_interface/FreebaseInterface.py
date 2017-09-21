@@ -49,7 +49,7 @@ class FreebaseInterface:
 
         if literals_only:
             query_string += "( isLiteral(?" + other + ")"
-            query_string += "\n&& lang(?" + other + ") = 'en')"
+            query_string += "\n&& lang(?" + other + ") = 'en'"
         elif hyperedges:
             query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
             query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
