@@ -62,6 +62,7 @@ for i,line in enumerate(sentences):
 
     print("\n".join(["\t".join(line) for line in sentence_matrix]))
     print("")
-    print("\n".join(["\t".join(line) for line in entity_matrix]))
+    if len(entity_matrix) > 0:
+        print("\n".join(["\t".join(line) for line in entity_matrix]))
     print("")
     print("\n".join(["\t".join(line) for line in answer_matrix]))
