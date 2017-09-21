@@ -15,13 +15,16 @@ class HypergraphInterface:
         self.expansion_algorithm = expansion_algorithm
         self.vertex_property_retriever = vertex_property_retriever
 
-    def get_neighborhood_hypergraph(self, vertices, hops=1):
+    def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
 
         for i in range(hops):
             self.expand_hypergraph_to_one_neighborhood(hypergraph)
+
+        if extra_literals:
+            self.expand_hypergraph_to_adjacent_literals(hypergraph)
 
         return hypergraph
 
@@ -51,12 +54,25 @@ class HypergraphInterface:
         hypergraph.mark_expanded(candidates_for_expansion, "entities")
         hypergraph.populate_discovered("entities")
 
+    def expand_hypergraph_to_adjacent_literals(self, hypergraph):
+        # In the long run, we may wish to select these through some smarter strategy:
+        candidates_for_expansion = hypergraph.get_expandable_vertices("entities", pop=True)
+
+        # Applies a filter to remove e.g. non-freebase vertices:
+        filtered_frontier = self.expansion_algorithm.get_frontier(candidates_for_expansion)
+
+        if not filtered_frontier.shape[0] > 0:
+            return
+
+        self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "entities", literals_only=True)
+
     def expand_hypergraph_from_data_interface(self,
                                               frontier,
                                               hypergraph,
                                               sources,
-                                              targets):
-        edge_query_result = self.data_interface.get_adjacent_edges(frontier, target=targets)
+                                              targets,
+                                              literals_only=False):
+        edge_query_result = self.data_interface.get_adjacent_edges(frontier, target=targets, literals_only=literals_only)
         hypergraph.expand(edge_query_result.get_forward_edges(),
                           edge_query_result.get_backward_edges(),
                           sources=sources,

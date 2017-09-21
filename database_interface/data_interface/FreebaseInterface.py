@@ -37,7 +37,7 @@ class FreebaseInterface:
      - hyperedges: If true, retrieve event neighbors. If false, retrieve entity neighbors.
      - forward: If true, retrieve edges where the centroids are the subject. If false, retrieve edges where the centroids are the object.
     """
-    def construct_neighbor_query(self, center_vertices, hyperedges=True, forward=True):
+    def construct_neighbor_query(self, center_vertices, hyperedges=True, forward=True, literals_only=False):
         center = "s" if forward else "o"
         other = "o" if forward else "s"
 
@@ -47,7 +47,9 @@ class FreebaseInterface:
         query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
         query_string += "filter "
 
-        if hyperedges:
+        if literals_only:
+            query_string += "( isLiteral(?" + other + ")"
+        elif hyperedges:
             query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
@@ -87,12 +89,12 @@ class FreebaseInterface:
     """
     Retrieve the 1-neighborhood of a set of vertices in the hypergraph
     """
-    def get_adjacent_edges(self, node_identifiers, target="entities"):
+    def get_adjacent_edges(self, node_identifiers, target="entities", literals_only=False):
         #print("retrieving")
         edge_query_result = EdgeQueryResult()
 
-        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True, target=target)
-        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=False, target=target)
+        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True, target=target, literals_only=literals_only)
+        self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=False, target=target, literals_only=literals_only)
 
         #print("done")
         return edge_query_result
@@ -148,7 +150,7 @@ class FreebaseInterface:
     """
     Retrieve edges from DB going one direction.
     """
-    def retrieve_edges_in_one_direction(self, center_vertices, edge_query_result, subject=True, target="entities"):
+    def retrieve_edges_in_one_direction(self, center_vertices, edge_query_result, subject=True, target="entities", literals_only=False):
         db_interface = self.initialize_sparql_interface()
         print("retrieval...")
 
@@ -156,9 +158,9 @@ class FreebaseInterface:
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             if target == "entities":
-                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
+                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject, literals_only=literals_only)
             else:
-                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
+                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject, literals_only=literals_only)
             #print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
