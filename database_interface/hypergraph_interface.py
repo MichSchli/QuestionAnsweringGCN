@@ -54,7 +54,7 @@ class HypergraphInterface:
         hypergraph.mark_expanded(candidates_for_expansion, "entities")
         hypergraph.populate_discovered("entities")
 
-    def expand_hypergraph_to_adjacent_literals(self, hypergraph):
+    def expand_hypergraph_to_adjacent_literals(self, hypergraph, use_event_edges=False):
         # In the long run, we may wish to select these through some smarter strategy:
         candidates_for_expansion = hypergraph.get_expandable_vertices("entities", pop=True)
 
@@ -65,6 +65,21 @@ class HypergraphInterface:
             return
 
         self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "entities", literals_only=True)
+
+        if use_event_edges:
+            self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "events")
+
+            hypergraph.populate_discovered("events")
+            unexpanded_event_vertices = hypergraph.get_expandable_vertices("events", pop=True)
+
+            if unexpanded_event_vertices.shape[0] > 0:
+                self.expand_hypergraph_from_data_interface(unexpanded_event_vertices,
+                                                           hypergraph,
+                                                           "events",
+                                                           "entities",
+                                                           literals_only=True)
+                hypergraph.mark_expanded(unexpanded_event_vertices, "events")
+
         hypergraph.mark_expanded(candidates_for_expansion, "entities")
         hypergraph.populate_discovered("entities")
 
