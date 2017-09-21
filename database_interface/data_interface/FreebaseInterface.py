@@ -167,7 +167,7 @@ class FreebaseInterface:
                 # Retrieving literals only crashes SPARQL DB. So, we filter in python instead:
                 if literals_only and subject and result["o"]["type"] != "literal":
                     continue
-                elif literals_only and object and result["s"]["type"] != "literal":
+                elif literals_only and not subject and result["s"]["type"] != "literal":
                     continue
 
                 edge_query_result.append_edge([
