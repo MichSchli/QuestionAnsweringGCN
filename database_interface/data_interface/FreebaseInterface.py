@@ -37,7 +37,7 @@ class FreebaseInterface:
      - hyperedges: If true, retrieve event neighbors. If false, retrieve entity neighbors.
      - forward: If true, retrieve edges where the centroids are the subject. If false, retrieve edges where the centroids are the object.
     """
-    def construct_neighbor_query(self, center_vertices, hyperedges=True, forward=True, literals_only=False):
+    def construct_neighbor_query(self, center_vertices, hyperedges=True, forward=True):
         center = "s" if forward else "o"
         other = "o" if forward else "s"
 
@@ -47,16 +47,12 @@ class FreebaseInterface:
         query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
         query_string += "filter "
 
-        if literals_only:
-            query_string += "( isLiteral(?" + other + ")"
-            query_string += "\n&& lang(?" + other + ") = 'en'"
-        elif hyperedges:
+        if hyperedges:
             query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
-            query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
-            query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
 
+        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
@@ -160,14 +156,20 @@ class FreebaseInterface:
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             if target == "entities":
-                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject, literals_only=literals_only)
+                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
             else:
-                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject, literals_only=literals_only)
+                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
             #print("#", end='', flush=True)
 
             results = self.execute_query(db_interface, query_string)
 
             for j,result in enumerate(results["results"]["bindings"]):
+                # Retrieving literals only crashes SPARQL DB. So, we filter in python instead:
+                if literals_only and subject and result["o"]["type"] != "literal":
+                    continue
+                elif literals_only and object and result["s"]["type"] != "literal":
+                    continue
+
                 edge_query_result.append_edge([
                     result["s"]["value"],
                     result["r"]["value"],
