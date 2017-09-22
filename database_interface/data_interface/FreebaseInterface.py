@@ -45,12 +45,12 @@ class FreebaseInterface:
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
         query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
-        query_string += "filter "
+        query_string += "filter ( "
 
         if hyperedges:
-            query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\")"
+            query_string += "( not exists { ?" + other + " ns:type.object.name ?name } && !isLiteral(?" + other + ") && strstarts(str(?"+other+"), \"" + self.prefix + "\") )"
         else:
-            query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ")"
+            query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ") )"
 
         query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
@@ -163,6 +163,10 @@ class FreebaseInterface:
 
             results = self.execute_query(db_interface, query_string)
 
+            if results is None:
+                print("Query failed to work five times. Skipping.")
+                continue
+
             for j,result in enumerate(results["results"]["bindings"]):
                 # Retrieving literals only crashes SPARQL DB. So, we filter in python instead:
                 if literals_only and subject and result["o"]["type"] != "literal":
@@ -186,13 +190,19 @@ class FreebaseInterface:
         #print(query_string)
         db_interface.setQuery(query_string)
         retrieved = False
+        trial_counter = 0
         while not retrieved:
             try:
                 results = db_interface.query().convert()
                 retrieved = True
             except:
+                trial_counter += 1
+                if trial_counter == 5:
+                    return None
+
                 print("Query failed. Reattempting in 5 seconds...\n")
                 print(query_string)
+
                 time.sleep(5)
         return results
 
