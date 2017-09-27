@@ -7,146 +7,245 @@ parser.add_argument('--train_file', type=str, help='The location of the .conll f
 parser.add_argument('--test_file', type=str, help='The location of the .conll file to contain test data')
 args = parser.parse_args()
 
-edges = []
+class PatternTrie:
 
-stop = False
+    word = None
+    next = None
+    identifier = None
 
-entity_vertices = []
-event_vertices = []
-literal_vertices = []
+    def __init__(self, word):
+        self.word = word
+        self.next = {}
 
-sentences = []
-sentence_entities = []
+    def insert(self, word_list, identifier):
+        if len(word_list) == 1:
+            self.identifier = identifier
+            return
 
-while not stop:
-    print("Input pattern:")
-    pattern = input()
-    if pattern.strip() == "stop":
-        stop = True
-        continue
+        if word_list[1] not in self.next:
+            self.next[word_list[1]] = PatternTrie(word_list[1])
 
-    print("Input sentence:")
-    from_console = input()
+        self.next[word_list[1]].insert(word_list[1:], identifier)
 
-    if from_console.strip() == "stop":
-        stop = True
-        continue
+    def pretty_print(self, tabs=0):
+        print("\t"*tabs + self.word + " / ID: " + str(self.identifier))
+        for subtree in self.next.values():
+            subtree.pretty_print(tabs=tabs+1)
 
-    words = from_console.strip().split(' ')
+    def get_identifier(self, pattern):
+        if len(pattern) == 1:
+            return self.identifier
 
-    sentences.append(words)
+        next_word = pattern[1]
 
-    if pattern == "1":
-        s = words[0]
-        v = words[1]
-        o = words[2]
+        result = None
+        if next_word in self.next:
+            result = self.next[next_word].get_identifier(pattern[1:])
 
-        s_type = "entity" if s.endswith("_") else "literal"
-        o_type = "entity" if o.endswith("_") else "literal"
+        if result is None and "E" in self.next:
+            result = self.next["E"].get_identifier(pattern[1:])
 
-        sentence_entities.append([[0, s[:-1]], [2, o[:-1]]])
+        if result is None and "R" in self.next:
+            result = self.next["R"].get_identifier(pattern[1:])
 
-        edge = [s[:-1], v, o[:-1], s_type, o_type]
-        edges.append(edge)
-    elif pattern == "2":
-        s = words[0]
-        v = words[1]
-        o = words[2]
-        p = words[3]
-        m = words[4]
+        if result is None and "P" in self.next:
+            result = self.next["P"].get_identifier(pattern[1:])
 
-        s_type = "entity" if s.endswith("_") else "literal"
-        o_type = "entity" if o.endswith("_") else "literal"
-        m_type = "entity" if m.endswith("_") else "literal"
+        if result is None and "L" in self.next:
+            result = self.next["L"].get_identifier(pattern[1:])
 
-        sentence_entities.append([[0, s[:-1]], [2, o[:-1]], [4, m[:-1]]])
+        return result
 
-        event = "e_" + str(len(event_vertices))
-        event_vertices.append(event)
 
-        edges.append([s[:-1], v+".subject", event, s_type, "event"])
-        edges.append([o[:-1], v+".object", event, o_type, "event"])
-        edges.append([m[:-1], p, event, m_type, "event"])
-    elif pattern == "3":
-        s = words[0]
-        v = words[1]
-        o = words[2]
-        p1 = words[3]
-        m1 = words[4]
-        p2 = words[5]
-        m2 = words[6]
+class ToyDatasetMaker:
 
-        s_type = "entity" if s.endswith("_") else "literal"
-        o_type = "entity" if o.endswith("_") else "literal"
-        m1_type = "entity" if m1.endswith("_") else "literal"
-        m2_type = "entity" if m2.endswith("_") else "literal"
+    patterns = [
+        ("who does E R ? E",
+         [["E1", "R1+s", "E2", "entity", "entity"]],
+         []
+         ),
+        ("who does E R for ? E",
+         [["E1", "R1+s.for", "E2", "entity", "entity"]],
+         ["who R1 -s for E2 ? E1"]
+         ),
+        ("where was E R ? E",
+         [["E1", "R1+.in", "E2", "entity", "entity"]],
+         ["who was R1 in E2 ? E1"]
+         ),
+        ("who did E R in L ? E",
+         [["E1", "R1+.1", "e+#1", "entity", "event"],
+          ["E2", "R1+.2", "e+#1", "entity", "event"],
+          ["L1", "R1+.in", "e+#1", "entity", "event"]],
+         ["when did E1 R1 E2 ? L1"]
+         )
+    ]
 
-        sentence_entities.append([[0, s[:-1]], [2, o[:-1]], [4, m[:-1]], [6, m[:-1]]])
+    pattern_trie = None
+    global_counter = None
 
-        event = "e_" + str(len(event_vertices))
-        event_vertices.append(event)
+    global_edges = None
+    global_questions = None
 
-        edges.append([s[:-1], v+".subject", event, s_type, "event"])
-        edges.append([o[:-1], v+".object", event, o_type, "event"])
-        edges.append([m1[:-1], p1, event, m1_type, "event"])
-        edges.append([m2[:-1], p2, event, m2_type, "event"])
-    elif pattern == "4":
-        s = words[0]
-        v = ".".join(words[2:-1])
-        o = words[-1]
+    def __init__(self):
+        self.pattern_trie = PatternTrie("BEGIN")
+        for i,pattern in enumerate(self.patterns):
+            self.pattern_trie.insert(["BEGIN"] + pattern[0].split(" "), i)
+        self.global_counter = {}
 
-        s_type = "entity" if s.endswith("_") else "literal"
-        o_type = "entity" if o.endswith("_") else "literal"
+        self.global_edges = []
+        self.global_questions = {}
 
-        sentence_entities.append([[0, s[:-1]], [len(words)-1, o[:-1]]])
+    def process(self, input_sentence):
+        input_sentence = input_sentence.strip().split(" ")
+        pattern_id = self.identify_pattern(input_sentence)
+        pattern = self.patterns[pattern_id]
 
-        edge = [s[:-1], v, o[:-1], s_type, o_type]
-        edges.append(edge)
+        element_dictionary = self.extract_element_dictionary(input_sentence, pattern)
+        edges = self.get_edges(element_dictionary, pattern)
+        entities, targets = self.extract_entities_and_targets(input_sentence, pattern[0])
 
-    continue
+        alt_questions = self.get_alternative_questions(element_dictionary, pattern)
 
-    if pattern == "2" or pattern == "3":
-        event = "e_" + str(len(event_vertices))
-        event_vertices.append(event)
+        alt_entities = []
+        alt_targets = []
 
-    v1 = None
-    v2 = None
-    v3 = None
-    v4 = None
+        for a_q, a_p in zip(alt_questions, pattern[2]):
+            a_e, a_t = self.extract_entities_and_targets(a_q, a_p)
+            alt_entities.append(a_e)
+            alt_targets.append(a_t)
 
-    for word in words:
-        # Entity:
-        if word.endswith("_"):
-            entity = word[:-1]
-            if entity not in entity_vertices:
-                entity_vertices.append(entity)
-        # Literal:
-        elif word.endswith("!"):
-            literal = word[:-1]
-            if literal not in entity_vertices:
-                literal_vertices.append(literal)
+        all_questions = [self.postprocess_question(q) for q in [input_sentence] + alt_questions]
+        all_entities = [entities] + alt_entities
+        all_targets = [targets] + alt_targets
 
-dataset = []
+        self.global_edges.extend(edges)
+        for question, entities, targets in zip(all_questions, all_entities, all_targets):
+            question_string = " ".join(question)
 
-for sentence, entities in zip(sentences, sentence_entities):
-    entity_indexes = [e[0] for e in entities]
-    for idx in entity_indexes:
-        sentence[idx] = sentence[idx][:-1]
+            if question_string in self.global_questions:
+                self.global_questions[question_string][2].update(targets)
+            else:
+                self.global_questions[question_string] = (question,entities,set(targets))
 
-    for target in entities:
-        sentence_matrix = []
+        print(self.global_edges)
+        print(self.global_questions)
 
-        for i,word in enumerate(sentence):
-            word_vector = ["_"]*5
-            word_vector[0] = str(i)
-            word_vector[1] = word if i != target[0] else "_blank_"
-            sentence_matrix.append(word_vector)
+    def postprocess_question(self, question):
+        o = []
+        for w in question:
+            if w == "?":
+                o.append(w)
+                break
+            elif w[0] == "-":
+                o[-1] += w[1:]
+            else:
+                o.append(w)
 
-        entity_matrix = []
+        return o
 
-        for e in entities:
-            if e[0] != target[0]:
-                entity_vector = [None]*4
+    def get_alternative_questions(self, element_dictionary, pattern):
+        alts = []
+        for alternative_sentence in pattern[2]:
+            parts = alternative_sentence.split(" ")
+            alts.append([])
+            for part in parts:
+                if part in element_dictionary:
+                    alts[-1].append(element_dictionary[part])
+                else:
+                    alts[-1].append(part)
+
+        return alts
+
+
+    def get_edges(self, elements, pattern):
+        edges = []
+        nums = {}
+        for prototype_edge in pattern[1]:
+            edge = [None]*5
+
+            for i in range(3):
+                num = False
+
+                prototype_parts = prototype_edge[i].split("+")
+                edge_string = ""
+                for part in prototype_parts:
+                    if part in elements:
+                        edge_string += elements[part]
+                    elif part[0] == "#":
+                        num = True
+                        num_id = part[1:]
+                    else:
+                        edge_string += part
+
+                if num:
+                    if edge_string+num_id not in nums:
+                        if edge_string not in self.global_counter:
+                            self.global_counter[edge_string] = 0
+
+                        self.global_counter[edge_string] += 1
+                        nums[edge_string+num_id] = self.global_counter[edge_string]
+
+                    edge_string += "_"+str(nums[edge_string+num_id])
+
+                edge[i] = edge_string
+
+            edge[3] = prototype_edge[3]
+            edge[4] = prototype_edge[4]
+            edges.append(edge)
+
+        return edges
+
+    def extract_element_dictionary(self, sentence, pattern):
+        elements = {}
+        element_type_counter = {}
+        pattern_parts = pattern[0].split(" ")
+        for i in range(len(sentence)):
+            pattern_part = pattern_parts[i]
+            if pattern_part in ["E", "R", "P", "L"]:
+                if pattern_part not in element_type_counter:
+                    element_type_counter[pattern_part] = 0
+                element_type_counter[pattern_part] += 1
+
+                elements[pattern_part + str(element_type_counter[pattern_part])] = sentence[i]
+
+        return elements
+
+    def extract_entities_and_targets(self, sentence, pattern):
+        collect_target = False
+        entities = []
+        pattern_parts = pattern.split(" ")
+        targets = []
+        for i in range(len(sentence)):
+            pattern_part = pattern_parts[i]
+            if pattern_part[0] in ["E", "R", "P", "L"]:
+                if pattern_part[0] == "E" and not collect_target:
+                    entities.append([i, sentence[i]])
+                elif collect_target:
+                    targets.append(sentence[i])
+
+            elif pattern_part == "?":
+                collect_target = True
+        return entities, targets
+
+    def identify_pattern(self, sentence):
+        pattern_id = self.pattern_trie.get_identifier(["BEGIN"]+sentence)
+        return pattern_id
+
+    def get_dataset_representation(self):
+        dataset = []
+        for question,entities,targets in self.global_questions.values():
+            sentence_matrix = []
+
+            for i, word in enumerate(question):
+                word_vector = ["_"] * 5
+                word_vector[0] = str(i)
+                word_vector[1] = word
+                sentence_matrix.append(word_vector)
+
+            entity_matrix = []
+
+            for e in entities:
+                entity_vector = [None] * 4
                 entity_vector[0] = str(e[0])
                 entity_vector[1] = str(e[0])
                 entity_vector[2] = e[1]
@@ -154,10 +253,27 @@ for sentence, entities in zip(sentences, sentence_entities):
 
                 entity_matrix.append(entity_vector)
 
-        target_matrix = [[target[1], target[1]]]
+            target_matrix = [[t,t] for t in targets]
 
-        dataset.append((sentence_matrix, entity_matrix, target_matrix))
+            dataset.append((sentence_matrix, entity_matrix, target_matrix))
 
+        return dataset
+
+t = ToyDatasetMaker()
+stop = False
+
+while not stop:
+    print("Input sentence:")
+    from_console = input()
+
+    if from_console.strip() == "stop":
+        stop = True
+        continue
+
+    t.process(from_console)
+
+dataset = t.get_dataset_representation()
+edges = t.global_edges
 
 random.shuffle(dataset)
 split = int(len(dataset)*0.8)
@@ -172,9 +288,14 @@ test_file = open(args.test_file, "w+")
 for edge in edges:
     print(",".join(edge), file=graph_file)
 
-
 def print_to_file(data, file):
+    first = True
     for s_matrix, e_matrix, t_matrix in data:
+        if first:
+            first = False
+        else:
+            print("", file=file)
+
         print("\n".join(["\t".join(line) for line in s_matrix]), file=file)
         print("", file=file)
         print("\n".join(["\t".join(line) for line in e_matrix]), file=file)

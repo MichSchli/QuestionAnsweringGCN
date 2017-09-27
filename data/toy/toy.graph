@@ -1,1 +1,8 @@
-a,l,b,entity,entity
+john,works.for,google,entity,entity
+alice,works.for,google,entity,entity
+john,meet.1,e_1,entity,event
+alice,meet.2,e_1,entity,event
+1997,meet.in,e_1,entity,event
+carl,meet.1,e_2,entity,event
+alice,meet.2,e_2,entity,event
+1989,meet.in,e_2,entity,event

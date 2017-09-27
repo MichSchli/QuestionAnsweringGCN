@@ -1,7 +1,22 @@
-0	a	_	_	_
-1	l	_	_	_
-2	_blank_	_	_	_
+0	who	_	_	_
+1	did	_	_	_
+2	carl	_	_	_
+3	meet	_	_	_
+4	in	_	_	_
+5	1989	_	_	_
+6	?	_	_	_
 
-0	0	a	1.0
+2	2	carl	1.0
 
-b	b
+alice	alice
+
+0	who	_	_	_
+1	works	_	_	_
+2	for	_	_	_
+3	google	_	_	_
+4	?	_	_	_
+
+4	4	google	1.0
+
+john	john
+alice	alice
