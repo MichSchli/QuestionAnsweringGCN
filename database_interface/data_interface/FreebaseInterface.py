@@ -11,7 +11,7 @@ from model.hypergraph import Hypergraph
 class FreebaseInterface:
     endpoint = None
     prefix = None
-    max_entities_per_query = 400
+    max_entities_per_query = 200
 
     def __init__(self):
         self.endpoint = "http://localhost:8890/sparql"
@@ -54,11 +54,12 @@ class FreebaseInterface:
 
         query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
-        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.schemastaging\" )"
-        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
-        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
-        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/type.object.key\" )"
-        query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.schemastaging\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/key/wikipedia\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/type.object.key\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.description\" )"
         query_string += " )\n"
 
         query_string += "}"

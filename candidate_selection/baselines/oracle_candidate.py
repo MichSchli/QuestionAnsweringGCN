@@ -18,7 +18,7 @@ class OracleCandidate:
         print("Running oracle...")
         for candidate_graph, gold_set in zip(candidate_iterator, gold_iterator):
             #print("aiololo")
-            print(str(counter), end="\r")
+            print(str(counter))
             counter += 1
             candidate_set = candidate_graph.get_vertices(type="entities")
             gold_in_candidates = np.isin(gold_set, candidate_set)
