@@ -52,7 +52,7 @@ class FreebaseInterface:
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ") )"
 
-        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en')"
+        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en' || lang(?" + other + ") = '')"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r),  \"http://rdf.freebase.com/key/wikipedia\" )"
@@ -172,6 +172,11 @@ class FreebaseInterface:
                 if literals_only and subject and result["o"]["type"] != "literal":
                     continue
                 elif literals_only and not subject and result["s"]["type"] != "literal":
+                    continue
+
+                if target == "event" and subject and not (len(result["o"]["value"]) > 28 and result["o"]["value"][28] == ""):
+                    continue
+                elif target == "event" and object and not (len(result["s"]["value"]) > 28 and result["s"]["value"][28] == ""):
                     continue
 
                 edge_query_result.append_edge([
