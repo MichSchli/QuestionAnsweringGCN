@@ -14,7 +14,7 @@ class InfixFilter:
         self.position = position
 
     def accepts(self, elements):
-        acceptance = np.array([e[self.position] == self.infix for e in elements])
+        acceptance = np.array([(len(e) > self.position) and (e[self.position] == self.infix) for e in elements])
 
         #for v1, v2 in zip(elements, acceptance):
         #    print("accept " + str(v1)+": "+str(v2))

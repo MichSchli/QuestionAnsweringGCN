@@ -18,6 +18,7 @@ class EdgeQueryResult:
         self.finalized_backward = False
 
     def append_edge(self, edge, forward=True):
+        #print(edge)
         if forward:
             self.forward_edges.append(edge)
         else:
