@@ -3,7 +3,7 @@ import numpy as np
 
 class PrefixFilter:
     """
-    Applies a heuristic filter excluding any vertices with a given prefix.
+    Applies a heuristic filter excluding any vertices without a given prefix.
     """
 
     prefix = None
