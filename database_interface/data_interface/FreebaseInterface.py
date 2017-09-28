@@ -52,7 +52,7 @@ class FreebaseInterface:
         else:
             query_string += "( exists { ?" + other + " ns:type.object.name ?name } || isLiteral(?" + other + ") )"
 
-        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en' || lang(?" + other + ") = '')"
+        query_string += "\n&& (!isLiteral(?" + other + ") || lang(?" + other + ") = 'en') || datatype(?" + other + ") = xsd:integer || datatype(?" + other + ") != xsd:string || datatype(?" + other + ") != rdf:langString"
         # Take out all schemastaging for now. Might consider putting some parts back in later:
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/key/wikipedia\" )"
