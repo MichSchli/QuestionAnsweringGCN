@@ -1,12 +1,18 @@
 import argparse
 import random
+import numpy as np
 
 parser = argparse.ArgumentParser(description='Creates a toy dataset.')
-parser.add_argument('--graph', type=str, help='The location of the .graph-file to contain the graph')
-parser.add_argument('--train_file', type=str, help='The location of the .conll file to contain train data')
-parser.add_argument('--test_file', type=str, help='The location of the .conll file to contain test data')
+parser.add_argument('--graph', type=str, help='The location of the .graph-file to contain the graph.')
+parser.add_argument('--train_file', type=str, help='The location of the .conll file to contain train data.')
+parser.add_argument('--test_file', type=str, help='The location of the .conll file to contain test data.')
+parser.add_argument('--append', action="store_true", help='Decides whether to append instead of overwriting.')
 args = parser.parse_args()
 
+
+'''
+Defines a radix tree structure to match input sentence and select patterns.
+'''
 class PatternTrie:
 
     word = None
@@ -17,21 +23,28 @@ class PatternTrie:
         self.word = word
         self.next = {}
 
+    '''
+    Insert a list of words in the trie recursively:
+    '''
     def insert(self, word_list, identifier):
         if len(word_list) == 1:
             self.identifier = identifier
             return
 
-        if word_list[1] not in self.next:
-            self.next[word_list[1]] = PatternTrie(word_list[1])
+        self.insert_in_subtree(identifier, word_list[1:])
 
-        self.next[word_list[1]].insert(word_list[1:], identifier)
+    '''
+    Internal method to insert a list of words under the correct subtree:
+    '''
+    def insert_in_subtree(self, identifier, word_list):
+        first_word = word_list[0]
+        if first_word not in self.next:
+            self.next[first_word] = PatternTrie(first_word)
+        self.next[first_word].insert(word_list, identifier)
 
-    def pretty_print(self, tabs=0):
-        print("\t"*tabs + self.word + " / ID: " + str(self.identifier))
-        for subtree in self.next.values():
-            subtree.pretty_print(tabs=tabs+1)
-
+    '''
+    Get the identifier associated with a pattern by recursively walking the trie, skipping control characters:
+    '''
     def get_identifier(self, pattern):
         if len(pattern) == 1:
             return self.identifier
@@ -56,27 +69,90 @@ class PatternTrie:
 
         return result
 
+    '''
+    Debug print:
+    '''
+    def pretty_print(self, tabs=0):
+        print("\t"*tabs + self.word + " / ID: " + str(self.identifier))
+        for subtree in self.next.values():
+            subtree.pretty_print(tabs=tabs+1)
 
+
+'''
+Defines a class constructing toy datasets based on patterns:
+'''
 class ToyDatasetMaker:
 
     patterns = [
         ("who does E R ? E",
          [["E1", "R1+s", "E2", "entity", "entity"]],
-         []
+         ["who R1 -s E2 ? E1",
+          "who is R1 -d by E1 ? E2"]
+         ),
+        ("who is the R of E ? E",
+         [["E1", "R1+.of", "E2", "entity", "entity"]],
+         ["who is R1 to E1 ? E2",
+          "who is E2 the R1 of ? E1",
+          "who is E2 R1 to ? E1"]
          ),
         ("who does E R for ? E",
          [["E1", "R1+s.for", "E2", "entity", "entity"]],
-         ["who R1 -s for E2 ? E1"]
+         ["who R1 -s for E2 ? E1",
+          "who is E1 R1 -ing for ? E2",
+          "who is R1 -ing for E2 ? E1"]
+         ),
+        ("who does E R with ? E",
+         [["E1", "R1+s.with", "E2", "entity", "entity"],
+          ["E2", "R1+s.with", "E1", "entity", "entity"]],
+         ["who does E2 R1 with ? E1",
+          "who R1 -s with E2 ? E1",
+          "who R1 -s with E1 ? E2",
+          "who is R1 -ing with E2 ? E1",
+          "who is R1 -ing with E1 ? E2"]
+         ),
+        ("what does E R P ? E",
+         [["E1", "R1+s.+P1", "E2", "entity", "entity"]],
+         ["who R1 -s P1 E2 ? E1",
+          "what is E1 R1 -ing P1 ? E2",
+          "who is R1 -ing P1 E2 ? E1"]
          ),
         ("where was E R ? E",
          [["E1", "R1+.in", "E2", "entity", "entity"]],
          ["who was R1 in E2 ? E1"]
          ),
+        ("when was E R ? L",
+         [["E1", "R1+.in", "L1", "entity", "literal"]],
+         ["who was R1 in L1 ? E1"]
+         ),
+        ("where does E R ? E",
+         [["E1", "R1+.in", "E2", "entity", "entity"]],
+         ["who R1 -s in E2 ? E1"]
+         ),
         ("who did E R in L ? E",
          [["E1", "R1+.1", "e+#1", "entity", "event"],
           ["E2", "R1+.2", "e+#1", "entity", "event"],
-          ["L1", "R1+.in", "e+#1", "entity", "event"]],
-         ["when did E1 R1 E2 ? L1"]
+          ["L1", "R1+.in", "e+#1", "literal", "event"]],
+         ["when did E1 R1 E2 ? L1",
+          "who did R1 E2 in L1 ? E1"]
+         ),
+        ("what did E R in L ? E",
+         [["E1", "R1+ed.1", "e+#1", "entity", "event"],
+          ["E2", "R1+ed.2", "e+#1", "entity", "event"],
+          ["L1", "R1+ed.in", "e+#1", "literal", "event"]],
+         ["when did E1 R1 E2 ? L1",
+          "who R1 -ed E2 in L1 ? E1",
+          "who R1 -ed E2 ? E1",
+          "when was E2 R1 -ed ? L1"]
+         ),
+        ("who did E R E to in L ? E",
+         [["E1", "R1+.1", "e+#1", "entity", "event"],
+          ["E2", "R1+.2", "e+#1", "entity", "event"],
+          ["E3", "R1+.3", "e+#1", "entity", "event"],
+          ["L1", "R1+.in", "e+#1", "literal", "event"]],
+         ["when did E1 R1 E2 to E3 ? L1",
+          "who R1 -ed E2 to E3 ? E1",
+          "who did E1 R1 E2 to ? E3",
+          "when was E2 R1 -ed to E3 ? L1"]
          )
     ]
 
@@ -90,6 +166,7 @@ class ToyDatasetMaker:
         self.pattern_trie = PatternTrie("BEGIN")
         for i,pattern in enumerate(self.patterns):
             self.pattern_trie.insert(["BEGIN"] + pattern[0].split(" "), i)
+
         self.global_counter = {}
 
         self.global_edges = []
@@ -98,6 +175,11 @@ class ToyDatasetMaker:
     def process(self, input_sentence):
         input_sentence = input_sentence.strip().split(" ")
         pattern_id = self.identify_pattern(input_sentence)
+
+        if pattern_id is None:
+            print("Sentence could not be parsed.")
+            return
+
         pattern = self.patterns[pattern_id]
 
         element_dictionary = self.extract_element_dictionary(input_sentence, pattern)
@@ -126,9 +208,6 @@ class ToyDatasetMaker:
                 self.global_questions[question_string][2].update(targets)
             else:
                 self.global_questions[question_string] = (question,entities,set(targets))
-
-        print(self.global_edges)
-        print(self.global_questions)
 
     def postprocess_question(self, question):
         o = []
@@ -260,6 +339,7 @@ class ToyDatasetMaker:
         return dataset
 
 t = ToyDatasetMaker()
+
 stop = False
 
 while not stop:
@@ -270,10 +350,22 @@ while not stop:
         stop = True
         continue
 
+    if from_console.strip() == "stats":
+        dataset = t.get_dataset_representation()
+        edges = np.array(t.global_edges)
+
+        total_entities = np.unique(np.concatenate((edges[:, 0], edges[:, 2]))).shape[0]
+        total_relations = np.unique(edges[:, 1]).shape[0]
+
+        print("Total questions: " + str(len(dataset)))
+        print("Total unique vertices: " + str(total_entities))
+        print("Total unique relation types: " + str(total_relations))
+        continue
+
     t.process(from_console)
 
 dataset = t.get_dataset_representation()
-edges = t.global_edges
+edges = np.array(t.global_edges)
 
 random.shuffle(dataset)
 split = int(len(dataset)*0.8)
@@ -281,9 +373,10 @@ split = int(len(dataset)*0.8)
 training_data = dataset[:split]
 test_data = dataset[split:]
 
-graph_file = open(args.graph, "w+")
-train_file = open(args.train_file, "w+")
-test_file = open(args.test_file, "w+")
+write_mode = "a+" if args.append else "w+"
+graph_file = open(args.graph, write_mode)
+train_file = open(args.train_file, write_mode)
+test_file = open(args.test_file, write_mode)
 
 for edge in edges:
     print(",".join(edge), file=graph_file)
@@ -307,3 +400,9 @@ print_to_file(training_data, train_file)
 print_to_file(test_data, test_file)
 
 print("I made a dataset!")
+
+total_entities = np.unique(np.concatenate((edges[:,0], edges[:,2]))).shape[0]
+total_relations = np.unique(edges[:,1]).shape[0]
+
+print("Total unique vertices: " + str(total_entities))
+print("Total unique relation types: " + str(total_relations))
