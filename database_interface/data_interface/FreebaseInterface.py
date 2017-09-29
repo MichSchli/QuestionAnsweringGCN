@@ -57,6 +57,7 @@ class FreebaseInterface:
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.schemastaging\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/key/wikipedia\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.webpage\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/type.object.key\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.description\" )"
@@ -156,6 +157,7 @@ class FreebaseInterface:
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
+            db_interface = self.initialize_sparql_interface()
             if target == "entities":
                 query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
             else:
@@ -168,7 +170,13 @@ class FreebaseInterface:
                 print("Query failed to work five times. Skipping.")
                 continue
 
+            #print(query_string)
+            #print(len(results["results"]["bindings"]))
+
             for j,result in enumerate(results["results"]["bindings"]):
+                #print(result["s"]["value"])
+                #print(result["r"]["value"])
+                #print(result["o"]["value"])
                 # Retrieving literals only crashes SPARQL DB. So, we filter in python instead:
                 if literals_only and subject and result["o"]["type"] != "literal":
                     continue
@@ -190,6 +198,7 @@ class FreebaseInterface:
                 else:
                     edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
 
+            #exit()
         #print("\r" + (i+1) * " "+"\r", end="", flush=True)
 
     def execute_query(self, db_interface, query_string):

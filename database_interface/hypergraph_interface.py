@@ -16,9 +16,12 @@ class HypergraphInterface:
         self.vertex_property_retriever = vertex_property_retriever
 
     def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
+        print(vertices)
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
+
+        #print(hypergraph.get_expandable_vertices("entities", pop=False))
 
         for i in range(hops):
             self.expand_hypergraph_to_one_neighborhood(hypergraph)
@@ -38,6 +41,7 @@ class HypergraphInterface:
         if not filtered_frontier.shape[0] > 0:
             return
 
+        #print(filtered_frontier)
         self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "events")
         self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "entities")
 
@@ -45,6 +49,9 @@ class HypergraphInterface:
         unexpanded_event_vertices = hypergraph.get_expandable_vertices("events", pop=True)
 
         if unexpanded_event_vertices.shape[0] > 0:
+            #print("PRINTING EVENT VERTICES")
+            #for v in unexpanded_event_vertices:
+            #    print(v)
             self.expand_hypergraph_from_data_interface(unexpanded_event_vertices,
                                                        hypergraph,
                                                        "events",
@@ -60,6 +67,10 @@ class HypergraphInterface:
 
         # Applies a filter to remove e.g. non-freebase vertices:
         filtered_frontier = self.expansion_algorithm.get_frontier(candidates_for_expansion)
+
+        #print("PRINTING ENTITY VERTICES")
+        #for v in filtered_frontier:
+        #    print(v)
 
         if not filtered_frontier.shape[0] > 0:
             return
@@ -94,6 +105,14 @@ class HypergraphInterface:
                           edge_query_result.get_backward_edges(),
                           sources=sources,
                           targets=targets)
+        #print(edge_query_result.get_forward_edges().shape)
+        #print(edge_query_result.get_backward_edges().shape)
+        #for edge in edge_query_result.get_forward_edges():
+        #    print(edge)
+        
+        #if edge_query_result.get_forward_edges().shape[0] == 50000:
+        #    print("ending")
+        #    exit()
         hypergraph.add_discovered_vertices(edge_query_result.get_forward_edges(),
                                            edge_query_result.get_backward_edges(),
                                            type=targets)

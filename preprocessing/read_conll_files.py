@@ -49,4 +49,5 @@ class ConllReader:
                         yield sentence_matrix, gold_matrix
 
                     sentence_matrix = []
+                    entity_matrix = []
                     gold_matrix = []
