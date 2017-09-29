@@ -1,22 +1,145 @@
-0	who	_	_	_
-1	did	_	_	_
+0	what	_	_	_
+1	does	_	_	_
 2	carl	_	_	_
-3	meet	_	_	_
-4	in	_	_	_
-5	1989	_	_	_
-6	?	_	_	_
+3	work	_	_	_
+4	with	_	_	_
+5	?	_	_	_
 
 2	2	carl	1.0
 
-alice	alice
+nlp	nlp
+
+0	what	_	_	_
+1	did	_	_	_
+2	david	_	_	_
+3	found	_	_	_
+4	in	_	_	_
+5	2005	_	_	_
+6	?	_	_	_
+
+2	2	david	1.0
+
+davidcorp	davidcorp
 
 0	who	_	_	_
-1	works	_	_	_
-2	for	_	_	_
-3	google	_	_	_
+1	lives	_	_	_
+2	in	_	_	_
+3	berlin	_	_	_
 4	?	_	_	_
 
-4	4	google	1.0
+4	4	berlin	1.0
 
-john	john
+carl	carl
 alice	alice
+david	david
+bob	bob
+
+0	who	_	_	_
+1	founded	_	_	_
+2	davidcorp	_	_	_
+3	?	_	_	_
+
+3	3	davidcorp	1.0
+
+david	david
+
+0	who	_	_	_
+1	invests	_	_	_
+2	in	_	_	_
+3	alicecorp	_	_	_
+4	?	_	_	_
+
+4	4	alicecorp	1.0
+
+alice	alice
+bob	bob
+
+0	who	_	_	_
+1	lives	_	_	_
+2	with	_	_	_
+3	carl	_	_	_
+4	?	_	_	_
+
+4	4	carl	1.0
+
+alice	alice
+bob	bob
+
+0	who	_	_	_
+1	lives	_	_	_
+2	with	_	_	_
+3	bob	_	_	_
+4	?	_	_	_
+
+4	4	bob	1.0
+
+carl	carl
+alice	alice
+
+0	where	_	_	_
+1	does	_	_	_
+2	alice	_	_	_
+3	work	_	_	_
+4	?	_	_	_
+
+2	2	alice	1.0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	does	_	_	_
+2	bob	_	_	_
+3	work	_	_	_
+4	for	_	_	_
+5	?	_	_	_
+
+2	2	bob	1.0
+
+alicecorp	alicecorp
+
+0	when	_	_	_
+1	did	_	_	_
+2	alice	_	_	_
+3	marry	_	_	_
+4	bob	_	_	_
+5	?	_	_	_
+
+2	2	alice	1.0
+4	4	bob	1.0
+
+2003	2003
+
+0	where	_	_	_
+1	does	_	_	_
+2	alice	_	_	_
+3	live	_	_	_
+4	?	_	_	_
+
+2	2	alice	1.0
+
+berlin	berlin
+
+0	what	_	_	_
+1	does	_	_	_
+2	bob	_	_	_
+3	invest	_	_	_
+4	in	_	_	_
+5	?	_	_	_
+
+2	2	bob	1.0
+
+davidcorp	davidcorp
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	did	_	_	_
+2	david	_	_	_
+3	sell	_	_	_
+4	davidcorp	_	_	_
+5	to	_	_	_
+6	?	_	_	_
+
+2	2	david	1.0
+4	4	davidcorp	1.0
+
+emma	emma
