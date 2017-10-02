@@ -18,4 +18,6 @@ gold_reader = ConllReader(output="gold")
 sentence_reader = ConllReader()
 
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
-    pass
+    print(gold)
+    print(sentence)
+    exit()
