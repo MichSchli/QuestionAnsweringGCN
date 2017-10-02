@@ -11,11 +11,15 @@ sparql = SPARQLWrapper("http://localhost:8890/sparql")
 gold_reader = ConllReader(output="gold")
 sentence_reader = ConllReader(output="entities", entity_prefix="ns:")
 
-def generate_1_query(centroids, golds):
+def generate_1_query(centroids, golds, forward_edges=True):
+    centroid_symbol = "s" if forward_edges else "o"
+    gold_symbol = "o" if forward_edges else "s"
+
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
     query += "\n\nselect * where {"
     query += "\n\t?s ?r ?o ."
-    query += "\n\tvalues ?o { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(golds) + " }"
     query += "\n}"
 
     return query
