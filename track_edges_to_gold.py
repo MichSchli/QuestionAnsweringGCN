@@ -2,6 +2,21 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 import argparse
 from preprocessing.read_conll_files import ConllReader
 import itertools
+from dateutil.parser import parse as date_parse
+
+# This is some serious bullshit:
+def format_string_for_freebase(s):
+    try:
+        float(s)
+        return s
+    except ValueError:
+        pass
+
+    try:
+        date_parse(s)
+        return s
+    except ValueError:
+        return "\""+s+"\"@en"
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--file', type=str, help='The location of the .conll-file to be parsed')
@@ -20,7 +35,7 @@ def generate_1_query(centroids, golds, forward_edges=True):
     query += "\n\nselect * where {"
     query += "\n\t?s ?r ?o ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -54,7 +69,7 @@ def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=Tru
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -73,7 +88,7 @@ def generate_2_query_through_event(centroids, golds, forward_1_edges=True, forwa
     query += "\n\t" + second_edge_string + " ."
     query += "\n\t" + third_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -94,7 +109,7 @@ def generate_4_query(centroids, golds, forward_1_edges=True, forward_2_edges=Tru
     query += "\n\t" + third_edge_string + " ."
     query += "\n\t" + fourth_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -119,10 +134,7 @@ def get_3_paths(centroids, golds):
         yield from get_3_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
 def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
-    #print(str(forward_1) + str(forward_2) + str(forward_3))
     query = generate_2_query_through_event(centroids, golds, forward_1, forward_2, forward_3)
-    #print(query)
-    #yield "hah", "hah", "hah"
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
@@ -152,11 +164,6 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
     for edge_1,edge_2 in get_2_paths(sentence, gold):
         print(str(edge_1) + " " + str(edge_2))
 
-    #print(sentence)
-    #print(gold)
-
     for edge_1,edge_2, edge_3 in get_3_paths(sentence, gold):
         print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3))
 
-    #for edge_1,edge_2, edge_3, edge_4 in get_4_paths(sentence, gold):
-    #    print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3) + " " + str(edge_4))
