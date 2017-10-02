@@ -115,11 +115,14 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
         yield r["r1"], r["r2"]
 
 def get_3_paths(centroids, golds):
-    for permutation in itertools.permutations([True, False], 3):
+    for permutation in itertools.product([True, False], repeat=3):
         yield from get_3_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
 def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
+    #print(str(forward_1) + str(forward_2) + str(forward_3))
     query = generate_2_query_through_event(centroids, golds, forward_1, forward_2, forward_3)
+    #print(query)
+    #yield "hah", "hah", "hah"
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
@@ -127,7 +130,7 @@ def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
         yield r["r1"], r["r2"], r["r3"]
 
 def get_4_paths(centroids, golds):
-    for permutation in itertools.permutations([True, False], 4):
+    for permutation in itertools.product([True, False], repeat=4):
         yield from get_4_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
 def get_4_paths_internal(centroids, golds, forward_1, forward_2, forward_3, forward_4):
@@ -148,8 +151,11 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
     for edge_1,edge_2 in get_2_paths(sentence, gold):
         print(str(edge_1) + " " + str(edge_2))
 
+    #print(sentence)
+    #print(gold)
+
     for edge_1,edge_2, edge_3 in get_3_paths(sentence, gold):
         print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3))
 
-    for edge_1,edge_2, edge_3, edge_4 in get_4_paths(sentence, gold):
-        print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3) + " " + str(edge_4))
+    #for edge_1,edge_2, edge_3, edge_4 in get_4_paths(sentence, gold):
+    #    print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3) + " " + str(edge_4))
