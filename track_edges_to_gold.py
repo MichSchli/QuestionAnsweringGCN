@@ -15,7 +15,7 @@ parser.add_argument('--file', type=str, help='The location of the .conll-file to
 args = parser.parse_args()
 
 gold_reader = ConllReader(output="gold")
-sentence_reader = ConllReader()
+sentence_reader = ConllReader(output="entities")
 
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
     print(gold)
