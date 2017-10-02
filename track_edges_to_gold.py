@@ -169,6 +169,9 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
     counter += 1
     found = False
 
+    if counter == 3:
+        break
+
     for edge in get_1_paths(sentence, gold):
         edges_required_counter[1] += 1
         found = True
