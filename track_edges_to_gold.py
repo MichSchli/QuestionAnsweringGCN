@@ -20,7 +20,7 @@ def generate_1_query(centroids, golds, forward_edges=True):
     query += "\n\nselect * where {"
     query += "\n\t?s ?r ?o ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -73,7 +73,28 @@ def generate_2_query_through_event(centroids, golds, forward_1_edges=True, forwa
     query += "\n\t" + second_edge_string + " ."
     query += "\n\t" + third_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
+    query += "\n}"
+
+    return query
+
+def generate_4_query(centroids, golds, forward_1_edges=True, forward_2_edges=True, forward_3_edges=True, forward_4_edges=True):
+    centroid_symbol = "s"
+    gold_symbol = "o"
+
+    first_edge_string = "?s ?r1 ?e" if forward_1_edges else "?e ?r1 ?s"
+    second_edge_string = "?e ?r2 ?i" if forward_2_edges else "?i ?r2 ?e"
+    third_edge_string = "?i ?r3 ?e2" if forward_3_edges else "?e2 ?r3 ?i"
+    fourth_edge_string = "?e2 ?r4 ?o" if forward_4_edges else "?o ?r4 ?e2"
+
+    query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
+    query += "\n\nselect * where {"
+    query += "\n\t" + first_edge_string + " ."
+    query += "\n\t" + second_edge_string + " ."
+    query += "\n\t" + third_edge_string + " ."
+    query += "\n\t" + fourth_edge_string + " ."
+    query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
     query += "\n}"
 
     return query
@@ -97,7 +118,6 @@ def get_3_paths(centroids, golds):
     for permutation in itertools.permutations([True, False], 3):
         yield from get_3_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
-
 def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
     query = generate_2_query_through_event(centroids, golds, forward_1, forward_2, forward_3)
     sparql.setQuery(query)
@@ -105,6 +125,18 @@ def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
     results = sparql.query().convert()
     for r in results["results"]["bindings"]:
         yield r["r1"], r["r2"], r["r3"]
+
+def get_4_paths(centroids, golds):
+    for permutation in itertools.permutations([True, False], 4):
+        yield from get_4_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
+
+def get_4_paths_internal(centroids, golds, forward_1, forward_2, forward_3, forward_4):
+    query = generate_4_query(centroids, golds, forward_1, forward_2, forward_3, forward_4)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    for r in results["results"]["bindings"]:
+        yield r["r1"], r["r2"], r["r3"], r["r3"]
 
 counter = 0
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
@@ -118,3 +150,6 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
 
     for edge_1,edge_2, edge_3 in get_3_paths(sentence, gold):
         print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3))
+
+    for edge_1,edge_2, edge_3, edge_4 in get_4_paths(sentence, gold):
+        print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3) + " " + str(edge_4))
