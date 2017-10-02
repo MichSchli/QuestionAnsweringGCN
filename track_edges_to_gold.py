@@ -153,17 +153,77 @@ def get_4_paths_internal(centroids, golds, forward_1, forward_2, forward_3, forw
     for r in results["results"]["bindings"]:
         yield r["r1"]["value"], r["r2"]["value"], r["r3"]["value"], r["r4"]["value"]
 
+path_counter = {}
+final_edge_counter = {}
+all_edge_counter = {}
+edges_required_counter = {1:0, 2:0, 3:0}
+
 counter = 0
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
     print(counter)
     counter += 1
+    found = False
 
     for edge in get_1_paths(sentence, gold):
-        print(edge)
+        edges_required_counter[1] += 1
+        found = True
+
+        if edge not in path_counter:
+            path_counter[edge] = 0
+        path_counter[edge] += 1
+
+        if edge not in final_edge_counter:
+            final_edge_counter[edge] = 0
+        final_edge_counter[edge] += 1
+
+        if edge not in all_edge_counter:
+            all_edge_counter[edge] = 0
+        all_edge_counter[edge] += 1
 
     for edge_1,edge_2 in get_2_paths(sentence, gold):
-        print(str(edge_1) + " " + str(edge_2))
+        edge = str(edge_1) + " " + str(edge_2)
+
+        if not found:
+            edges_required_counter[1] += 1
+            found = True
+
+        if edge not in path_counter:
+            path_counter[edge] = 0
+        path_counter[edge] += 1
+
+        if edge_2 not in final_edge_counter:
+            final_edge_counter[edge] = 0
+        final_edge_counter[edge] += 1
+
+        for edge in [edge_1, edge_2]:
+            if edge not in all_edge_counter:
+                all_edge_counter[edge] = 0
+            all_edge_counter[edge] += 1
 
     for edge_1,edge_2, edge_3 in get_3_paths(sentence, gold):
-        print(str(edge_1) + " " + str(edge_2)+ " " + str(edge_3))
+        edge = str(edge_1) + " " + str(edge_2+ " " + str(edge_3))
+
+        if not found:
+            edges_required_counter[1] += 1
+            found = True
+
+        if edge not in path_counter:
+            path_counter[edge] = 0
+        path_counter[edge] += 1
+
+        if edge_3 not in final_edge_counter:
+            final_edge_counter[edge] = 0
+        final_edge_counter[edge] += 1
+
+        for edge in [edge_1, edge_2, edge_3]:
+            if edge not in all_edge_counter:
+                all_edge_counter[edge] = 0
+            all_edge_counter[edge] += 1
+
+
+    if counter % 10 == 1:
+        print(path_counter)
+        print(final_edge_counter)
+        print(all_edge_counter)
+        print(edges_required_counter)
 
