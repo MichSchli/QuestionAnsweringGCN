@@ -46,8 +46,8 @@ def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=Tru
     centroid_symbol = "s"
     gold_symbol = "o"
 
-    first_edge_string = "?s ?r1 ?i ." if forward_1_edges else "?i ?r1 ?s"
-    second_edge_string = "?i ?r2 ?o ." if forward_2_edges else "?o ?r2 ?i"
+    first_edge_string = "?s ?r1 ?i" if forward_1_edges else "?i ?r1 ?s"
+    second_edge_string = "?i ?r2 ?o" if forward_2_edges else "?o ?r2 ?i"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
     query += "\n\nselect * where {"
@@ -83,4 +83,4 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
         print(edge)
 
     for edge_1,edge_2 in get_2_paths(sentence, gold):
-        print(edge_1 + " " + edge_2)
+        print(str(edge_1) + " " + str(edge_2))
