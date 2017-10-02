@@ -81,3 +81,6 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
     counter += 1
     for edge in get_1_paths(sentence, gold):
         print(edge)
+
+    for edge_1,edge_2 in get_2_paths(sentence, gold):
+        print(edge_1 + " " + edge_2)
