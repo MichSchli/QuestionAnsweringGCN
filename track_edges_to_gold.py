@@ -32,7 +32,7 @@ def generate_1_query(centroids, golds, forward_edges=True):
     gold_symbol = "o" if forward_edges else "s"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect * where {"
+    query += "\n\nselect ?r where {"
     query += "\n\t?s ?r ?o ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
     query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
@@ -65,7 +65,7 @@ def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=Tru
     second_edge_string = "?i ?r2 ?o" if forward_2_edges else "?o ?r2 ?i"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect * where {"
+    query += "\n\nselect ?r1 ?r2 where {"
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
@@ -83,7 +83,7 @@ def generate_2_query_through_event(centroids, golds, forward_1_edges=True, forwa
     third_edge_string = "?i ?r3 ?o" if forward_3_edges else "?o ?r3 ?i"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect * where {"
+    query += "\n\nselect ?r1 ?r2 ?r3 where {"
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\t" + third_edge_string + " ."
@@ -131,10 +131,12 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
 
 def get_3_paths(centroids, golds):
     for permutation in itertools.product([True, False], repeat=3):
+        print(permutation)
         yield from get_3_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
 def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
     query = generate_2_query_through_event(centroids, golds, forward_1, forward_2, forward_3)
+    print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
