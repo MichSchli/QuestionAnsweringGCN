@@ -13,15 +13,20 @@ sentence_reader = ConllReader(output="entities", entity_prefix="ns:")
 
 def generate_1_query(centroids, golds):
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect count(*) where {"
-    query += "\n?s ?r ?o ."
-    query += "\nvalues ?s { " + " ".join(centroids) + " }"
+    query += "\n\nselect * where {"
+    query += "\n\t?s ?r ?o ."
+    query += "\n\tvalues ?o { " + " ".join(centroids) + " }"
+    query += "\n}"
+
+    return query
 
 
-for gold, sentence in zip(gold_reader.parse_file(args.file)[:3], sentence_reader.parse_file(args.file)[:3]):
+for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
     query = generate_1_query(sentence, gold)
+    print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
 
     print(results)
+    exit()
