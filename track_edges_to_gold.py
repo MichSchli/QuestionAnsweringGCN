@@ -158,6 +158,11 @@ final_edge_counter = {}
 all_edge_counter = {}
 edges_required_counter = {1:0, 2:0, 3:0}
 
+path_file = open(args.file + ".path_count")
+final_edge_file = open(args.file + ".final_edge_count")
+all_edge_file = open(args.file + ".all_edge_count")
+edges_required_file = open(args.file + ".edges_required_count")
+
 counter = 0
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
     print(counter)
@@ -220,10 +225,14 @@ for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.par
                 all_edge_counter[edge] = 0
             all_edge_counter[edge] += 1
 
+for k, v in path_counter:
+    print(str(k) + "\t" + str(v), file=path_file)
 
-    if counter % 10 == 1:
-        print(path_counter)
-        print(final_edge_counter)
-        print(all_edge_counter)
-        print(edges_required_counter)
+for k, v in final_edge_counter:
+    print(str(k) + "\t" + str(v), file=final_edge_file)
 
+for k, v in all_edge_counter:
+    print(str(k) + "\t" + str(v), file=all_edge_file)
+
+for k, v in edges_required_counter:
+    print(str(k) + "\t" + str(v), file=edges_required_file)
