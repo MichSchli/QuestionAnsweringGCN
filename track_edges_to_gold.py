@@ -40,7 +40,7 @@ def get_1_paths(centroids, golds):
     results = sparql.query().convert()
 
     for r in results["results"]["bindings"]:
-        yield r["r"]
+        yield r["r"]["value"]
 
 def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=True):
     centroid_symbol = "s"
@@ -112,7 +112,7 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     for r in results["results"]["bindings"]:
-        yield r["r1"], r["r2"]
+        yield r["r1"]["value"], r["r2"]["value"]
 
 def get_3_paths(centroids, golds):
     for permutation in itertools.permutations([True, False], 3):
@@ -124,7 +124,7 @@ def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     for r in results["results"]["bindings"]:
-        yield r["r1"], r["r2"], r["r3"]
+        yield r["r1"]["value"], r["r2"]["value"], r["r3"]["value"]
 
 def get_4_paths(centroids, golds):
     for permutation in itertools.permutations([True, False], 4):
@@ -136,12 +136,13 @@ def get_4_paths_internal(centroids, golds, forward_1, forward_2, forward_3, forw
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     for r in results["results"]["bindings"]:
-        yield r["r1"], r["r2"], r["r3"], r["r3"]
+        yield r["r1"]["value"], r["r2"]["value"], r["r3"]["value"], r["r4"]["value"]
 
 counter = 0
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
     print(counter)
     counter += 1
+
     for edge in get_1_paths(sentence, gold):
         print(edge)
 
