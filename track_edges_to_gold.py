@@ -17,7 +17,7 @@ def generate_1_query(centroids, golds, forward_edges=True):
     gold_symbol = "o" if forward_edges else "s"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect r where {"
+    query += "\n\nselect * where {"
     query += "\n\t?s ?r ?o ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
     query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"" for g in golds]) + " }"
@@ -75,6 +75,9 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
         yield r["r1"], r["r2"]
 
 
+counter = 0
 for gold, sentence in zip(gold_reader.parse_file(args.file), sentence_reader.parse_file(args.file)):
+    print(counter)
+    counter += 1
     for edge in get_1_paths(sentence, gold):
         print(edge)
