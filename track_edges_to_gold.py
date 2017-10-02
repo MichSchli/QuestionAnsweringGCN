@@ -131,12 +131,12 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
 
 def get_3_paths(centroids, golds):
     for permutation in itertools.product([True, False], repeat=3):
-        print(permutation)
+        #print(permutation)
         yield from get_3_paths_internal(centroids, golds, permutation[0], permutation[1], permutation[2])
 
 def get_3_paths_internal(centroids, golds, forward_1, forward_2, forward_3):
     query = generate_2_query_through_event(centroids, golds, forward_1, forward_2, forward_3)
-    print(query)
+    #print(query)
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
