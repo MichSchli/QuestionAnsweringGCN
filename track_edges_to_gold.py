@@ -54,7 +54,7 @@ def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=Tru
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"" for g in golds]) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join(["\""+g+"\"@en" for g in golds]) + " }"
     query += "\n}"
 
     return query
