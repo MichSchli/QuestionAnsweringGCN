@@ -16,7 +16,6 @@ class HypergraphInterface:
         self.vertex_property_retriever = vertex_property_retriever
 
     def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
-        print(vertices)
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")

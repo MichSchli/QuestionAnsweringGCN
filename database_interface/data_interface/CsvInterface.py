@@ -28,10 +28,12 @@ class CsvInterface:
 
         return np.array(props)
 
-    def get_adjacent_edges(self, node_identifiers, target="entities"):
+    def get_adjacent_edges(self, node_identifiers, target="entities", literals_only=False):
         edges = EdgeQueryResult()
 
         target_types = ["entity", "literal"] if target == "entities" else ["event"]
+        if literals_only:
+            target_types = ["literal"]
 
         for edge in self.edges:
             if edge[0] in node_identifiers and edge[4] in target_types:
