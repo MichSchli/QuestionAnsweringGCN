@@ -5,8 +5,6 @@ import time
 
 from database_interface.data_interface.edge_query_result import EdgeQueryResult
 from database_interface.search_filters.prefix_filter import PrefixFilter
-from model.hypergraph import Hypergraph
-from dateutil.parser import parse as date_parse
 
 
 class FreebaseInterface:

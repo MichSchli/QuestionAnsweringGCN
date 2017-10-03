@@ -1,11 +1,10 @@
 import argparse
 import json
 import sys
-from preprocessing.read_json_files import JsonReader
 import numpy as np
 
 
-class CandidateNeighborhoodGenerator:
+class NeighborhoodCandidateGenerator:
 
     freebase_interface = None
     neighborhood_search_scope = None

@@ -1,6 +1,3 @@
-from model.hypergraph import Hypergraph
-import numpy as np
-
 from model.hypergraph_model import HypergraphModel
 
 
@@ -42,7 +39,7 @@ class HypergraphInterface:
         self.expand_hypergraph_from_data_interface(filtered_frontier, hypergraph, "entities", "entities", literals_only=literals_only)
 
         if use_event_edges:
-            self.expand_through_hyperedges(filtered_frontier, hypergraph, literals_only=literals_only)
+            self.expand_hypergraph_through_hyperedges(filtered_frontier, hypergraph, literals_only=literals_only)
 
         hypergraph.mark_expanded(candidates_for_expansion, "entities")
         hypergraph.populate_discovered("entities")
@@ -51,7 +48,7 @@ class HypergraphInterface:
     Expand a hypergraph through a precomputed frontier to any adjacent vertices lying along hyperedges.
     """
     def expand_hypergraph_through_hyperedges(self, filtered_frontier, hypergraph, literals_only=False):
-        self.expand_to_event_vertices(filtered_frontier, hypergraph)
+        self.expand_hypergraph_to_event_vertices(filtered_frontier, hypergraph)
         unexpanded_event_vertices = hypergraph.get_expandable_vertices("events", pop=True)
         if unexpanded_event_vertices.shape[0] > 0:
             self.expand_hypergraph_from_data_interface(unexpanded_event_vertices,

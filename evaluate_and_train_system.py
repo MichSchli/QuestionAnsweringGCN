@@ -1,16 +1,14 @@
 import argparse
 
+from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
 from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
-from database_interface.properties.vertex_property_retriever import VertexPropertyRetriever
 from evaluation.python_evaluator import Evaluator
-from grounding.json_to_candidate_neighborhood import CandidateNeighborhoodGenerator
 from preprocessing.read_conll_files import ConllReader
-from preprocessing.read_json_files import JsonReader
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--train_file', type=str, help='The location of the .conll-file to be used for training')
@@ -31,7 +29,7 @@ else:
 
 database = HypergraphInterface(database_interface, expansion_strategy)
 sentence_reader = ConllReader(entity_prefix=entity_prefix)
-candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1, extra_literals=True)
+candidate_generator = NeighborhoodCandidateGenerator(database, sentence_reader, neighborhood_search_scope=1, extra_literals=True)
 
 gold_reader_for_oracle = ConllReader(output="gold")
 strategy = OracleCandidate(candidate_generator, gold_reader_for_oracle)
