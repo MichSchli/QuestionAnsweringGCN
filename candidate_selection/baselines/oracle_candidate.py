@@ -22,6 +22,11 @@ class OracleCandidate:
             counter += 1
             candidate_set = candidate_graph.get_vertices(type="entities")
             gold_in_candidates = np.isin(gold_set, candidate_set)
+            print(candidate_set)
+            print(gold_set)
             print(gold_in_candidates)
             yield gold_set[gold_in_candidates]
+
+    def train(self, train_file):
+        pass
 

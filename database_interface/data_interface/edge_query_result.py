@@ -28,7 +28,6 @@ class EdgeQueryResult:
         self.vertices[vertex] = type
 
     def get_forward_edges(self):
-        print(len(self.forward_edges))
         #for edge in self.forward_edges:
         #    print(edge)
 
