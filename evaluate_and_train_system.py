@@ -22,12 +22,14 @@ gold_reader = ConllReader(output="gold")
 
 if args.backend == "freebase":
     database_interface = FreebaseInterface()
+    expansion_strategy = OnlyFreebaseExpansionStrategy()
     entity_prefix = "http://rdf.freebase.com/ns/"
 else:
     database_interface = CsvInterface(args.backend)
+    expansion_strategy = AllThroughExpansionStrategy()
     entity_prefix = ""
 
-database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), VertexPropertyRetriever(database_interface))
+database = HypergraphInterface(database_interface, expansion_strategy)
 sentence_reader = ConllReader(entity_prefix=entity_prefix)
 candidate_generator = CandidateNeighborhoodGenerator(database, sentence_reader, neighborhood_search_scope=1, extra_literals=True)
 

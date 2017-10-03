@@ -67,18 +67,6 @@ denniscorp	denniscorp
 
 henry	henry
 
-0	who	_	_	_
-1	is	_	_	_
-2	the	_	_	_
-3	daughter	_	_	_
-4	of	_	_	_
-5	dennis	_	_	_
-6	?	_	_	_
-
-5	5	dennis	1.0
-
-emma	emma
-
 0	what	_	_	_
 1	is	_	_	_
 2	fay	_	_	_
@@ -309,6 +297,20 @@ maths	maths
 5	5	emma	1.0
 
 carl	carl
+
+0	when	_	_	_
+1	did	_	_	_
+2	henry	_	_	_
+3	teach	_	_	_
+4	physics	_	_	_
+5	?	_	_	_
+
+2	2	henry	1.0
+4	4	physics	1.0
+
+2006	2006
+2005	2005
+2004	2004
 
 0	who	_	_	_
 1	is	_	_	_
