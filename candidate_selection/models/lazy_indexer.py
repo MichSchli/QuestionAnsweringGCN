@@ -10,6 +10,14 @@ class LazyIndexer:
         self.global_map = {}
         self.counter = 0
 
+    def index_single_element(self, element):
+        if element not in self.global_map:
+            self.global_map[element] = self.counter
+            self.counter += 1
+
+        return self.global_map[element]
+
+
     def index(self, elements):
         local_map = np.empty(elements.shape, dtype=np.int32)
 

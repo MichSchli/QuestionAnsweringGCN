@@ -17,7 +17,7 @@ class TargetComparator:
         return comparison
 
 
-    def prepare_variables(self):
+    def prepare_tensorflow_variables(self):
         self.variables.add_variable(self.variable_prefix + "target_indices", tf.placeholder(tf.int32))
 
     def handle_variable_assignment(self, target_indices):

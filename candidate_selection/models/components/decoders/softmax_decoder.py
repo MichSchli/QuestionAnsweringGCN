@@ -30,18 +30,18 @@ class SoftmaxDecoder:
 
         def map_function(x):
             golds = x[2][:x[1]]
-            vals = tf.nn.softmax_cross_entropy_with_logits(logits=x[0][:x[1]], labels=golds)
+            vals = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=x[0][:x[1]], labels=golds))
             return vals
 
         elems = (entity_vertex_scores_distributed, self.variables.get_variable("vertex_count_per_hypergraph"), gold_scores)
         alternate = tf.map_fn(map_function, elems, dtype=tf.float32)
 
         if sum_examples:
-            return tf.reduce_sum(alternate)
+            return tf.reduce_mean(alternate)
         else:
             return alternate
 
-    def prepare_variables(self, mode='predict'):
+    def prepare_tensorflow_variables(self, mode='predict'):
         self.variables.add_variable("vertex_lookup_matrix", tf.placeholder(tf.int32))
         self.variables.add_variable("vertex_count_per_hypergraph", tf.placeholder(tf.int32))
 

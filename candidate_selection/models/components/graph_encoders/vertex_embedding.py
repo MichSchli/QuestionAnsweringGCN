@@ -31,11 +31,11 @@ class VertexEmbedding:
     def get_embedding(self):
         return tf.nn.embedding_lookup(self.W, self.variables.get_variable(self.variable_prefix+"element_indices"))
 
-    def prepare_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         if self.random:
             self.variables.add_variable(self.variable_prefix+"number_of_elements_in_batch", tf.placeholder(tf.int32, name=self.variable_prefix+"number_of_elements_in_batch"))
         else:
-            self.variables.add_variable(self.variable_prefix+"element_indices", tf.placeholder(tf.int32, name=self.variable_prefix+"element_indices"))
+            self.variables.add_variable(self.variable_prefix+"element_indices", tf.placeholder(tf.int32, [None], name=self.variable_prefix+"element_indices"))
             initializer = np.random.normal(0, 1, size=(self.facts.number_of_entities, self.dimension)).astype(np.float32)
             self.W = tf.Variable(initializer)
 

@@ -82,7 +82,7 @@ class CandidateAndAuxGcnModel:
         self.aux_hypergraph.prepare_variables()
         self.aux_entity_embedding.prepare_variables()
         self.aux_event_embedding.prepare_variables()
-        self.target_comparator.prepare_variables()
+        self.target_comparator.prepare_tensorflow_variables()
 
         self.decoder.prepare_variables(mode=mode)
 

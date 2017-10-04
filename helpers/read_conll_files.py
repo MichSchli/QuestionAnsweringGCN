@@ -45,6 +45,8 @@ class ConllReader:
                     elif output == "gold":
                         gold_entities = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
                         yield gold_entities
+                    elif output == "sentences":
+                        yield sentence_matrix
                     else:
                         yield sentence_matrix, gold_matrix
 

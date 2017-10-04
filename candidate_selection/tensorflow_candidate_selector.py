@@ -10,8 +10,8 @@ class TensorflowCandidateSelector:
     facts = None
 
     # To be moved to configuration file
-    epochs = 1000
-    batch_size = 10
+    epochs = 20
+    batch_size = 26
 
     def __init__(self, model, candidate_neighborhood_generator, gold_generator, facts):
         self.candidate_neighborhood_generator = candidate_neighborhood_generator
@@ -43,7 +43,7 @@ class TensorflowCandidateSelector:
             yield [b[:index] for b in batch]
 
     def train(self, training_file):
-        self.model.prepare_variables(mode='train')
+        self.model.prepare_tensorflow_variables(mode='train')
         model_loss = self.model.get_loss_graph()
         parameters_to_optimize = self.model.get_optimizable_parameters()
         opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
@@ -72,16 +72,17 @@ class TensorflowCandidateSelector:
                 loss = result[1]
                 print(loss)
 
-    def predict(self, filename):
+    def parse_file(self, filename):
         candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
         aux_iterators = self.model.get_aux_iterators()
-        all_iterators = [candidate_iterator] + aux_iterators
+        label_iterator = self.gold_generator.parse_file(filename)
+        all_iterators = [candidate_iterator] + aux_iterators + [label_iterator]
         batch_iterator = self.iterate_in_batches(all_iterators, validate_batches=False)
 
         #self.model.prepare_variables(mode='predict')
 
         model_prediction = self.model.get_prediction_graph()
-        model_loss = self.model.get_loss_graph(sum_examples=False)
+        model_loss = self.model.get_loss_graph()
 
         for batch in batch_iterator:
             preprocessed_batch = self.model.preprocess(batch, mode='predict')
@@ -91,7 +92,6 @@ class TensorflowCandidateSelector:
             print("Loss was: " + str(loss))
 
             for i, prediction in enumerate(predictions):
-                print(prediction)
                 best_prediction = np.argmax(prediction)
                 output = self.model.retrieve_entities(i, best_prediction)
                 yield output
