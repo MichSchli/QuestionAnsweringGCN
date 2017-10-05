@@ -11,7 +11,7 @@ class TensorflowCandidateSelector:
 
     # To be moved to configuration file
     epochs = 20
-    batch_size = 26
+    batch_size = 10
 
     def __init__(self, model, candidate_neighborhood_generator, gold_generator, facts):
         self.candidate_neighborhood_generator = candidate_neighborhood_generator

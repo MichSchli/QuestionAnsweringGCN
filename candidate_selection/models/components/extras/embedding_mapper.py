@@ -12,13 +12,13 @@ class EmbeddingMapper:
         if self.variable_prefix != "":
             self.variable_prefix += "_"
 
-    def get_map(self):
-        g_indices = self.variables.get_variable(self.variable_prefix + "to_indices")
-        s_indices = self.variables.get_variable(self.variable_prefix + "from_indices")
+    def get_map(self, direction="forward"):
+        g_indices = self.variables.get_variable(self.variable_prefix + "to_indices" if direction == "forward" else "from_indices")
+        s_indices = self.variables.get_variable(self.variable_prefix + "from_indices" if direction == "forward" else "to_indices")
         stg_values = tf.to_float(tf.ones_like(g_indices))
 
-        g_size = self.variables.get_variable(self.variable_prefix + "to_size")
-        s_size = self.variables.get_variable(self.variable_prefix + "from_size")
+        g_size = self.variables.get_variable(self.variable_prefix + "to_size" if direction == "forward" else "from_size")
+        s_size = self.variables.get_variable(self.variable_prefix + "from_size"  if direction == "forward" else "to_size")
 
         stg_indices = tf.to_int64(tf.transpose(tf.stack([g_indices, s_indices])))
         stg_shape = tf.to_int64([g_size, s_size])
@@ -27,8 +27,8 @@ class EmbeddingMapper:
                                                        values=stg_values,
                                                        dense_shape=stg_shape))
 
-    def apply_map(self, embedding):
-        return tf.sparse_tensor_dense_matmul(self.get_map(), embedding)
+    def apply_map(self, embedding, direction="forward"):
+        return tf.sparse_tensor_dense_matmul(self.get_map(direction=direction), embedding)
 
     def prepare_variables(self):
         self.variables.add_variable(self.variable_prefix + "from_indices", tf.placeholder(tf.int32))

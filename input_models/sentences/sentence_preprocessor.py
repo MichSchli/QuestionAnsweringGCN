@@ -12,7 +12,8 @@ class SentencePreprocessor():
         self.indexer = LazyIndexer()
 
     def preprocess(self, sentence_batch):
-        words = [[self.indexer.index_single_element(word[1]) for word in sentence] for sentence in sentence_batch]
+        words = [[self.indexer.index_single_element(word[1]) for word in sentence[0]] for sentence in sentence_batch]
+
         # convert sentence batch to vocabulary
         batch_indices = -1 * np.ones((len(words), max([len(w) for w in words])), dtype=np.int32)
         sentence_lengths = np.zeros(len(words), dtype=np.int32)

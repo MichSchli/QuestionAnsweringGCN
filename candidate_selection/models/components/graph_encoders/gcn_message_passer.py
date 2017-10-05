@@ -10,7 +10,7 @@ class GcnConcatMessagePasser:
     dimension = None
     variable_prefix = None
 
-    n_coefficients = 3
+    n_coefficients = 20
     submatrix_d = None
 
     senders = None

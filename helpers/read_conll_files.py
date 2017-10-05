@@ -12,7 +12,7 @@ class ConllReader:
         self.entity_prefix = entity_prefix
 
     def parse_file(self, filename, output=None):
-        if output == None:
+        if output is None:
             output = self.output
 
         with open(filename) as data_file:
@@ -47,6 +47,9 @@ class ConllReader:
                         yield gold_entities
                     elif output == "sentences":
                         yield sentence_matrix
+                    elif output == "sentences+entities":
+                        entity_matrix = np.array([[entry[0], entry[1], self.entity_prefix + entry[2], entry[3]] for entry in entity_matrix])
+                        yield sentence_matrix, entity_matrix
                     else:
                         yield sentence_matrix, gold_matrix
 

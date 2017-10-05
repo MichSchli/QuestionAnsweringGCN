@@ -41,11 +41,11 @@ candidate_generator = NeighborhoodCandidateGenerator(database, sentence_reader, 
 # Move this to argument/config later:
 strategy_string = "lstm+gcn"
 if strategy_string == "oracle":
-    gold_reader_for_oracle = ConllReader(output="gold")
+    gold_reader_for_oracle = ConllReader(output="gold", entity_prefix=entity_prefix)
     strategy = OracleCandidate(candidate_generator, gold_reader_for_oracle)
 elif strategy_string == "lstm+gcn":
-    gold_reader_for_training = ConllReader(output="gold")
-    sentence_reader = ConllReader(output="sentences")
+    gold_reader_for_training = ConllReader(output="gold", entity_prefix=entity_prefix)
+    sentence_reader = ConllReader(output="sentences+entities", entity_prefix=entity_prefix)
     aux_read_wrapper = AuxParserWrapper(sentence_reader, args.train_file)
     model = LstmVsGcnModel(facts, 100, aux_read_wrapper)
     strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
