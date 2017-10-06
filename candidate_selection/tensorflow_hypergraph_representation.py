@@ -52,7 +52,7 @@ class TensorflowHypergraphRepresentation:
     Defining and assigning graph-related variables:
     """
 
-    def prepare_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         self.prepare_variable_set(self.variable_prefix + "events_to_entities")
         self.prepare_variable_set(self.variable_prefix + "entities_to_events")
         self.prepare_variable_set(self.variable_prefix + "entities_to_entities")

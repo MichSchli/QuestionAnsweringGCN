@@ -42,7 +42,7 @@ class HypergraphGcnPropagationUnit:
 
         return params
 
-    def prepare_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         self.gcn_encoder_ev_to_en.prepare_variables()
         self.gcn_encoder_en_to_ev.prepare_variables()
         self.gcn_encoder_en_to_en.prepare_variables()

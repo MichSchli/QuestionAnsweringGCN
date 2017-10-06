@@ -28,24 +28,8 @@ class BiLstm:
     def handle_variable_assignment(self, sentence_input_model):
         self.variables.assign_variable(self.variable_prefix+"lengths", sentence_input_model.sentence_lengths)
 
-    def prepare_tensorflow_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         self.variables.add_variable(self.variable_prefix+"lengths", tf.placeholder(tf.int32, [None], name=self.variable_prefix+"lengths"))
-
-        #TODO: W initializer is total crap. Also no bias.
-        initializer = np.random.normal(0, 0.01, size=(self.dimension*2, self.dimension)).astype(np.float32)
-        self.W_forget = tf.Variable(initializer, name=self.variable_prefix + "forget_weights")
-
-        initializer = np.random.normal(0, 0.01, size=(self.dimension*2, self.dimension)).astype(np.float32)
-        self.W_input = tf.Variable(initializer, name=self.variable_prefix + "forget_weights")
-
-        initializer = np.random.normal(0, 0.01, size=(self.dimension*2, self.dimension)).astype(np.float32)
-        self.W_output = tf.Variable(initializer, name=self.variable_prefix + "forget_weights")
-
-        initializer = np.random.normal(0, 0.01, size=(self.dimension*2, self.dimension)).astype(np.float32)
-        self.W_update = tf.Variable(initializer, name=self.variable_prefix + "update_weights")
-
-        initializer = np.random.normal(0, 0.01, size=(self.dimension*2, self.dimension)).astype(np.float32)
-        self.W_hidden = tf.Variable(initializer, name=self.variable_prefix + "hidden_weights")
 
     def lstm_cell(self, previous, current):
         prev_h = previous[0]

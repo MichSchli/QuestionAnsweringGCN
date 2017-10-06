@@ -24,6 +24,7 @@ class LstmVsGcnModel:
     hypergraph_batch_preprocessor = None
     entity_scores = None
     sentence_iterator = None
+    components = None
 
     def __init__(self, facts, dimension, sentence_iterator):
         self.facts = facts
@@ -56,6 +57,10 @@ class LstmVsGcnModel:
 
         self.aux_mapper = EmbeddingMapper(self.variables)
 
+        self.components = [self.entity_embedding, self.word_embedding, self.event_embedding, self.decoder,
+                           self.hypergraph, self.lstm1, self.lstm2, self.lstm_attention, self.target_comparator, self.aux_mapper] \
+                          + self.hypergraph_gcn_propagation_units
+
     def get_aux_iterators(self):
         return [self.sentence_iterator.get_iterator()]
 
@@ -71,30 +76,8 @@ class LstmVsGcnModel:
         return target_vertices_in_candidates.all()
 
     def prepare_tensorflow_variables(self, mode="train"):
-        self.entity_embedding.prepare_tensorflow_variables(mode=mode)
-        self.event_embedding.prepare_tensorflow_variables(mode=mode)
-        self.word_embedding.prepare_tensorflow_variables(mode=mode)
-        self.decoder.prepare_tensorflow_variables(mode=mode)
-        self.target_comparator.prepare_tensorflow_variables()
-        self.hypergraph.prepare_variables()
-        self.aux_mapper.prepare_variables()
-
-        self.lstm1.prepare_tensorflow_variables()
-        self.lstm2.prepare_tensorflow_variables()
-        self.lstm_attention.prepare_tensorflow_variables()
-
-        for hgpu in self.hypergraph_gcn_propagation_units:
-            hgpu.prepare_variables()
-
-    def get_optimizable_parameters(self):
-        optimizable_vars = self.entity_embedding.get_optimizable_parameters()
-        optimizable_vars += self.word_embedding.get_optimizable_parameters()
-        optimizable_vars += self.lstm.get_optimizable_parameters()
-
-        for hgpu in self.hypergraph_gcn_propagation_units:
-            optimizable_vars += hgpu.get_optimizable_parameters()
-
-        return optimizable_vars
+        for component in self.components:
+            component.prepare_tensorflow_variables(mode=mode)
 
     def get_loss_graph(self, sum_examples=True):
         if self.entity_scores is None:

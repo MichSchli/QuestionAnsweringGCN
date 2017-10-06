@@ -30,7 +30,7 @@ class EmbeddingMapper:
     def apply_map(self, embedding, direction="forward"):
         return tf.sparse_tensor_dense_matmul(self.get_map(direction=direction), embedding)
 
-    def prepare_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         self.variables.add_variable(self.variable_prefix + "from_indices", tf.placeholder(tf.int32))
         self.variables.add_variable(self.variable_prefix + "to_indices", tf.placeholder(tf.int32))
         self.variables.add_variable(self.variable_prefix + "from_size", tf.placeholder(tf.int32))
