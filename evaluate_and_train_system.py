@@ -47,7 +47,7 @@ elif strategy_string == "lstm+gcn":
     gold_reader_for_training = ConllReader(output="gold", entity_prefix=entity_prefix)
     sentence_reader = ConllReader(output="sentences+entities", entity_prefix=entity_prefix)
     aux_read_wrapper = AuxParserWrapper(sentence_reader, args.train_file)
-    model = LstmVsGcnModel(facts, 100, aux_read_wrapper)
+    model = LstmVsGcnModel(facts, 40, aux_read_wrapper)
     strategy = TensorflowCandidateSelector(model, candidate_generator, gold_reader_for_training, facts)
 
 strategy.train(args.train_file)

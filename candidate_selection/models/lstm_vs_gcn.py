@@ -4,6 +4,7 @@ from candidate_selection.models.components.extras.target_comparator import Targe
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
+from candidate_selection.models.components.sequence_encoders.bilstm import BiLstm
 from candidate_selection.models.components.word_embeddings.untrained_word_embedding import UntrainedWordEmbedding
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
@@ -40,9 +41,13 @@ class LstmVsGcnModel:
         self.sentence_batch_preprocessor = SentencePreprocessor()
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
 
+        self.lstm1 = BiLstm(self.variables, dimension, variable_prefix="lstm1")
+        self.lstm2 = BiLstm(self.variables, dimension, variable_prefix="lstm2")
+        self.lstm_attention = BiLstm(self.variables, dimension, variable_prefix="lstm_attention")
+
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence")
 
-        layers = 1
+        layers = 8
         self.hypergraph_gcn_propagation_units = [None] * layers
         for layer in range(layers):
             self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer), facts,
@@ -74,12 +79,17 @@ class LstmVsGcnModel:
         self.hypergraph.prepare_variables()
         self.aux_mapper.prepare_variables()
 
+        self.lstm1.prepare_tensorflow_variables()
+        self.lstm2.prepare_tensorflow_variables()
+        self.lstm_attention.prepare_tensorflow_variables()
+
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.prepare_variables()
 
     def get_optimizable_parameters(self):
         optimizable_vars = self.entity_embedding.get_optimizable_parameters()
         optimizable_vars += self.word_embedding.get_optimizable_parameters()
+        optimizable_vars += self.lstm.get_optimizable_parameters()
 
         for hgpu in self.hypergraph_gcn_propagation_units:
             optimizable_vars += hgpu.get_optimizable_parameters()
@@ -99,29 +109,43 @@ class LstmVsGcnModel:
         return self.decoder.decode_to_prediction(self.entity_scores)
 
     def compute_entity_scores(self):
+        # Get initial word embeddings:
         word_scores = self.word_embedding.get_representations()
         flat_word_scores = tf.reshape(word_scores, [-1, self.dimension])
 
+        # Add initial entity embeddings:
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
         self.hypergraph.event_vertex_embeddings = self.event_embedding.get_representations()
-
-        self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(flat_word_scores)
-
-        self.hypergraph_gcn_propagation_units[-1].propagate()
-        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
-        self.hypergraph_gcn_propagation_units[-1].propagate()
-        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
-        self.hypergraph_gcn_propagation_units[-1].propagate()
-        self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
-        self.hypergraph_gcn_propagation_units[-1].propagate()
-        self.hypergraph.entity_vertex_embeddings = self.hypergraph.entity_vertex_embeddings
-
+        for i in range(0,3):
+            self.hypergraph_gcn_propagation_units[0].propagate()
+            self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
+        self.hypergraph_gcn_propagation_units[3].propagate()
         flat_word_scores += self.aux_mapper.apply_map(self.hypergraph.entity_vertex_embeddings, direction="backward")
         word_scores = tf.reshape(flat_word_scores, tf.shape(word_scores))
 
-        bag_of_words = tf.reduce_sum(word_scores, 1)
+        # Store word embeddings with entity embeddings:
+        original_word_scores = word_scores
 
-        entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
+        # Parse sentence with LSTM:
+        word_scores = self.lstm1.transform_sequences(word_scores)
+
+        # Propagate from sentence to KB graph:
+        flat_word_scores = tf.reshape(word_scores, [-1, self.dimension])
+        self.hypergraph.entity_vertex_embeddings += self.aux_mapper.apply_map(flat_word_scores)
+        for i in range(4,7):
+            self.hypergraph_gcn_propagation_units[i].propagate()
+            self.hypergraph.entity_vertex_embeddings = tf.nn.relu(self.hypergraph.entity_vertex_embeddings)
+        self.hypergraph_gcn_propagation_units[7].propagate()
+
+        # Calculate target vector:
+        word_scores = self.lstm2.transform_sequences(original_word_scores)
+        attention_scores = self.lstm_attention.transform_sequences(original_word_scores)
+        attention_values = tf.nn.softmax(attention_scores, dim=1)
+        attention_weighted_word_scores = word_scores * attention_values
+        target_vector = tf.reduce_sum(attention_weighted_word_scores, 1)
+
+        # Score entities:
+        entity_scores = self.target_comparator.get_comparison_scores(target_vector,
                                                                      self.hypergraph.entity_vertex_embeddings)
 
         return entity_scores
@@ -133,6 +157,9 @@ class LstmVsGcnModel:
         self.hypergraph.handle_variable_assignment(hypergraph_input_model)
 
         self.word_embedding.handle_variable_assignment(o_preprocessed_batch[1])
+        self.lstm1.handle_variable_assignment(o_preprocessed_batch[1])
+        self.lstm2.handle_variable_assignment(o_preprocessed_batch[1])
+        self.lstm_attention.handle_variable_assignment(o_preprocessed_batch[1])
         self.target_comparator.handle_variable_assignment(o_preprocessed_batch[3])
 
         self.decoder.handle_variable_assignment(hypergraph_input_model.entity_vertex_matrix, hypergraph_input_model.entity_vertex_slices)

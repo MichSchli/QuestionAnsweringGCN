@@ -63,7 +63,7 @@ class HypergraphGcnPropagationUnit:
     def propagate(self):
 
         # Propagate information to events:
-        self.hypergraph.event_vertex_embeddings = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
+        self.hypergraph.event_vertex_embeddings += tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
         self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph) \
                                                   + self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
 
@@ -74,5 +74,5 @@ class HypergraphGcnPropagationUnit:
         entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph) \
                                     + self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
 
-        self.hypergraph.entity_vertex_embeddings = tf.matmul(self.hypergraph.entity_vertex_embeddings, self.W_self_entities)
+        self.hypergraph.entity_vertex_embeddings += tf.matmul(self.hypergraph.entity_vertex_embeddings, self.W_self_entities)
         self.hypergraph.entity_vertex_embeddings += entity_vertex_embeddings

@@ -11,7 +11,7 @@ class TensorflowCandidateSelector:
 
     # To be moved to configuration file
     epochs = 20
-    batch_size = 10
+    batch_size = 30
 
     def __init__(self, model, candidate_neighborhood_generator, gold_generator, facts):
         self.candidate_neighborhood_generator = candidate_neighborhood_generator
@@ -45,7 +45,7 @@ class TensorflowCandidateSelector:
     def train(self, training_file):
         self.model.prepare_tensorflow_variables(mode='train')
         model_loss = self.model.get_loss_graph()
-        parameters_to_optimize = self.model.get_optimizable_parameters()
+        parameters_to_optimize = tf.trainable_variables()
         opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
         grad_func = tf.gradients(model_loss, parameters_to_optimize)
         optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
@@ -73,6 +73,7 @@ class TensorflowCandidateSelector:
                 print(loss)
 
     def parse_file(self, filename):
+        self.batch_size = 1
         candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
         aux_iterators = self.model.get_aux_iterators()
         label_iterator = self.gold_generator.parse_file(filename)
@@ -85,13 +86,17 @@ class TensorflowCandidateSelector:
         model_loss = self.model.get_loss_graph()
 
         for batch in batch_iterator:
+            print(" ".join([w[1] for w in batch[1][0][0]]))
             preprocessed_batch = self.model.preprocess(batch, mode='predict')
             assignment_dict = self.model.handle_variable_assignment(preprocessed_batch, mode='predict')
             predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
 
-            print("Loss was: " + str(loss))
+            #print("Loss was: " + str(loss))
 
             for i, prediction in enumerate(predictions):
-                best_prediction = np.argmax(prediction)
-                output = self.model.retrieve_entities(i, best_prediction)
+                best_predictions = np.where(prediction[0] > .3)[0]
+                output = []
+                for prediction in best_predictions:
+                    output.extend(self.model.retrieve_entities(i,prediction))
+
                 yield output
