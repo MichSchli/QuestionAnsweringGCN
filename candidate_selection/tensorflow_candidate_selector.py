@@ -53,7 +53,7 @@ class TensorflowCandidateSelector:
         if index != 0:
             yield {k:v[:index] for k,v in batch_dict.items()}
 
-    def train(self, train_file_iterator):
+    def train(self, train_file_iterator, verbose=False):
         self.model.prepare_tensorflow_variables(mode='train')
         model_loss = self.model.get_loss_graph()
         parameters_to_optimize = tf.trainable_variables()
@@ -66,7 +66,8 @@ class TensorflowCandidateSelector:
         self.sess.run(init_op)
 
         for epoch in range(self.epochs):
-            print("Starting epoch: "+str(epoch))
+            if verbose:
+                print("Starting epoch: "+str(epoch))
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
 
@@ -77,7 +78,8 @@ class TensorflowCandidateSelector:
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
                 result = self.sess.run([optimize_func, model_loss], feed_dict=assignment_dict)
                 loss = result[1]
-                print(loss)
+                if verbose:
+                    print(loss)
 
     def parse_file(self, filename):
         self.batch_size = 1
