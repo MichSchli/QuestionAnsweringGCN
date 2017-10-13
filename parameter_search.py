@@ -25,7 +25,9 @@ for parameter_line, model in model_builder.search():
     train_file_iterator = ConllReader(args.train_file)
     model.train(train_file_iterator)
 
-    evaluation = evaluator.evaluate(model)
+    valid_file_iterator = ConllReader(args.valid_file)
+    prediction = model.predict(valid_file_iterator)
+    evaluation = evaluator.evaluate(prediction)
     performance = evaluation.f1
 
     print(performance)

@@ -1,44 +1,64 @@
 import numpy as np
 
+from helpers.read_conll_files import ConllReader
+
+
+class Evaluation:
+
+    total_true_positives = 0
+    total_false_positives = 0
+    total_false_negatives = 0
+
+    macro_precision = 0
+    macro_recall = 0
+    macro_f1 = 0
+
+    micro_precision = 0
+    micro_recall = 0
+    micro_f1 = 0
+
+    def __init__(self):
+        self.total_true_positives = 0
+        self.total_false_positives = 0
+        self.total_false_negatives = 0
+
+        self.macro_precision = 0
+        self.macro_recall = 0
+        self.macro_f1 = 0
+
+        self.micro_precision = 0
+        self.micro_recall = 0
+        self.micro_f1 = 0
+
+
 
 class Evaluator:
 
     predictor = None
     gold_reader = None
-    evalution_file = None
+    evaluation_file = None
 
     def __init__(self, gold_reader):
         self.gold_reader = gold_reader
 
     def evaluate(self, model):
-        pass
+        self.parse_file(model, self.evaluation_file)
 
-    def parse_file(self, filename, method="micro"):
-        prediction_iterator = self.predictor.parse_file(filename)
-        gold_iterator = self.gold_reader.parse_file(filename)
+    def parse_file(self, prediction_iterator, method="micro", verbose=True):
+        gold_iterator = self.gold_reader.iterate()
 
-        total_true_positives = 0
-        total_false_positives = 0
-        total_false_negatives = 0
-
-        macro_precision = 0
-        macro_recall = 0
-        macro_f1 = 0
-
+        evaluation = Evaluation()
         count = 0
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
-            print("Prediction: " + ",".join(prediction))
-            print("Gold: " + ",".join(gold))
-            print("")
             count += 1
             true_positives = np.isin(prediction, gold)
             false_positives = np.logical_not(true_positives)
             false_negatives = np.isin(gold, prediction, invert=True)
 
-            total_true_positives += np.sum(true_positives)
-            total_false_positives += np.sum(false_positives)
-            total_false_negatives += np.sum(false_negatives)
+            evaluation.total_true_positives += np.sum(true_positives)
+            evaluation.total_false_positives += np.sum(false_positives)
+            evaluation.total_false_negatives += np.sum(false_negatives)
 
             if np.sum(true_positives) + np.sum(false_positives) == 0:
                 inner_precision = 1.0
@@ -46,29 +66,31 @@ class Evaluator:
                 inner_precision = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_positives))
 
             inner_recall = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_negatives))
-            macro_precision += inner_precision
-            macro_recall += inner_recall
+            evaluation.macro_precision += inner_precision
+            evaluation.macro_recall += inner_recall
 
             if inner_precision + inner_recall > 0:
-                macro_f1 += 2 * (inner_precision * inner_recall) / (inner_precision + inner_recall)
+                evaluation.macro_f1 += 2 * (inner_precision * inner_recall) / (inner_precision + inner_recall)
 
-        precision = total_true_positives / (total_true_positives + total_false_positives)
-        recall = total_true_positives / (total_true_positives + total_false_negatives)
-        f1 = 2 * (precision * recall) / (precision + recall)
+        evaluation.micro_precision = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_positives)
+        evaluation.micro_recall = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_negatives)
+        evaluation.f1 = 2 * (evaluation.micro_precision * evaluation.micro_recall) / (evaluation.micro_precision + evaluation.micro_recall)
 
-        macro_precision /= count
-        macro_recall /= count
-        macro_f1 /= count
+        evaluation.macro_precision /= count
+        evaluation.macro_recall /= count
+        evaluation.macro_f1 /= count
 
-        if method == "micro":
+        if method == "micro" and verbose:
             print("Final results (micro-averaged):")
             print("===============================")
-            print("Precision: " + str(precision))
-            print("Recall: " + str(recall))
-            print("F1: " + str(f1))
-        else:
+            print("Precision: " + str(evaluation.micro_precision))
+            print("Recall: " + str(evaluation.micro_recall))
+            print("F1: " + str(evaluation.micro_f1))
+        elif verbose:
             print("Final results (macro-averaged):")
             print("===============================")
-            print("Precision: " + str(macro_precision))
-            print("Recall: " + str(macro_recall))
-            print("F1: " + str(macro_f1))
+            print("Precision: " + str(evaluation.macro_precision))
+            print("Recall: " + str(evaluation.macro_recall))
+            print("F1: " + str(evaluation.macro_f1))
+
+        return evaluation

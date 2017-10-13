@@ -81,26 +81,19 @@ class TensorflowCandidateSelector:
                 if verbose:
                     print(loss)
 
-    def parse_file(self, filename):
+    def predict(self, test_file_iterator):
         self.batch_size = 1
-        candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
-        aux_iterators = self.model.get_aux_iterators()
-        label_iterator = self.gold_generator.parse_file(filename)
-        all_iterators = [candidate_iterator] + aux_iterators + [label_iterator]
-        batch_iterator = self.iterate_in_batches(all_iterators, validate_batches=False)
-
-        #self.model.prepare_variables(mode='predict')
+        epoch_iterator = test_file_iterator.iterate()
+        epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
+        batch_iterator = self.iterate_in_batches(epoch_iterator)
 
         model_prediction = self.model.get_prediction_graph()
         model_loss = self.model.get_loss_graph()
 
         for batch in batch_iterator:
-            print(" ".join([w[1] for w in batch[1][0][0]]))
-            preprocessed_batch = self.model.preprocess(batch, mode='predict')
-            assignment_dict = self.model.handle_variable_assignment(preprocessed_batch, mode='predict')
+            self.model.get_preprocessor().process(batch)
+            assignment_dict = self.model.handle_variable_assignment(batch, mode='predict')
             predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
-
-            #print("Loss was: " + str(loss))
 
             for i, prediction in enumerate(predictions):
                 best_predictions = np.where(prediction[0] > .3)[0]
