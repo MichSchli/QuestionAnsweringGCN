@@ -5,10 +5,13 @@ class Evaluator:
 
     predictor = None
     gold_reader = None
+    evalution_file = None
 
-    def __init__(self, predictor, gold_reader):
-        self.predictor = predictor
+    def __init__(self, gold_reader):
         self.gold_reader = gold_reader
+
+    def evaluate(self, model):
+        pass
 
     def parse_file(self, filename, method="micro"):
         prediction_iterator = self.predictor.parse_file(filename)

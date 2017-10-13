@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class HypergraphInputModel:
 
     entity_vertex_matrix = None
@@ -11,3 +14,22 @@ class HypergraphInputModel:
     entity_to_entity_types = None
     n_events = None
     n_entities = None
+    in_batch_indices = None
+
+    def get(self, tensor_name):
+        if tensor_name == "entity_vertex_matrix":
+            return self.entity_vertex_matrix
+
+    def retrieve_index_in_batch(self, graph_index, entity_label):
+        return self.in_batch_indices[graph_index][entity_label]
+
+    def get_instance_indices(self):
+        targets = np.zeros(self.n_entities, dtype=np.int32)
+        pointer = 0
+        counter = 0
+        for r in (self.entity_vertex_matrix != 0).sum(1):
+            targets[pointer:pointer + r] = counter
+            pointer += r
+            counter += 1
+
+        return targets

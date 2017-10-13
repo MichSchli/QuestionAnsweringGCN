@@ -7,15 +7,14 @@ class ConllReader:
     output=None
     entity_prefix=None
 
-    def __init__(self, output=None, entity_prefix="http://rdf.freebase.com/ns/"):
-        self.output=output
+    def __init__(self, filename, entity_prefix=""):
+        self.filename = filename
         self.entity_prefix = entity_prefix
 
-    def parse_file(self, filename, output=None):
-        if output is None:
-            output = self.output
+    def iterate(self, output=None):
+        dictionary = {}
 
-        with open(filename) as data_file:
+        with open(self.filename) as data_file:
             sentence_matrix = []
             gold_matrix = []
             entity_matrix = []
@@ -39,7 +38,14 @@ class ConllReader:
                 elif not line and not reading_sentence and not reading_entities:
                     reading_sentence = True
 
-                    if output == "entities":
+                    dictionary["mentioned_entities"] = np.unique(np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
+                    dictionary["sentence"] = sentence_matrix
+                    dictionary["sentence_entity_map"] = np.array([[entry[0], entry[1], self.entity_prefix + entry[2], entry[3]] for entry in entity_matrix])
+                    dictionary["gold_entities"] = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
+
+                    yield dictionary
+
+                    """if output == "entities":
                         sentence_entities = np.unique(np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
                         yield sentence_entities
                     elif output == "gold":
@@ -52,6 +58,10 @@ class ConllReader:
                         yield sentence_matrix, entity_matrix
                     else:
                         yield sentence_matrix, gold_matrix
+
+                    """
+
+                    dictionary = {}
 
                     sentence_matrix = []
                     entity_matrix = []

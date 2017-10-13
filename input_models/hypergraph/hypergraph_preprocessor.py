@@ -1,10 +1,11 @@
 import numpy as np
 
 from candidate_selection.models.lazy_indexer import LazyIndexer
+from input_models.abstract_preprocessor import AbstractPreprocessor
 from input_models.hypergraph.hypergraph_input_model import HypergraphInputModel
 
 
-class HypergraphPreprocessor:
+class HypergraphPreprocessor(AbstractPreprocessor):
 
     entity_indexer = None
     relation_indexer = None
@@ -13,15 +14,26 @@ class HypergraphPreprocessor:
 
     graph_counter = None
 
-    def __init__(self):
+    def __init__(self, input_string, output_string, next_preprocessor, clean_dictionary=True):
+        AbstractPreprocessor.__init__(self, next_preprocessor)
         self.entity_indexer = LazyIndexer()
         self.relation_indexer = LazyIndexer()
         self.in_batch_indices = {}
         self.in_batch_labels = {}
         self.graph_counter = 0
 
-    def preprocess(self, hypergraph_batch):
-        #print("Beginning preprocessing...")
+        self.input_string = input_string
+        self.output_string = output_string
+        self.clean_dictionary = clean_dictionary
+
+    def process(self, batch_dictionary, mode="train"):
+        if self.next_preprocessor is not None:
+            self.next_preprocessor.process(batch_dictionary, mode=mode)
+
+        hypergraph_batch = batch_dictionary[self.input_string]
+        if self.clean_dictionary:
+            del batch_dictionary[self.input_string]
+
         self.in_batch_indices = {}
         self.in_batch_labels = {}
         self.graph_counter = 0
@@ -84,7 +96,9 @@ class HypergraphPreprocessor:
         input_model.n_events = n_events
         input_model.n_entities = n_entities
 
-        return input_model
+        input_model.in_batch_indices = self.in_batch_indices
+
+        batch_dictionary[self.output_string] = input_model
 
     def get_padded_vertex_lookup_matrix(self, entity_vertex_slices, hypergraph_batch):
         max_vertices = np.max(entity_vertex_slices)
