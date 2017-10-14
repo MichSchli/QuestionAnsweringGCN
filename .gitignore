@@ -4,6 +4,9 @@ text_parsing/models/
 # Don't upload Siva's parser
 siva-parser/
 
+# Don't upload glove:
+data/glove.6B
+
 # Data files ignored for now:
 #data/spades/
 
