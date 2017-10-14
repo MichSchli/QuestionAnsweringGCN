@@ -25,8 +25,8 @@ class DumbEntityEmbeddingVsBagOfWords:
     use_glove = None
 
     def __init__(self):
-        self.preprocessor = HypergraphPreprocessor("neighborhood", "neighborhood_input_model", None)
-        self.preprocessor = LookupMaskPreprocessor("neighborhood_input_model", "entity_vertex_matrix", "gold_entities", "gold_mask", self.preprocessor)
+        self.hypergraph_batch_preprocessor = HypergraphPreprocessor("neighborhood", "neighborhood_input_model", None)
+        self.preprocessor = LookupMaskPreprocessor("neighborhood_input_model", "entity_vertex_matrix", "gold_entities", "gold_mask", self.hypergraph_batch_preprocessor)
         self.preprocessor = SentencePreprocessor("sentence", "question_sentence_input_model", self.preprocessor)
 
     def get_preprocessor(self):

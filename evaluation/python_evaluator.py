@@ -42,7 +42,7 @@ class Evaluator:
         self.gold_reader = gold_reader
 
     def evaluate(self, model):
-        self.parse_file(model, self.evaluation_file)
+        return self.parse_file(model, self.evaluation_file, verbose=False)
 
     def parse_file(self, prediction_iterator, method="micro", verbose=True):
         gold_iterator = self.gold_reader.iterate()
@@ -51,6 +51,7 @@ class Evaluator:
         count = 0
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
+            gold = gold["gold_entities"]
             count += 1
             true_positives = np.isin(prediction, gold)
             false_positives = np.logical_not(true_positives)

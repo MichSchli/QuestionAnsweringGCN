@@ -71,7 +71,7 @@ class ModelBuilder:
                 model.update_setting(k,v)
             model.initialize()
 
-            parameter_string = ", ".join([k+"="+v for k,v in combination])
+            parameter_string = ",".join([k+"="+v for k,v in combination])
             yield parameter_string, model
 
 

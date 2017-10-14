@@ -1,6 +1,10 @@
 # Ignore models
 text_parsing/models/
 
+# Ignore stored files and logs
+stored_models/
+logs/
+
 # Don't upload Siva's parser
 siva-parser/
 
