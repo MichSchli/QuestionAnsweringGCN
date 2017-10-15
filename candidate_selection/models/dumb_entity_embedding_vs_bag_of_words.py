@@ -1,7 +1,10 @@
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.extras.target_comparator import TargetComparator
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
+from candidate_selection.models.components.indexing.glove_indexer import GloveIndexer
+from candidate_selection.models.components.word_embeddings.pretrained_word_embedding import PretrainedWordEmbedding
 from candidate_selection.models.components.word_embeddings.untrained_word_embedding import UntrainedWordEmbedding
+from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 import tensorflow as tf
@@ -28,6 +31,7 @@ class DumbEntityEmbeddingVsBagOfWords:
         self.hypergraph_batch_preprocessor = HypergraphPreprocessor("neighborhood", "neighborhood_input_model", None)
         self.preprocessor = LookupMaskPreprocessor("neighborhood_input_model", "entity_vertex_matrix", "gold_entities", "gold_mask", self.hypergraph_batch_preprocessor)
         self.preprocessor = SentencePreprocessor("sentence", "question_sentence_input_model", self.preprocessor)
+        self.sentence_batch_preprocessor = self.preprocessor
 
     def get_preprocessor(self):
         return self.preprocessor
@@ -45,7 +49,15 @@ class DumbEntityEmbeddingVsBagOfWords:
         self.entity_embedding = VertexEmbedding(self.facts, self.variables, self.dimension, random=False,
                                                 variable_prefix="entity")
         # Stupidly assume vocabulary size of 1000 (actually compute later)
-        self.word_embedding = UntrainedWordEmbedding(1000, self.variables, self.dimension, random=False,
+
+        if self.use_glove:
+            indexer = GloveIndexer(self.dimension)
+            self.sentence_batch_preprocessor.indexer = indexer
+            self.word_embedding = PretrainedWordEmbedding(indexer, self.variables, variable_prefix="word")
+        else:
+            indexer = LazyIndexer()
+            self.sentence_batch_preprocessor.indexer = indexer
+            self.word_embedding = UntrainedWordEmbedding(400000, self.variables, self.dimension, random=False,
                                                      variable_prefix="word")
         self.event_embedding = VertexEmbedding(self.facts, self.variables, self.dimension, random=True,
                                                variable_prefix="event")
