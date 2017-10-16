@@ -20,7 +20,7 @@ from model_construction.model_builder import ModelBuilder
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--algorithm', type=str, help='The name of the algorithm to be tested')
 parser.add_argument('--train_file', type=str, help='The location of the .conll-file to be used for training')
-parser.add_argument('--valid_file', type=str, help='The location of the .conll file to be used for validation')
+parser.add_argument('--test_file', type=str, help='The location of the .conll file to be used for validation')
 parser.add_argument('--version', type=str, help='Optional version number')
 parser.add_argument('--save', type=bool, default=False, help='Determines whether to save the best model on disk.')
 args = parser.parse_args()
