@@ -16,6 +16,7 @@ from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
 from helpers.read_conll_files import ConllReader
 from model_construction.model_builder import ModelBuilder
+from model_construction.settings_reader import SettingsReader
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--algorithm', type=str, help='The name of the algorithm to be tested')
@@ -31,17 +32,22 @@ algorithm_name = ".".join(args.algorithm.split("/")[-1].split(".")[:-1])
 log_file_location = "logs/" + algorithm_name + version_string + ".txt"
 save_file_location = "stored_models/" + algorithm_name + version_string + ".ckpt"
 
-model_builder = ModelBuilder()
-model_builder.build(args.algorithm, version=args.version)
+settings = {}
+settings_reader = SettingsReader()
+settings["algorithm"] = settings_reader.read(args.algorithm)
+settings["dataset"] = settings_reader.read(args.dataset)
 
-gold_reader = ConllReader(args.test_file)
+model_builder = ModelBuilder()
+model_builder.build(settings, version=args.version)
+
+gold_reader = ConllReader(settings["dataset"]["location"]["test_file"])
 evaluator = Evaluator(gold_reader)
 
 model = model_builder.first()
-train_file_iterator = ConllReader(args.train_file)
+train_file_iterator = ConllReader(settings["dataset"]["location"]["train_file"])
 model.train(train_file_iterator)
 
-test_file_iterator = ConllReader(args.test_file)
+test_file_iterator = ConllReader(settings["dataset"]["location"]["test_file"])
 prediction = model.predict(test_file_iterator)
 evaluation = evaluator.evaluate(prediction)
 

@@ -21,15 +21,15 @@ class ModelBuilder:
     def __init__(self):
         self.settings_reader = SettingsReader()
 
-    def build(self, settings_file, version=None):
-        self.settings = self.settings_reader.read(settings_file)
+    def build(self, settings, version=None):
+        self.settings = settings
         return self.create_model()
 
     def create_model(self):
-        model_class = self.retrieve_class_name(self.settings["model"]["stack_name"])
+        model_class = self.retrieve_class_name(self.settings["algorithm"]["model"]["stack_name"])
         model = model_class()
         model = self.wrap_model(model)
-        for k, v in self.settings["model"].items():
+        for k, v in self.settings["algorithm"]["model"].items():
             if k == "stack_name":
                 continue
             else:
@@ -37,16 +37,22 @@ class ModelBuilder:
         return model
 
     def wrap_model(self, model):
-        if self.settings["backend"]["format"] == "sparql":
+        if "prefix" in self.settings["dataset"]["database"]:
+            prefix = ["dataset"]["database"]["prefix"]
+        else:
+            prefix = ""
+
+        if self.settings["dataset"]["database"]["endpoint"] == "sparql":
             database_interface = FreebaseInterface()
             expansion_strategy = OnlyFreebaseExpansionStrategy()
             facts = FreebaseFacts()
-        elif self.settings["backend"]["format"] == "csv":
-            database_interface = CsvInterface(self.settings["backend"]["csv_file"])
+        elif self.settings["dataset"]["database"]["endpoint"] == "csv":
+            database_interface = CsvInterface(self.settings["dataset"]["database"]["file"])
             expansion_strategy = AllThroughExpansionStrategy()
-            facts = CsvFacts(self.settings["backend"]["csv_file"])
+            facts = CsvFacts(self.settings["dataset"]["database"]["file"])
+            prefix = ""
 
-        database = HypergraphInterface(database_interface, expansion_strategy, prefix="http://rdf.freebase.com/ns/")
+        database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
 
@@ -66,13 +72,13 @@ class ModelBuilder:
     def search(self):
         configurations = []
 
-        if "searchable" not in self.settings:
+        if "searchable" not in self.settings["algorithm"]:
             model = self.create_model()
             model.initialize()
             yield model
             return
 
-        for k,v in self.settings["searchable"].items():
+        for k,v in self.settings["algorithm"]["searchable"].items():
             options = [(k, option) for option in v.split(",")]
             configurations.append(options)
 

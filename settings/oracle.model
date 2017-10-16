@@ -1,5 +1,0 @@
-[model]
-    stack_name = oracle
-
-[backend]
-    format = sparql
