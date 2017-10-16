@@ -34,15 +34,15 @@ save_file_location = "stored_models/" + algorithm_name + version_string + ".ckpt
 model_builder = ModelBuilder()
 model_builder.build(args.algorithm, version=args.version)
 
-gold_reader = ConllReader(args.valid_file)
+gold_reader = ConllReader(args.test_file)
 evaluator = Evaluator(gold_reader)
 
 model = model_builder.first()
 train_file_iterator = ConllReader(args.train_file)
 model.train(train_file_iterator)
 
-valid_file_iterator = ConllReader(args.valid_file)
-prediction = model.predict(valid_file_iterator)
+test_file_iterator = ConllReader(args.test_file)
+prediction = model.predict(test_file_iterator)
 evaluation = evaluator.evaluate(prediction)
 
 evaluation.pretty_print()
