@@ -22,7 +22,7 @@ class HypergraphInterface:
             self.expand_hypergraph_to_one_neighborhood(hypergraph, use_event_edges=True, literals_only=False)
 
         if extra_literals:
-            self.expand_hypergraph_to_one_neighborhood(hypergraph, use_event_edges=True, literals_only=True)
+            self.expand_hypergraph_to_one_neighborhood(hypergraph, use_event_edges=False, literals_only=True)
 
         return hypergraph
 

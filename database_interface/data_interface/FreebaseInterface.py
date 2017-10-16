@@ -22,11 +22,16 @@ class FreebaseInterface:
     """
     Construct a query to retrieve property fields associated to a set of vertices
     """
-    def construct_property_query(self, vertices, property):
+    def construct_property_query(self, center_vertices, forward=True):
+        center = "s" if forward else "o"
+        other = "o" if forward else "s"
+
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
         query_string += "select * where {\n"
-        query_string += "?s " + property + " ?prop .\n"
-        query_string += "FILTER (?s in (" + ", ".join(["ns:" + v.split("/ns/")[-1] for v in vertices]) + "))\n"
+        query_string += "?s ?r ?o .\n"
+        query_string += "values ?" + center + " {" + " ".join(
+            ["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
+        query_string += "values ?r { http://www.w3.org/2000/01/rdf-schema#label ns:common.topic.alias }\n"
         query_string += "}"
 
         return query_string
@@ -158,8 +163,12 @@ class FreebaseInterface:
 
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             db_interface = self.initialize_sparql_interface()
+
             if target == "entities":
-                query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
+                if not literals_only:
+                    query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=False, forward=subject)
+                else:
+                    query_string = self.construct_property_query(center_vertex_batch, forward=subject)
             else:
                 query_string = self.construct_neighbor_query(center_vertex_batch, hyperedges=True, forward=subject)
             #print("#", end='', flush=True)
