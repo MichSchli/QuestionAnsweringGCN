@@ -46,7 +46,7 @@ class ModelBuilder:
             expansion_strategy = AllThroughExpansionStrategy()
             facts = CsvFacts(self.settings["backend"]["csv_file"])
 
-        database = HypergraphInterface(database_interface, expansion_strategy)
+        database = HypergraphInterface(database_interface, expansion_strategy, prefix="http://rdf.freebase.com/ns/")
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
 

@@ -5,15 +5,18 @@ class HypergraphInterface:
 
     data_interface = None
     expansion_algorithm = None
+    prefix = None
 
-    def __init__(self, data_interface, expansion_algorithm):
+    def __init__(self, data_interface, expansion_algorithm, prefix=""):
         self.data_interface = data_interface
         self.expansion_algorithm = expansion_algorithm
+        self.prefix = prefix
 
     """
     Retrieve the n-neighborhood of a hypergraph, potentially including surrounding literals as well.
     """
     def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
+        vertices = [self.prefix + v for v in vertices]
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
