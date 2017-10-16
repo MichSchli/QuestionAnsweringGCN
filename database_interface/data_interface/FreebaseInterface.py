@@ -27,7 +27,7 @@ class FreebaseInterface:
         other = "o" if forward else "s"
 
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
-        query_string = "PREFIX rdf: <http://www.w3.org/2000/01/>\n"
+        query_string += "PREFIX rdf: <http://www.w3.org/2000/01/>\n"
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
         query_string += "values ?" + center + " {" + " ".join(
