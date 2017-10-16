@@ -24,6 +24,8 @@ class DumbEntityEmbeddingVsBagOfWords:
     entity_scores = None
     sentence_iterator = None
 
+    is_tensorflow = True
+
     dimension = None
     use_glove = None
 

@@ -42,7 +42,7 @@ for parameter_line, model in model_builder.search():
     valid_file_iterator = ConllReader(args.valid_file)
     prediction = model.predict(valid_file_iterator)
     evaluation = evaluator.evaluate(prediction)
-    performance = evaluation.f1
+    performance = evaluation.micro_f1
 
     print(performance)
     print(performance, file=log_file)

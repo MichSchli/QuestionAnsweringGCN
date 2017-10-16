@@ -30,6 +30,19 @@ class Evaluation:
         self.micro_recall = 0
         self.micro_f1 = 0
 
+    def pretty_print(self, method="micro"):
+        if method == "micro":
+            print("Final results (micro-averaged):")
+            print("===============================")
+            print("Precision: " + str(self.micro_precision))
+            print("Recall: " + str(self.micro_recall))
+            print("F1: " + str(self.micro_f1))
+        else:
+            print("Final results (macro-averaged):")
+            print("===============================")
+            print("Precision: " + str(self.macro_precision))
+            print("Recall: " + str(self.macro_recall))
+            print("F1: " + str(self.macro_f1))
 
 
 class Evaluator:
@@ -75,23 +88,13 @@ class Evaluator:
 
         evaluation.micro_precision = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_positives)
         evaluation.micro_recall = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_negatives)
-        evaluation.f1 = 2 * (evaluation.micro_precision * evaluation.micro_recall) / (evaluation.micro_precision + evaluation.micro_recall)
+        evaluation.micro_f1 = 2 * (evaluation.micro_precision * evaluation.micro_recall) / (evaluation.micro_precision + evaluation.micro_recall)
 
         evaluation.macro_precision /= count
         evaluation.macro_recall /= count
         evaluation.macro_f1 /= count
 
-        if method == "micro" and verbose:
-            print("Final results (micro-averaged):")
-            print("===============================")
-            print("Precision: " + str(evaluation.micro_precision))
-            print("Recall: " + str(evaluation.micro_recall))
-            print("F1: " + str(evaluation.micro_f1))
-        elif verbose:
-            print("Final results (macro-averaged):")
-            print("===============================")
-            print("Precision: " + str(evaluation.macro_precision))
-            print("Recall: " + str(evaluation.macro_recall))
-            print("F1: " + str(evaluation.macro_f1))
+        if verbose:
+            evaluation.pretty_print(method=method)
 
         return evaluation

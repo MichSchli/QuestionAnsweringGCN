@@ -6,25 +6,25 @@ class OracleCandidate:
     candidate_neighborhood_generator = None
     gold_generator = None
 
-    def __init__(self, candidate_neighborhood_generator, gold_generator):
-        self.candidate_neighborhood_generator = candidate_neighborhood_generator
-        self.gold_generator = gold_generator
+    is_tensorflow = False
 
-    def parse_file(self, filename):
-        candidate_iterator = self.candidate_neighborhood_generator.parse_file(filename)
-        gold_iterator = self.gold_generator.parse_file(filename, output="gold")
+    def set_neighborhood_generate(self, neighborhood_generator):
+        self.candidate_neighborhood_generator = neighborhood_generator
 
-        counter = 1
-        print("Running oracle...")
-        for candidate_graph, gold_set in zip(candidate_iterator, gold_iterator):
-            #print("aiololo")
-            print(str(counter))
-            counter += 1
-            candidate_set = candidate_graph.get_vertices(type="entities")
+    def update_setting(self, name, value):
+        pass
+
+    def initialize(self):
+        pass
+
+    def predict(self, test_file_iterator):
+        epoch_iterator = test_file_iterator.iterate()
+        epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
+
+        for element in epoch_iterator:
+            candidate_set = element["neighborhood"].get_vertices(type="entities")
+            gold_set = element["gold_entities"]
             gold_in_candidates = np.isin(gold_set, candidate_set)
-            print(candidate_set)
-            print(gold_set)
-            print(gold_in_candidates)
             yield gold_set[gold_in_candidates]
 
     def train(self, train_file):

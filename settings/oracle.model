@@ -1,0 +1,6 @@
+[model]
+    stack_name = oracle
+
+[backend]
+    format = csv
+    csv_file = data/toy-125/toy.graph

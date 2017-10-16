@@ -1,4 +1,5 @@
 from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
+from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from candidate_selection.models.dumb_entity_embedding_vs_bag_of_words import DumbEntityEmbeddingVsBagOfWords
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
@@ -36,11 +37,6 @@ class ModelBuilder:
         return model
 
     def wrap_model(self, model):
-        if "db_prefix" in self.settings["backend"]:
-            entity_prefix_used_in_db = self.settings["backend"]["db_prefix"]
-        else:
-            entity_prefix_used_in_db = ""
-
         if self.settings["backend"]["format"] == "sparql":
             database_interface = FreebaseInterface()
             expansion_strategy = OnlyFreebaseExpansionStrategy()
@@ -54,12 +50,27 @@ class ModelBuilder:
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
 
-        candidate_selector = TensorflowCandidateSelector(model, candidate_generator)
+        # Should be refactored
+        if model.is_tensorflow:
+            candidate_selector = TensorflowCandidateSelector(model, candidate_generator)
+        else:
+            candidate_selector = model
+            candidate_selector.set_neighborhood_generate(candidate_generator)
+
         candidate_selector.update_setting("facts", facts)
         return candidate_selector
 
+    def first(self):
+        return self.search().__next__()
+
     def search(self):
         configurations = []
+
+        if "searchable" not in self.settings:
+            model = self.create_model()
+            model.initialize()
+            yield model
+            return
 
         for k,v in self.settings["searchable"].items():
             options = [(k, option) for option in v.split(",")]
@@ -76,6 +87,9 @@ class ModelBuilder:
 
 
     def retrieve_class_name(self, stack_name):
+        if stack_name == "oracle":
+            return OracleCandidate
+
         if stack_name == "bow+dumb":
             return DumbEntityEmbeddingVsBagOfWords
 
