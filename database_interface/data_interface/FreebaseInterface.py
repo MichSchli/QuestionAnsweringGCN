@@ -27,11 +27,12 @@ class FreebaseInterface:
         other = "o" if forward else "s"
 
         query_string = "PREFIX ns: <" + self.prefix + ">\n"
+        query_string = "PREFIX rdf: <http://www.w3.org/2000/01/>\n"
         query_string += "select * where {\n"
         query_string += "?s ?r ?o .\n"
         query_string += "values ?" + center + " {" + " ".join(
             ["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
-        query_string += "values ?r { http://www.w3.org/2000/01/rdf-schema#label ns:common.topic.alias }\n"
+        query_string += "values ?r { rdf:rdf-schema#label ns:common.topic.alias }\n"
         query_string += "}"
 
         return query_string
