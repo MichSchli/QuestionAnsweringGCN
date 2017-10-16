@@ -39,6 +39,9 @@ class TensorflowCandidateSelector:
 
         index = 0
         for example in iterator:
+            if validate_batches and not self.model.validate_example(example):
+                continue
+
             for k,v in example.items():
                 if k not in batch_dict:
                     batch_dict[k] = [None]*self.batch_size

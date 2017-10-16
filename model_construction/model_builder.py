@@ -1,6 +1,7 @@
 from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
 from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from candidate_selection.models.dumb_entity_embedding_vs_bag_of_words import DumbEntityEmbeddingVsBagOfWords
+from candidate_selection.models.dumb_entity_embedding_vs_lstm import DumbEntityEmbeddingVsLstm
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
@@ -98,5 +99,8 @@ class ModelBuilder:
 
         if stack_name == "bow+dumb":
             return DumbEntityEmbeddingVsBagOfWords
+
+        if stack_name == "lstm+dumb":
+            return DumbEntityEmbeddingVsLstm
 
         return None
