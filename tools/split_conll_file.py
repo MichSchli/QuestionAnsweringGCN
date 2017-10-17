@@ -35,7 +35,14 @@ split_1 = elements[:partition]
 split_2 = elements[partition:]
 
 out_file_1 = open(args.out_file_1, "w+")
-print("\n\n".join(["\n\n".join(e) for e in split_1]), file=out_file_1)
+
+def inner_process(parts):
+    s = parts[0]
+    s += "\n\n"+parts[1] if parts[1] != "" else "\n"
+    s += "\n\n"+parts[2] if parts[2] != "" else "\n"
+    return s
+
+print("\n\n".join([inner_process(e) for e in split_1]), file=out_file_1)
 
 out_file_2 = open(args.out_file_2, "w+")
-print("\n\n".join(["\n\n".join(e) for e in split_2]), file=out_file_2)
+print("\n\n".join([inner_process(e) for e in split_2]), file=out_file_2)
