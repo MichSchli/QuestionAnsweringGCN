@@ -74,7 +74,7 @@ class TensorflowCandidateSelector:
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
 
-            batch_iterator = self.iterate_in_batches(epoch_iterator)
+            batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for batch in batch_iterator:
                 self.model.get_preprocessor().process(batch)
 
