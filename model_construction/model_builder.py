@@ -5,6 +5,7 @@ from candidate_selection.models.dumb_entity_embedding_vs_lstm import DumbEntityE
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
+from database_interface.entity_cache_interface import EntityCacheInterface
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
@@ -54,6 +55,7 @@ class ModelBuilder:
             prefix = ""
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
+        database = EntityCacheInterface(database)
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
 

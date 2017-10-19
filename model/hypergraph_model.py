@@ -1,3 +1,5 @@
+from time import sleep
+
 import numpy as np
 
 
@@ -55,6 +57,38 @@ class HypergraphModel:
             self.event_vertices = np.concatenate((self.event_vertices, self.discovered_events))
             self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, self.discovered_events))
             self.discovered_events = np.empty(0)
+
+    def join_other_hypergraph(self, other):
+        # New edges have at least one vertex in the old graph.
+        new_entity_vertices = other.entity_vertices[np.isin(other.entity_vertices, self.entity_vertices, assume_unique=True, invert=True)]
+        new_event_vertices = other.event_vertices[np.isin(other.event_vertices, self.event_vertices, assume_unique=True, invert=True)]
+
+        self.entity_vertices = np.concatenate((self.entity_vertices, new_entity_vertices))
+        self.event_vertices = np.concatenate((self.event_vertices, new_event_vertices))
+
+        # Add edges with new subject entity
+        # Add edges with new object entity
+        new_entity_to_entity_edges = np.logical_or(
+            np.isin(other.entity_to_entity_edges[:,0], new_entity_vertices),
+            np.isin(other.entity_to_entity_edges[:,2], new_entity_vertices)
+        )
+        new_entity_to_entity_edges = other.entity_to_entity_edges[new_entity_to_entity_edges]
+
+        new_event_to_entity_edges = np.logical_or(
+            np.isin(other.event_to_entity_edges[:, 0], new_event_vertices),
+            np.isin(other.event_to_entity_edges[:, 2], new_entity_vertices)
+        )
+        new_event_to_entity_edges = other.event_to_entity_edges[new_event_to_entity_edges]
+
+        new_entity_to_event_edges = np.logical_or(
+            np.isin(other.entity_to_event_edges[:, 0], new_entity_vertices),
+            np.isin(other.entity_to_event_edges[:, 2], new_event_vertices)
+        )
+        new_entity_to_event_edges = other.entity_to_event_edges[new_entity_to_event_edges]
+
+        self.entity_to_entity_edges = np.concatenate((self.entity_to_entity_edges, new_entity_to_entity_edges))
+        self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, new_entity_to_event_edges))
+        self.event_to_entity_edges = np.concatenate((self.event_to_entity_edges, new_event_to_entity_edges))
 
     """
     Get all seen vertices of a given type.
