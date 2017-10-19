@@ -40,7 +40,7 @@ class ModelBuilder:
 
     def wrap_model(self, model):
         if "prefix" in self.settings["dataset"]["database"]:
-            prefix = ["dataset"]["database"]["prefix"]
+            prefix = self.settings["dataset"]["database"]["prefix"]
         else:
             prefix = ""
 
