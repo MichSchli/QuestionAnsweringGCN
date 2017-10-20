@@ -68,6 +68,8 @@ class TensorflowCandidateSelector:
         self.sess = tf.Session()
         self.sess.run(init_op)
 
+        verbose = True
+
         for epoch in range(self.epochs):
             if verbose:
                 print("Starting epoch: "+str(epoch))

@@ -18,11 +18,15 @@ class NeighborhoodCandidateGenerator:
 
     def enrich(self, instances):
         for instance in instances:
-            neighborhood_hypergraph = self.freebase_interface.get_neighborhood_hypergraph(instance["mentioned_entities"],
-                                                                                          hops=self.neighborhood_search_scope,
-                                                                                          extra_literals=self.extra_literals)
+            neighborhood_hypergraph = self.generate_neighborhood(instance)
             instance["neighborhood"] = neighborhood_hypergraph
             yield instance
+
+    def generate_neighborhood(self, instance):
+        neighborhood_hypergraph = self.freebase_interface.get_neighborhood_hypergraph(instance["mentioned_entities"],
+                                                                                      hops=self.neighborhood_search_scope,
+                                                                                      extra_literals=self.extra_literals)
+        return neighborhood_hypergraph
 
     def parse_file(self, filename):
         for sentence_entities in self.json_reader.parse_file(filename, output="entities"):

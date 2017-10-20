@@ -1,3 +1,4 @@
+from candidate_generation.candidate_generator_cache import CandidateGeneratorCache
 from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
 from candidate_selection.baselines.oracle_candidate import OracleCandidate
 from candidate_selection.models.dumb_entity_embedding_vs_bag_of_words import DumbEntityEmbeddingVsBagOfWords
@@ -56,8 +57,11 @@ class ModelBuilder:
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
         database = EntityCacheInterface(database)
+        disk_cache = self.settings["dataset"]["database"]["disk_cache"] if "disk_cache" in self.settings["dataset"]["database"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
+        candidate_generator = CandidateGeneratorCache(candidate_generator,
+                                                      disk_cache=disk_cache)
 
         # Should be refactored
         if model.is_tensorflow:
