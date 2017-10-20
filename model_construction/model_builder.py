@@ -56,7 +56,7 @@ class ModelBuilder:
             prefix = ""
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
-        database = EntityCacheInterface(database)
+        #database = EntityCacheInterface(database)
         disk_cache = self.settings["dataset"]["database"]["disk_cache"] if "disk_cache" in self.settings["dataset"]["database"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
