@@ -37,11 +37,11 @@ class HypergraphModel:
     """
 
     def to_string_storage(self):
-        l = "@@".join(self.event_vertices)
-        l += "||" + "@@".join(self.entity_vertices)
-        l += "||" + self.string_store_list(self.event_to_entity_edges)
-        l += "||" + self.string_store_list(self.entity_to_event_edges)
-        l += "||" + self.string_store_list(self.entity_to_entity_edges)
+        l = ":::".join(self.event_vertices)
+        l += "$$$" + ":::".join(self.entity_vertices)
+        l += "$$$" + self.string_store_list(self.event_to_entity_edges)
+        l += "$$$" + self.string_store_list(self.entity_to_event_edges)
+        l += "$$$" + self.string_store_list(self.entity_to_entity_edges)
 
         return l
 
@@ -52,8 +52,8 @@ class HypergraphModel:
             if first:
                 first = False
             else:
-                s += "@@"
-            s += "##".join(edge)
+                s += ":::"
+            s += "%%%".join(edge)
 
         return s
 
@@ -75,17 +75,17 @@ class HypergraphModel:
         parsed_element = ""
         while counter < len(string)-1:
             counter += 1
-            character = string[counter]
-            if character == "@" and counter < len(string)-1 and string[counter+1] == "@":
-                counter += 1
+            character = string[counter:counter+3]
+            if character == ":::":
+                counter += 2
                 vertices.append(parsed_element)
                 parsed_element = ""
-            elif character == "|" and counter < len(string)-1 and string[counter+1] == "|":
-                counter += 1
+            elif character == "$$$":
+                counter += 2
                 vertices.append(parsed_element)
                 return np.array(vertices), counter
             else:
-                parsed_element += character
+                parsed_element += character[0]
 
         return np.array(vertices), counter
 
@@ -94,16 +94,16 @@ class HypergraphModel:
         parsed_element = [""]
         while counter < len(string)-1:
             counter += 1
-            character = string[counter]
-            if character == "@" and counter < len(string)-1 and string[counter+1] == "@":
-                counter += 1
+            character = string[counter:counter+3]
+            if character == ":::":
+                counter += 2
                 edges.append(parsed_element)
                 parsed_element = [""]
-            elif character == "#" and counter < len(string)-1 and string[counter+1] == "#":
-                counter += 1
+            elif character == "%%%":
+                counter += 2
                 parsed_element.append("")
-            elif character == "|" and counter < len(string)-1 and string[counter+1] == "|":
-                counter += 1
+            elif character == "$$$":
+                counter += 2
                 if len(parsed_element) == 3:
                     edges.append(parsed_element)
 
@@ -111,7 +111,7 @@ class HypergraphModel:
                     return np.empty((0,3), dtype=np.int32), counter
                 return np.array(edges), counter
             else:
-                parsed_element[-1] += character
+                parsed_element[-1] += character[0]
 
         if len(parsed_element) == 3:
             edges.append(parsed_element)
