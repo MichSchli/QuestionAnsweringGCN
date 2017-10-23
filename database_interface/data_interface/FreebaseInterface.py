@@ -67,6 +67,7 @@ class FreebaseInterface:
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/type.object.key\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.topic.description\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/common.document.text\" )"
         query_string += " )\n"
 
         query_string += "}"
