@@ -74,7 +74,7 @@ class ModelBuilder:
         return candidate_selector
 
     def first(self):
-        return self.search().__next__()
+        return self.search().__next__()[1]
 
     def search(self):
         configurations = []

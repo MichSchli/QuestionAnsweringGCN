@@ -34,6 +34,3 @@ class UntrainedWordEmbedding:
     def handle_variable_assignment(self, sentence_input_model):
         self.variables.assign_variable(self.variable_prefix+"indices", sentence_input_model.word_index_matrix)
         self.variables.assign_variable(self.variable_prefix+"mask", sentence_input_model.word_index_matrix > 0)
-
-    def get_optimizable_parameters(self):
-        return [self.W]

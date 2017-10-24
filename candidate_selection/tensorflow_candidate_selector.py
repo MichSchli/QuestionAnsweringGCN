@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
 
+from helpers.static import Static
+
 
 class TensorflowCandidateSelector:
 
@@ -30,12 +32,26 @@ class TensorflowCandidateSelector:
     def initialize(self):
         tf.reset_default_graph()
         self.model.initialize()
+        self.model.prepare_tensorflow_variables(mode='train')
+
+        model_loss = self.model.get_loss_graph()
+        parameters_to_optimize = tf.trainable_variables()
+        opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
+        grad_func = tf.gradients(model_loss, parameters_to_optimize)
+        self.optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
+        init_op = tf.global_variables_initializer()
+
+        self.sess = tf.Session()
+        self.sess.run(init_op)
 
     def valid_example(self, elements):
         return self.model.validate_example(elements)
 
-    def iterate_in_batches(self, iterator, validate_batches=False):
+    def iterate_in_batches(self, iterator, validate_batches=False, batch_size = None):
         batch_dict = {}
+
+        if batch_size is None:
+            batch_size = self.batch_size
 
         index = 0
         for example in iterator:
@@ -44,11 +60,11 @@ class TensorflowCandidateSelector:
 
             for k,v in example.items():
                 if k not in batch_dict:
-                    batch_dict[k] = [None]*self.batch_size
+                    batch_dict[k] = [None]*batch_size
                 batch_dict[k][index] = v
 
             index += 1
-            if index == self.batch_size:
+            if index == batch_size:
                 yield batch_dict
                 index = 0
                 batch_dict = {}
@@ -56,41 +72,31 @@ class TensorflowCandidateSelector:
         if index != 0:
             yield {k:v[:index] for k,v in batch_dict.items()}
 
-    def train(self, train_file_iterator, verbose=False):
-        self.model.prepare_tensorflow_variables(mode='train')
+    def train(self, train_file_iterator, epochs=None):
+        if epochs is None:
+            epochs = self.epochs
+
         model_loss = self.model.get_loss_graph()
-        parameters_to_optimize = tf.trainable_variables()
-        opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
-        grad_func = tf.gradients(model_loss, parameters_to_optimize)
-        optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
-        init_op = tf.global_variables_initializer()
 
-        self.sess = tf.Session()
-        self.sess.run(init_op)
-
-        verbose = True
-
-        for epoch in range(self.epochs):
-            if verbose:
-                print("Starting epoch: "+str(epoch))
+        for epoch in range(epochs):
+            Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
-            for batch in batch_iterator:
+            for i,batch in enumerate(batch_iterator):
                 self.model.get_preprocessor().process(batch)
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
-                result = self.sess.run([optimize_func, model_loss], feed_dict=assignment_dict)
+                result = self.sess.run([self.optimize_func, model_loss], feed_dict=assignment_dict)
                 loss = result[1]
-                if verbose:
-                    print(loss)
+
+                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=3)
 
     def predict(self, test_file_iterator):
-        self.batch_size = 1
         epoch_iterator = test_file_iterator.iterate()
         epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
-        batch_iterator = self.iterate_in_batches(epoch_iterator)
+        batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
 
         model_prediction = self.model.get_prediction_graph()
         model_loss = self.model.get_loss_graph()

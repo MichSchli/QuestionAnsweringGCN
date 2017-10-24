@@ -1,7 +1,10 @@
 import argparse
 
 from evaluation.python_evaluator import Evaluator
+from helpers.logger import Logger
 from helpers.read_conll_files import ConllReader
+from helpers.static import Static
+from learning.validation_set_evaluator import ValidationSetEvaluator
 from model_construction.model_builder import ModelBuilder
 from model_construction.settings_reader import SettingsReader
 
@@ -18,6 +21,8 @@ algorithm_name = ".".join(args.algorithm.split("/")[-1].split(".")[:-1])
 log_file_location = "logs/" + algorithm_name + version_string + ".txt"
 save_file_location = "stored_models/" + algorithm_name + version_string + ".ckpt"
 
+Static.logger = Logger(log_file_location, console_verbosity=3, logger_verbosity=2)
+
 settings = {}
 settings_reader = SettingsReader()
 settings["algorithm"] = settings_reader.read(args.algorithm)
@@ -33,24 +38,15 @@ best_model = None
 best_string = None
 best_performance = -1
 
-print("Running parameter tuning for \'" + algorithm_name + "\'.")
+Static.logger.write("Running parameter tuning for \'" + algorithm_name + "\'.", verbosity_priority=1)
 if args.version:
-    print("Version number: "+args.version)
+    Static.logger.write("Version number: "+args.version, verbosity_priority=1)
 
-log_file = open(log_file_location, "w")
 for parameter_line, model in model_builder.search():
-    print(parameter_line, end="\t")
-    print(parameter_line, end="\t", file=log_file)
+    Static.logger.write(parameter_line, verbosity_priority=2)
     train_file_iterator = ConllReader(settings["dataset"]["location"]["train_file"])
-    model.train(train_file_iterator)
-
-    valid_file_iterator = ConllReader(settings["dataset"]["location"]["valid_file"])
-    prediction = model.predict(valid_file_iterator)
-    evaluation = evaluator.evaluate(prediction)
-    performance = evaluation.micro_f1
-
-    print(performance)
-    print(performance, file=log_file)
+    model = ValidationSetEvaluator(model, settings)
+    epoch, performance = model.train(train_file_iterator)
 
     if best_performance < performance:
         best_performance = performance
@@ -60,6 +56,6 @@ for parameter_line, model in model_builder.search():
         if args.save:
             model.save(save_file_location)
 
-print("Parameter tuning done.")
-print("Best setting: ")
-print(best_string + "\t" + str(best_performance))
+Static.logger.write("Parameter tuning done.", verbosity_priority=1)
+Static.logger.write("Best setting: ", verbosity_priority=1)
+Static.logger.write(best_string + "\t" + str(best_performance), verbosity_priority=1)
