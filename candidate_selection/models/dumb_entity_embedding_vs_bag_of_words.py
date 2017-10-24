@@ -42,7 +42,7 @@ class DumbEntityEmbeddingVsBagOfWords:
         if setting_string == "dimension":
             self.dimension = int(value)
         elif setting_string == "glove":
-            self.use_glove = bool(value)
+            self.use_glove = True if value == "True" else False
         elif setting_string == "facts":
             self.facts = value
 

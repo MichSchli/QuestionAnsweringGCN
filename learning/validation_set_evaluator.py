@@ -18,7 +18,7 @@ class ValidationSetEvaluator:
 
         self.max_epochs = int(settings["algorithm"]["training"]["max_epochs"])
         self.epochs_between_tests = int(settings["algorithm"]["training"]["epochs_between_tests"])
-        self.early_stopping = bool(settings["algorithm"]["training"]["early_stopping"])
+        self.early_stopping = True if settings["algorithm"]["training"]["early_stopping"] == "True" else False
 
     def train(self, train_file_iterator):
         epoch = 0
