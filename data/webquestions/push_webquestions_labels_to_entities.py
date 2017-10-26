@@ -1,5 +1,5 @@
 import argparse
-
+import numpy as np
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLWrapper
 
@@ -82,7 +82,7 @@ def retrieve_entity(centroids, string):
 
     sparql.setQuery(query_string)
     results = sparql.query().convert()
-    return [r['y'] for r in results['results']['bindings']]
+    return np.unique([r['y']['value'] for r in results['results']['bindings']])
 
 newline_counter = 0
 centroids = []
@@ -105,7 +105,7 @@ for line in open(args.input_file):
         centroids = []
         shitty_counter += 1
         print(str(shitty_counter) + "\t" + str(entity))
-        if len(entity) != 1:
+        if entity.shape[0] != 1:
             _ = input()
     else:
         print(line)
