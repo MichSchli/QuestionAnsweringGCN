@@ -12,15 +12,17 @@ args = parser.parse_args()
 def strip_prefix(string):
     return string[len("http://rdf.freebase.com/ns/"):]
 
-def retrieve_entity(string):
+def retrieve_entity(centroids, string):
     sparql = SPARQLWrapper("http://localhost:8890/sparql")
     sparql.setReturnFormat(JSON)
 
     query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
-    query_string += "select * where {\n"
-    query_string += "?s ?r ?o .\n"
-    query_string += "values ?s { " + string + "@en }\n"
+    query_string += "select ?y where {\n"
+    query_string += "?s ?r1 ?y .\n"
+    query_string += "?y ?r2 ?o .\n"
+    query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
+    query_string += "values ?o { " + string + "@en }\n"
     query_string += "}"
 
     sparql.setQuery(query_string)
@@ -28,6 +30,7 @@ def retrieve_entity(string):
     return results
 
 newline_counter = 0
+centroids = []
 for line in open(args.input_file):
     line = line.strip()
 
@@ -36,10 +39,14 @@ for line in open(args.input_file):
         newline_counter += 1
         continue
 
+    if newline_counter % 3 == 1:
+        centroids.append(line.split("\t")[2])
+
     if newline_counter % 3 == 2:
         literal = line.split('\t')[-1]
-        entity = retrieve_entity(literal)
-        entity = strip_prefix(entity)
+        entity = retrieve_entity(centroids, literal)
+        #entity = strip_prefix(entity)
+        centroids = []
         print(entity)
         exit()
     else:
