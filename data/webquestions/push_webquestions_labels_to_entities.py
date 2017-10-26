@@ -96,6 +96,9 @@ for line in open(args.input_file):
         newline_counter += 1
         continue
 
+    if newline_counter % 3 == 0:
+        centroids = []
+
     if newline_counter % 3 == 1:
         centroids.append(line.split("\t")[2])
 
@@ -103,7 +106,6 @@ for line in open(args.input_file):
         literal = line.split('\t')[-1]
         entity = retrieve_entity(centroids, literal)
         #entity = strip_prefix(entity)
-        centroids = []
         shitty_counter += 1
         if entity.shape[0] != 1:
             print("=====")
