@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+import time
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLWrapper
 
@@ -22,7 +23,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r2 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "}\n"
     query_string += "UNION\n"
 
@@ -31,7 +32,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r2 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "}\n"
     query_string += "UNION\n"
 
@@ -41,7 +42,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r3 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "filter ( not exists { ?e ns:type.object.name ?name } && !isLiteral(?e) && strstarts(str(?e), \"http://rdf.freebase.com/ns/\") )"
     query_string += "}\n"
     query_string += "UNION\n"
@@ -52,7 +53,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r3 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "filter ( not exists { ?e ns:type.object.name ?name } && !isLiteral(?e) && strstarts(str(?e), \"http://rdf.freebase.com/ns/\") )"
     query_string += "}\n"
     query_string += "UNION\n"
@@ -63,7 +64,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r3 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "filter ( not exists { ?e ns:type.object.name ?name } && !isLiteral(?e) && strstarts(str(?e), \"http://rdf.freebase.com/ns/\") )"
     query_string += "}\n"
     query_string += "UNION\n"
@@ -74,7 +75,7 @@ def retrieve_entity(centroids, string):
     query_string += "?y ?r3 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
     query_string += "filter ( not exists { ?e ns:type.object.name ?name } && !isLiteral(?e) && strstarts(str(?e), \"http://rdf.freebase.com/ns/\") )"
     query_string += "}\n"
 
@@ -104,8 +105,12 @@ for line in open(args.input_file):
         #entity = strip_prefix(entity)
         centroids = []
         shitty_counter += 1
-        print(str(shitty_counter) + "\t" + str(entity))
         if entity.shape[0] != 1:
-            _ = input()
+            print("=====")
+            print(str(shitty_counter) + "\t" + str(entity))
+            print("=====")
+            time.sleep(5)
+        else:
+            print(str(shitty_counter) + "\t" + str(entity))
     else:
         print(line)
