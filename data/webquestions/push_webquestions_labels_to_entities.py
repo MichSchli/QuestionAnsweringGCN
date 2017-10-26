@@ -88,6 +88,10 @@ def retrieve_entity(centroids, string):
 newline_counter = 0
 centroids = []
 shitty_counter = 0
+
+zero_count = 0
+too_many_count = 0
+
 for line in open(args.input_file):
     line = line.strip()
 
@@ -114,5 +118,13 @@ for line in open(args.input_file):
             time.sleep(5)
         else:
             print(str(shitty_counter) + "\t" + str(entity))
+
+        if entity.shape[0] > 1:
+            too_many_count += 1
+        elif entity.shape[0] == 0:
+            zero_count += 1
     else:
         print(line)
+
+print(too_many_count)
+print(zero_count)
