@@ -3,8 +3,6 @@ import argparse
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLWrapper
 
-from helpers.read_conll_files import ConllReader
-
 parser = argparse.ArgumentParser(description='Parses webquestions files with entity annotations to our internal format.')
 parser.add_argument('--input_file', type=str, help='The location of the .json-file to be parsed')
 args = parser.parse_args()
@@ -18,11 +16,24 @@ def retrieve_entity(centroids, string):
 
     query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
     query_string += "select ?y where {\n"
+
+    query_string += "{\n"
     query_string += "?s ?r1 ?y .\n"
     query_string += "?y ?r2 ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
     query_string += "values ?r { ns:type.object.name }\n"
-    query_string += "values ?o { " + string + "@en }\n"
+    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "}\n"
+    query_string += "UNION\n"
+
+    query_string += "{\n"
+    query_string += "?y ?r1 ?s .\n"
+    query_string += "?y ?r2 ?o .\n"
+    query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
+    query_string += "values ?r { ns:type.object.name }\n"
+    query_string += "values ?o { \'" + string + "\'@en }\n"
+    query_string += "}\n"
+
     query_string += "}"
 
     sparql.setQuery(query_string)
