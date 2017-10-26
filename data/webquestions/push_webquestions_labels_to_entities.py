@@ -82,10 +82,11 @@ def retrieve_entity(centroids, string):
 
     sparql.setQuery(query_string)
     results = sparql.query().convert()
-    return results
+    return [r['y'] for r in results['results']['bindings']]
 
 newline_counter = 0
 centroids = []
+shitty_counter = 0
 for line in open(args.input_file):
     line = line.strip()
 
@@ -102,7 +103,9 @@ for line in open(args.input_file):
         entity = retrieve_entity(centroids, literal)
         #entity = strip_prefix(entity)
         centroids = []
-        print(entity)
-        exit()
+        shitty_counter += 1
+        print(str(shitty_counter) + "\t" + str(entity))
+        if len(entity) != 1:
+            _ = input()
     else:
         print(line)
