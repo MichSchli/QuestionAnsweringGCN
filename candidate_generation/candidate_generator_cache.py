@@ -20,13 +20,15 @@ class CandidateGeneratorCache:
     def enrich(self, instances):
         for instance in instances:
             key = "cachekey_"+":".join(instance["mentioned_entities"])
+            print(key)
 
             if key not in self.cache:
-                neighborhood_hypergraph = self.inner.generate_neighborhood(instance)
                 print("computed")
+                neighborhood_hypergraph = self.inner.generate_neighborhood(instance)
                 self.cache[key] = neighborhood_hypergraph
                 instance["neighborhood"] = neighborhood_hypergraph
             else:
+                print("retrieved")
                 instance["neighborhood"] = self.cache[key]
 
             yield instance
