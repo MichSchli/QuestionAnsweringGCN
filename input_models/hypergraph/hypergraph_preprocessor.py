@@ -1,6 +1,6 @@
 import numpy as np
 
-from candidate_selection.models.lazy_indexer import LazyIndexer
+from indexing.lazy_indexer import LazyIndexer
 from input_models.abstract_preprocessor import AbstractPreprocessor
 from input_models.hypergraph.hypergraph_input_model import HypergraphInputModel
 
@@ -14,10 +14,10 @@ class HypergraphPreprocessor(AbstractPreprocessor):
 
     graph_counter = None
 
-    def __init__(self, input_string, output_string, next_preprocessor, clean_dictionary=True):
+    def __init__(self, entity_indexer, relation_indexer, input_string, output_string, next_preprocessor, clean_dictionary=True):
         AbstractPreprocessor.__init__(self, next_preprocessor)
-        self.entity_indexer = LazyIndexer()
-        self.relation_indexer = LazyIndexer()
+        self.entity_indexer = entity_indexer
+        self.relation_indexer = relation_indexer
         self.in_batch_indices = {}
         self.in_batch_labels = {}
         self.graph_counter = 0

@@ -1,6 +1,6 @@
-from candidate_selection.models.lazy_indexer import LazyIndexer
 import numpy as np
 
+from indexing.lazy_indexer import LazyIndexer
 from input_models.abstract_preprocessor import AbstractPreprocessor
 from input_models.sentences.sentence_input_model import SentenceInputModel
 
@@ -10,9 +10,9 @@ class SentencePreprocessor(AbstractPreprocessor):
     indexer = None
     sentence_string = "sentence"
 
-    def __init__(self, sentence_string, output_name, next_preprocessor, clean_dictionary=True):
+    def __init__(self, indexer, sentence_string, output_name, next_preprocessor, clean_dictionary=True):
         AbstractPreprocessor.__init__(self, next_preprocessor)
-        self.indexer = LazyIndexer()
+        self.indexer = indexer
         self.sentence_string = sentence_string
         self.clean_dictionary = clean_dictionary
         self.output_name = output_name

@@ -23,6 +23,7 @@ class CandidateGeneratorCache:
 
             if key not in self.cache:
                 neighborhood_hypergraph = self.inner.generate_neighborhood(instance)
+                print("computed")
                 self.cache[key] = neighborhood_hypergraph
                 instance["neighborhood"] = neighborhood_hypergraph
             else:

@@ -1,5 +1,6 @@
-from candidate_selection.models.lazy_indexer import LazyIndexer
 import numpy as np
+
+from indexing.lazy_indexer import LazyIndexer
 
 
 class GloveIndexer:
@@ -7,11 +8,20 @@ class GloveIndexer:
     vectors = None
 
     def __init__(self, dimension):
-        self.indexer = LazyIndexer()
         self.dimension = dimension
-        self.indexer.index_single_element("<unknown>")
 
         self.load_file()
+
+    def get_dimension(self):
+        return self.dimension
+
+    def index(self, elements):
+        local_map = np.empty(elements.shape, dtype=np.int32)
+
+        for i, element in enumerate(elements):
+            local_map[i] = self.index_single_element(element)
+
+        return local_map
 
     def index_single_element(self, element):
         if element not in self.indexer.global_map:
@@ -28,7 +38,10 @@ class GloveIndexer:
 
         num_lines = sum(1 for _ in open(file_string, encoding="utf8"))
         self.vectors = np.empty((num_lines+1, self.dimension), dtype=np.float32)
-        self.vectors[0] = np.random.uniform(-1, 1, self.dimension)
+        self.vectors[0] = np.random.uniform(-1, 0.01, self.dimension)
+
+        self.indexer = LazyIndexer((num_lines+1, self.dimension))
+        self.indexer.index_single_element("<unknown>")
 
         for line in open(file_string, encoding="utf8"):
             counter += 1
