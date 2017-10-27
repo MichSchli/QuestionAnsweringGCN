@@ -1,13 +1,11 @@
 import numpy as np
 import tensorflow as tf
 
-from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
-from candidate_selection.models.components.embeddings.sequence_embedding import SequenceEmbedding
-from candidate_selection.models.components.embeddings.vector_embedding import VectorEmbedding
-from candidate_selection.models.components.extras.target_comparator import TargetComparator
-from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
-from candidate_selection.models.components.word_embeddings.pretrained_word_embedding import PretrainedWordEmbedding
-from candidate_selection.models.components.word_embeddings.untrained_word_embedding import UntrainedWordEmbedding
+from candidate_selection.tensorflow_models.components.decoders.softmax_decoder import SoftmaxDecoder
+from candidate_selection.tensorflow_models.components.embeddings.sequence_embedding import SequenceEmbedding
+from candidate_selection.tensorflow_models.components.embeddings.vector_embedding import VectorEmbedding
+from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
+from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 from helpers.static import Static
 from indexing.glove_indexer import GloveIndexer
@@ -17,7 +15,7 @@ from input_models.mask.mask_preprocessor import LookupMaskPreprocessor
 from input_models.sentences.sentence_preprocessor import SentencePreprocessor
 
 
-class DumbEntityEmbeddingVsBagOfWords:
+class EntityEmbeddingVsBagOfWords:
 
     decoder = None
     variables = None
@@ -29,7 +27,10 @@ class DumbEntityEmbeddingVsBagOfWords:
 
     is_tensorflow = True
 
-    dimension = None
+    entity_dimension = None
+    word_dimension = None
+
+    use_transformation = False
 
     word_embedding_type = None
     entity_embedding_type = None
@@ -44,7 +45,12 @@ class DumbEntityEmbeddingVsBagOfWords:
 
     def update_setting(self, setting_string, value):
         if setting_string == "dimension":
-            self.dimension = int(value)
+            self.entity_dimension = int(value)
+            self.word_dimension = int(value)
+        elif setting_string == "word_dimension":
+            self.word_dimension = int(value)
+        elif setting_string == "entity_dimension":
+            self.entity_dimension = int(value)
         elif setting_string == "word_embedding_type":
             self.word_embedding_type = value
         elif setting_string == "entity_embedding_type":
@@ -59,6 +65,8 @@ class DumbEntityEmbeddingVsBagOfWords:
             self.default_relation_embedding = value
         elif setting_string == "facts":
             self.facts = value
+        elif setting_string == "use_transformation":
+            self.use_transformation = True if value == "True" else False
 
     def build_indexer(self, string, shape, default_embedding):
         if string is None or string == "none":
@@ -66,7 +74,6 @@ class DumbEntityEmbeddingVsBagOfWords:
         elif string == "initialized" and default_embedding == "GloVe":
             key = default_embedding + "_" + str(shape[1])
             if key not in Static.embedding_indexers:
-                print("building")
                 Static.embedding_indexers[key] = GloveIndexer(shape[1])
             return Static.embedding_indexers[key]
 
@@ -82,6 +89,9 @@ class DumbEntityEmbeddingVsBagOfWords:
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence")
         self.decoder = SoftmaxDecoder(self.variables)
 
+        if self.use_transformation:
+            self.transformation = MultilayerPerceptron([self.word_dimension, self.entity_dimension], self.variables, variable_prefix="transformation")
+
     def initialize_preprocessors(self):
         self.hypergraph_batch_preprocessor = HypergraphPreprocessor(self.entity_indexer, self.relation_indexer,
                                                                     "neighborhood", "neighborhood_input_model", None)
@@ -91,11 +101,11 @@ class DumbEntityEmbeddingVsBagOfWords:
                                                  self.preprocessor)
 
     def initialize_indexers(self):
-        self.word_indexer = self.build_indexer(self.word_embedding_type, (40000, self.dimension), self.default_word_embedding)
+        self.word_indexer = self.build_indexer(self.word_embedding_type, (40000, self.word_dimension), self.default_word_embedding)
         self.entity_indexer = self.build_indexer(self.entity_embedding_type,
-                                                 (self.facts.number_of_entities, self.dimension), self.default_entity_embedding)
+                                                 (self.facts.number_of_entities, self.entity_dimension), self.default_entity_embedding)
         self.relation_indexer = self.build_indexer(self.relation_embedding_type,
-                                                   (self.facts.number_of_relation_types, self.dimension), self.default_relation_embedding)
+                                                   (self.facts.number_of_relation_types, self.entity_dimension), self.default_relation_embedding)
 
     def get_aux_iterators(self):
         return [self.sentence_iterator.get_iterator()]
@@ -121,6 +131,9 @@ class DumbEntityEmbeddingVsBagOfWords:
         self.decoder.prepare_tensorflow_variables(mode=mode)
         self.target_comparator.prepare_tensorflow_variables()
 
+        if self.use_transformation:
+            self.transformation.prepare_tensorflow_variables()
+
     def get_loss_graph(self, sum_examples=True):
         if self.entity_scores is None:
             self.entity_scores = self.compute_entity_scores()
@@ -137,6 +150,9 @@ class DumbEntityEmbeddingVsBagOfWords:
         entity_scores = self.entity_embedding.get_representations()
         word_scores = self.word_embedding.get_representations()
         bag_of_words = tf.reduce_sum(word_scores, 1)
+
+        if self.use_transformation:
+            bag_of_words = self.transformation.transform(bag_of_words)
 
         entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
                                                                      entity_scores)

@@ -1,8 +1,8 @@
 from candidate_generation.candidate_generator_cache import CandidateGeneratorCache
 from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
-from candidate_selection.baselines.oracle_candidate import OracleCandidate
-from candidate_selection.models.dumb_entity_embedding_vs_bag_of_words import DumbEntityEmbeddingVsBagOfWords
-from candidate_selection.models.dumb_entity_embedding_vs_lstm import DumbEntityEmbeddingVsLstm
+from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_bag_of_words import EntityEmbeddingVsBagOfWords
+from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_lstm import EntityEmbeddingVsLstm
+from candidate_selection.test_models.oracle_candidate import OracleCandidate
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
@@ -26,17 +26,22 @@ class ModelBuilder:
 
     def build(self, settings, version=None):
         self.settings = settings
-        return self.create_model()
+        #return self.create_model()
 
     def create_model(self):
         model_class = self.retrieve_class_name(self.settings["algorithm"]["model"]["stack_name"])
         model = model_class()
         model = self.wrap_model(model)
+
         for k, v in self.settings["algorithm"]["model"].items():
             if k == "stack_name":
                 continue
             else:
                 model.update_setting(k, v)
+
+        for k, v in self.settings["dataset"]["model"].items():
+            model.update_setting(k, v)
+
         return model
 
     def wrap_model(self, model):
@@ -104,9 +109,9 @@ class ModelBuilder:
             return OracleCandidate
 
         if stack_name == "bow+dumb":
-            return DumbEntityEmbeddingVsBagOfWords
+            return EntityEmbeddingVsBagOfWords
 
         if stack_name == "lstm+dumb":
-            return DumbEntityEmbeddingVsLstm
+            return EntityEmbeddingVsLstm
 
         return None
