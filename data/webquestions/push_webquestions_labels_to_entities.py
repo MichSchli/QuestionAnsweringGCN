@@ -19,6 +19,14 @@ def retrieve_entity(centroids, string):
     query_string += "select ?y where {\n"
 
     query_string += "{\n"
+    query_string += "?y ?r ?o .\n"
+    query_string += "values ?y { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
+    query_string += "values ?r { ns:type.object.name }\n"
+    query_string += "values ?o { \"" + string + "\"@en }\n"
+    query_string += "}\n"
+    query_string += "UNION\n"
+
+    query_string += "{\n"
     query_string += "?s ?r1 ?y .\n"
     query_string += "?y ?r ?o .\n"
     query_string += "values ?s { " + " ".join(["ns:" + v for v in centroids]) + " }\n"
