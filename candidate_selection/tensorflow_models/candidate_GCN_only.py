@@ -4,9 +4,9 @@ from candidate_selection.models.components.decoders.softmax_decoder import Softm
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
-from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
+from indexing.lazy_indexer import LazyIndexer
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 
 

@@ -1,20 +1,21 @@
+import numpy as np
+import tensorflow as tf
+
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.extras.target_comparator import TargetComparator
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
-from candidate_selection.models.components.indexing.glove_indexer import GloveIndexer
+from candidate_selection.models.components.sequence_encoders.bilstm import BiLstm
 from candidate_selection.models.components.word_embeddings.pretrained_word_embedding import PretrainedWordEmbedding
 from candidate_selection.models.components.word_embeddings.untrained_word_embedding import UntrainedWordEmbedding
-from candidate_selection.models.lazy_indexer import LazyIndexer
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
+from indexing.glove_indexer import GloveIndexer
+from indexing.lazy_indexer import LazyIndexer
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
-import tensorflow as tf
-import numpy as np
-
 from input_models.mask.mask_preprocessor import LookupMaskPreprocessor
 from input_models.sentences.sentence_preprocessor import SentencePreprocessor
 
 
-class DumbEntityEmbeddingVsBagOfWords:
+class DumbEntityEmbeddingVsLstm:
 
     decoder = None
     variables = None
@@ -28,6 +29,7 @@ class DumbEntityEmbeddingVsBagOfWords:
 
     dimension = None
     use_glove = None
+    n_lstms = None
 
     def __init__(self):
         self.hypergraph_batch_preprocessor = HypergraphPreprocessor("neighborhood", "neighborhood_input_model", None)
@@ -41,8 +43,10 @@ class DumbEntityEmbeddingVsBagOfWords:
     def update_setting(self, setting_string, value):
         if setting_string == "dimension":
             self.dimension = int(value)
+        if setting_string == "n_lstms":
+            self.n_lstms = int(value)
         elif setting_string == "glove":
-            self.use_glove = True if value == "True" else False
+            self.use_glove = bool(value)
         elif setting_string == "facts":
             self.facts = value
 
@@ -61,6 +65,11 @@ class DumbEntityEmbeddingVsBagOfWords:
             self.sentence_batch_preprocessor.indexer = indexer
             self.word_embedding = UntrainedWordEmbedding(400000, self.variables, self.dimension, random=False,
                                                      variable_prefix="word")
+
+
+        self.lstms = [BiLstm(self.variables, self.dimension, variable_prefix="lstm_"+str(i)) for i in range(self.n_lstms)]
+        self.lstm_attention = BiLstm(self.variables, self.dimension, variable_prefix="lstm_attention")
+
         self.event_embedding = VertexEmbedding(self.facts, self.variables, self.dimension, random=True,
                                                variable_prefix="event")
         self.decoder = SoftmaxDecoder(self.variables)
@@ -92,6 +101,12 @@ class DumbEntityEmbeddingVsBagOfWords:
         self.decoder.prepare_tensorflow_variables(mode=mode)
         self.target_comparator.prepare_tensorflow_variables()
 
+        self.lstm_attention.prepare_tensorflow_variables(mode=mode)
+
+        for lstm in self.lstms:
+            lstm.prepare_tensorflow_variables(mode=mode)
+
+
     def get_loss_graph(self, sum_examples=True):
         if self.entity_scores is None:
             self.entity_scores = self.compute_entity_scores()
@@ -107,9 +122,16 @@ class DumbEntityEmbeddingVsBagOfWords:
     def compute_entity_scores(self):
         entity_scores = self.entity_embedding.get_representations()
         word_scores = self.word_embedding.get_representations()
-        bag_of_words = tf.reduce_sum(word_scores, 1)
 
-        entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
+        for lstm in self.lstms:
+            word_scores = lstm.transform_sequences(word_scores)
+
+        attention_scores = self.lstm_attention.transform_sequences(word_scores)
+        attention_values = tf.nn.softmax(attention_scores, dim=1)
+        attention_weighted_word_scores = word_scores * attention_values
+        target_vector = tf.reduce_sum(attention_weighted_word_scores, 1)
+
+        entity_scores = self.target_comparator.get_comparison_scores(target_vector,
                                                                      entity_scores)
 
         return entity_scores
@@ -124,6 +146,10 @@ class DumbEntityEmbeddingVsBagOfWords:
 
         self.decoder.handle_variable_assignment(hypergraph_input_model.entity_vertex_matrix, hypergraph_input_model.entity_vertex_slices)
         self.decoder.assign_gold_variable(o_preprocessed_batch["gold_mask"])
+
+        self.lstm_attention.handle_variable_assignment(o_preprocessed_batch["question_sentence_input_model"])
+        for lstm in self.lstms:
+            lstm.handle_variable_assignment(o_preprocessed_batch["question_sentence_input_model"])
 
         return self.variables.get_assignment_dict()
 

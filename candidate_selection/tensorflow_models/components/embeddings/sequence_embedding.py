@@ -1,8 +1,7 @@
 import tensorflow as tf
-import numpy as np
 
 
-class MatrixEmbedding:
+class SequenceEmbedding:
 
     variables = None
     random = None
@@ -10,7 +9,6 @@ class MatrixEmbedding:
 
     def __init__(self, indexer, variables, variable_prefix=""):
         self.indexer = indexer
-        self.dimension = self.indexer.get_dimension()
         self.variables = variables
 
         self.variable_prefix = variable_prefix

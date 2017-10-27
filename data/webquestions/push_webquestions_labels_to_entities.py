@@ -90,7 +90,15 @@ def retrieve_entity(centroids, string):
     query_string += "}"
 
     sparql.setQuery(query_string)
-    results = sparql.query().convert()
+
+    while True:
+        try:
+            results = sparql.query().convert()
+            break
+        except:
+            print("Query failed. Reattempting in 5 seconds...")
+            time.sleep(5)
+
     return np.unique([r['y']['value'] for r in results['results']['bindings']])
 
 newline_counter = 0
