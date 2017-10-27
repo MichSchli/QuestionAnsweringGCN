@@ -21,6 +21,11 @@ class HypergraphInputModel:
             return self.entity_vertex_matrix
 
     def retrieve_index_in_batch(self, graph_index, entity_label):
+        if entity_label not in self.in_batch_indices[graph_index]:
+            print(entity_label)
+            print(self.in_batch_indices)
+            return 0
+
         return self.in_batch_indices[graph_index][entity_label]
 
     def get_instance_indices(self):
