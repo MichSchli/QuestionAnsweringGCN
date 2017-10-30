@@ -94,20 +94,27 @@ class TensorflowCandidateSelector:
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=3)
 
     def predict(self, test_file_iterator):
-        epoch_iterator = test_file_iterator.iterate()
-        epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
-        batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
+        example_iterator = test_file_iterator.iterate()
+        example_iterator = self.candidate_neighborhood_generator.enrich(example_iterator)
+        #batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
 
         model_prediction = self.model.get_prediction_graph()
         model_loss = self.model.get_loss_graph()
 
-        for batch in batch_iterator:
-            self.model.get_preprocessor().process(batch)
-            assignment_dict = self.model.handle_variable_assignment(batch, mode='predict')
+        for example in example_iterator:
+            can_be_predicted = self.model.validate_example(example)
+            if not can_be_predicted:
+                yield []
+                continue
+
+            as_batch = {k:[v] for k,v in example.items()}
+            self.model.get_preprocessor().process(as_batch)
+
+            assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
             predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > .3)[0]
+                best_predictions = np.where(prediction[0] > .5)[0]
                 output = []
                 for prediction in best_predictions:
                     output.extend(self.model.retrieve_entities(i,prediction))

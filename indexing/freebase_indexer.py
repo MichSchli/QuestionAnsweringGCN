@@ -36,6 +36,8 @@ class FreebaseIndexer:
         file_string = "/home/michael/Projects/QuestionAnswering/GCNQA/data/embeddings/freebase-vectors-skipgram1000.bin"
         counter = 0
 
+        print("counting")
+
         num_lines = sum(1 for _ in open(file_string, "rb"))
         #self.vectors = np.empty((num_lines+1, self.dimension), dtype=np.float32)
         #self.vectors[0] = np.random.uniform(-1, 0.01, self.dimension)
@@ -46,12 +48,14 @@ class FreebaseIndexer:
         print("init")
 
         for line in open(file_string, "rb"):
+            print(line)
+            print(line.decode("utf-16", "ignore"))
+            if counter > 10:
+                exit()
             counter += 1
-            parts = line.strip().split(" ")
-            print(parts[1])
-            exit()
-            self.indexer.index_single_element(parts[0])
-            self.vectors[counter] = parts[1:]
+            #parts = line.strip().split(" ")
+            #self.indexer.index_single_element(parts[0])
+            #self.vectors[counter] = parts[1:]
 
 
 FreebaseIndexer()
