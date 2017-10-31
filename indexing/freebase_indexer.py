@@ -47,6 +47,9 @@ class FreebaseIndexer:
 
         print("init")
 
+        from gensim.models.keyedvectors import KeyedVectors
+        word_vectors = KeyedVectors.load_word2vec_format('wiki.gu/wiki.gu.bin', binary=True, unicode_errors='ignore')
+
         for line in open(file_string, "rb"):
             print(line)
             print(line.decode("utf-16", "ignore"))

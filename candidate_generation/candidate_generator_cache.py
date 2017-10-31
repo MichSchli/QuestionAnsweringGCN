@@ -28,4 +28,8 @@ class CandidateGeneratorCache:
             else:
                 instance["neighborhood"] = self.cache[key]
 
+            print(instance)
+
+            instance["neighborhood"].get_edges_and_hyperedges(instance["mentioned_entities"], instance["gold_entities"])
+
             yield instance

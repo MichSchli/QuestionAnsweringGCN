@@ -1,5 +1,6 @@
 from time import sleep
 
+import numpy
 import numpy as np
 
 
@@ -32,93 +33,80 @@ class HypergraphModel:
         self.discovered_entities = np.empty(0)
         self.discovered_events = np.empty(0)
 
-    """
-    Cache storage:
-    """
 
-    def to_string_storage(self):
-        l = ":::".join(self.event_vertices)
-        l += "$$$" + ":::".join(self.entity_vertices)
-        l += "$$$" + self.string_store_list(self.event_to_entity_edges)
-        l += "$$$" + self.string_store_list(self.entity_to_event_edges)
-        l += "$$$" + self.string_store_list(self.entity_to_entity_edges)
+    def get_name_connections(self, entities):
+        names = np.empty_like(entities)
+        name_dict = {k:i for k,i in enumerate(entities)}
+        for edge in self.entity_to_entity_edges:
+            if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[0] in name_dict:
+                names[name_dict[edge[0]]] = edge[2]
 
-        return l
+        return names
 
-    def string_store_list(self, l):
-        s = ""
-        first = True
-        for edge in l:
-            if first:
-                first = False
-            else:
-                s += ":::"
-            s += "%%%".join(edge)
+    def get_inverse_name_connections(self, names):
+        vertices = {name: [] for name in names}
+        for edge in self.entity_to_entity_edges:
+            if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[2] in names:
+                vertices[edge[2]].append(edge[0])
 
-        return s
+        return vertices
 
-    def load_from_string_storage(self, string):
-        event_vertices, counter = self.load_vertices_from_string(string, -1)
-        entity_vertices, counter = self.load_vertices_from_string(string, counter)
-        event_to_entity_edges, counter = self.load_edges_from_string(string, counter)
-        entity_to_event_edges, counter = self.load_edges_from_string(string, counter)
-        entity_to_entity_edges, counter = self.load_edges_from_string(string, counter)
 
-        self.event_vertices = event_vertices
-        self.entity_vertices = entity_vertices
-        self.event_to_entity_edges = event_to_entity_edges
-        self.entity_to_event_edges = entity_to_event_edges
-        self.entity_to_entity_edges = entity_to_entity_edges
+    def get_edges_and_hyperedges(self, start_vertex):
+        # Entities
+        paths = []
+        start_to_entity_edges = np.where(self.entity_to_entity_edges[:,0] == start_vertex)
+        start_to_entity_edges = self.entity_to_entity_edges[start_to_entity_edges]
 
-    def load_vertices_from_string(self, string, counter):
-        vertices = []
-        parsed_element = ""
-        while counter < len(string)-1:
-            counter += 1
-            character = string[counter:counter+3]
-            if character == ":::":
-                counter += 2
-                vertices.append(parsed_element)
-                parsed_element = ""
-            elif character == "$$$":
-                counter += 2
-                vertices.append(parsed_element)
-                return np.array(vertices), counter
-            else:
-                parsed_element += character[0]
+        entity_to_start_edges = np.where(self.entity_to_entity_edges[:,2] == start_vertex)
+        entity_to_start_edges = self.entity_to_entity_edges[entity_to_start_edges]
+        inversed = np.empty_like(entity_to_start_edges)
+        inversed[:,0] = entity_to_start_edges[:,2]
+        inversed[:,2] = entity_to_start_edges[:,0]
+        inversed[:,1] = numpy.core.defchararray.add(entity_to_start_edges[:,1],".inverse")
+        start_to_entity_edges = np.concatenate((start_to_entity_edges, inversed))
 
-        return np.array(vertices), counter
+        for edge in start_to_entity_edges:
+            paths.append([list(edge)])
 
-    def load_edges_from_string(self, string, counter):
-        edges = []
-        parsed_element = [""]
-        while counter < len(string)-1:
-            counter += 1
-            character = string[counter:counter+3]
-            if character == ":::":
-                counter += 2
-                edges.append(parsed_element)
-                parsed_element = [""]
-            elif character == "%%%":
-                counter += 2
-                parsed_element.append("")
-            elif character == "$$$":
-                counter += 2
-                if len(parsed_element) == 3:
-                    edges.append(parsed_element)
+        # Events
 
-                if len(edges) == 0:
-                    return np.empty((0,3), dtype=np.int32), counter
-                return np.array(edges), counter
-            else:
-                parsed_element[-1] += character[0]
+        start_to_event_edges = np.where(self.entity_to_event_edges[:, 0] == start_vertex)
+        start_to_event_edges = self.entity_to_event_edges[start_to_event_edges]
 
-        if len(parsed_element) == 3:
-            edges.append(parsed_element)
-        if len(edges) == 0:
-            return np.empty((0,3), dtype=np.int32), counter
+        event_to_start_edges = np.where(self.event_to_entity_edges[:, 2] == start_vertex)
+        event_to_start_edges = self.event_to_entity_edges[event_to_start_edges]
 
-        return np.array(edges), counter
+        if event_to_start_edges.shape[0] > 0:
+            inversed = np.empty_like(event_to_start_edges)
+            inversed[:, 0] = event_to_start_edges[:, 2]
+            inversed[:, 2] = event_to_start_edges[:, 0]
+            inversed[:, 1] = numpy.core.defchararray.add(event_to_start_edges[:, 1], ".inverse")
+            start_to_event_edges = np.concatenate((start_to_event_edges, inversed))
+
+        intermediary_event_vertices = start_to_event_edges[:,2]
+        intermediary_to_entity_edges = np.isin(self.event_to_entity_edges[:, 0], intermediary_event_vertices)
+        intermediary_to_entity_edges = self.event_to_entity_edges[intermediary_to_entity_edges]
+
+        entity_intermediary_to_edges = np.isin(self.entity_to_event_edges[:, 2], intermediary_event_vertices)
+        entity_intermediary_to_edges = self.entity_to_event_edges[entity_intermediary_to_edges]
+        if entity_intermediary_to_edges.shape[0] > 0:
+            inversed = np.empty_like(entity_intermediary_to_edges)
+            inversed[:, 0] = entity_intermediary_to_edges[:, 2]
+            inversed[:, 2] = entity_intermediary_to_edges[:, 0]
+            inversed[:, 1] = numpy.core.defchararray.add(entity_intermediary_to_edges[:, 1], ".inverse")
+            intermediary_to_entity_edges = np.concatenate((intermediary_to_entity_edges, inversed))
+
+        new_paths = []
+        for edge_1 in start_to_event_edges:
+            for edge_2 in intermediary_to_entity_edges:
+                if edge_1[2] == edge_2[0]:
+                    new_paths.append([list(edge_1), list(edge_2)])
+        paths.extend(new_paths)
+
+        return paths
+
+
 
     """
     Add vertices to the graph, guaranteeing uniqueness.

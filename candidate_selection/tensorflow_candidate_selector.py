@@ -14,6 +14,7 @@ class TensorflowCandidateSelector:
     # To be moved to configuration file
     epochs = 20
     batch_size = 30
+    project_names = False
 
     def __init__(self, model, candidate_neighborhood_generator):
         self.candidate_neighborhood_generator = candidate_neighborhood_generator
@@ -26,6 +27,8 @@ class TensorflowCandidateSelector:
             self.batch_size = int(value)
         elif setting_string == "facts":
             self.facts = value
+        elif setting_string == "project_name":
+            self.project_names = True if value == "True" else False
 
         self.model.update_setting(setting_string, value)
 
@@ -72,6 +75,22 @@ class TensorflowCandidateSelector:
         if index != 0:
             yield {k:v[:index] for k,v in batch_dict.items()}
 
+    def project_from_name_wrapper(self, iterator):
+        for example in iterator:
+            names = example["gold_entities"]
+            graph = example["neighborhood"]
+            name_projection_dictionary = graph.get_inverse_name_connections(names)
+
+            gold_list = []
+            for name,l in name_projection_dictionary.items():
+                if len(l) > 0:
+                    gold_list.extend(l)
+                else:
+                    gold_list.append(name)
+
+            example["gold_entities"] = names
+            yield example
+
     def train(self, train_file_iterator, epochs=None):
         if epochs is None:
             epochs = self.epochs
@@ -82,6 +101,9 @@ class TensorflowCandidateSelector:
             Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
+
+            if self.project_names:
+                epoch_iterator = self.project_from_name_wrapper(epoch_iterator)
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for i,batch in enumerate(batch_iterator):
@@ -118,5 +140,8 @@ class TensorflowCandidateSelector:
                 output = []
                 for prediction in best_predictions:
                     output.extend(self.model.retrieve_entities(i,prediction))
+
+                if self.project_names:
+                    output = example["neighborhood"].get_name_connections(output)
 
                 yield output
