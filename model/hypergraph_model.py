@@ -186,7 +186,8 @@ class HypergraphModel:
                 name_vertices = np.unique(name_edges[:,2])
 
                 non_name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != "http://www.w3.org/2000/01/rdf-schema#label")]
-                non_name_vertices = np.unique(non_name_edges[:,2])
+                other_non_name_vertices = self.event_to_entity_edges[:,2]
+                non_name_vertices = np.unique(np.concatenate((non_name_edges[:,2], other_non_name_vertices)))
                 name_vertices = name_vertices[np.isin(name_vertices, non_name_vertices, assume_unique=True, invert=True)]
 
                 return self.entity_vertices[np.isin(self.entity_vertices, name_vertices, assume_unique=True, invert=True)]
