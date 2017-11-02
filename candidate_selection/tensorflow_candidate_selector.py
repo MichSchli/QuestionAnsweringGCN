@@ -122,6 +122,9 @@ class TensorflowCandidateSelector:
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
         example_iterator = self.candidate_neighborhood_generator.enrich(example_iterator)
+
+        if self.project_names:
+            example_iterator = self.project_from_name_wrapper(example_iterator)
         #batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
 
         model_prediction = self.model.get_prediction_graph()
