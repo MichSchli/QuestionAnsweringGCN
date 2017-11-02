@@ -35,20 +35,30 @@ class HypergraphModel:
 
 
     def get_name_connections(self, entities):
-        name_dict = {k:i for k,i in enumerate(entities)}
+        name_dict = {k:i for i,k in enumerate(entities)}
         names = np.array(entities)
+        
         for edge in self.entity_to_entity_edges:
+            #if entities[0].startswith("http") and edge[1] == "http://www.w3.org/2000/01/rdf-schema#label":
+            #    print(edge)
+            #    sleep(0.5)
             if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[0] in name_dict:
+                #print(edge)
                 names[name_dict[edge[0]]] = edge[2]
-
-        return names
+        #exit()
+        #print("names")
+        #print(names)
+        return names #{n[0]:np.unique(n[1]) for n in names.items()}
 
     def get_inverse_name_connections(self, names):
         vertices = {name: [] for name in names}
         for edge in self.entity_to_entity_edges:
             if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[2] in names:
                 vertices[edge[2]].append(edge[0])
-
+        #print("vertices")
+        #print(vertices)
+        vertices = {n[0]:np.unique(n[1]) for n in vertices.items()}
+        #print(vertices)
         return vertices
 
 
