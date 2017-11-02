@@ -32,7 +32,8 @@ class FreebaseInterface:
         query_string += "?s ?r ?o .\n"
         query_string += "values ?" + center + " {" + " ".join(
             ["ns:" + v.split("/ns/")[-1] for v in center_vertices]) + "}\n"
-        query_string += "values ?r { rdf:label ns:common.topic.alias }\n"
+        query_string += "values ?r { rdf:label }\n"
+        query_string += "FILTER (lang(?o) = \'en\')"
         query_string += "}"
 
         return query_string
@@ -189,6 +190,8 @@ class FreebaseInterface:
                 #print(result["r"]["value"])
                 #print(result["o"]["value"])
                 # Retrieving literals only crashes SPARQL DB. So, we filter in python instead:
+                #if literals_only:
+                #    print(result)
                 if literals_only and subject and result["o"]["type"] != "literal":
                     continue
                 elif literals_only and not subject and result["s"]["type"] != "literal":

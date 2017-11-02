@@ -107,6 +107,8 @@ class TensorflowCandidateSelector:
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for i,batch in enumerate(batch_iterator):
+                if i > 2:
+                    break
                 self.model.get_preprocessor().process(batch)
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
@@ -126,6 +128,7 @@ class TensorflowCandidateSelector:
         for example in example_iterator:
             can_be_predicted = self.model.validate_example(example)
             if not can_be_predicted:
+                print("gold not in candidates")
                 yield []
                 continue
 
@@ -136,12 +139,17 @@ class TensorflowCandidateSelector:
             predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > .5)[0]
+                #best_predictions = np.where(prediction[0] > .5)[0]
+                best_predictions = [np.argmax(prediction)]
+                #print(best_predictions)
                 output = []
                 for prediction in best_predictions:
                     output.extend(self.model.retrieve_entities(i,prediction))
 
                 if self.project_names:
+                    print("made prediction:")
+                    print(output)
                     output = example["neighborhood"].get_name_connections(output)
+                    print(output)
 
                 yield output

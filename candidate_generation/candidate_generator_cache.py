@@ -22,14 +22,16 @@ class CandidateGeneratorCache:
             key = "cachekey_"+":".join(instance["mentioned_entities"])
 
             if key not in self.cache:
+                print("retrieve")
                 neighborhood_hypergraph = self.inner.generate_neighborhood(instance)
                 self.cache[key] = neighborhood_hypergraph
                 instance["neighborhood"] = neighborhood_hypergraph
+
+                print(key in self.cache)
             else:
                 instance["neighborhood"] = self.cache[key]
 
-            print(instance)
-
-            instance["neighborhood"].get_edges_and_hyperedges(instance["mentioned_entities"], instance["gold_entities"])
+            #print(instance)
+            #instance["neighborhood"].get_edges_and_hyperedges(instance["mentioned_entities"], instance["gold_entities"])
 
             yield instance
