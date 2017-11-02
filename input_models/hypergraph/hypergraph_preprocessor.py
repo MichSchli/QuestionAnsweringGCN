@@ -118,7 +118,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
     def preprocess_single_hypergraph(self, hypergraph, event_start_index, entity_start_index):
         #print("Preprocessing hgraph")
         event_vertices = hypergraph.get_vertices(type="events")
-        entity_vertices = hypergraph.get_vertices(type="entities")
+        entity_vertices = hypergraph.get_vertices(type="entities", ignore_names=True)
         #print(event_vertices)
         #print(entity_vertices)
 
@@ -140,7 +140,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         event_to_entity_types = self.relation_indexer.index(event_to_entity_edges[:,1])
         entity_to_event_edges = hypergraph.get_edges(sources="entities", targets="events")
         entity_to_event_types = self.relation_indexer.index(entity_to_event_edges[:,1])
-        entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities")
+        entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities", ignore_names=True)
         entity_to_entity_types = self.relation_indexer.index(entity_to_entity_edges[:,1])
 
         ev_to_en_2 = np.empty((event_to_entity_edges.shape[0], 2))
