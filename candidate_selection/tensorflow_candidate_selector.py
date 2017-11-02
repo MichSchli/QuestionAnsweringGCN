@@ -88,7 +88,9 @@ class TensorflowCandidateSelector:
                 else:
                     gold_list.append(name)
 
-            example["gold_entities"] = names
+            #print("Swapping " + str(example["gold_entities"]) + " for " + str(gold_list))
+
+            example["gold_entities"] = gold_list
             yield example
 
     def train(self, train_file_iterator, epochs=None):
@@ -128,7 +130,7 @@ class TensorflowCandidateSelector:
         for example in example_iterator:
             can_be_predicted = self.model.validate_example(example)
             if not can_be_predicted:
-                print("gold not in candidates")
+                #print("gold not in candidates")
                 yield []
                 continue
 
@@ -139,17 +141,17 @@ class TensorflowCandidateSelector:
             predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                #best_predictions = np.where(prediction[0] > .5)[0]
-                best_predictions = [np.argmax(prediction)]
+                best_predictions = np.where(prediction[0] > 0.0)[0]
+                #best_predictions = [np.argmax(prediction)]
                 #print(best_predictions)
                 output = []
                 for prediction in best_predictions:
                     output.extend(self.model.retrieve_entities(i,prediction))
 
                 if self.project_names:
-                    print("made prediction:")
-                    print(output)
+                    #print("made prediction:")
+                    #print(output)
                     output = example["neighborhood"].get_name_connections(output)
-                    print(output)
+                    #print(output)
 
                 yield output
