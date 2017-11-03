@@ -15,6 +15,7 @@ class HypergraphInputModel:
     n_events = None
     n_entities = None
     in_batch_indices = None
+    entity_embeddings = None
 
     def get(self, tensor_name):
         if tensor_name == "entity_vertex_matrix":

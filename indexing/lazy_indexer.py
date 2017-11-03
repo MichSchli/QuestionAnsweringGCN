@@ -22,6 +22,9 @@ class LazyIndexer:
     def get_dimension(self):
         return self.vocabulary_shape[1]
 
+    def retrieve_vector(self, index):
+        return self.get_all_vectors()[index]
+
     def get_all_vectors(self):
         return np.random.normal(0, 0.01, size=self.vocabulary_shape).astype(np.float32)
 

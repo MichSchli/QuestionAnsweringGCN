@@ -1,15 +1,15 @@
 import numpy as np
-
+import struct
 from indexing.lazy_indexer import LazyIndexer
 
 
 class FreebaseIndexer:
 
     vectors = None
+    indexer = None
 
     def __init__(self):
         self.dimension = 1000
-
         self.load_file()
 
     def get_dimension(self):
@@ -29,36 +29,64 @@ class FreebaseIndexer:
         else:
             return self.indexer.global_map[element]
 
+    def retrieve_vector(self, index):
+        return self.get_all_vectors()[index]
+
     def get_all_vectors(self):
         return self.vectors
 
     def load_file(self):
         file_string = "/home/michael/Projects/QuestionAnswering/GCNQA/data/embeddings/freebase-vectors-skipgram1000.bin"
-        counter = 0
 
-        print("counting")
+        f = open(file_string, "rb")
+        vocab_size = ""
+        while True:
+            c = f.read(1)
+            if ord(c) == ord(" "):
+                break
+            else:
+                vocab_size += chr(ord(c))
 
-        num_lines = sum(1 for _ in open(file_string, "rb"))
-        #self.vectors = np.empty((num_lines+1, self.dimension), dtype=np.float32)
-        #self.vectors[0] = np.random.uniform(-1, 0.01, self.dimension)
+        vocab_size = int(vocab_size)
+        print(vocab_size)
+        self.vectors = np.zeros((vocab_size+1, self.dimension), dtype=np.float32)
+        vocab = [None]*vocab_size
 
-        #self.indexer = LazyIndexer((num_lines+1, self.dimension))
-        #self.indexer.index_single_element("<unknown>")
+        f.read(5)
 
-        print("init")
+        word = True
+        counter = 1
 
-        from gensim.models.keyedvectors import KeyedVectors
-        word_vectors = KeyedVectors.load_word2vec_format('wiki.gu/wiki.gu.bin', binary=True, unicode_errors='ignore')
+        current_mid = ""
+        while True:
+            if word:
+                c = f.read(1)
+                if not c:
+                    break
+                if ord(c) == ord(" "):
+                    vocab[counter] = current_mid
+                    current_mid = ""
+                    word = False
 
-        for line in open(file_string, "rb"):
-            print(line)
-            print(line.decode("utf-16", "ignore"))
-            if counter > 10:
-                exit()
-            counter += 1
-            #parts = line.strip().split(" ")
-            #self.indexer.index_single_element(parts[0])
-            #self.vectors[counter] = parts[1:]
+                    if counter % 10000 == 0:
+                        print(counter)
+                else:
+                    current_mid += chr(ord(c))
+            else:
+                n = f.read(4000)
+                number = np.array(struct.unpack("1000f", n))
 
+                self.vectors[counter] = number
+
+                counter += 1
+                word = True
+
+        self.indexer = LazyIndexer((vocab_size, self.dimension))
+
+        self.index_single_element("<unknown>")
+
+        for word in vocab:
+            self.index_single_element("http://rdf.freebase.com/ns/" + word)
 
 FreebaseIndexer()
+print("done")

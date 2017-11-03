@@ -29,6 +29,9 @@ class GloveIndexer:
         else:
             return self.indexer.global_map[element]
 
+    def retrieve_vector(self, index):
+        return self.get_all_vectors()[index]
+
     def get_all_vectors(self):
         return self.vectors
 
