@@ -11,7 +11,9 @@ from database_interface.hypergraph_interface import HypergraphInterface
 from evaluation.python_evaluator import Evaluator
 from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
+from helpers.logger import Logger
 from helpers.read_conll_files import ConllReader
+from helpers.static import Static
 from model_construction.model_builder import ModelBuilder
 from model_construction.settings_reader import SettingsReader
 
@@ -27,6 +29,8 @@ version_string = ".v" + args.version if args.version else ""
 algorithm_name = ".".join(args.algorithm.split("/")[-1].split(".")[:-1])
 log_file_location = "logs/" + algorithm_name + version_string + ".txt"
 save_file_location = "stored_models/" + algorithm_name + version_string + ".ckpt"
+
+Static.logger = Logger(log_file_location, console_verbosity=3, logger_verbosity=2)
 
 settings = {}
 settings_reader = SettingsReader()
