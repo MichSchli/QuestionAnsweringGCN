@@ -27,5 +27,5 @@ class VectorEmbedding:
         initializer = self.indexer.get_all_vectors()
         self.W = tf.Variable(initializer)
 
-    def handle_variable_assignment(self, variable):
-        self.variables.assign_variable(self.variable_prefix+"element_indices", variable)
+    def handle_variable_assignment(self, variable, mode):
+        self.variables.assign_variable(self.variable_prefix+"element_indices", variable["neighborhood_input_model"].entity_map)

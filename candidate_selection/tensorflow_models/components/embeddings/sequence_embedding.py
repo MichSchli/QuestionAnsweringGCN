@@ -30,6 +30,6 @@ class SequenceEmbedding:
 
         self.W = tf.Variable(initializer)
 
-    def handle_variable_assignment(self, sentence_input_model):
-        self.variables.assign_variable(self.variable_prefix+"indices", sentence_input_model.word_index_matrix)
-        self.variables.assign_variable(self.variable_prefix+"mask", sentence_input_model.word_index_matrix > 0)
+    def handle_variable_assignment(self, batch_dictionary, mode):
+        self.variables.assign_variable(self.variable_prefix+"indices", batch_dictionary["question_sentence_input_model"].word_index_matrix)
+        self.variables.assign_variable(self.variable_prefix+"mask", batch_dictionary["question_sentence_input_model"].word_index_matrix > 0)

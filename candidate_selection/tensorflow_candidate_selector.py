@@ -128,7 +128,7 @@ class TensorflowCandidateSelector:
         #batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
 
         model_prediction = self.model.get_prediction_graph()
-        model_loss = self.model.get_loss_graph()
+        #model_loss = self.model.get_loss_graph()
 
         for example in example_iterator:
             can_be_predicted = self.model.validate_example(example)
@@ -141,7 +141,7 @@ class TensorflowCandidateSelector:
             self.model.get_preprocessor().process(as_batch)
 
             assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
-            predictions, loss = self.sess.run([model_prediction, model_loss], feed_dict=assignment_dict)
+            predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
                 best_predictions = np.where(prediction[0] > 0.0)[0]

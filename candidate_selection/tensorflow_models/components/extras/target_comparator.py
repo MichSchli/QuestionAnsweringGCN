@@ -20,6 +20,6 @@ class TargetComparator:
     def prepare_tensorflow_variables(self, mode="train"):
         self.variables.add_variable(self.variable_prefix + "target_indices", tf.placeholder(tf.int32))
 
-    def handle_variable_assignment(self, target_indices):
-        self.variables.assign_variable(self.variable_prefix + "target_indices", target_indices)
+    def handle_variable_assignment(self, batch_dictionary, mode):
+        self.variables.assign_variable(self.variable_prefix + "target_indices", batch_dictionary["neighborhood_input_model"].get_instance_indices())
 

@@ -87,6 +87,3 @@ class FreebaseIndexer:
 
         for word in vocab:
             self.index_single_element("http://rdf.freebase.com/ns/" + word)
-
-FreebaseIndexer()
-print("done")

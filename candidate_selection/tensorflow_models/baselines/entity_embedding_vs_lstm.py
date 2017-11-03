@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 from candidate_selection.tensorflow_models.components.decoders.softmax_decoder import SoftmaxDecoder
+from candidate_selection.tensorflow_models.components.embeddings.static_vector_embedding import StaticVectorEmbedding
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
 from candidate_selection.tensorflow_models.components.sequence_encoders.bilstm import BiLstm
 
@@ -10,11 +11,13 @@ from candidate_selection.tensorflow_models.components.embeddings.vector_embeddin
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 from helpers.static import Static
+from indexing.freebase_indexer import FreebaseIndexer
 from indexing.glove_indexer import GloveIndexer
 from indexing.lazy_indexer import LazyIndexer
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 from input_models.mask.mask_preprocessor import LookupMaskPreprocessor
 from input_models.sentences.sentence_preprocessor import SentencePreprocessor
+from input_models.static_embedding.static_entity_embedding_preprocessor import StaticEntityEmbeddingPreprocessor
 
 
 class EntityEmbeddingVsLstm:
@@ -66,6 +69,8 @@ class EntityEmbeddingVsLstm:
             self.default_relation_embedding = value
         elif setting_string == "facts":
             self.facts = value
+        elif setting_string == "static_entity_embeddings":
+            self.static_entity_embeddings = True if value == "True" else False
         elif setting_string == "use_transformation":
             self.use_transformation = True if value == "True" else False
 
@@ -78,6 +83,11 @@ class EntityEmbeddingVsLstm:
                 print("building")
                 Static.embedding_indexers[key] = GloveIndexer(shape[1])
             return Static.embedding_indexers[key]
+        elif string == "initialized" and default_embedding == "Siva":
+            key = default_embedding
+            if key not in Static.embedding_indexers:
+                Static.embedding_indexers[key] = FreebaseIndexer()
+            return Static.embedding_indexers[key]
 
     def initialize(self):
         self.initialize_indexers()
@@ -86,7 +96,12 @@ class EntityEmbeddingVsLstm:
 
     def initialize_graph(self):
         self.variables = TensorflowVariablesHolder()
-        self.entity_embedding = VectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
+
+        if not self.static_entity_embeddings:
+            self.entity_embedding = VectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
+        else:
+            self.entity_embedding = StaticVectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
+
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
 
         self.lstms = [BiLstm(self.variables, self.word_dimension, variable_prefix="lstm_" + str(i)) for i in
@@ -108,6 +123,9 @@ class EntityEmbeddingVsLstm:
         self.preprocessor = SentencePreprocessor(self.word_indexer, "sentence", "question_sentence_input_model",
                                                  self.preprocessor)
 
+        if self.static_entity_embeddings:
+            self.preprocessor = StaticEntityEmbeddingPreprocessor(self.entity_indexer, "neighborhood_input_model", self.preprocessor)
+
     def initialize_indexers(self):
         self.word_indexer = self.build_indexer(self.word_embedding_type, (40000, self.word_dimension), self.default_word_embedding)
         self.entity_indexer = self.build_indexer(self.entity_embedding_type,
@@ -118,14 +136,6 @@ class EntityEmbeddingVsLstm:
 
     def get_preprocessor(self):
         return self.preprocessor
-
-    def get_aux_iterators(self):
-        return [self.sentence_iterator.get_iterator()]
-
-    def iterate_preprocessors(self, mode="train"):
-        yield "candidate_neighborhoods", self.hypergraph_batch_preprocessor, ["neighborhood"]
-        yield "question_sentences", self.sentence_batch_preprocessor, ["sentence"]
-        yield "gold_mapping", self.gold_batch_preprocessor, ["gold_entities"]
 
     def validate_example(self, example):
         candidates = example["neighborhood"].get_vertices(type="entities")
@@ -186,7 +196,10 @@ class EntityEmbeddingVsLstm:
 
     def handle_variable_assignment(self, o_preprocessed_batch, mode="predict"):
         hypergraph_input_model = o_preprocessed_batch["neighborhood_input_model"]
-        self.entity_embedding.handle_variable_assignment(hypergraph_input_model.entity_map)
+        if not self.static_entity_embeddings:
+            self.entity_embedding.handle_variable_assignment(hypergraph_input_model.entity_map)
+        else:
+            self.entity_embedding.handle_variable_assignment(hypergraph_input_model)
 
         self.word_embedding.handle_variable_assignment(o_preprocessed_batch["question_sentence_input_model"])
         self.target_comparator.handle_variable_assignment(hypergraph_input_model.get_instance_indices())
@@ -202,19 +215,3 @@ class EntityEmbeddingVsLstm:
 
     def retrieve_entities(self, graph_index, entity_index):
         return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(graph_index, entity_index)]
-
-    def preprocess(self, batch, mode='test'):
-        hypergraph_input_model = self.hypergraph_batch_preprocessor.preprocess(batch[0])
-        sentence_input_model = self.sentence_batch_preprocessor.preprocess(batch[1])
-
-        preprocessed = [hypergraph_input_model, sentence_input_model]
-
-        gold_matrix = np.zeros_like(hypergraph_input_model.entity_vertex_matrix, dtype=np.float32)
-        shitty_counter = 0
-        for i, golds in enumerate(batch[-1]):
-            gold_indexes = np.array([self.hypergraph_batch_preprocessor.retrieve_entity_indexes_in_batch(i,gold) for gold in golds])
-            gold_matrix[i][gold_indexes - shitty_counter] = 1
-            shitty_counter = np.max(hypergraph_input_model.entity_vertex_matrix[i])
-        preprocessed += [gold_matrix]
-
-        return preprocessed

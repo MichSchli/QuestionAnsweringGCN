@@ -13,7 +13,7 @@ class SoftmaxDecoder:
         entity_vertex_scores_distributed = tf.nn.embedding_lookup(entity_vertex_scores, self.variables.get_variable("vertex_lookup_matrix"))
 
         def map_function(x):
-            vals = tf.nn.softmax(x[0][:x[1]])
+            vals = tf.nn.sigmoid(x[0][:x[1]])
             zeros_needed = tf.reduce_max(self.variables.get_variable("vertex_count_per_hypergraph")) - x[1]
             mask = tf.zeros((1, zeros_needed), dtype=tf.float32)
             return tf.concat((tf.expand_dims(vals, 0), mask), 1)
@@ -48,9 +48,16 @@ class SoftmaxDecoder:
         if mode == 'train':
             self.variables.add_variable("gold_lookup_matrix", tf.placeholder(tf.float32))
 
-    def handle_variable_assignment(self, vertex_lookup_matrix, vertex_count_per_hypergraph):
+    def handle_variable_assignment(self, batch_dictionary, mode):
+        hypergraph = batch_dictionary["neighborhood_input_model"]
+        self.assign_train_variables(hypergraph.entity_vertex_matrix, hypergraph.entity_vertex_slices)
+
+        if mode == "train":
+            self.assign_test_variables(batch_dictionary["gold_mask"])
+
+    def assign_train_variables(self, vertex_lookup_matrix, vertex_count_per_hypergraph):
         self.variables.assign_variable("vertex_lookup_matrix", vertex_lookup_matrix)
         self.variables.assign_variable("vertex_count_per_hypergraph", vertex_count_per_hypergraph)
 
-    def assign_gold_variable(self, gold_matrix):
+    def assign_test_variables(self, gold_matrix):
         self.variables.assign_variable("gold_lookup_matrix", gold_matrix)

@@ -25,5 +25,5 @@ class StaticVectorEmbedding:
     def prepare_tensorflow_variables(self, mode='train'):
         self.variables.add_variable(self.variable_prefix+"batch_embeddings", tf.placeholder(tf.float32, [None, self.dimension], name=self.variable_prefix+"batch_embeddings"))
 
-    def handle_variable_assignment(self, hypergraph_model):
-        self.variables.assign_variable(self.variable_prefix+"batch_embeddings", hypergraph_model.entity_embeddings)
+    def handle_variable_assignment(self, batch_dictionary, mode):
+        self.variables.assign_variable(self.variable_prefix+"batch_embeddings", batch_dictionary["neighborhood_input_model"].entity_embeddings)

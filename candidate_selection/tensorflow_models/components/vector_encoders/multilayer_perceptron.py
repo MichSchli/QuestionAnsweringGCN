@@ -40,3 +40,6 @@ class MultilayerPerceptron:
                 vectors = tf.nn.relu(vectors)
 
         return vectors
+
+    def handle_variable_assignment(self, batch, mode):
+        pass
