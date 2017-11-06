@@ -59,7 +59,7 @@ class AbstractTensorflowModel:
         if setting_string == "dimension":
             self.model_settings["entity_dimension"] = int(value)
             self.model_settings["word_dimension"] = int(value)
-        elif setting_string in ["word_dimension", "entity_dimension", "n_lstms"]:
+        elif setting_string in ["word_dimension", "entity_dimension", "n_lstms", "n_layers"]:
             self.model_settings[setting_string] = int(value)
         elif setting_string in ["static_entity_embeddings", "use_transformation"]:
             self.model_settings[setting_string] = True if value == "True" else False

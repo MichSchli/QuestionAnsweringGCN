@@ -22,7 +22,7 @@ class ValidationSetEvaluator:
 
     def train(self, train_file_iterator):
         epoch = 0
-        best_performance = 0
+        best_performance = -1
         best_epoch = 0
         Static.logger.write("Beginning training with max_epochs="+str(self.max_epochs)+ (", not" if not self.early_stopping else ",") + " using early stopping.", verbosity_priority=4)
         while epoch < self.max_epochs:

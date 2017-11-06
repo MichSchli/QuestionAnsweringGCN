@@ -86,7 +86,10 @@ class Evaluator:
             if inner_precision + inner_recall > 0:
                 evaluation.macro_f1 += 2 * (inner_precision * inner_recall) / (inner_precision + inner_recall)
 
-        evaluation.micro_precision = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_positives)
+        if np.sum(evaluation.total_true_positives) + np.sum(evaluation.total_false_positives) == 0:
+            evaluation.micro_precision = 1.0
+        else:
+            evaluation.micro_precision = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_positives)
         evaluation.micro_recall = evaluation.total_true_positives / (evaluation.total_true_positives + evaluation.total_false_negatives)
         evaluation.micro_f1 = 2 * (evaluation.micro_precision * evaluation.micro_recall) / (evaluation.micro_precision + evaluation.micro_recall)
 

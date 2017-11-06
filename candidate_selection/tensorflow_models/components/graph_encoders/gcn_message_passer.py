@@ -46,11 +46,14 @@ class GcnConcatMessagePasser:
         #For now just add event embeddings to entity embeddings
         messages = tf.nn.embedding_lookup(sender_embeddings, sender_indices)
 
+
         ###
         transformations = tf.nn.embedding_lookup(self.W, types)
         reshape_embeddings = tf.reshape(messages, [-1, self.n_coefficients, self.submatrix_d])
         transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
-        transformed_messages = tf.reshape(transformed_messages, [-1, self.dimension])
+        transformed_messages = messages # tf.reshape(transformed_messages, [-1, self.dimension])
+        type_biases = tf.nn.embedding_lookup(self.b, types)
+        transformed_messages += type_biases
         ###
 
         sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, transformed_messages)
@@ -87,10 +90,9 @@ class GcnConcatMessagePasser:
 
         return tf.sparse_reduce_sum_sparse(tensor, 0)
 
-    def get_optimizable_parameters(self):
-        return [self.W]
 
     def prepare_variables(self):
         #TODO: W initializer is total crap. Also no bias.
         initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
         self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
+        self.b = tf.Variable(np.zeros((self.facts.number_of_relation_types, self.dimension)).astype(np.float32))

@@ -1,4 +1,4 @@
-from candidate_selection.models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 import numpy as np
 import tensorflow as tf
 
@@ -42,6 +42,9 @@ class HypergraphGcnPropagationUnit:
 
         return params
 
+    def handle_variable_assignment(self, batch_dict, mode):
+        pass
+
     def prepare_tensorflow_variables(self, mode="train"):
         self.gcn_encoder_ev_to_en.prepare_variables()
         self.gcn_encoder_en_to_ev.prepare_variables()
@@ -63,7 +66,7 @@ class HypergraphGcnPropagationUnit:
     def propagate(self):
 
         # Propagate information to events:
-        self.hypergraph.event_vertex_embeddings += tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
+        #self.hypergraph.event_vertex_embeddings += tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
         self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph) \
                                                   + self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
 
@@ -74,5 +77,5 @@ class HypergraphGcnPropagationUnit:
         entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph) \
                                     + self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
 
-        self.hypergraph.entity_vertex_embeddings += tf.matmul(self.hypergraph.entity_vertex_embeddings, self.W_self_entities)
+        #self.hypergraph.entity_vertex_embeddings += tf.matmul(self.hypergraph.entity_vertex_embeddings, self.W_self_entities)
         self.hypergraph.entity_vertex_embeddings += entity_vertex_embeddings

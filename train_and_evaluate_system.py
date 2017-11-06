@@ -45,9 +45,9 @@ gold_reader = ConllReader(settings["dataset"]["location"]["test_file"])
 evaluator = Evaluator(gold_reader)
 
 model = model_builder.first()
-model = ValidationSetEvaluator(model, settings)
+model_with_validator = ValidationSetEvaluator(model, settings)
 train_file_iterator = ConllReader(settings["dataset"]["location"]["train_file"])
-model.train(train_file_iterator)
+model_with_validator.train(train_file_iterator)
 
 test_file_iterator = ConllReader(settings["dataset"]["location"]["test_file"])
 prediction = model.predict(test_file_iterator)

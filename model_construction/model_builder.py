@@ -2,6 +2,7 @@ from candidate_generation.candidate_generator_cache import CandidateGeneratorCac
 from candidate_generation.neighborhood_candidate_generator import NeighborhoodCandidateGenerator
 from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_bag_of_words import EntityEmbeddingVsBagOfWords
 from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_lstm import EntityEmbeddingVsLstm
+from candidate_selection.tensorflow_models.baselines.path_bag_vs_bag_of_words import PathBagVsBagOfWords
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
 from candidate_selection.tensorflow_candidate_selector import TensorflowCandidateSelector
 from database_interface.data_interface.CsvInterface import CsvInterface
@@ -113,5 +114,8 @@ class ModelBuilder:
 
         if stack_name == "lstm+dumb":
             return EntityEmbeddingVsLstm
+
+        if stack_name == "bow+path":
+            return PathBagVsBagOfWords
 
         return None
