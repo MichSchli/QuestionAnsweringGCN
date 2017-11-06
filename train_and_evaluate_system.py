@@ -14,6 +14,7 @@ from facts.database_facts.freebase_facts import FreebaseFacts
 from helpers.logger import Logger
 from helpers.read_conll_files import ConllReader
 from helpers.static import Static
+from learning.validation_set_evaluator import ValidationSetEvaluator
 from model_construction.model_builder import ModelBuilder
 from model_construction.settings_reader import SettingsReader
 
@@ -44,6 +45,7 @@ gold_reader = ConllReader(settings["dataset"]["location"]["test_file"])
 evaluator = Evaluator(gold_reader)
 
 model = model_builder.first()
+model = ValidationSetEvaluator(model, settings)
 train_file_iterator = ConllReader(settings["dataset"]["location"]["train_file"])
 model.train(train_file_iterator)
 

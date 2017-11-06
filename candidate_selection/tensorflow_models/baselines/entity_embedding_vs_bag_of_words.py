@@ -7,15 +7,16 @@ from candidate_selection.tensorflow_models.components.embeddings.static_vector_e
 from candidate_selection.tensorflow_models.components.embeddings.vector_embedding import VectorEmbedding
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
-from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
-from input_models.mask.mask_preprocessor import LookupMaskPreprocessor
-from input_models.sentences.sentence_preprocessor import SentencePreprocessor
-from input_models.static_embedding.static_entity_embedding_preprocessor import StaticEntityEmbeddingPreprocessor
 
 
 class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
 
-    hypergraph_batch_preprocessor = None
+
+    def get_preprocessor_stack_types(self):
+        preprocessor_stack_types = ["hypergraph", "gold", "sentence"]
+        if self.model_settings["static_entity_embeddings"]:
+            preprocessor_stack_types += ["static_entity_embeddings"]
+        return preprocessor_stack_types
 
     def initialize_graph(self):
         if not self.model_settings["static_entity_embeddings"]:
@@ -41,18 +42,6 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
                                                        variable_prefix="transformation")
             self.add_component(self.transformation)
 
-    def initialize_preprocessors(self):
-        self.hypergraph_batch_preprocessor = HypergraphPreprocessor(self.entity_indexer, self.relation_indexer,
-                                                                    "neighborhood", "neighborhood_input_model", None)
-        self.preprocessor = LookupMaskPreprocessor("neighborhood_input_model", "entity_vertex_matrix", "gold_entities",
-                                                   "gold_mask", self.hypergraph_batch_preprocessor)
-        self.preprocessor = SentencePreprocessor(self.word_indexer, "sentence", "question_sentence_input_model",
-                                                 self.preprocessor)
-
-        if self.model_settings["static_entity_embeddings"]:
-            self.preprocessor = StaticEntityEmbeddingPreprocessor(self.entity_indexer, "neighborhood_input_model", self.preprocessor)
-
-
     def initialize_indexers(self):
         self.word_indexer = self.build_indexer(self.model_settings["word_embedding_type"], (40000, self.model_settings["word_dimension"]), self.model_settings["default_word_embedding"])
         self.entity_indexer = self.build_indexer(self.model_settings["entity_embedding_type"],
@@ -76,6 +65,3 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
                                                                      entity_scores)
 
         return entity_scores
-
-    def retrieve_entities(self, graph_index, entity_index):
-        return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(graph_index, entity_index)]

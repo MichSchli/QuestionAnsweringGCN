@@ -25,8 +25,8 @@ class BiLstm:
     def get_optimizable_parameters(self):
         return [self.W_forget, self.W_input, self.W_output, self.W_update, self.W_hidden]
 
-    def handle_variable_assignment(self, sentence_input_model):
-        self.variables.assign_variable(self.variable_prefix+"lengths", sentence_input_model.sentence_lengths)
+    def handle_variable_assignment(self, batch_dictionary, mode):
+        self.variables.assign_variable(self.variable_prefix+"lengths", batch_dictionary["question_sentence_input_model"].sentence_lengths)
 
     def prepare_tensorflow_variables(self, mode="train"):
         self.variables.add_variable(self.variable_prefix+"lengths", tf.placeholder(tf.int32, [None], name=self.variable_prefix+"lengths"))

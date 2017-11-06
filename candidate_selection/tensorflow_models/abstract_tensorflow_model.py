@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+from candidate_selection.tensorflow_models.parts.preprocessor import PreprocessorPart
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 from helpers.static import Static
 from indexing.freebase_indexer import FreebaseIndexer
@@ -42,6 +43,14 @@ class AbstractTensorflowModel:
         for component in self.components:
             component.prepare_tensorflow_variables(mode=mode)
 
+    def initialize_preprocessors(self):
+        preprocessor_stack_types = self.get_preprocessor_stack_types()
+        preprocessor = PreprocessorPart(preprocessor_stack_types, self.word_indexer, self.entity_indexer,
+                                        self.relation_indexer)
+        preprocessor.initialize_all_preprocessors()
+        self.preprocessor = preprocessor
+
+
     """
     Configuration of settings:
     """
@@ -50,7 +59,7 @@ class AbstractTensorflowModel:
         if setting_string == "dimension":
             self.model_settings["entity_dimension"] = int(value)
             self.model_settings["word_dimension"] = int(value)
-        elif setting_string in ["word_dimension", "entity_dimension"]:
+        elif setting_string in ["word_dimension", "entity_dimension", "n_lstms"]:
             self.model_settings[setting_string] = int(value)
         elif setting_string in ["static_entity_embeddings", "use_transformation"]:
             self.model_settings[setting_string] = True if value == "True" else False
@@ -120,3 +129,6 @@ class AbstractTensorflowModel:
 
     def get_preprocessor(self):
         return self.preprocessor
+
+    def retrieve_entities(self, graph_index, entity_index):
+        return self.preprocessor.retrieve_entities(graph_index, entity_index)

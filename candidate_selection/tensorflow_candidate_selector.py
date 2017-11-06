@@ -109,15 +109,13 @@ class TensorflowCandidateSelector:
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for i,batch in enumerate(batch_iterator):
-                if i > 2:
-                    break
                 self.model.get_preprocessor().process(batch)
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
                 result = self.sess.run([self.optimize_func, model_loss], feed_dict=assignment_dict)
                 loss = result[1]
 
-                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=3)
+                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=2)
 
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
