@@ -25,18 +25,20 @@ class FreebaseIndexer:
 
     def index_single_element(self, element):
         if element not in self.indexer.global_map:
+            #print(element)
             return 0
         else:
             return self.indexer.global_map[element]
 
     def retrieve_vector(self, index):
+        #print(index)
         return self.get_all_vectors()[index]
 
     def get_all_vectors(self):
         return self.vectors
 
     def load_file(self):
-        file_string = "/home/michael/Projects/QuestionAnswering/GCNQA/data/embeddings/freebase-vectors-skipgram1000.bin"
+        file_string = "/home/mschlic1/GCNQA/data/embeddings/freebase-vectors-skipgram1000.bin"
 
         f = open(file_string, "rb")
         vocab_size = ""
@@ -50,7 +52,7 @@ class FreebaseIndexer:
         vocab_size = int(vocab_size)
         print(vocab_size)
         self.vectors = np.zeros((vocab_size+1, self.dimension), dtype=np.float32)
-        vocab = [None]*vocab_size
+        vocab = [None]*(vocab_size+1)
 
         f.read(5)
 
@@ -83,7 +85,9 @@ class FreebaseIndexer:
 
         self.indexer = LazyIndexer((vocab_size, self.dimension))
 
-        self.index_single_element("<unknown>")
+        self.indexer.index_single_element("<unknown>")
 
-        for word in vocab:
-            self.index_single_element("http://rdf.freebase.com/ns/" + word)
+        for word in vocab[1:]:
+            #print("http://rdf.freebase.com/ns/" + word[1:].replace("/", "."))
+            #exit()
+            self.indexer.index_single_element("http://rdf.freebase.com/ns/" + word[1:].replace("/", "."))

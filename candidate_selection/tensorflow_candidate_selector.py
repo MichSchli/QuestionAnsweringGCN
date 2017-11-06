@@ -142,7 +142,7 @@ class TensorflowCandidateSelector:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > 0.0)[0]
+                best_predictions = np.where(prediction[0] > 0.5)[0]
                 #best_predictions = [np.argmax(prediction)]
                 #print(best_predictions)
                 output = []
