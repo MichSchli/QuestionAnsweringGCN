@@ -109,8 +109,8 @@ class TensorflowCandidateSelector:
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for i,batch in enumerate(batch_iterator):
-                if i > 2:
-                    break
+                #if i > 2:
+                #    break
                 self.model.get_preprocessor().process(batch)
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
@@ -144,7 +144,7 @@ class TensorflowCandidateSelector:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > 0.0)[0]
+                best_predictions = np.where(prediction[0] > 0.5)[0]
                 #best_predictions = [np.argmax(prediction)]
                 #print(best_predictions)
                 output = []

@@ -12,7 +12,7 @@ siva-parser/
 data/glove.6B
 
 # Data files ignored for now:
-#data/spades/
+data/
 
 # Ignore PC files
 .idea/
