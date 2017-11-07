@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from candidate_selection.tensorflow_models.parts.preprocessor import PreprocessorPart
+from candidate_selection.tensorflow_models.model_parts.preprocessor import PreprocessorPart
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 from helpers.static import Static
 from indexing.freebase_indexer import FreebaseIndexer
