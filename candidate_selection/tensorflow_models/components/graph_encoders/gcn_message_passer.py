@@ -17,11 +17,13 @@ class GcnConcatMessagePasser:
     receivers = None
     inverse_edges = None
 
-    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False):
+    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant"):
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
         self.submatrix_d = int(dimension / self.n_coefficients)
+        self.weight_type = weights
+        self.bias_type = biases
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
@@ -48,15 +50,21 @@ class GcnConcatMessagePasser:
 
 
         ###
-        transformations = tf.nn.embedding_lookup(self.W, types)
-        reshape_embeddings = tf.reshape(messages, [-1, self.n_coefficients, self.submatrix_d])
-        transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
-        transformed_messages = messages # tf.reshape(transformed_messages, [-1, self.dimension])
-        type_biases = tf.nn.embedding_lookup(self.b, types)
-        transformed_messages += type_biases
+        if self.weight_type == "blocks":
+            transformations = tf.nn.embedding_lookup(self.W, types)
+            reshape_embeddings = tf.reshape(messages, [-1, self.n_coefficients, self.submatrix_d])
+            transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
+            transformed_messages = tf.reshape(transformed_messages, [-1, self.dimension])
+            messages = transformed_messages
+
+        if self.bias_type == "constant":
+            messages += self.b
+        elif self.bias_type == "relation_specific":
+            type_biases = tf.nn.embedding_lookup(self.b, types)
+            messages += type_biases
         ###
 
-        sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, transformed_messages)
+        sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, messages)
         return sent_messages
 
     def get_unnormalized_incidence_matrix(self, receiver_indices, number_of_receivers):
@@ -92,7 +100,11 @@ class GcnConcatMessagePasser:
 
 
     def prepare_variables(self):
-        #TODO: W initializer is total crap. Also no bias.
-        initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
-        self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
-        self.b = tf.Variable(np.zeros((self.facts.number_of_relation_types, self.dimension)).astype(np.float32))
+        if self.weight_type == "blocks":
+            initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
+            self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
+
+        if self.bias_type == "constant":
+            self.b = tf.Variable(np.zeros(self.dimension).astype(np.float32))
+        elif self.bias_type == "relation_specific":
+            self.b = tf.Variable(np.zeros((self.facts.number_of_relation_types, self.dimension)).astype(np.float32))

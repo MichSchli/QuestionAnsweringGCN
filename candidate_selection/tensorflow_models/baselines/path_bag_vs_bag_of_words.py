@@ -36,9 +36,13 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
 
         self.hypergraph_gcn_propagation_units = [None] * self.model_settings["n_layers"]
         for layer in range(self.model_settings["n_layers"]):
-            self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer), self.model_settings["facts"],
-                                                                                        self.variables, self.model_settings["entity_dimension"],
-                                                                                        self.hypergraph)
+            self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
+                                                                                        self.model_settings["facts"],
+                                                                                        self.variables,
+                                                                                        self.model_settings["entity_dimension"],
+                                                                                        self.hypergraph,
+                                                                                        weights="identity",
+                                                                                        biases="relation_specific")
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
 
         if self.model_settings["use_transformation"]:
