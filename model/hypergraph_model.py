@@ -19,6 +19,8 @@ class HypergraphModel:
     discovered_entities = None
     discovered_events = None
 
+    entity_map = None
+
     def __init__(self):
         self.event_vertices = np.empty(0)
         self.entity_vertices = np.empty(0)

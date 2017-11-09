@@ -17,6 +17,8 @@ from facts.database_facts.freebase_facts import FreebaseFacts
 from grounding.json_to_candidate_neighborhood import CandidateNeighborhoodGenerator
 from preprocessing.read_json_files import JsonReader
 
+from indexing.lazy_indexer import LazyIndexer
+
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--file', type=str, help='The location of the .json-file to be parsed')
 parser.add_argument('--backend', type=str, help='The backend DB to use')
@@ -32,7 +34,6 @@ else:
     facts = CsvFacts("data/toy/toy.graph")
     database_interface = CsvInterface("data/toy/toy.graph")
     aux_iterator = ToyAdditionalGraphs()
-
 
 database = HypergraphInterface(database_interface, AllThroughExpansionStrategy(), HypergraphPropertyRetriever(VertexPropertyRetriever(database_interface)))
 sentence_reader = JsonReader(entity_prefix="http://rdf.freebase.com/ns/")

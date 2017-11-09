@@ -11,9 +11,11 @@ from database_interface.entity_cache_interface import EntityCacheInterface
 from database_interface.expansion_strategies.all_through_expansion_strategy import AllThroughExpansionStrategy
 from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
+from database_interface.indexed_interface import IndexedInterface
 from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
 from helpers.read_conll_files import ConllReader
+from indexing.lazy_indexer import LazyIndexer
 from model_construction.settings_reader import SettingsReader
 import itertools
 
@@ -62,6 +64,13 @@ class ModelBuilder:
             prefix = ""
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
+
+        en_i = LazyIndexer((500,500))
+        ev_i = LazyIndexer((500,500))
+        r_i = LazyIndexer((500,500))
+
+        database = IndexedInterface(database, en_i, ev_i, r_i)
+
         #database = EntityCacheInterface(database)
         disk_cache = self.settings["dataset"]["database"]["disk_cache"] if "disk_cache" in self.settings["dataset"]["database"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
