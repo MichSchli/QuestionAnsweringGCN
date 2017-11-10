@@ -15,6 +15,9 @@ from database_interface.indexed_interface import IndexedInterface
 from facts.database_facts.csv_facts import CsvFacts
 from facts.database_facts.freebase_facts import FreebaseFacts
 from helpers.read_conll_files import ConllReader
+from helpers.static import Static
+from indexing.freebase_indexer import FreebaseIndexer
+from indexing.glove_indexer import GloveIndexer
 from indexing.lazy_indexer import LazyIndexer
 from model_construction.settings_reader import SettingsReader
 import itertools
@@ -29,7 +32,6 @@ class ModelBuilder:
 
     def build(self, settings, version=None):
         self.settings = settings
-        #return self.create_model()
 
     def create_model(self):
         model_class = self.retrieve_class_name(self.settings["algorithm"]["model"]["stack_name"])
@@ -48,6 +50,8 @@ class ModelBuilder:
         return model
 
     def wrap_model(self, model):
+        static = Static()
+
         if "prefix" in self.settings["dataset"]["database"]:
             prefix = self.settings["dataset"]["database"]["prefix"]
         else:
@@ -57,19 +61,18 @@ class ModelBuilder:
             database_interface = FreebaseInterface()
             expansion_strategy = OnlyFreebaseExpansionStrategy()
             facts = FreebaseFacts()
+            entity_indexer = static.get_freebase_entity_indexer()
+            relation_indexer = static.get_freebase_relation_indexer()
         elif self.settings["dataset"]["database"]["endpoint"] == "csv":
             database_interface = CsvInterface(self.settings["dataset"]["database"]["file"])
             expansion_strategy = AllThroughExpansionStrategy()
             facts = CsvFacts(self.settings["dataset"]["database"]["file"])
             prefix = ""
+            entity_indexer = static.get_toy_entity_indexer()
+            relation_indexer = static.get_toy_relation_indexer()
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
-
-        en_i = LazyIndexer((500,500))
-        ev_i = LazyIndexer((500,500))
-        r_i = LazyIndexer((500,500))
-
-        database = IndexedInterface(database, en_i, ev_i, r_i)
+        database = IndexedInterface(database, entity_indexer, relation_indexer)
 
         #database = EntityCacheInterface(database)
         disk_cache = self.settings["dataset"]["database"]["disk_cache"] if "disk_cache" in self.settings["dataset"]["database"] else None

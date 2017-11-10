@@ -32,7 +32,7 @@ class AbstractTensorflowModel:
         self.components = []
         self.variables = TensorflowVariablesHolder()
 
-        self.initialize_indexers()
+        #self.initialize_indexers()
         self.initialize_preprocessors()
         self.initialize_graph()
 
@@ -115,13 +115,12 @@ class AbstractTensorflowModel:
     Heuristics:
     """
 
-
     def validate_example(self, example):
         candidates = example["neighborhood"].get_vertices(type="entities")
         target_vertices = example["gold_entities"]
         target_vertices_in_candidates = np.isin(target_vertices, candidates)
 
-        return target_vertices_in_candidates.all()
+        return target_vertices_in_candidates.any()
 
     """
     Interface:

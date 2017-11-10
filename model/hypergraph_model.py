@@ -20,6 +20,14 @@ class HypergraphModel:
     discovered_events = None
 
     entity_map = None
+    inverse_entity_map = None
+    name_edge_type =-1
+
+    def to_index(self, entity):
+        return self.inverse_entity_map[entity]
+
+    def from_index(self, index):
+        return self.entity_map[index]
 
     def __init__(self):
         self.event_vertices = np.empty(0)
@@ -44,7 +52,7 @@ class HypergraphModel:
             #if entities[0].startswith("http") and edge[1] == "http://www.w3.org/2000/01/rdf-schema#label":
             #    print(edge)
             #    sleep(0.5)
-            if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[0] in name_dict:
+            if edge[1] == self.name_edge_type and edge[0] in name_dict:
                 #print(edge)
                 names[name_dict[edge[0]]] = edge[2]
         #exit()
@@ -55,7 +63,7 @@ class HypergraphModel:
     def get_inverse_name_connections(self, names):
         vertices = {name: [] for name in names}
         for edge in self.entity_to_entity_edges:
-            if edge[1] == "http://www.w3.org/2000/01/rdf-schema#label" and edge[2] in names:
+            if edge[1] == self.name_edge_type and edge[2] in names:
                 vertices[edge[2]].append(edge[0])
         #print("vertices")
         #print(vertices)
@@ -184,10 +192,10 @@ class HypergraphModel:
     def get_vertices(self, type="entities", ignore_names=False):
         if type == "entities":
             if ignore_names and self.entity_to_entity_edges.shape[0] > 0:
-                name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] == "http://www.w3.org/2000/01/rdf-schema#label")]
+                name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] == self.name_edge_type)]
                 name_vertices = np.unique(name_edges[:,2])
 
-                non_name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != "http://www.w3.org/2000/01/rdf-schema#label")]
+                non_name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != self.name_edge_type)]
                 other_non_name_vertices = self.event_to_entity_edges[:,2]
                 more_non_name_vertices = self.entity_to_event_edges[:,0]
                 even_more_non_name_vertices = self.entity_to_entity_edges[:,0]
@@ -207,7 +215,7 @@ class HypergraphModel:
             return self.event_to_entity_edges
         elif sources == "entities" and targets == "entities":
             if ignore_names and self.entity_to_entity_edges.shape[0] > 0:
-                return self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != "http://www.w3.org/2000/01/rdf-schema#label")]
+                return self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != self.name_edge_type)]
 
             return self.entity_to_entity_edges
 

@@ -122,10 +122,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         #print(event_vertices)
         #print(entity_vertices)
 
-        vertex_map = self.entity_indexer.index(entity_vertices)
-
-        event_indexes = {k:v+event_start_index for v, k in enumerate(event_vertices)}
-        entity_indexes = {k:v+entity_start_index for v, k in enumerate(entity_vertices)}
+        vertex_map = entity_vertices
 
         #print(self.graph_counter)
         #print(entity_vertices[:3])
@@ -137,29 +134,23 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         n_entity_vertices = entity_vertices.shape[0]
 
         event_to_entity_edges = hypergraph.get_edges(sources="events", targets="entities")
-        event_to_entity_types = self.relation_indexer.index(event_to_entity_edges[:,1])
+        event_to_entity_types = event_to_entity_edges[:,1]
         entity_to_event_edges = hypergraph.get_edges(sources="entities", targets="events")
-        entity_to_event_types = self.relation_indexer.index(entity_to_event_edges[:,1])
+        entity_to_event_types = entity_to_event_edges[:,1]
         entity_to_entity_edges = hypergraph.get_edges(sources="entities", targets="entities", ignore_names=True)
-        entity_to_entity_types = self.relation_indexer.index(entity_to_entity_edges[:,1])
+        entity_to_entity_types = entity_to_entity_edges[:,1]
 
         ev_to_en_2 = np.empty((event_to_entity_edges.shape[0], 2))
+        ev_to_en_2[:,0] = event_to_entity_edges[:,0] + event_start_index
+        ev_to_en_2[:,1] = event_to_entity_edges[:,2] + entity_start_index
+
         en_to_ev_2 = np.empty((entity_to_event_edges.shape[0], 2))
+        en_to_ev_2[:,0] = entity_to_event_edges[:,0] + entity_start_index
+        en_to_ev_2[:,1] = entity_to_event_edges[:,2] + event_start_index
+
         en_to_en_2 = np.empty((entity_to_entity_edges.shape[0], 2))
-
-        for i, edge in enumerate(event_to_entity_edges):
-            ev_to_en_2[i][0] = event_indexes[edge[0]]
-            ev_to_en_2[i][1] = entity_indexes[edge[2]]
-
-        for i, edge in enumerate(entity_to_event_edges):
-            en_to_ev_2[i][0] = entity_indexes[edge[0]]
-            en_to_ev_2[i][1] = event_indexes[edge[2]]
-
-        for i, edge in enumerate(entity_to_entity_edges):
-            en_to_en_2[i][0] = entity_indexes[edge[0]]
-            en_to_en_2[i][1] = entity_indexes[edge[2]]
-
-        #print("Doner")
+        en_to_en_2[:,0] = entity_to_entity_edges[:,0] + entity_start_index
+        en_to_en_2[:,1] = entity_to_entity_edges[:,2] + entity_start_index
 
         self.graph_counter += 1
 

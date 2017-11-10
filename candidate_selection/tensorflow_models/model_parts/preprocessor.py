@@ -24,7 +24,7 @@ class PreprocessorPart:
             self.stack = self.hypergraph_batch_preprocessor
         elif preprocessor_type == "gold":
             self.stack = LookupMaskPreprocessor("neighborhood_input_model", "entity_vertex_matrix", "gold_entities",
-                                                   "gold_mask", self.stack)
+                                                   "gold_mask", self.stack, clean_dictionary=False, mode="train")
         elif preprocessor_type == "sentence":
             self.stack = SentencePreprocessor(self.word_indexer, "sentence", "question_sentence_input_model",
                                                      self.stack)
@@ -35,8 +35,8 @@ class PreprocessorPart:
         for preprocessor_type in self.preprocessor_types:
             self.initialize_preprocessor(preprocessor_type)
 
-    def process(self, batch):
-        return self.stack.process(batch)
+    def process(self, batch, mode="train"):
+        return self.stack.process(batch, mode)
 
     def retrieve_entities(self, graph_index, entity_index):
         return [self.hypergraph_batch_preprocessor.retrieve_entity_labels_in_batch(graph_index, entity_index)]

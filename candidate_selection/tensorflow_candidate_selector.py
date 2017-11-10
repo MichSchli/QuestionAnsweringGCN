@@ -75,6 +75,18 @@ class TensorflowCandidateSelector:
         if index != 0:
             yield {k:v[:index] for k,v in batch_dict.items()}
 
+    def project_gold(self, iterator):
+        for example in iterator:
+            candidates = example["neighborhood"].get_vertices(type="entities")
+            target_vertices = example["gold_entities"]
+            projected_target_vertices = [example["neighborhood"].to_index(e) for e in target_vertices]
+            target_vertices_in_candidates = np.isin(projected_target_vertices, candidates)
+
+            if target_vertices_in_candidates.any():
+                example["gold_entities"] = projected_target_vertices
+                yield example
+
+
     def project_from_name_wrapper(self, iterator):
         for example in iterator:
             names = example["gold_entities"]
@@ -103,13 +115,14 @@ class TensorflowCandidateSelector:
             Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_neighborhood_generator.enrich(epoch_iterator)
+            epoch_iterator = self.project_gold(epoch_iterator)
 
             if self.project_names:
                 epoch_iterator = self.project_from_name_wrapper(epoch_iterator)
 
-            batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
+            batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=False)
             for i,batch in enumerate(batch_iterator):
-                self.model.get_preprocessor().process(batch)
+                self.model.get_preprocessor().process(batch, mode="train")
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
                 result = self.sess.run([self.optimize_func, model_loss], feed_dict=assignment_dict)
@@ -123,36 +136,22 @@ class TensorflowCandidateSelector:
 
         if self.project_names:
             example_iterator = self.project_from_name_wrapper(example_iterator)
-        #batch_iterator = self.iterate_in_batches(epoch_iterator, batch_size=1)
-
         model_prediction = self.model.get_prediction_graph()
-        #model_loss = self.model.get_loss_graph()
-
         for example in example_iterator:
-            can_be_predicted = self.model.validate_example(example)
-            if not can_be_predicted:
-                #print("gold not in candidates")
-                yield []
-                continue
 
             as_batch = {k:[v] for k,v in example.items()}
-            self.model.get_preprocessor().process(as_batch)
+            self.model.get_preprocessor().process(as_batch, mode='predict')
 
             assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > 0.5)[0]
-                #best_predictions = [np.argmax(prediction)]
-                #print(best_predictions)
+                best_predictions = np.where(prediction[0] > 0.3)[0]
                 output = []
                 for prediction in best_predictions:
-                    output.extend(self.model.retrieve_entities(i,prediction))
+                    output.append(example["neighborhood"].from_index(prediction))
 
                 if self.project_names:
-                    #print("made prediction:")
-                    #print(output)
                     output = example["neighborhood"].get_name_connections(output)
-                    #print(output)
 
                 yield output
