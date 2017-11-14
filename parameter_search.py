@@ -1,10 +1,10 @@
 import argparse
 
 from evaluation.python_evaluator import Evaluator
+from experiment_construction.model_construction.validation_set_evaluator import ValidationSetEvaluator
 from helpers.logger import Logger
 from helpers.read_conll_files import ConllReader
 from helpers.static import Static
-from learning.validation_set_evaluator import ValidationSetEvaluator
 from model_construction.model_builder import ModelBuilder
 from model_construction.settings_reader import SettingsReader
 

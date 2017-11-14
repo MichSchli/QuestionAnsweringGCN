@@ -11,16 +11,25 @@ class ValidationSetEvaluator:
     max_epochs = None
     early_stopping = None
 
-    def __init__(self, inner, settings):
+    def __init__(self, inner, validation_file_location):
         self.inner = inner
-        self.validation_file_iterator = ConllReader(settings["dataset"]["location"]["valid_file"])
+        self.validation_file_iterator = ConllReader(validation_file_location)
         self.evaluator = Evaluator(self.validation_file_iterator)
 
-        self.max_epochs = int(settings["algorithm"]["training"]["max_epochs"])
-        self.epochs_between_tests = int(settings["algorithm"]["training"]["epochs_between_tests"])
-        self.early_stopping = True if settings["algorithm"]["training"]["early_stopping"] == "True" else False
+    def initialize(self):
+        self.inner.initialize()
 
-    def train(self, train_file_iterator):
+    def update_setting(self, setting_string, value):
+        if setting_string == "max_epochs":
+            self.max_epochs = int(value)
+        elif setting_string == "epochs_between_tests":
+            self.epochs_between_tests = int(value)
+        elif setting_string == "early_stopping":
+            self.early_stopping = True if value == "True" else False
+
+        self.inner.update_setting(setting_string, value)
+
+    def train_and_validate(self, train_file_iterator):
         epoch = 0
         best_performance = -1
         best_epoch = 0
@@ -42,5 +51,5 @@ class ValidationSetEvaluator:
                 break
 
         Static.logger.write("Stopped at epoch "+str(best_epoch)+" with performance "+str(best_performance), verbosity_priority=2)
-        return best_epoch, best_performance
+        return best_performance
 

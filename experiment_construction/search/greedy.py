@@ -62,13 +62,24 @@ class GreedySearch:
 
     def get_option_iterator(self, settings):
         first = True
+        all_options = []
+
+        stored_default = None
+
         for header, options in settings.items():
             for k, v in options.items():
                 options = [(header, k, option) for option in v.split(",")]
                 if first and len(options) > 1:
                     first = False
-                    yield options[0]
+                    all_options.append(options[0])
 
-                for option in options[1:]:
-                    yield option
+                all_options.extend(options[1:])
+                stored_default = options[0]
+
+        for option in all_options:
+            yield option
+
+        if len(all_options) == 0:
+            yield stored_default
+
         yield None

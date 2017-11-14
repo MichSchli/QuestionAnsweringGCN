@@ -62,7 +62,7 @@ class ModelBuilder:
             expansion_strategy = OnlyFreebaseExpansionStrategy()
             facts = FreebaseFacts()
             entity_indexer = static.get_freebase_entity_indexer()
-            relation_indexer = static.get_freebase_relation_indexer()
+            relation_indexer = Static.get_freebase_relation_indexer()
         elif self.settings["dataset"]["database"]["endpoint"] == "csv":
             database_interface = CsvInterface(self.settings["dataset"]["database"]["file"])
             expansion_strategy = AllThroughExpansionStrategy()

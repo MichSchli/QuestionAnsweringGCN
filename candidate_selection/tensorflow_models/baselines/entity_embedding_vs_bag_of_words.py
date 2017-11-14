@@ -36,13 +36,17 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
         self.add_component(self.decoder)
 
         if self.model_settings["use_transformation"]:
-            self.transformation = MultilayerPerceptron([self.model_settings["word_dimension"],
-                                                        self.model_settings["entity_dimension"]],
+            self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
+                                                        self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
                                                        variable_prefix="transformation")
             self.add_component(self.transformation)
 
-    def initialize_indexers(self):
+    def set_indexers(self, indexers):
+        self.word_indexer = indexers.word_indexer
+        self.entity_indexer = indexers.entity_indexer
+
+    def OLD_initialize_indexers(self):
         self.word_indexer = self.build_indexer(self.model_settings["word_embedding_type"], (40000, self.model_settings["word_dimension"]), self.model_settings["default_word_embedding"])
         self.entity_indexer = self.build_indexer(self.model_settings["entity_embedding_type"],
                                                  (self.model_settings["facts"].number_of_entities,

@@ -33,7 +33,7 @@ class AbstractTensorflowModel:
         self.variables = TensorflowVariablesHolder()
 
         #self.initialize_indexers()
-        self.initialize_preprocessors()
+        #self.initialize_preprocessors()
         self.initialize_graph()
 
     def add_component(self, component):
@@ -43,7 +43,10 @@ class AbstractTensorflowModel:
         for component in self.components:
             component.prepare_tensorflow_variables(mode=mode)
 
-    def initialize_preprocessors(self):
+    def set_preprocessor(self, preprocessor):
+        self.preprocessor = preprocessor
+
+    def OLD_initialize_preprocessors(self):
         preprocessor_stack_types = self.get_preprocessor_stack_types()
         preprocessor = PreprocessorPart(preprocessor_stack_types, self.word_indexer, self.entity_indexer,
                                         self.relation_indexer)
@@ -59,7 +62,7 @@ class AbstractTensorflowModel:
         if setting_string == "dimension":
             self.model_settings["entity_dimension"] = int(value)
             self.model_settings["word_dimension"] = int(value)
-        elif setting_string in ["word_dimension", "entity_dimension", "n_lstms", "n_layers"]:
+        elif setting_string in ["word_embedding_dimension", "entity_embedding_dimension", "relation_embedding_dimension", "n_lstms", "n_layers"]:
             self.model_settings[setting_string] = int(value)
         elif setting_string in ["static_entity_embeddings", "use_transformation"]:
             self.model_settings[setting_string] = True if value == "True" else False
