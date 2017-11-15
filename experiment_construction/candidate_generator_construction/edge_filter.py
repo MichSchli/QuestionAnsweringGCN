@@ -48,5 +48,5 @@ class EdgeFilter:
     def filter_edges(self, edges):
         counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
         filtered_edges = edges[np.where(counts > self.edge_count_cutoff)]
-        print("Discarded " + str(counts.shape[0] - filtered_edges.shape[0]) + " edges.")
+        print("Discarded " + str(counts.shape[0] - filtered_edges.shape[0]) + " of " + str(counts.shape[0]) + " edges.")
         return filtered_edges
