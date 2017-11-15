@@ -33,15 +33,15 @@ class EdgeFilter:
         for instance in instances:
             edges = instance["neighborhood"].entity_to_event_edges
             filtered_edges = self.filter_edges(edges)
-            instance["neighborhood"].entity_to_event_edges = filtered_edges
+            instance["neighborhood"].update_edges(filtered_edges, sources="entities", targets="events")
 
             edges = instance["neighborhood"].entity_to_entity_edges
             filtered_edges = self.filter_edges(edges)
-            instance["neighborhood"].entity_to_entity_edges = filtered_edges
+            instance["neighborhood"].update_edges(filtered_edges, sources="entities", targets="entities")
 
             edges = instance["neighborhood"].event_to_entity_edges
             filtered_edges = self.filter_edges(edges)
-            instance["neighborhood"].event_to_entity_edges = filtered_edges
+            instance["neighborhood"].update_edges(filtered_edges, sources="events", targets="entities")
 
             yield instance
 
