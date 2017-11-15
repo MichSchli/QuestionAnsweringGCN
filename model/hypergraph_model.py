@@ -204,7 +204,7 @@ class HypergraphModel:
         entity_vertices = np.concatenate((entity_vertices, self.entity_to_event_edges[:,0]))
         self.entity_vertices = np.unique(entity_vertices)
 
-        self.event_vertices = np.concatenate((self.event_to_entity_edges[:,0], self.entity_to_event_edges[:,2]))
+        self.event_vertices = np.unique(np.concatenate((self.event_to_entity_edges[:,0], self.entity_to_event_edges[:,2])))
 
     """
     Get all seen vertices of a given type.
