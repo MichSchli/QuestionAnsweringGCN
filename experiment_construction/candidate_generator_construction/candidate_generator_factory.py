@@ -6,6 +6,7 @@ from database_interface.expansion_strategies.all_through_expansion_strategy impo
 from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
 from database_interface.indexed_interface import IndexedInterface
+from experiment_construction.candidate_generator_construction.edge_filter import EdgeFilter
 
 
 class CandidateGeneratorFactory:
@@ -30,6 +31,13 @@ class CandidateGeneratorFactory:
         disk_cache = settings["endpoint"]["disk_cache"] if "disk_cache" in settings["endpoint"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
+
+        if "frequency_filter" in settings["endpoint"]:
+            candidate_generator = EdgeFilter(candidate_generator,
+                                             settings["endpoint"]["frequency_list"],
+                                             settings["endpoint"]["frequency_filter"],
+                                             relation_indexer=index.relation_indexer)
+
         if disk_cache:
             candidate_generator = CandidateGeneratorCache(candidate_generator, disk_cache=disk_cache)
 
