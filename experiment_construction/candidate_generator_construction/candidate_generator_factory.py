@@ -27,11 +27,13 @@ class CandidateGeneratorFactory:
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
         database = IndexedInterface(database, index.entity_indexer, index.relation_indexer)
-
-        disk_cache = settings["endpoint"]["disk_cache"] if "disk_cache" in settings["endpoint"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
-        print(settings["endpoint"])
+
+        disk_cache = settings["endpoint"]["disk_cache"] if "disk_cache" in settings["endpoint"] else None
+        if disk_cache:
+            candidate_generator = CandidateGeneratorCache(candidate_generator, disk_cache=disk_cache)
+
         if "frequency_filter" in settings["endpoint"]:
             print("haha")
             candidate_generator = EdgeFilter(candidate_generator,
@@ -39,7 +41,5 @@ class CandidateGeneratorFactory:
                                              settings["endpoint"]["frequency_filter"],
                                              relation_indexer=index.relation_indexer)
 
-        if disk_cache:
-            candidate_generator = CandidateGeneratorCache(candidate_generator, disk_cache=disk_cache)
 
         return candidate_generator
