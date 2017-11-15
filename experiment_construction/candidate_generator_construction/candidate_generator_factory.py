@@ -31,8 +31,9 @@ class CandidateGeneratorFactory:
         disk_cache = settings["endpoint"]["disk_cache"] if "disk_cache" in settings["endpoint"] else None
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
-
+        print(settings["endpoint"])
         if "frequency_filter" in settings["endpoint"]:
+            print("haha")
             candidate_generator = EdgeFilter(candidate_generator,
                                              settings["endpoint"]["frequency_list"],
                                              settings["endpoint"]["frequency_filter"],

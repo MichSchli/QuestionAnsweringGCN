@@ -15,7 +15,7 @@ class CandidateGeneratorCache:
             self.cache = {}
         else:
             self.disk_cache_file=disk_cache
-            self.cache = Cache(self.disk_cache_file, size_limit=2**40)
+            self.cache = Cache(self.disk_cache_file, size_limit=2**42)
 
     def enrich(self, instances):
         for instance in instances:
@@ -29,7 +29,9 @@ class CandidateGeneratorCache:
 
                 print(key in self.cache)
             else:
+                #print("retrieval")
                 instance["neighborhood"] = self.cache[key]
+                #print("retrieved")
 
             #print(instance)
             #instance["neighborhood"].get_edges_and_hyperedges(instance["mentioned_entities"], instance["gold_entities"])
