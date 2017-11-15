@@ -30,7 +30,7 @@ class DummyLearner:
     def train_and_validate(self, train_file):
         prediction = self.predict(self.validation_file_iterator)
         evaluation = self.evaluator.evaluate(prediction)
-        return evaluation.micro_f1
+        return None, evaluation.micro_f1
 
 
     def set_preprocessor(self, preprocessor):
