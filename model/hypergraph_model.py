@@ -186,6 +186,26 @@ class HypergraphModel:
         self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, new_entity_to_event_edges))
         self.event_to_entity_edges = np.concatenate((self.event_to_entity_edges, new_event_to_entity_edges))
 
+    def update_edges(self, edges, sources="entities", targets="events"):
+        if sources == "entities":
+            if targets == "events":
+                self.entity_to_event_edges = edges
+            else:
+                self.entity_to_entity_edges = edges
+        else:
+            self.event_to_entity_edges = edges
+
+        self.update_vertices()
+
+    def update_vertices(self):
+        non_name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != self.name_edge_type)]
+        entity_vertices = np.concatenate((non_name_edges[:,2], non_name_edges[:,0]))
+        entity_vertices = np.concatenate((entity_vertices, self.event_to_entity_edges[:,2]))
+        entity_vertices = np.concatenate((entity_vertices, self.entity_to_event_edges[:,0]))
+        self.entity_vertices = np.unique(entity_vertices)
+
+        self.event_vertices = np.concatenate((self.event_to_entity_edges[:,0], self.entity_to_event_edges[:,2]))
+
     """
     Get all seen vertices of a given type.
     """

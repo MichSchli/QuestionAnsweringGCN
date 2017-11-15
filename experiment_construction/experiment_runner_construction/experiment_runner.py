@@ -1,3 +1,4 @@
+from evaluation.python_evaluator import Evaluator
 from helpers.read_conll_files import ConllReader
 
 
@@ -11,5 +12,14 @@ class ExperimentRunner:
 
     def train_and_validate(self):
         self.learner.initialize()
-        performance = self.learner.train_and_validate(self.train_file_iterator)
-        return performance
+        best_epochs, performance = self.learner.train_and_validate(self.train_file_iterator)
+        return best_epochs, performance
+
+    def evaluate(self, file):
+        iterator = ConllReader(file)
+
+        predictions = self.learner.predict(iterator)
+        evaluator = Evaluator(ConllReader(file))
+
+        evaluation = evaluator.evaluate(predictions)
+        return evaluation.micro_f1
