@@ -29,6 +29,9 @@ class ValidationSetEvaluator:
 
         self.inner.update_setting(setting_string, value)
 
+    def predict(self, iterator):
+        return self.inner.predict(iterator)
+
     def train_and_validate(self, train_file_iterator):
         epoch = 0
         best_performance = -1
@@ -51,5 +54,5 @@ class ValidationSetEvaluator:
                 break
 
         Static.logger.write("Stopped at epoch "+str(best_epoch)+" with performance "+str(best_performance), verbosity_priority=2)
-        return best_performance
+        return best_epoch, best_performance
 

@@ -7,12 +7,14 @@ from experiment_construction.learner_construction.learner_factory import Learner
 from experiment_construction.preprocessor_construction.preprocessor_factory import PreprocessorFactory
 from experiment_construction.search.greedy import GreedySearch
 from experiment_construction.search.grid import GridSearch
-
+from helpers.static import Static
+import copy
 
 class ExperimentFactory:
 
     settings = None
     index_factory = None
+    latest_experiment_runner = None
 
     def __init__(self, settings):
         self.settings = settings
@@ -27,29 +29,55 @@ class ExperimentFactory:
         strategy = self.iterate_settings()
         next_configuration = strategy.next(None)
 
+        best_performance = -1
+        best_string = None
+        best_configuration = None
+
         while next_configuration is not None:
+            epochs, parameter_string, performance = self.train_and_validate(next_configuration)
 
-            config_items = []
-            for h,cfg in next_configuration.items():
-                for k,v in cfg.items():
-                    config_items.append(h+":"+k+"="+v)
-            parameter_string = ",".join(config_items)
-            print(parameter_string)
-
-            indexers = self.index_factory.construct_indexes(next_configuration)
-            preprocessors = self.preprocessor_factory.construct_preprocessor(indexers, next_configuration)
-            candidate_generator = self.candidate_generator_factory.construct_candidate_generator(indexers, next_configuration)
-            candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers, preprocessors, next_configuration)
-            learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector, next_configuration)
-            experiment_runner = self.experiment_runner_factory.construct_experiment_runner(preprocessors, learner, next_configuration)
-
-            performance = experiment_runner.train_and_validate()
-
-            print(performance)
+            if performance > best_performance:
+                best_performance = performance
+                best_string = parameter_string
+                best_configuration = copy.deepcopy(next_configuration)
+                best_configuration["training"]["max_epochs"] = str(epochs)
+                best_configuration["training"]["use_early_stopping"] = "False"
 
             previous_performance = performance
             next_configuration = strategy.next(previous_performance)
 
+        Static.logger.write("Parameter tuning done.", verbosity_priority=1)
+        Static.logger.write("Best setting: " + best_string, verbosity_priority=1)
+        Static.logger.write("Performance: " + str(best_performance), verbosity_priority=1)
+
+        return best_configuration
+
+    def train_and_validate(self, next_configuration):
+        config_items = []
+        for h, cfg in next_configuration.items():
+            for k, v in cfg.items():
+                config_items.append(h + ":" + k + "=" + v)
+        parameter_string = ", ".join(config_items)
+        Static.logger.write(parameter_string, verbosity_priority=2)
+        indexers = self.index_factory.construct_indexes(next_configuration)
+        preprocessors = self.preprocessor_factory.construct_preprocessor(indexers, next_configuration)
+        candidate_generator = self.candidate_generator_factory.construct_candidate_generator(indexers,
+                                                                                             next_configuration)
+        candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers, preprocessors,
+                                                                                          next_configuration)
+        learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector,
+                                                         next_configuration)
+        experiment_runner = self.experiment_runner_factory.construct_experiment_runner(preprocessors, learner,
+                                                                                       next_configuration)
+        best_epochs, performance = experiment_runner.train_and_validate()
+
+        self.latest_experiment_runner = experiment_runner
+        return best_epochs, parameter_string, performance
+
+    def evaluate(self, dataset_string):
+        Static.logger.write("Evaluating on \""+dataset_string+"\"...", verbosity_priority=1)
+        performance = self.latest_experiment_runner.evaluate(self.settings["dataset"][dataset_string])
+        Static.logger.write("Performance: " + str(performance), verbosity_priority=1)
 
     """
     Iterate all possible configurations of settings:

@@ -29,6 +29,11 @@ class EntityEmbeddingVsLstm(AbstractTensorflowModel):
             preprocessor_stack_types += ["static_entity_embeddings"]
         return preprocessor_stack_types
 
+
+    def set_indexers(self, indexers):
+        self.word_indexer = indexers.word_indexer
+        self.entity_indexer = indexers.entity_indexer
+
     def initialize_graph(self):
         if not self.model_settings["static_entity_embeddings"]:
             self.entity_embedding = VectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
@@ -40,12 +45,12 @@ class EntityEmbeddingVsLstm(AbstractTensorflowModel):
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         self.add_component(self.word_embedding)
 
-        self.lstms = [BiLstm(self.variables, self.model_settings["word_dimension"], variable_prefix="lstm_" + str(i)) for i in
+        self.lstms = [BiLstm(self.variables, self.model_settings["word_embedding_dimension"], variable_prefix="lstm_" + str(i)) for i in
                       range(self.model_settings["n_lstms"])]
         for lstm in self.lstms:
             self.add_component(lstm)
 
-        self.lstm_attention = BiLstm(self.variables, self.model_settings["word_dimension"], variable_prefix="lstm_attention")
+        self.lstm_attention = BiLstm(self.variables, self.model_settings["word_embedding_dimension"], variable_prefix="lstm_attention")
         self.add_component(self.lstm_attention)
 
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence")
@@ -55,14 +60,14 @@ class EntityEmbeddingVsLstm(AbstractTensorflowModel):
         self.add_component(self.decoder)
 
         if self.model_settings["use_transformation"]:
-            self.transformation = MultilayerPerceptron([self.model_settings["word_dimension"],
-                                                        self.model_settings["entity_dimension"]],
+            self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
+                                                        self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
                                                        variable_prefix="transformation")
             self.add_component(self.transformation)
 
 
-    def initialize_indexers(self):
+    def OLD_initialize_indexers(self):
         self.word_indexer = self.build_indexer(self.model_settings["word_embedding_type"], (40000, self.model_settings["word_dimension"]), self.model_settings["default_word_embedding"])
         self.entity_indexer = self.build_indexer(self.model_settings["entity_embedding_type"],
                                                  (self.model_settings["facts"].number_of_entities,
