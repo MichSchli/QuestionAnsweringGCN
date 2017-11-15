@@ -35,7 +35,6 @@ class CandidateGeneratorFactory:
             candidate_generator = CandidateGeneratorCache(candidate_generator, disk_cache=disk_cache)
 
         if "frequency_filter" in settings["endpoint"]:
-            print("haha")
             candidate_generator = EdgeFilter(candidate_generator,
                                              settings["endpoint"]["frequency_list"],
                                              int(settings["endpoint"]["frequency_filter"]),
