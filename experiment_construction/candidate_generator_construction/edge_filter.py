@@ -27,19 +27,23 @@ class EdgeFilter:
 
             self.edge_counts[edge_name] = int(edge_count)
 
-    def enrich(self, instance):
-        self.inner.enrich(instance)
-        edges = instance["neighborhood"].entity_to_event_edges
-        filtered_edges = self.filter_edges(edges)
-        instance["neighborhood"].entity_to_event_edges = filtered_edges
+    def enrich(self, instances):
+        instances = self.inner.enrich(instances)
 
-        edges = instance["neighborhood"].entity_to_entity_edges
-        filtered_edges = self.filter_edges(edges)
-        instance["neighborhood"].entity_to_entity_edges = filtered_edges
+        for instance in instances:
+            edges = instance["neighborhood"].entity_to_event_edges
+            filtered_edges = self.filter_edges(edges)
+            instance["neighborhood"].entity_to_event_edges = filtered_edges
 
-        edges = instance["neighborhood"].event_to_entity_edges
-        filtered_edges = self.filter_edges(edges)
-        instance["neighborhood"].event_to_entity_edges = filtered_edges
+            edges = instance["neighborhood"].entity_to_entity_edges
+            filtered_edges = self.filter_edges(edges)
+            instance["neighborhood"].entity_to_entity_edges = filtered_edges
+
+            edges = instance["neighborhood"].event_to_entity_edges
+            filtered_edges = self.filter_edges(edges)
+            instance["neighborhood"].event_to_entity_edges = filtered_edges
+
+            yield instance
 
     def filter_edges(self, edges):
         counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
