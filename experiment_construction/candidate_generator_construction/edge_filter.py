@@ -5,13 +5,15 @@ import numpy as np
 class EdgeFilter:
 
     edge_counts = None
+    edge_count_cutoff = None
     relation_indexer = None
 
-    def __init__(self, inner, edge_list_file, relation_indexer=None):
+    def __init__(self, inner, edge_list_file, edge_count_cutoff, relation_indexer=None):
         self.inner = inner
         self.edge_counts = defaultdict(int)
         self.load_edge_list(edge_list_file)
         self.relation_indexer = relation_indexer
+        self.edge_count_cutoff = edge_count_cutoff
 
     def load_edge_list(self, file):
         for line in open(file):
@@ -41,5 +43,5 @@ class EdgeFilter:
 
     def filter_edges(self, edges):
         counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
-        filtered_edges = edges[np.where(counts > self.edge_counts)]
+        filtered_edges = edges[np.where(counts > self.edge_count_cutoff)]
         return filtered_edges
