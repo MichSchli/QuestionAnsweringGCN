@@ -1,4 +1,5 @@
 from collections import defaultdict
+import numpy as np
 
 
 class EdgeFilter:
@@ -10,7 +11,7 @@ class EdgeFilter:
         self.inner = inner
         self.edge_counts = defaultdict(int)
         self.load_edge_list(edge_list_file)
-        self.relation_indexer = None
+        self.relation_indexer = relation_indexer
 
     def load_edge_list(self, file):
         for line in open(file):
@@ -23,5 +24,25 @@ class EdgeFilter:
                 edge_name = self.relation_indexer.index(edge_name)
 
             self.edge_counts[edge_name] = int(edge_count)
+
+    def enrich(self, instance):
+        self.inner.enrich(instance)
+        edges = instance["neighborhood"].entity_to_event_edges
+        filtered_edges = self.filter_edges(edges)
+        instance["neighborhood"].entity_to_event_edges = filtered_edges
+
+        edges = instance["neighborhood"].entity_to_entity_edges
+        filtered_edges = self.filter_edges(edges)
+        instance["neighborhood"].entity_to_entity_edges = filtered_edges
+
+        edges = instance["neighborhood"].event_to_entity_edges
+        filtered_edges = self.filter_edges(edges)
+        instance["neighborhood"].event_to_entity_edges = filtered_edges
+
+    def filter_edges(self, edges):
+        counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
+        filtered_edges = edges[np.where(counts > self.edge_counts)]
+        return filtered_edges
+
 
 EdgeFilter(None, "/home/michael/Projects/QuestionAnswering/GCNQA/data/webquestions/edge_count.txt")
