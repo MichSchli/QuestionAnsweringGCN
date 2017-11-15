@@ -38,7 +38,7 @@ class CandidateGeneratorFactory:
             print("haha")
             candidate_generator = EdgeFilter(candidate_generator,
                                              settings["endpoint"]["frequency_list"],
-                                             settings["endpoint"]["frequency_filter"],
+                                             int(settings["endpoint"]["frequency_filter"]),
                                              relation_indexer=index.relation_indexer)
 
 
