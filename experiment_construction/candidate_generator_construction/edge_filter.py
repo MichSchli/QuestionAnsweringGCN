@@ -43,6 +43,3 @@ class EdgeFilter:
         counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
         filtered_edges = edges[np.where(counts > self.edge_counts)]
         return filtered_edges
-
-
-EdgeFilter(None, "/home/michael/Projects/QuestionAnswering/GCNQA/data/webquestions/edge_count.txt")
