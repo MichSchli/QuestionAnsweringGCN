@@ -11,8 +11,8 @@ class EdgeFilter:
     def __init__(self, inner, edge_list_file, edge_count_cutoff, relation_indexer=None):
         self.inner = inner
         self.edge_counts = defaultdict(int)
-        self.load_edge_list(edge_list_file)
         self.relation_indexer = relation_indexer
+        self.load_edge_list(edge_list_file)
         self.edge_count_cutoff = edge_count_cutoff
 
     def load_edge_list(self, file):
@@ -23,7 +23,7 @@ class EdgeFilter:
             edge_count = int(parts[0])
 
             if self.relation_indexer is not None:
-                edge_name = self.relation_indexer.index(edge_name)
+                edge_name = self.relation_indexer.index_single_element(edge_name)
 
             self.edge_counts[edge_name] = int(edge_count)
 
