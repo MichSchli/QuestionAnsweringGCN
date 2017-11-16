@@ -202,7 +202,7 @@ class HypergraphModel:
         self.update_vertices()
 
     def set_centroids(self, entities):
-        self.centroids = entities
+        self.centroids = np.array(entities)
 
     def update_vertices(self):
         visited_v = self.centroids
