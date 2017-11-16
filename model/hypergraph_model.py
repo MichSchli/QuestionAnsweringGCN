@@ -226,6 +226,14 @@ class HypergraphModel:
             frontier = all_v[np.isin(all_v, visited_v, assume_unique=True, invert=True)]
             visited_v = np.concatenate((visited_v, frontier))
 
+        print("\n+++++++\n")
+        print(self.entity_vertices.shape)
+        print(self.event_vertices.shape)
+        print(self.entity_to_entity_edges.shape)
+        print(self.entity_to_event_edges.shape)
+        print(self.event_to_entity_edges.shape)
+
+        print("------")
         self.entity_vertices = visited_v
         self.event_vertices = visited_v
 
@@ -237,6 +245,12 @@ class HypergraphModel:
 
         self.event_to_entity_edges = self.event_to_entity_edges[np.logical_or(np.isin(self.event_to_entity_edges[:,0], visited_e),
                                                                               np.isin(self.event_to_entity_edges[:,2], visited_v))]
+
+        print(self.entity_vertices.shape)
+        print(self.event_vertices.shape)
+        print(self.entity_to_entity_edges.shape)
+        print(self.entity_to_event_edges.shape)
+        print(self.event_to_entity_edges.shape)
 
     """
     Get all seen vertices of a given type.
