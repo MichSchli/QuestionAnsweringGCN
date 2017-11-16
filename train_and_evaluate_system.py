@@ -3,7 +3,7 @@ import argparse
 from experiment_construction.experiment_factory import ExperimentFactory
 from helpers.logger import Logger
 from helpers.static import Static
-from model_construction.settings_reader import SettingsReader
+from experiment_construction.settings_reader import SettingsReader
 
 parser = argparse.ArgumentParser(description='Yields pairs of prediction from a strategy and gold to stdout.')
 parser.add_argument('--configuration', type=str, help='The location of the configurations file')
