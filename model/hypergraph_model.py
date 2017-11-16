@@ -209,6 +209,10 @@ class HypergraphModel:
         visited_e = np.array([], dtype=np.int32)
         frontier = self.centroids
 
+        print(frontier)
+        print(frontier.shape)
+        print(frontier.shape[0] > 0)
+
         while frontier.shape[0] > 0:
             outgoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,0], self.centroids)][:,2]
             ingoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,2], self.centroids)][:,0]
