@@ -23,6 +23,8 @@ class HypergraphModel:
     inverse_entity_map = None
     name_edge_type =-1
 
+    centroids = None
+
     def to_index(self, entity):
         return self.inverse_entity_map[entity]
 
@@ -186,6 +188,8 @@ class HypergraphModel:
         self.entity_to_event_edges = np.concatenate((self.entity_to_event_edges, new_entity_to_event_edges))
         self.event_to_entity_edges = np.concatenate((self.event_to_entity_edges, new_event_to_entity_edges))
 
+        self.centroids = np.unique(np.concatenate((self.centroids, other.centroids)))
+
     def update_edges(self, edges, sources="entities", targets="events"):
         if sources == "entities":
             if targets == "events":
@@ -197,14 +201,42 @@ class HypergraphModel:
 
         self.update_vertices()
 
-    def update_vertices(self):
-        non_name_edges = self.entity_to_entity_edges[np.where(self.entity_to_entity_edges[:,1] != self.name_edge_type)]
-        entity_vertices = np.concatenate((non_name_edges[:,2], non_name_edges[:,0]))
-        entity_vertices = np.concatenate((entity_vertices, self.event_to_entity_edges[:,2]))
-        entity_vertices = np.concatenate((entity_vertices, self.entity_to_event_edges[:,0]))
-        self.entity_vertices = np.unique(entity_vertices)
+    def set_centroids(self, entities):
+        self.centroids = entities
 
-        self.event_vertices = np.unique(np.concatenate((self.event_to_entity_edges[:,0], self.entity_to_event_edges[:,2])))
+    def update_vertices(self):
+        visited_v = self.centroids
+        visited_e = np.array([], dtype=np.int32)
+        frontier = self.centroids
+
+        while frontier.shape[0] > 0:
+            outgoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,0], self.centroids)][:,2]
+            ingoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,2], self.centroids)][:,0]
+
+            outgoing_e = self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:,0], self.centroids)][:,2]
+            ingoing_e = self.event_to_entity_edges[np.isin(self.entity_to_event_edges[:,2], self.centroids)][:,0]
+
+            all_e = np.unique(np.conatenate(outgoing_e, ingoing_e))
+            visited_e = np.unique(np.concatenate((visited_e, all_e)))
+
+            ingoing_e_v = self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:,2], all_e)][:,0]
+            outgoing_e_v = self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:,0], all_e)][:,2]
+
+            all_v = np.unique(np.concatenate((outgoing_v, ingoing_v, outgoing_e_v, ingoing_e_v)))
+            frontier = all_v[np.isin(all_v, visited_v, assume_unique=True, invert=True)]
+            visited_v = np.concatenate((visited_v, frontier))
+
+        self.entity_vertices = visited_v
+        self.event_vertices = visited_v
+
+        self.entity_to_entity_edges = self.entity_to_entity_edges[np.logical_or(np.isin(self.entity_to_entity_edges[:,0], visited_v),
+                                                                                np.isin(self.entity_to_entity_edges[:,2], visited_v))]
+
+        self.entity_to_event_edges = self.entity_to_event_edges[np.logical_or(np.isin(self.entity_to_event_edges[:,0], visited_v),
+                                                                                np.isin(self.entity_to_event_edges[:,2], visited_e))]
+
+        self.event_to_entity_edges = self.event_to_entity_edges[np.logical_or(np.isin(self.event_to_entity_edges[:,0], visited_e),
+                                                                              np.isin(self.event_to_entity_edges[:,2], visited_v))]
 
     """
     Get all seen vertices of a given type.
