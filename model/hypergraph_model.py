@@ -214,7 +214,7 @@ class HypergraphModel:
             ingoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,2], self.centroids)][:,0]
 
             outgoing_e = self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:,0], self.centroids)][:,2]
-            ingoing_e = self.event_to_entity_edges[np.isin(self.entity_to_event_edges[:,2], self.centroids)][:,0]
+            ingoing_e = self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:,2], self.centroids)][:,0]
 
             all_e = np.unique(np.conatenate(outgoing_e, ingoing_e))
             visited_e = np.unique(np.concatenate((visited_e, all_e)))
