@@ -253,7 +253,7 @@ class HypergraphModel:
 
         print(self.entity_vertices)
         print(self.entity_vertices.shape)
-        exit()
+        sleep(10)
 
         print(self.entity_vertices.shape)
         print(self.event_vertices.shape)
