@@ -204,6 +204,7 @@ class HypergraphModel:
 
     def update_vertices(self):
         visited_v = self.centroids
+        print(self.centroids)
         visited_e = np.array([], dtype=np.int32)
         frontier = self.centroids
 
