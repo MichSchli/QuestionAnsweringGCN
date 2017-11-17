@@ -28,6 +28,9 @@ class HypergraphModel:
     def to_index(self, entity):
         return self.inverse_entity_map[entity]
 
+    def has_index(self, entity):
+        return entity in self.inverse_entity_map
+
     def from_index(self, index):
         return self.entity_map[index]
 

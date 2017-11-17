@@ -74,10 +74,10 @@ class TensorflowModel:
         for example in iterator:
             candidates = example["neighborhood"].get_vertices(type="entities")
             target_vertices = example["gold_entities"]
-            projected_target_vertices = [example["neighborhood"].to_index(e) for e in target_vertices]
-            target_vertices_in_candidates = np.isin(projected_target_vertices, candidates)
+            projected_target_vertices = np.array([example["neighborhood"].to_index(e) for e in target_vertices if example["neighborhood"].has_index(e)])
+            #target_vertices_in_candidates = np.isin(projected_target_vertices, candidates)
 
-            if target_vertices_in_candidates.any():
+            if projected_target_vertices.shape[0] > 0:
                 example["gold_entities"] = projected_target_vertices
                 yield example
 
