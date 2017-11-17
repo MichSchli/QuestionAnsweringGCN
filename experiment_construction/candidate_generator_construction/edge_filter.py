@@ -43,6 +43,8 @@ class EdgeFilter:
             filtered_edges = self.filter_edges(edges)
             instance["neighborhood"].update_edges(filtered_edges, sources="events", targets="entities")
 
+            #instance["neighborhood"].update_vertices()
+
             yield instance
 
     def filter_edges(self, edges):

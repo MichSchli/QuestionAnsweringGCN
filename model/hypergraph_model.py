@@ -199,8 +199,6 @@ class HypergraphModel:
         else:
             self.event_to_entity_edges = edges
 
-        self.update_vertices()
-
     def set_centroids(self, entities):
         self.centroids = np.array(entities)
 
