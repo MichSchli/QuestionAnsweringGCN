@@ -212,6 +212,7 @@ class HypergraphModel:
         print(frontier.shape[0] > 0)
 
         while frontier.shape[0] > 0:
+            print("iteration")
             outgoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,0], self.centroids)][:,2]
             ingoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,2], self.centroids)][:,0]
 
