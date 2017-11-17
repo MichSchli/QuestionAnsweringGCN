@@ -239,8 +239,8 @@ class HypergraphModel:
         print(self.entity_vertices)
 
         print("------")
-        self.entity_vertices = visited_v
-        self.event_vertices = visited_v
+        self.entity_vertices = self.entity_vertices[visited_v]
+        self.event_vertices = self.event_vertices[visited_e]
 
         self.entity_to_entity_edges = self.entity_to_entity_edges[np.logical_or(np.isin(self.entity_to_entity_edges[:,0], visited_v),
                                                                                 np.isin(self.entity_to_entity_edges[:,2], visited_v))]
