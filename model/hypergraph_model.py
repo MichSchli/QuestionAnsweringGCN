@@ -253,13 +253,12 @@ class HypergraphModel:
 
         print(self.entity_vertices)
         print(self.entity_vertices.shape)
-        sleep(10)
 
-        print(self.entity_vertices.shape)
         print(self.event_vertices.shape)
         print(self.entity_to_entity_edges.shape)
         print(self.entity_to_event_edges.shape)
         print(self.event_to_entity_edges.shape)
+        sleep(10)
 
     """
     Get all seen vertices of a given type.

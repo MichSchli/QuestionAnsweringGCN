@@ -31,6 +31,10 @@ class EdgeFilter:
         instances = self.inner.enrich(instances)
 
         for instance in instances:
+            print("FIRST")
+            instance["neighborhood"].update_vertices()
+            print("SECOND")
+
             edges = instance["neighborhood"].entity_to_event_edges
             filtered_edges = self.filter_edges(edges)
             instance["neighborhood"].update_edges(filtered_edges, sources="entities", targets="events")
