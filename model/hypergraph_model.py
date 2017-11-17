@@ -207,17 +207,9 @@ class HypergraphModel:
         visited_e = np.array([], dtype=np.int32)
         frontier = self.centroids
 
-        print(frontier)
-        print(frontier.shape)
-        print(frontier.shape[0] > 0)
-
         while frontier.shape[0] > 0:
-            print("iteration")
             outgoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,0], frontier)][:,2]
             ingoing_v = self.entity_to_entity_edges[np.isin(self.entity_to_entity_edges[:,2], frontier)][:,0]
-
-            print(outgoing_v.shape[0])
-            print(ingoing_v.shape[0])
 
             outgoing_e = self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:,0], frontier)][:,2]
             ingoing_e = self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:,2], frontier)][:,0]
@@ -230,19 +222,8 @@ class HypergraphModel:
 
             all_v = np.unique(np.concatenate((outgoing_v, ingoing_v, outgoing_e_v, ingoing_e_v)))
             frontier = all_v[np.isin(all_v, visited_v, assume_unique=True, invert=True)]
-            print(frontier.shape[0])
             visited_v = np.concatenate((visited_v, frontier))
 
-        print("\n+++++++\n")
-        print(self.entity_vertices.shape)
-        print(self.event_vertices.shape)
-        print(self.entity_to_entity_edges.shape)
-        print(self.entity_to_event_edges.shape)
-        print(self.event_to_entity_edges.shape)
-
-        print(self.entity_vertices)
-
-        print("------")
         self.entity_vertices = self.entity_vertices[visited_v]
         self.event_vertices = self.event_vertices[visited_e]
 
@@ -255,14 +236,7 @@ class HypergraphModel:
         self.event_to_entity_edges = self.event_to_entity_edges[np.logical_or(np.isin(self.event_to_entity_edges[:,0], visited_e),
                                                                               np.isin(self.event_to_entity_edges[:,2], visited_v))]
 
-        print(self.entity_vertices)
-        print(self.entity_vertices.shape)
 
-        print(self.event_vertices.shape)
-        print(self.entity_to_entity_edges.shape)
-        print(self.entity_to_event_edges.shape)
-        print(self.event_to_entity_edges.shape)
-        sleep(10)
 
     """
     Get all seen vertices of a given type.
