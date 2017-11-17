@@ -224,6 +224,8 @@ class HypergraphModel:
             frontier = all_v[np.isin(all_v, visited_v, assume_unique=True, invert=True)]
             visited_v = np.concatenate((visited_v, frontier))
 
+        print(visited_v)
+        print(visited_v.shape)
         self.entity_vertices = self.entity_vertices[visited_v]
         self.event_vertices = self.event_vertices[visited_e]
 
