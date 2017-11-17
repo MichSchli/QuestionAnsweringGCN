@@ -123,6 +123,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         #print(entity_vertices)
 
         vertex_map = entity_vertices
+        print(np.max(vertex_map))
 
         #print(self.graph_counter)
         #print(entity_vertices[:3])
