@@ -81,7 +81,6 @@ class TensorflowModel:
                 example["gold_entities"] = projected_target_vertices
                 yield example
 
-
     def project_from_name_wrapper(self, iterator):
         for example in iterator:
             names = example["gold_entities"]
