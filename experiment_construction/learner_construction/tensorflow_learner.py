@@ -115,7 +115,7 @@ class TensorflowModel:
             if self.project_names:
                 epoch_iterator = self.project_from_name_wrapper(epoch_iterator)
 
-            batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=False)
+            batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=True)
             for i,batch in enumerate(batch_iterator):
                 self.preprocessor.process(batch, mode="train")
 
