@@ -251,6 +251,7 @@ class HypergraphModel:
                                                                               np.isin(self.event_to_entity_edges[:,2], visited_v))]
 
         print(self.entity_vertices)
+        print(self.entity_vertices.shape)
         exit()
 
         print(self.entity_vertices.shape)
