@@ -107,6 +107,7 @@ class HypergraphModel:
         self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
         self.entity_to_entity_edges = np.array(non_name_edges)
         self.centroids = np.array(non_name_vertices[c] for c in self.centroids)
+        print(self.centroids)
 
 
     def make_type_map(self):
