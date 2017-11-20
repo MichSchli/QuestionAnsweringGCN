@@ -91,15 +91,22 @@ class HypergraphModel:
 
                 non_name_edges.append([non_name_vertices[edge[0]], edge[1], non_name_vertices[edge[2]]])
 
-        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), np.array(name_dict.values()))
-        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
-        self.entity_to_entity_edges = np.array(non_name_edges)
-
         for i,edge in enumerate(self.entity_to_event_edges):
+            if edge[0] not in non_name_vertices:
+                non_name_vertices[edge[0]] = non_name_counter
+                non_name_counter += 1
             self.entity_to_event_edges[i][0] = non_name_vertices[edge[0]]
 
         for i,edge in enumerate(self.event_to_entity_edges):
+            if edge[2] not in non_name_vertices:
+                non_name_vertices[edge[2]] = non_name_counter
+                non_name_counter += 1
             self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
+
+
+        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), np.array(name_dict.values()))
+        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
+        self.entity_to_entity_edges = np.array(non_name_edges)
 
 
     def make_type_map(self):
