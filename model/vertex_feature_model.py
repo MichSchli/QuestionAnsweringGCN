@@ -5,7 +5,9 @@ class VertexFeatureModel:
 
     features = None
     feature_map = None
+    feature_projection = None
 
     def set_map(self, features, map):
         self.feature_map = map
+        self.feature_projection = np.array(features.items())
         self.features = features

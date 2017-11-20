@@ -103,7 +103,7 @@ class HypergraphModel:
                 non_name_counter += 1
             self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
 
-        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), np.array(name_dict.values()))
+        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), name_dict)
         self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
         self.entity_to_entity_edges = np.array(non_name_edges)
         self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
@@ -120,6 +120,7 @@ class HypergraphModel:
 
 
     def get_name_connections(self, entities):
+        return self.name_map.project(entities)
         print(entities)
         name_dict = {k:i for i,k in enumerate(entities)}
         names = np.array(entities)
