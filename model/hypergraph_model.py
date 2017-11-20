@@ -144,6 +144,7 @@ class HypergraphModel:
         return names #{n[0]:np.unique(n[1]) for n in names.items()}
 
     def get_inverse_name_connections(self, names):
+        return self.name_map.inverse_project(names)
         vertices = {name: [] for name in names}
         for edge in self.entity_to_entity_edges:
             if edge[1] == self.name_edge_type and edge[2] in names:
