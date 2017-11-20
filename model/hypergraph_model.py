@@ -206,8 +206,8 @@ class HypergraphModel:
         self.centroids = np.array(entities)
 
     def update_vertices(self):
-        print("update")
-        print(np.max(self.entity_vertices))
+        #print("update")
+        #print(np.max(self.entity_vertices))
         if self.centroids.shape[0] == 0:
             return
 
@@ -262,8 +262,12 @@ class HypergraphModel:
                 non_name_vertices = np.unique(np.concatenate((non_name_edges[:,2], other_non_name_vertices, more_non_name_vertices, even_more_non_name_vertices)))
                 name_vertices = name_vertices[np.isin(name_vertices, non_name_vertices, assume_unique=True, invert=True)]
 
-                print("heyo")
-                print(np.max(self.entity_vertices))
+                #print("heyo")
+                #print(np.max(self.entity_vertices))
+                if self.entity_vertices.shape[0] == 0:
+                    print(self.entity_vertices)
+                    print(self.entity_to_entity_edges)
+                    exit()
 
                 return self.entity_vertices[np.isin(self.entity_vertices, name_vertices, assume_unique=True, invert=True)]
 
