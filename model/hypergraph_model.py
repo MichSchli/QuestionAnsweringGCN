@@ -3,6 +3,8 @@ from time import sleep
 import numpy
 import numpy as np
 
+from model.vertex_feature_model import VertexFeatureModel
+
 
 class HypergraphModel:
 
@@ -21,9 +23,12 @@ class HypergraphModel:
 
     entity_map = None
     inverse_entity_map = None
-    name_edge_type =-1
+    name_edge_type = -1
+    type_edge_type = -1
 
     centroids = None
+
+    name_map = None
 
     def to_index(self, entity):
         return self.inverse_entity_map[entity]
@@ -47,6 +52,58 @@ class HypergraphModel:
 
         self.discovered_entities = np.empty(0)
         self.discovered_events = np.empty(0)
+
+    def make_name_map(self):
+        non_name_vertices = {}
+        non_name_edges = []
+        name_vertices = {}
+
+        non_name_counter = 0
+        name_counter = 0
+
+        self.name_map = VertexFeatureModel()
+        name_dict = {}
+
+        for edge in self.entity_to_entity_edges:
+            if edge[1] == self.name_edge_type:
+                if edge[0] in name_vertices:
+                    print("FOUND PROBLEM")
+                    print(edge[0])
+                    exit()
+
+                if edge[0] not in non_name_vertices:
+                    non_name_vertices[edge[0]] = non_name_counter
+                    non_name_counter += 1
+
+                if edge[2] not in name_vertices:
+                    name_vertices[edge[2]] = name_counter
+                    name_counter += 1
+
+                name_dict[non_name_vertices[edge[0]]] = name_vertices[edge[2]]
+            else:
+                if edge[0] not in non_name_vertices:
+                    non_name_vertices[edge[0]] = non_name_counter
+                    non_name_counter += 1
+
+                if edge[2] not in non_name_vertices:
+                    non_name_vertices[edge[2]] = non_name_counter
+                    non_name_counter += 1
+
+                non_name_edges.append(edge)
+
+        self.name_map.set_map(np.array(name_vertices), np.array(name_dict.values()))
+        self.entity_vertices = np.array(non_name_vertices)
+        self.entity_to_entity_edges = np.array(non_name_edges)
+
+    def make_type_map(self):
+        self.type_map = VertexFeatureModel()
+        type_dict = {}
+
+        for edge in self.entity_to_entity_edges:
+            if edge[1] == self.type_edge_type:
+                type_dict[edge[0]] = edge[2]
+
+        self.name_map.set_map(np.array(type_dict.values()))
 
 
     def get_name_connections(self, entities):
