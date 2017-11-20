@@ -95,7 +95,12 @@ class HypergraphModel:
         self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
         self.entity_to_entity_edges = np.array(non_name_edges)
 
-        # TODO REMOVE E TO EV
+        for i,edge in enumerate(self.entity_to_event_edges):
+            self.entity_to_event_edges[i][0] = non_name_vertices[edge[0]]
+
+        for i,edge in enumerate(self.event_to_entity_edges):
+            self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
+
 
     def make_type_map(self):
         self.type_map = VertexFeatureModel()
