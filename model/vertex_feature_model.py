@@ -11,3 +11,6 @@ class VertexFeatureModel:
         self.feature_map = map
         self.feature_projection = np.array(features.items())
         self.features = features
+
+    def project(self, keys):
+        return np.array([self.feature_map[k] for k in keys])
