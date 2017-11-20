@@ -68,7 +68,7 @@ class HypergraphModel:
             if edge[1] == self.name_edge_type:
                 if edge[0] in name_vertices:
                     print("FOUND PROBLEM")
-                    print(edge[0])
+                    print(edge)
                     exit()
 
                 if edge[0] not in non_name_vertices:
@@ -89,11 +89,13 @@ class HypergraphModel:
                     non_name_vertices[edge[2]] = non_name_counter
                     non_name_counter += 1
 
-                non_name_edges.append(edge)
+                non_name_edges.append([non_name_vertices[edge[0]], edge[1], non_name_vertices[edge[2]]])
 
-        self.name_map.set_map(np.array(name_vertices), np.array(name_dict.values()))
-        self.entity_vertices = np.array(non_name_vertices)
+        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), np.array(name_dict.values()))
+        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
         self.entity_to_entity_edges = np.array(non_name_edges)
+
+        # TODO REMOVE E TO EV
 
     def make_type_map(self):
         self.type_map = VertexFeatureModel()
