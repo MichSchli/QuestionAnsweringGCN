@@ -103,13 +103,15 @@ class HypergraphModel:
                 non_name_counter += 1
             self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
 
-        self.name_map.set_map(np.array(sorted(name_vertices.keys(), key=lambda k: name_vertices[k])), name_dict)
-        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
-        self.entity_to_entity_edges = np.array(non_name_edges)
-        self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
 
         new_entity_map = {non_name_vertices[k]:v for k,v in self.entity_map.items() if k in non_name_vertices}
         new_inverse_entity_map = {k:non_name_vertices[v] for k,v in self.inverse_entity_map.items() if v in non_name_vertices}
+        name_map_map = {self.entity_map[k]:v for k,v in name_vertices.items()}
+
+        self.name_map.set_map(np.array(sorted(name_map_map.keys(), key=lambda k: name_vertices[k])), name_dict)
+        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
+        self.entity_to_entity_edges = np.array(non_name_edges)
+        self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
 
         self.entity_map = new_entity_map
         self.inverse_entity_map = new_inverse_entity_map
