@@ -96,6 +96,10 @@ class TensorflowModel:
                 else:
                     gold_list.append(name)
 
+            # TODO CHECK SOMEWHERE ELSE
+            if len(gold_list) == 0:
+                continue
+
             gold_list = np.array(gold_list).astype(np.int32)
             print(example["neighborhood"].entity_vertices.shape[0])
             print("Swapping " + str(example["gold_entities"]) + " for " + str(gold_list))
