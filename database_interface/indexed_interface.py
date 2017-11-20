@@ -23,6 +23,7 @@ class IndexedInterface:
         hypergraph.event_vertices = np.arange(hypergraph.event_vertices.shape[0])
         hypergraph.entity_vertices = self.entity_indexer.index(hypergraph.entity_vertices)
 
+
         hypergraph.event_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.event_to_entity_edges[:,1])
         hypergraph.entity_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_entity_edges[:,1])
         hypergraph.entity_to_event_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_event_edges[:,1])

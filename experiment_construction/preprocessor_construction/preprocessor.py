@@ -10,6 +10,7 @@ class Preprocessor:
     hypergraph_batch_preprocessor = None
 
     def process(self, batch, mode="train"):
+        print("prep")
         return self.stack.process(batch, mode)
 
     def retrieve_entities(self, graph_index, entity_index):
