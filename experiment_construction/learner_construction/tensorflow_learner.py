@@ -111,7 +111,7 @@ class TensorflowModel:
             Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)
-            epoch_iterator = self.project_gold(epoch_iterator)
+            #epoch_iterator = self.project_gold(epoch_iterator)
 
             if self.project_names:
                 epoch_iterator = self.project_from_name_wrapper(epoch_iterator)
