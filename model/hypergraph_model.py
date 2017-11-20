@@ -108,6 +108,12 @@ class HypergraphModel:
         self.entity_to_entity_edges = np.array(non_name_edges)
         self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
 
+        new_entity_map = {non_name_vertices[k]:v for k,v in self.entity_map.items()}
+        new_inverse_entity_mape = {k:non_name_vertices[v] for k,v in self.inverse_entity_map.items()}
+
+        self.entity_map = new_entity_map
+        self.inverse_entity_map = new_inverse_entity_mape
+
     def make_type_map(self):
         self.type_map = VertexFeatureModel()
         type_dict = {}
