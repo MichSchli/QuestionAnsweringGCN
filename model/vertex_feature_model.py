@@ -13,7 +13,10 @@ class VertexFeatureModel:
         self.features = features
 
     def project(self, keys):
-        return np.array([self.feature_map[k] for k in keys])
+        for k in keys:
+            if k not in self.feature_map:
+                print("RETRIEVAL_ERROR")
+        return np.array([self.feature_map[k] if k in self.feature_map else "RETRIEVAL_ERROR" for k in keys])
 
     def inverse_project(self, features):
         vertices = {feature: [] for feature in features}
@@ -22,5 +25,5 @@ class VertexFeatureModel:
                 vertices[self.features[edge[1]]].append(edge[0])
 
         vertices = {n[0]: np.unique(n[1]) for n in vertices.items()}
-        print(vertices)
+        #print(vertices)
         return vertices

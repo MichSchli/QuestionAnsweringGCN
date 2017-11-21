@@ -27,7 +27,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         self.clean_dictionary = clean_dictionary
 
     def process(self, batch_dictionary, mode="train"):
-        print("preprocessing...")
+        #print("preprocessing...")
         if self.next_preprocessor is not None:
             self.next_preprocessor.process(batch_dictionary, mode=mode)
 
@@ -52,7 +52,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         event_start_index = 0
         entity_start_index = 0
         for i,hypergraph in enumerate(hypergraph_batch):
-            print("Element started")
+            #print("Element started")
             phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
             vertex_list_slices[i][0] = phg[0]
             vertex_list_slices[i][1] = phg[1]
@@ -80,7 +80,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
 
         #print(entity_vertex_slices)
         #print(entity_vertex_matrix.shape)
-        print(np.max(entity_map))
+        #print(np.max(entity_map))
 
         n_entities = np.max(entity_vertex_matrix)
         n_events = np.sum(vertex_list_slices[:,0])

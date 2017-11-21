@@ -77,8 +77,8 @@ class TensorflowModel:
             projected_target_vertices = np.array([example["neighborhood"].to_index(e) for e in target_vertices if example["neighborhood"].has_index(e)])
             #target_vertices_in_candidates = np.isin(projected_target_vertices, candidates)
 
-            print(projected_target_vertices.shape[0])
-            print(projected_target_vertices)
+            #print(projected_target_vertices.shape[0])
+            #print(projected_target_vertices)
             if projected_target_vertices.shape[0] > 0:
                 example["gold_entities"] = projected_target_vertices
                 yield example
@@ -101,8 +101,8 @@ class TensorflowModel:
                 continue
 
             gold_list = np.array(gold_list).astype(np.int32)
-            print(example["neighborhood"].entity_vertices.shape[0])
-            print("Swapping " + str(example["gold_entities"]) + " for " + str(gold_list))
+            #print(example["neighborhood"].entity_vertices.shape[0])
+            #print("Swapping " + str(example["gold_entities"]) + " for " + str(gold_list))
 
             example["gold_entities"] = gold_list
             yield example
@@ -124,7 +124,7 @@ class TensorflowModel:
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=False)
             for i,batch in enumerate(batch_iterator):
-                print("asdf")
+                #print("asdf")
                 self.preprocessor.process(batch, mode="train")
 
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
