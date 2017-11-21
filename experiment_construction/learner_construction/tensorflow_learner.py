@@ -159,6 +159,7 @@ class TensorflowModel:
                     output.append(prediction)
 
                 if self.project_names:
+                    print(output)
                     output = example["neighborhood"].get_name_connections(output)
 
                 yield output
