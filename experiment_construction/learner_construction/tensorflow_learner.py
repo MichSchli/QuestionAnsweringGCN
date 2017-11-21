@@ -139,6 +139,7 @@ class TensorflowModel:
 
         if self.project_names:
             example_iterator = self.project_from_name_wrapper(example_iterator)
+
         model_prediction = self.model.get_prediction_graph()
         for example in example_iterator:
 
@@ -151,8 +152,11 @@ class TensorflowModel:
             for i, prediction in enumerate(predictions):
                 best_predictions = np.where(prediction[0] > 0.3)[0]
                 output = []
+
+                # TODO: THIS BREAK ORACLE AS PREDICTIONS HERE ARE INDICES
+
                 for prediction in best_predictions:
-                    output.append(example["neighborhood"].from_index(prediction))
+                    output.append(prediction)
 
                 if self.project_names:
                     output = example["neighborhood"].get_name_connections(output)

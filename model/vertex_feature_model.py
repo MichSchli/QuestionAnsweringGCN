@@ -15,10 +15,8 @@ class VertexFeatureModel:
     def project(self, keys):
         for k in keys:
             if k not in self.feature_map:
-                print(self.feature_map)
-                print(k)
                 print("RETRIEVAL_ERROR")
-        return np.array([self.feature_map[k] if k in self.feature_map else "RETRIEVAL_ERROR" for k in keys])
+        return np.array([self.features[self.feature_map[k]] if k in self.feature_map else "RETRIEVAL_ERROR" for k in keys])
 
     def inverse_project(self, features):
         vertices = {feature: [] for feature in features}

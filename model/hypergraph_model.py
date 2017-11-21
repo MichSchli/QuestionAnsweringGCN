@@ -137,7 +137,7 @@ class HypergraphModel:
 
 
     def get_name_connections(self, entities):
-        print(entities)
+        #print(entities)
         return self.name_map.project(entities)
         print(entities)
         name_dict = {k:i for i,k in enumerate(entities)}
