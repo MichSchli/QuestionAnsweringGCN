@@ -31,6 +31,7 @@ class HypergraphModel:
     name_map = None
 
     def to_index(self, entity):
+        print(self.inverse_entity_map)
         return self.inverse_entity_map[entity]
 
     def has_index(self, entity):
@@ -103,6 +104,10 @@ class HypergraphModel:
                 non_name_counter += 1
             self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
 
+        for c in self.centroids:
+            if c not in non_name_vertices:
+                non_name_vertices[c] = non_name_counter
+                non_name_counter += 1
 
         new_entity_map = {non_name_vertices[k]:v for k,v in self.entity_map.items() if k in non_name_vertices}
         new_inverse_entity_map = {k:non_name_vertices[v] for k,v in self.inverse_entity_map.items() if v in non_name_vertices}
@@ -110,7 +115,11 @@ class HypergraphModel:
 
         self.name_map.set_map(np.array(sorted(name_map_map.keys(), key=lambda k: name_map_map[k])), name_dict)
         self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
-        self.entity_to_entity_edges = np.array(non_name_edges)
+        self.entity_to_entity_edges = np.array(non_name_edges) if len(non_name_edges) > 0 else np.empty((0,3), dtype=np.int32)
+
+        print(self.centroids)
+        print([c in non_name_vertices for c in self.centroids])
+        print([c in name_vertices for c in self.centroids])
         self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
 
         self.entity_map = new_entity_map

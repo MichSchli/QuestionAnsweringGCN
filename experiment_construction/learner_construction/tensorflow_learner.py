@@ -93,8 +93,8 @@ class TensorflowModel:
             for name,l in name_projection_dictionary.items():
                 if len(l) > 0:
                     gold_list.extend(l)
-                else:
-                    gold_list.append(name)
+                elif graph.has_index(name):
+                    gold_list.append(graph.to_index(name))
 
             # TODO CHECK SOMEWHERE ELSE
             if len(gold_list) == 0:
