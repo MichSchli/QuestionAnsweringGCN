@@ -17,7 +17,7 @@ class VertexFeatureModel:
 
     def project_singleton(self, key):
         if key in self.feature_map:
-            return self.feature[self.feature_map[key]]
+            return self.features[self.feature_map[key]]
         else:
             return "no_map_found"
 
