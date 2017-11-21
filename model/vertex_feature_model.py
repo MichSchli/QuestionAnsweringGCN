@@ -12,6 +12,15 @@ class VertexFeatureModel:
         self.feature_projection = np.array(list(map.items()))
         self.features = features
 
+    def has_name(self, key):
+        return key in self.feature_map
+
+    def get_name(self, key):
+        if key in self.feature_map:
+            return self.feature[self.feature_map[key]]
+        else:
+            return "no_map_found"
+
     def project(self, keys):
         for k in keys:
             if k not in self.feature_map:

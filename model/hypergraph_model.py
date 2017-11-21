@@ -135,6 +135,11 @@ class HypergraphModel:
 
         self.name_map.set_map(np.array(type_dict.values()))
 
+    def has_name(self, entity):
+        return self.name_map.has_projection(entity)
+
+    def get_name(self, entity):
+        return self.name_map.project_singleton(entity)
 
     def get_name_connections(self, entities):
         #print(entities)

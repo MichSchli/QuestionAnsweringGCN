@@ -153,13 +153,10 @@ class TensorflowModel:
                 best_predictions = np.where(prediction[0] > 0.3)[0]
                 output = []
 
-                # TODO: THIS BREAK ORACLE AS PREDICTIONS HERE ARE INDICES
-
                 for prediction in best_predictions:
-                    output.append(prediction)
-
-                if self.project_names:
-                    print(output)
-                    output = example["neighborhood"].get_name_connections(output)
+                    if example["neighborhood"].has_name(prediction):
+                        output.append(example["neighborhood"].get_name(prediction))
+                    else:
+                        output.append(example["neighborhood"].from_index(prediction))
 
                 yield output
