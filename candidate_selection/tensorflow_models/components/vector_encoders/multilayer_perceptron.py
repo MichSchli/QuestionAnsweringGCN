@@ -1,16 +1,19 @@
 import numpy as np
 import tensorflow as tf
 
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
-class MultilayerPerceptron:
+
+class MultilayerPerceptron(AbstractComponent):
 
     transforms = None
     variable_prefix = None
     variables = None
     weights = None
     biases = None
+    l2_scale = None
 
-    def __init__(self, transforms, variables, variable_prefix=""):
+    def __init__(self, transforms, variables, variable_prefix="", l2_scale=0.0):
         self.transforms = transforms
 
         self.variable_prefix = variable_prefix
@@ -20,6 +23,7 @@ class MultilayerPerceptron:
         self.variables = variables
         self.weights = [None]*(len(transforms)-1)
         self.biases = [None]*(len(transforms)-1)
+        self.l2_scale=l2_scale
 
     def prepare_tensorflow_variables(self, mode="train"):
         for i in range(len(self.transforms)-1):
@@ -40,6 +44,9 @@ class MultilayerPerceptron:
                 vectors = tf.nn.relu(vectors)
 
         return vectors
+
+    def get_regularization_term(self):
+        return self.l2_scale * tf.reduce_sum(tf.square(self.weights))
 
     def handle_variable_assignment(self, batch, mode):
         pass

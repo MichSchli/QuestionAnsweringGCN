@@ -52,7 +52,7 @@ class ExperimentFactory:
 
         return best_configuration
 
-    def train_and_validate(self, next_configuration):
+    def train_and_validate(self, next_configuration, report_running_train_performance=True):
         config_items = []
         for h, cfg in next_configuration.items():
             for k, v in cfg.items():
@@ -70,8 +70,11 @@ class ExperimentFactory:
         experiment_runner = self.experiment_runner_factory.construct_experiment_runner(preprocessors, learner,
                                                                                        next_configuration)
         best_epochs, performance = experiment_runner.train_and_validate()
-
         self.latest_experiment_runner = experiment_runner
+
+        if report_running_train_performance:
+            self.evaluate("train_file")
+
         return best_epochs, parameter_string, performance
 
     def evaluate(self, dataset_string):

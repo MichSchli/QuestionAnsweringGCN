@@ -55,7 +55,6 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
 
     def set_indexers(self, indexers):
         self.word_indexer = indexers.word_indexer
-        self.entity_indexer = indexers.entity_indexer
         self.relation_indexer = indexers.relation_indexer
 
     def OLD_initialize_indexers(self):

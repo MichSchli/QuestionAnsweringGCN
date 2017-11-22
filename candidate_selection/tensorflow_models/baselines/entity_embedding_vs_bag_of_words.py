@@ -39,7 +39,8 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
             self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
                                                         self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
-                                                       variable_prefix="transformation")
+                                                       variable_prefix="transformation",
+                                                       l2_scale=self.model_settings["regularization_scale"])
             self.add_component(self.transformation)
 
     def set_indexers(self, indexers):

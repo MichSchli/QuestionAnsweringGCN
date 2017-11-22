@@ -1,7 +1,9 @@
 import tensorflow as tf
 
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
-class SoftmaxDecoder:
+
+class SoftmaxDecoder(AbstractComponent):
 
     variables = None
 
