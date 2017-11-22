@@ -49,7 +49,8 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
             self.transformation = MultilayerPerceptron([self.model_settings["word_dimension"],
                                                         self.model_settings["entity_dimension"]],
                                                        self.variables,
-                                                       variable_prefix="transformation")
+                                                       variable_prefix="transformation",
+                                                       l2_scale=self.model_settings["regularization_scale"])
             self.add_component(self.transformation)
 
 
