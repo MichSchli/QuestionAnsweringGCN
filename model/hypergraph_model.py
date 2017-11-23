@@ -113,7 +113,7 @@ class HypergraphModel:
         new_inverse_entity_map = {k:non_name_vertices[v] for k,v in self.inverse_entity_map.items() if v in non_name_vertices}
         name_map_map = {self.entity_map[k]:v for k,v in name_vertices.items()}
 
-        print(name_map_map)
+        print(name_dict)
         print(self.entity_vertices.shape)
 
         self.name_map.set_map(np.array(sorted(name_map_map.keys(), key=lambda k: name_map_map[k])), name_dict)
