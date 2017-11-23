@@ -1,6 +1,9 @@
 import tensorflow as tf
 
-class TargetComparator:
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
+
+
+class TargetComparator(AbstractComponent):
 
     variable_prefix = None
     variables = None

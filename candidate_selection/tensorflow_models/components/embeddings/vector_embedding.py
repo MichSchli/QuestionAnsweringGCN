@@ -1,8 +1,10 @@
 import tensorflow as tf
 import numpy as np
 
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
-class VectorEmbedding:
+
+class VectorEmbedding(AbstractComponent):
 
     variables = None
     random = None

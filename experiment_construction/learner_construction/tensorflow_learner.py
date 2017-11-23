@@ -83,6 +83,23 @@ class TensorflowModel:
                 example["gold_entities"] = projected_target_vertices
                 yield example
 
+    def project_gold_to_index(self, iterator):
+        for example in iterator:
+            names = example["gold_entities"]
+            graph = example["neighborhood"]
+            gold_list = []
+            for name in names:
+                if graph.has_index(name):
+                    gold_list.append(graph.to_index(name))
+
+            # TODO CHECK SOMEWHERE ELSE
+            if len(gold_list) == 0:
+                continue
+
+            gold_list = np.array(gold_list).astype(np.int32)
+            example["gold_entities"] = gold_list
+            yield example
+
     def project_from_name_wrapper(self, iterator):
         for example in iterator:
             names = example["gold_entities"]
@@ -121,6 +138,8 @@ class TensorflowModel:
 
             if self.project_names:
                 epoch_iterator = self.project_from_name_wrapper(epoch_iterator)
+            else:
+                epoch_iterator = self.project_gold_to_index(epoch_iterator)
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=False)
             for i,batch in enumerate(batch_iterator):
