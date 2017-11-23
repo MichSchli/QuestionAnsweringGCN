@@ -119,8 +119,6 @@ class TensorflowModel:
 
             gold_list = np.array(gold_list).astype(np.int32)
             #print(example["neighborhood"].entity_vertices.shape[0])
-            print("Swapping " + str(example["gold_entities"]) + " for " + str(gold_list))
-
             example["gold_entities"] = gold_list
             yield example
 
