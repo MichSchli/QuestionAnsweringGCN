@@ -1,7 +1,9 @@
 import tensorflow as tf
 
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
-class TensorflowHypergraphRepresentation:
+
+class TensorflowHypergraphRepresentation(AbstractComponent):
 
     entity_vertex_embeddings = None
     entity_vertex_dimension = None

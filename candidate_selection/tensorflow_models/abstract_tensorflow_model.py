@@ -18,6 +18,7 @@ class AbstractTensorflowModel:
     variables = None
 
     model_settings = None
+    facts = None
 
     entity_scores = None
 
@@ -25,8 +26,9 @@ class AbstractTensorflowModel:
     Methods for model initialization:
     """
 
-    def __init__(self):
+    def __init__(self, facts):
         self.model_settings = defaultdict(lambda : None)
+        self.facts = facts
 
     def initialize(self):
         self.components = []

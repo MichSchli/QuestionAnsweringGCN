@@ -4,12 +4,11 @@ from candidate_selection.tensorflow_hypergraph_representation import TensorflowH
 from candidate_selection.tensorflow_models.abstract_tensorflow_model import AbstractTensorflowModel
 from candidate_selection.tensorflow_models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.tensorflow_models.components.embeddings.sequence_embedding import SequenceEmbedding
-from candidate_selection.tensorflow_models.components.embeddings.static_vector_embedding import StaticVectorEmbedding
-from candidate_selection.tensorflow_models.components.embeddings.vector_embedding import VectorEmbedding
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
 from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
+from experiment_construction.fact_construction.freebase_facts import FreebaseFacts
 
 
 class PathBagVsBagOfWords(AbstractTensorflowModel):
@@ -37,17 +36,17 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
         self.hypergraph_gcn_propagation_units = [None] * self.model_settings["n_layers"]
         for layer in range(self.model_settings["n_layers"]):
             self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
-                                                                                        self.model_settings["facts"],
+                                                                                        self.facts,
                                                                                         self.variables,
-                                                                                        self.model_settings["entity_dimension"],
+                                                                                        self.model_settings["entity_embedding_dimension"],
                                                                                         self.hypergraph,
                                                                                         weights="identity",
                                                                                         biases="relation_specific")
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
 
         if self.model_settings["use_transformation"]:
-            self.transformation = MultilayerPerceptron([self.model_settings["word_dimension"],
-                                                        self.model_settings["entity_dimension"]],
+            self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
+                                                        self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
                                                        variable_prefix="transformation",
                                                        l2_scale=self.model_settings["regularization_scale"])
@@ -70,7 +69,7 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
                                                    self.model_settings["default_relation_embedding"])
 
     def compute_entity_scores(self):
-        self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_dimension"])
+        self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.propagate()
 

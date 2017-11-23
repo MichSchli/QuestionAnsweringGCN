@@ -12,9 +12,9 @@ class CandidateSelectorFactory:
     def __init__(self):
         pass
 
-    def construct_candidate_selector(self, indexers, preprocessors, settings):
+    def construct_candidate_selector(self, indexers, facts, preprocessors, settings):
         model_class = self.retrieve_class_name(settings["model"]["stack_name"])
-        model = model_class()
+        model = model_class(facts)
 
         for k, v in settings["model"].items():
             if k == "stack_name":

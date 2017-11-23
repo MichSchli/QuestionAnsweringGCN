@@ -1,9 +1,10 @@
+from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 import numpy as np
 import tensorflow as tf
 
 
-class HypergraphGcnPropagationUnit:
+class HypergraphGcnPropagationUnit(AbstractComponent):
 
     self_weight_type = None
     self_bias_type = None

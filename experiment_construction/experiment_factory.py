@@ -2,6 +2,7 @@ from experiment_construction.candidate_generator_construction.candidate_generato
     CandidateGeneratorFactory
 from experiment_construction.candidate_selector_construction.candidate_selector_factory import CandidateSelectorFactory
 from experiment_construction.experiment_runner_construction.experiment_runner_factory import ExperimentRunnerFactory
+from experiment_construction.fact_construction.fact_factory import FactFactory
 from experiment_construction.index_construction.index_factory import IndexFactory
 from experiment_construction.learner_construction.learner_factory import LearnerFactory
 from experiment_construction.preprocessor_construction.preprocessor_factory import PreprocessorFactory
@@ -24,6 +25,7 @@ class ExperimentFactory:
         self.candidate_selector_factory = CandidateSelectorFactory()
         self.learner_factory = LearnerFactory()
         self.experiment_runner_factory = ExperimentRunnerFactory()
+        self.fact_factory = FactFactory()
 
     def search(self):
         strategy = self.iterate_settings()
@@ -59,11 +61,13 @@ class ExperimentFactory:
                 config_items.append(h + ":" + k + "=" + v)
         parameter_string = ", ".join(config_items)
         Static.logger.write(parameter_string, verbosity_priority=2)
+        facts = self.fact_factory.construct_facts(next_configuration)
         indexers = self.index_factory.construct_indexes(next_configuration)
         preprocessors = self.preprocessor_factory.construct_preprocessor(indexers, next_configuration)
         candidate_generator = self.candidate_generator_factory.construct_candidate_generator(indexers,
                                                                                              next_configuration)
-        candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers, preprocessors,
+        candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers,
+                                                                                             facts, preprocessors,
                                                                                           next_configuration)
         learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector,
                                                          next_configuration)
