@@ -20,7 +20,7 @@ class EdgeFilter:
             parts = line.strip().split('\t')
 
             edge_name = parts[0]
-            edge_count = int(parts[0])
+            edge_count = int(parts[1])
 
             if self.relation_indexer is not None:
                 edge_name = self.relation_indexer.index_single_element(edge_name)
