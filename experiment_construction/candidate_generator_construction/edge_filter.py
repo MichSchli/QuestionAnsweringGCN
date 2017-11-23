@@ -49,6 +49,6 @@ class EdgeFilter:
 
     def filter_edges(self, edges):
         counts = np.array([self.edge_counts[e] for e in edges[:, 1]])
-        filtered_edges = edges[np.where(counts > self.edge_count_cutoff)]
+        edges[np.where(counts > self.edge_count_cutoff), 1] = self.relation_indexer.index_single_element("low_frequency_edge")
         #print("Discarded " + str(counts.shape[0] - filtered_edges.shape[0]) + " of " + str(counts.shape[0]) + " edges.")
-        return filtered_edges
+        return edges
