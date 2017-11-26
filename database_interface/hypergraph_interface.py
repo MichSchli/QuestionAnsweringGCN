@@ -16,7 +16,6 @@ class HypergraphInterface:
     Retrieve the n-neighborhood of a hypergraph, potentially including surrounding literals as well.
     """
     def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
-        vertices = [self.prefix + v for v in vertices]
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
