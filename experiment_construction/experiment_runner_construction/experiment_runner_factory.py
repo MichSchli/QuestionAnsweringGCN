@@ -7,4 +7,7 @@ class ExperimentRunnerFactory:
         experiment_runner = ExperimentRunner()
         experiment_runner.learner = learner
         experiment_runner.set_train_file(settings["dataset"]["train_file"])
+        if "prefix" in settings["endpoint"]:
+            experiment_runner.set_kb_prefix(settings["endpoint"]["prefix"])
+
         return experiment_runner
