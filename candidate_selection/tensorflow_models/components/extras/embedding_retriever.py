@@ -15,15 +15,34 @@ class EmbeddingRetriever(AbstractComponent):
         if self.variable_prefix != "":
             self.variable_prefix += "_"
 
-    def from_embedding(self, embeddings, indices):
-        return tf.nn.embedding_lookup(embeddings, indices)
+    def get_forward_embeddings(self, embeddings):
+        return tf.nn.embedding_lookup(embeddings, self.variables.get_variable(self.variable_prefix + "forward_indices"))
 
-    def to_embedding(self, values, indices):
+    def get_backward_embeddings(self, embeddings):
+        return tf.nn.embedding_lookup(embeddings, self.variables.get_variable(self.variable_prefix + "backward_indices"))
+
+    def map_backwards(self, temporary_embeddings):
         if self.duplicate_policy == "average":
             pass
         elif self.duplicate_policy == "sum":
-            from_indices = self.variables.get_variable(
-                tf.range(self.variables.get_variable(self.variable_prefix + "n_centroids")))
+            from_indices = tf.range(tf.shape(temporary_embeddings)[0])
+            to_indices = self.variables.get_variable(self.variable_prefix + "backward_indices")
+            values = tf.ones_like(from_indices, dtype=tf.float32)
+
+            from_size = tf.shape(temporary_embeddings)[0]
+            to_size = self.variables.get_variable(self.variable_prefix + "backward_total_size")
+
+            indices = tf.to_int64(tf.transpose(tf.stack([to_indices, from_indices])))
+            shape = tf.to_int64([to_size, from_size])
+
+            matrix = tf.SparseTensor(indices=indices, values=values, dense_shape=shape)
+            return tf.sparse_tensor_dense_matmul(matrix, temporary_embeddings)
+
+    def OLD_to_embedding(self, values, indices):
+        if self.duplicate_policy == "average":
+            pass
+        elif self.duplicate_policy == "sum":
+            from_indices = tf.range(self.variables.get_variable(self.variable_prefix + "n_centroids"))
             to_indices = indices
             stg_values = tf.to_float(tf.ones_like(from_indices))
 
@@ -41,9 +60,15 @@ class EmbeddingRetriever(AbstractComponent):
         else:
             pass
 
-
     def prepare_tensorflow_variables(self, mode="train"):
-        self.variables.add_variable(self.variable_prefix + "target_embedding_size", tf.placeholder(tf.int32, shape=[None, None]))
+        self.variables.add_variable(self.variable_prefix + "forward_indices", tf.placeholder(tf.int32, shape=[None], name=self.variable_prefix + "forward_indices"))
+        self.variables.add_variable(self.variable_prefix + "backward_indices", tf.placeholder(tf.int32, shape=[None], name=self.variable_prefix + "backward_indices"))
+        self.variables.add_variable(self.variable_prefix + "forward_total_size", tf.placeholder(tf.int32, shape=None, name=self.variable_prefix + "forward_total_size"))
+        self.variables.add_variable(self.variable_prefix + "backward_total_size", tf.placeholder(tf.int32, shape=None, name=self.variable_prefix + "backward_total_size"))
 
     def handle_variable_assignment(self, batch, mode):
-        self.variables.assign_variable(self.variable_prefix + "target_embedding_size", batch["neighborhood"].n_entities)
+        map = batch["sentence_to_neighborhood_map"]
+        self.variables.assign_variable(self.variable_prefix + "forward_indices", map.flat_forward_map)
+        self.variables.assign_variable(self.variable_prefix + "backward_indices", map.flat_backward_map)
+        self.variables.assign_variable(self.variable_prefix + "forward_total_size", map.forward_total_size)
+        self.variables.assign_variable(self.variable_prefix + "backward_total_size", map.backward_total_size)

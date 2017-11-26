@@ -22,6 +22,7 @@ class SentencePreprocessor(AbstractPreprocessor):
             self.next_preprocessor.process(batch_dictionary, mode=mode)
 
         sentence_batch = batch_dictionary[self.sentence_string]
+        centroid_map = batch_dictionary["sentence_entity_map"]
 
         if self.clean_dictionary:
             del batch_dictionary[self.sentence_string]
@@ -29,16 +30,30 @@ class SentencePreprocessor(AbstractPreprocessor):
         words = [[self.indexer.index_single_element(word[1]) for word in sentence] for sentence in sentence_batch]
 
         # convert sentence batch to vocabulary
-        batch_indices = -1 * np.ones((len(words), max([len(w) for w in words])), dtype=np.int32)
+        max_sentence_len = max([len(w) for w in words])
+        batch_indices = np.zeros((len(words), max_sentence_len), dtype=np.int32)
+        entity_mask = np.zeros((len(words), max_sentence_len), dtype=np.int32)
         sentence_lengths = np.zeros(len(words), dtype=np.int32)
+        flat_entity_indices_in_sentence = []
 
         for i in range(len(words)):
             sentence_lengths[i] = len(words[i])
             for j in range(len(words[i])):
                 batch_indices[i,j] = words[i][j]
 
+            for entity in centroid_map[i]:
+                start = int(entity[0])
+                end = int(entity[1])
+                entity_mask[i, start:end+1] = 1
+
+                flat_entity_indices_in_sentence.extend(range(i*max_sentence_len+start,i*max_sentence_len+end+1))
+
+
         sentence_input_model = SentenceInputModel()
-        sentence_input_model.word_index_matrix = batch_indices + 1
+        sentence_input_model.word_index_matrix = batch_indices
         sentence_input_model.sentence_lengths = sentence_lengths
+
+        sentence_input_model.entity_mask = entity_mask
+        sentence_input_model.flat_entity_indices_in_sentence = np.array(flat_entity_indices_in_sentence).astype(np.int32)
 
         batch_dictionary[self.output_name] = sentence_input_model

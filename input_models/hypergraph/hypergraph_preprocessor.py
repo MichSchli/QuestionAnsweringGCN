@@ -32,8 +32,6 @@ class HypergraphPreprocessor(AbstractPreprocessor):
             self.next_preprocessor.process(batch_dictionary, mode=mode)
 
         hypergraph_batch = batch_dictionary[self.input_string]
-        if self.clean_dictionary:
-            del batch_dictionary[self.input_string]
 
         self.in_batch_indices = {}
         self.in_batch_labels = {}
@@ -79,7 +77,6 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
 
         #print(entity_vertex_slices)
-        #print(entity_vertex_matrix.shape)
         #print(np.max(entity_map))
 
         n_entities = np.max(entity_vertex_matrix)

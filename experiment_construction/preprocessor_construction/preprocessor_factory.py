@@ -1,6 +1,7 @@
 from experiment_construction.preprocessor_construction.preprocessor import Preprocessor
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 from input_models.mask.mask_preprocessor import LookupMaskPreprocessor
+from input_models.padded_map.sentence_to_graph_map_preprocessor import SentenceToGraphMapPreprocessor
 from input_models.sentences.sentence_preprocessor import SentencePreprocessor
 from input_models.static_embedding.static_entity_embedding_preprocessor import StaticEntityEmbeddingPreprocessor
 
@@ -31,6 +32,7 @@ class PreprocessorFactory:
         elif preprocessor_type == "sentence":
             preprocessor.stack = SentencePreprocessor(index.word_indexer, "sentence", "question_sentence_input_model",
                                                       preprocessor.stack)
+            preprocessor.stack = SentenceToGraphMapPreprocessor(preprocessor.stack)
         elif preprocessor_type == "static_entity_embeddings":
             preprocessor.stack = StaticEntityEmbeddingPreprocessor(index.entity_indexer, "neighborhood_input_model", preprocessor.stack)
 

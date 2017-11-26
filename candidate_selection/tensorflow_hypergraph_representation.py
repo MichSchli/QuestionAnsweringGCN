@@ -67,7 +67,6 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.prepare_variable_set(self.variable_prefix + "entities_to_entities")
         self.variables.add_variable(self.variable_prefix + "n_entities", tf.placeholder(tf.int32, name=self.variable_prefix+"n_entities"))
         self.variables.add_variable(self.variable_prefix + "n_events", tf.placeholder(tf.int32, name=self.variable_prefix+"n_events"))
-        self.variables.add_variable(self.variable_prefix + "centroid_indices", tf.placeholder(tf.int32, shape=[None], name=self.variable_prefix+"n_events"))
 
     def prepare_variable_set(self, prefix):
         self.variables.add_variable(prefix+"_edges", tf.placeholder(tf.int32, name=prefix+"_edges"))
@@ -80,7 +79,6 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", hypergraph_input_model.entity_to_entity_edges, hypergraph_input_model.entity_to_entity_types)
         self.variables.assign_variable(self.variable_prefix + "n_entities", hypergraph_input_model.n_entities)
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
-        self.variables.assign_variable(self.variable_prefix + "centroid_indices", np.concatenate(hypergraph_input_model.centroid_indices))
 
     def handle_variable_set_assignment(self, prefix, edges, types):
         self.variables.assign_variable(prefix + "_edges", edges)

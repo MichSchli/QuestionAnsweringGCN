@@ -41,10 +41,9 @@ class GloveIndexer:
 
         num_lines = sum(1 for _ in open(file_string, encoding="utf8"))
         self.vectors = np.empty((num_lines+1, self.dimension), dtype=np.float32)
-        self.vectors[0] = np.random.uniform(-1, 0.01, self.dimension)
+        self.vectors[0] = 0
 
-        self.indexer = LazyIndexer((num_lines+1, self.dimension))
-        self.indexer.index_single_element("<unknown>")
+        self.indexer = LazyIndexer((num_lines, self.dimension))
 
         for line in open(file_string, encoding="utf8"):
             counter += 1

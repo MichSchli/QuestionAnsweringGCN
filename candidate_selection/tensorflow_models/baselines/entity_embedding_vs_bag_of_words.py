@@ -32,8 +32,8 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
         self.add_component(self.hypergraph)
 
-        self.question_sentence = TensorflowSentenceRepresentation(self.variables)
-        self.add_component(self.question_sentence)
+        #self.question_sentence = TensorflowSentenceRepresentation(self.variables)
+        #self.add_component(self.question_sentence)
 
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         self.add_component(self.word_embedding)
@@ -44,8 +44,8 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
         self.decoder = SoftmaxDecoder(self.variables)
         self.add_component(self.decoder)
 
-        self.centroid_to_sentence_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum")
-        self.add_component(self.centroid_to_sentence_mapper)
+        self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
+        self.add_component(self.sentence_to_graph_mapper)
 
         if self.model_settings["use_transformation"]:
             self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
@@ -55,8 +55,8 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
                                                        l2_scale=self.model_settings["regularization_scale"])
 
 
-            self.centroid_transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
-                                                                 self.model_settings["entity_embedding_dimension"]],
+            self.centroid_transformation = MultilayerPerceptron([self.model_settings["entity_embedding_dimension"],
+                                                                 self.model_settings["word_embedding_dimension"]],
                                                                 self.variables,
                                                                 variable_prefix="centroid_transformation",
                                                                 l2_scale=self.model_settings["regularization_scale"])
@@ -81,10 +81,13 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
     def compute_entity_scores(self):
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
         word_embeddings = self.word_embedding.get_representations()
+        word_embedding_shape = tf.shape(word_embeddings)
+        word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
 
-        centroid_embeddings = self.hypergraph.get_centroid_embeddings()
+        centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(self.hypergraph.entity_vertex_embeddings)
         centroid_embeddings = self.centroid_transformation.transform(centroid_embeddings)
-        word_embeddings += self.centroid_to_sentence_mapper.add_to_embedding(self.hypergraph.entity_vertex_embeddings, centroid_embeddings, self.question_sentence.centroid_map)
+        word_embeddings += self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)
+        word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
         bag_of_words = tf.reduce_sum(word_embeddings, 1)
 
@@ -92,6 +95,6 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
             bag_of_words = self.transformation.transform(bag_of_words)
 
         entity_embeddings = self.target_comparator.get_comparison_scores(bag_of_words,
-                                                                     entity_embeddings)
+                                                                         self.hypergraph.entity_vertex_embeddings)
 
         return entity_embeddings

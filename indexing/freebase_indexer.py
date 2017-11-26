@@ -25,13 +25,11 @@ class FreebaseIndexer:
 
     def index_single_element(self, element):
         if element not in self.indexer.global_map:
-            #print(element)
             return 0
         else:
             return self.indexer.global_map[element]
 
     def retrieve_vector(self, index):
-        #print(index)
         return self.get_all_vectors()[index]
 
     def get_all_vectors(self):
@@ -85,9 +83,5 @@ class FreebaseIndexer:
 
         self.indexer = LazyIndexer((vocab_size, self.dimension))
 
-        self.indexer.index_single_element("<unknown>")
-
         for word in vocab[1:]:
-            #print("http://rdf.freebase.com/ns/" + word[1:].replace("/", "."))
-            #exit()
             self.indexer.index_single_element("http://rdf.freebase.com/ns/" + word[1:].replace("/", "."))
