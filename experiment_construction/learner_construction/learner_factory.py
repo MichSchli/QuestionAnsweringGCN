@@ -17,7 +17,13 @@ class LearnerFactory:
         learner.set_candidate_selector(candidate_selector)
 
         if "early_stopping" in settings["training"] or "epochs_between_tests" in settings["training"]:
-            learner = ValidationSetEvaluator(learner, settings["dataset"]["valid_file"])
+            if "prefix" in settings["endpoint"]:
+                prefix = settings["endpoint"]["prefix"]
+            else:
+                prefix = ""
+                
+            learner = ValidationSetEvaluator(learner, settings["dataset"]["valid_file"], kb_prefix=prefix)
+
 
         for k, v in settings["training"].items():
             learner.update_setting(k, v)

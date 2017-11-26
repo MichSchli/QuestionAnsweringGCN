@@ -11,9 +11,9 @@ class ValidationSetEvaluator:
     max_epochs = None
     early_stopping = None
 
-    def __init__(self, inner, validation_file_location):
+    def __init__(self, inner, validation_file_location, kb_prefix=""):
         self.inner = inner
-        self.validation_file_iterator = ConllReader(validation_file_location)
+        self.validation_file_iterator = ConllReader(validation_file_location, entity_prefix=kb_prefix)
         self.evaluator = Evaluator(self.validation_file_iterator)
 
     def initialize(self):
