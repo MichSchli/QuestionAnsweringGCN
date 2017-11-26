@@ -21,7 +21,7 @@ class LearnerFactory:
                 prefix = settings["endpoint"]["prefix"]
             else:
                 prefix = ""
-                
+
             learner = ValidationSetEvaluator(learner, settings["dataset"]["valid_file"], kb_prefix=prefix)
 
 
