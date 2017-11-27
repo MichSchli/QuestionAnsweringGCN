@@ -48,7 +48,12 @@ class IndexedInterface:
         hypergraph.entity_to_entity_edges = hypergraph.entity_to_entity_edges.astype(np.int32)
         hypergraph.entity_to_event_edges = hypergraph.entity_to_event_edges.astype(np.int32)
 
-        hypergraph.name_edge_type = self.relation_indexer.index_single_element("http://www.w3.org/2000/01/rdf-schema#label")
+        new_name_map = {}
+        for key, value in hypergraph.name_map.items():
+            new_name_map[self.entity_indexer.index(key)] = value
+        hypergraph.name_map.set_map(new_name_map)
+
+        #hypergraph.name_edge_type = self.relation_indexer.index_single_element("http://www.w3.org/2000/01/rdf-schema#label")
 
         hypergraph.set_centroids([entity_indexes[c] for c in hypergraph.centroids])
 
