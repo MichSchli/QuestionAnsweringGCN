@@ -2,8 +2,11 @@
 Different candidate selectors
 """
 from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_bag_of_words import EntityEmbeddingVsBagOfWords
+from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_gold import EntityEmbeddingVsGold
 from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_lstm import EntityEmbeddingVsLstm
 from candidate_selection.tensorflow_models.baselines.path_bag_vs_bag_of_words import PathBagVsBagOfWords
+from candidate_selection.tensorflow_models.components.extras.mean_gold_embedding_retriever import \
+    MeanGoldEmbeddingRetriever
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
 
 
@@ -39,5 +42,8 @@ class CandidateSelectorFactory:
 
         if stack_name == "bow+path":
             return PathBagVsBagOfWords
+
+        if stack_name == "gold_retriever":
+            return EntityEmbeddingVsGold
 
         return None

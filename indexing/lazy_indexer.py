@@ -27,7 +27,7 @@ class LazyIndexer:
         return self.get_all_vectors()[index]
 
     def get_all_vectors(self):
-        vectors = np.random.normal(0, 0.01, size=self.vocabulary_shape).astype(np.float32)
+        vectors = np.random.uniform(-1, 1, size=self.vocabulary_shape).astype(np.float32)
         vectors[0] = 0
         return vectors
 

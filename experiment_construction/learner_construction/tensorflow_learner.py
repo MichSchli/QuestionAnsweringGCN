@@ -35,10 +35,10 @@ class TensorflowModel:
         self.model.initialize()
         self.model.prepare_tensorflow_variables(mode='train')
 
-        model_loss = self.model.get_loss_graph()
+        self.model_loss = self.model.get_loss_graph()
         parameters_to_optimize = tf.trainable_variables()
         opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
-        grad_func = tf.gradients(model_loss, parameters_to_optimize)
+        grad_func = tf.gradients(self.model_loss, parameters_to_optimize)
         self.optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
         init_op = tf.global_variables_initializer()
 
@@ -126,8 +126,6 @@ class TensorflowModel:
         if epochs is None:
             epochs = self.epochs
 
-        model_loss = self.model.get_loss_graph()
-
         for epoch in range(epochs):
             Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
             epoch_iterator = train_file_iterator.iterate()
@@ -143,12 +141,13 @@ class TensorflowModel:
             for i,batch in enumerate(batch_iterator):
                 #print("asdf")
                 self.preprocessor.process(batch, mode="train")
-
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
-                result = self.sess.run([self.optimize_func, model_loss], feed_dict=assignment_dict)
+                result = self.sess.run([self.optimize_func, self.model_loss], feed_dict=assignment_dict)
                 loss = result[1]
 
+
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=2)
+
 
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
@@ -156,12 +155,14 @@ class TensorflowModel:
 
         if self.project_names:
             example_iterator = self.project_from_name_wrapper(example_iterator)
+        else:
+            example_iterator = self.project_gold_to_index(example_iterator)
 
         model_prediction = self.model.get_prediction_graph()
         for example in example_iterator:
 
             as_batch = {k:[v] for k,v in example.items()}
-            self.preprocessor.process(as_batch, mode='predict')
+            self.preprocessor.process(as_batch, mode='train')
 
             assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
@@ -171,9 +172,9 @@ class TensorflowModel:
                 output = []
 
                 for prediction in best_predictions:
-                    if example["neighborhood"].has_name(prediction):
-                        output.append(example["neighborhood"].get_name(prediction))
-                    else:
-                        output.append(example["neighborhood"].from_index(prediction))
+                    #if example["neighborhood"].has_name(prediction):
+                    #    output.append(example["neighborhood"].get_name(prediction))
+                    #else:
+                    output.append(example["neighborhood"].from_index(prediction))
 
                 yield output

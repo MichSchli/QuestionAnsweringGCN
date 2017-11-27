@@ -35,7 +35,7 @@ class CandidateGeneratorFactory:
         if disk_cache:
             candidate_generator = CandidateGeneratorCache(candidate_generator, disk_cache=disk_cache)
 
-        candidate_generator = NameMapper(candidate_generator)
+        #candidate_generator = NameMapper(candidate_generator)
 
         if "frequency_filter" in settings["endpoint"]:
             candidate_generator = EdgeFilter(candidate_generator,
