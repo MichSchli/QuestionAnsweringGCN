@@ -17,7 +17,7 @@ class VertexFeatureModel:
         self.feature_projection = np.array(list(map.items()))
         self.features = features
 
-    def add_map(self, map):
+    def add_features(self, map):
         print(map)
         exit()
 
