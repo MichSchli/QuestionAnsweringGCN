@@ -172,9 +172,9 @@ class TensorflowModel:
                 output = []
 
                 for prediction in best_predictions:
-                    #if example["neighborhood"].has_name(prediction):
-                    #    output.append(example["neighborhood"].get_name(prediction))
-                    #else:
-                    output.append(example["neighborhood"].from_index(prediction))
+                    if example["neighborhood"].has_name(prediction):
+                        output.append(example["neighborhood"].get_name(prediction))
+                    else:
+                        output.append(example["neighborhood"].from_index(prediction))
 
                 yield output
