@@ -8,6 +8,9 @@ class OracleCandidate:
 
     is_tensorflow = False
 
+    def __init__(self, facts):
+        pass
+
     def set_neighborhood_generate(self, neighborhood_generator):
         self.candidate_neighborhood_generator = neighborhood_generator
 
