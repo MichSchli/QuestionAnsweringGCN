@@ -26,7 +26,7 @@ class ExperimentRunner:
         iterator = ConllReader(file, self.kb_prefix)
 
         predictions = self.learner.predict(iterator)
-        evaluator = Evaluator(ConllReader(file), self.kb_prefix)
+        evaluator = Evaluator(ConllReader(file, self.kb_prefix))
 
         evaluation = evaluator.evaluate(predictions)
         return evaluation.micro_f1

@@ -32,7 +32,8 @@ class SoftmaxDecoder(AbstractComponent):
 
         def map_function(x):
             golds = x[2][:x[1]]
-            vals = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=x[0][:x[1]], labels=golds))
+            pos_weight = tf.to_float(x[1])/tf.reduce_sum(tf.to_float(golds))
+            vals = tf.reduce_mean(tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight))
             return vals
 
         elems = (entity_vertex_scores_distributed, self.variables.get_variable("vertex_count_per_hypergraph"), gold_scores)
