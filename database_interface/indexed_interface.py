@@ -49,7 +49,7 @@ class IndexedInterface:
         hypergraph.entity_to_event_edges = hypergraph.entity_to_event_edges.astype(np.int32)
 
         new_name_map = {}
-        for key, value in hypergraph.name_map.items():
+        for key, value in hypergraph.name_map.feature_map.items():
             new_name_map[self.entity_indexer.index(key)] = value
         hypergraph.name_map.set_map(new_name_map)
 
