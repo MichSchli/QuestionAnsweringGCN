@@ -22,9 +22,7 @@ class IndexedInterface:
         hypergraph.inverse_entity_map = entity_indexes
         hypergraph.event_vertices = np.arange(hypergraph.event_vertices.shape[0])
 
-        print(hypergraph.entity_vertices)
         hypergraph.entity_vertices = self.entity_indexer.index(hypergraph.entity_vertices)
-        print(hypergraph.entity_vertices)
 
         hypergraph.event_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.event_to_entity_edges[:,1])
         hypergraph.entity_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_entity_edges[:,1])
@@ -50,7 +48,7 @@ class IndexedInterface:
 
         new_name_map = {}
         for key, value in hypergraph.name_map.feature_map.items():
-            new_name_map[self.entity_indexer.index(key)] = value
+            new_name_map[self.entity_indexer.index_single_element(key)] = value
         hypergraph.name_map.set_map(new_name_map)
 
         #hypergraph.name_edge_type = self.relation_indexer.index_single_element("http://www.w3.org/2000/01/rdf-schema#label")
