@@ -31,7 +31,6 @@ class HypergraphModel:
     name_map = None
 
     def to_index(self, entity):
-        #print(self.inverse_entity_map)
         return self.inverse_entity_map[entity]
 
     def has_index(self, entity):
@@ -53,6 +52,11 @@ class HypergraphModel:
 
         self.discovered_entities = np.empty(0)
         self.discovered_events = np.empty(0)
+
+        self.name_map = VertexFeatureModel()
+
+    def add_names(self, name_map):
+        self.name_map.add_names(name_map)
 
     def make_name_map(self):
         non_name_vertices = {}
@@ -125,16 +129,6 @@ class HypergraphModel:
         self.entity_map = new_entity_map
         self.inverse_entity_map = new_inverse_entity_map
 
-    def make_type_map(self):
-        self.type_map = VertexFeatureModel()
-        type_dict = {}
-
-        for edge in self.entity_to_entity_edges:
-            if edge[1] == self.type_edge_type:
-                type_dict[edge[0]] = edge[2]
-
-        self.name_map.set_map(np.array(type_dict.values()))
-
     def has_name(self, entity):
         return self.name_map.has_projection(entity)
 
@@ -142,36 +136,10 @@ class HypergraphModel:
         return self.name_map.project_singleton(entity)
 
     def get_name_connections(self, entities):
-        #print(entities)
         return self.name_map.project(entities)
-        print(entities)
-        name_dict = {k:i for i,k in enumerate(entities)}
-        names = np.array(entities)
-        
-        for edge in self.entity_to_entity_edges:
-            #if entities[0].startswith("http") and edge[1] == "http://www.w3.org/2000/01/rdf-schema#label":
-            #    print(edge)
-            #    sleep(0.5)
-            if edge[1] == self.name_edge_type and edge[0] in name_dict:
-                #print(edge)
-                names[name_dict[edge[0]]] = edge[2]
-        #exit()
-        #print("names")
-        #print(names)
-        return names #{n[0]:np.unique(n[1]) for n in names.items()}
 
     def get_inverse_name_connections(self, names):
         return self.name_map.inverse_project(names)
-        vertices = {name: [] for name in names}
-        for edge in self.entity_to_entity_edges:
-            if edge[1] == self.name_edge_type and edge[2] in names:
-                vertices[edge[2]].append(edge[0])
-        #print("vertices")
-        #print(vertices)
-        vertices = {n[0]:np.unique(n[1]) for n in vertices.items()}
-        #print(vertices)
-        return vertices
-
 
     def get_edges_and_hyperedges(self, start_vertex):
         # Entities

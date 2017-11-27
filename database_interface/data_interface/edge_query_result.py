@@ -10,12 +10,18 @@ class EdgeQueryResult:
     finalized_forward = None
     finalized_backward = None
 
+    name_map = None
+
     def __init__(self):
         self.forward_edges = []
         self.backward_edges = []
         self.vertices = {}
         self.finalized_forward = False
         self.finalized_backward = False
+        self.name_map = {}
+
+    def get_name_map(self):
+        return self.name_map
 
     def append_edge(self, edge, forward=True):
         #print(edge)
@@ -26,6 +32,9 @@ class EdgeQueryResult:
 
     def append_vertex(self, vertex, type):
         self.vertices[vertex] = type
+
+    def append_name(self, vertex, name):
+        self.name_map[vertex] = name
 
     def get_forward_edges(self):
         #for edge in self.forward_edges:

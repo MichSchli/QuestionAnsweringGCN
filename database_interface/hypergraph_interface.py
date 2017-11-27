@@ -85,3 +85,4 @@ class HypergraphInterface:
         hypergraph.add_discovered_vertices(edge_query_result.get_forward_edges(),
                                            edge_query_result.get_backward_edges(),
                                            type=targets)
+        hypergraph.add_names(edge_query_result.get_name_map())

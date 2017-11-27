@@ -31,7 +31,7 @@ class LookupMaskPreprocessor(AbstractPreprocessor):
         #print(batch_dictionary[self.input_string])
 
         for i, lookups in enumerate(batch_dictionary[self.input_string]):
-            mask[i][np.array(lookups)] = 1
+            mask[i][np.array(lookups)[:1]] = 1
 
         if self.clean_dictionary:
             del batch_dictionary[self.input_string]

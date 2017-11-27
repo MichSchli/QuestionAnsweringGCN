@@ -11,10 +11,12 @@ class FreebaseInterface:
     endpoint = None
     prefix = None
     max_entities_per_query = 200
+    name_relation = None
 
-    def __init__(self):
+    def __init__(self, ):
         self.endpoint = "http://localhost:8890/sparql"
         self.prefix = "http://rdf.freebase.com/ns/"
+        self.name_relation = "http://www.w3.org/2000/01/rdf-schema#label"
 
         self.frontier_filter = PrefixFilter("http://rdf.freebase.com/ns/")
 
@@ -202,15 +204,18 @@ class FreebaseInterface:
                 elif target == "event" and object and not (len(result["s"]["value"]) > 28 and result["s"]["value"][28] == ""):
                     continue
 
-                edge_query_result.append_edge([
-                    result["s"]["value"],
-                    result["r"]["value"],
-                    result["o"]["value"]], forward=subject
-                )
-                if subject:
-                    edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
+                if result["r"]["value"] == self.name_relation:
+                    edge_query_result.append_name(result["s"]["value"], result["o"]["value"])
                 else:
-                    edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
+                    edge_query_result.append_edge([
+                        result["s"]["value"],
+                        result["r"]["value"],
+                        result["o"]["value"]], forward=subject
+                    )
+                    if subject:
+                        edge_query_result.append_vertex(result["o"]["value"],result["o"]["type"])
+                    else:
+                        edge_query_result.append_vertex(result["s"]["value"],result["s"]["type"])
 
             #exit()
         #print("\r" + (i+1) * " "+"\r", end="", flush=True)
