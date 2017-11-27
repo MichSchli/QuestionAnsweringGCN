@@ -10,8 +10,6 @@ class ConllReader:
     def __init__(self, filename, entity_prefix=""):
         self.filename = filename
         self.entity_prefix = entity_prefix
-        print(self.entity_prefix)
-        print("LOL")
 
     def iterate(self, output=None):
         dictionary = {}

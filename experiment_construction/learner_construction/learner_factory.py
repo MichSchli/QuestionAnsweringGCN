@@ -24,7 +24,6 @@ class LearnerFactory:
 
             learner = ValidationSetEvaluator(learner, settings["dataset"]["valid_file"], kb_prefix=prefix)
 
-
         for k, v in settings["training"].items():
             learner.update_setting(k, v)
 
@@ -34,4 +33,4 @@ class LearnerFactory:
         if candidate_selector.is_tensorflow:
             return TensorflowModel()
         else:
-            return DummyLearner(settings["dataset"]["valid_file"])
+            return DummyLearner(settings["dataset"]["valid_file"], settings["endpoint"]["prefix"])

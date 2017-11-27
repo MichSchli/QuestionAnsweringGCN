@@ -9,8 +9,8 @@ class DummyLearner:
     model = None
 
 
-    def __init__(self, validation_file_location):
-        self.validation_file_iterator = ConllReader(validation_file_location)
+    def __init__(self, validation_file_location, prefix):
+        self.validation_file_iterator = ConllReader(validation_file_location, entity_prefix=prefix)
         self.evaluator = Evaluator(self.validation_file_iterator)
 
     def update_setting(self, setting_string, value):
