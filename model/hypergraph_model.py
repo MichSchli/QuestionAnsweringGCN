@@ -56,7 +56,7 @@ class HypergraphModel:
         self.name_map = VertexFeatureModel()
 
     def add_names(self, name_map):
-        self.name_map.add_names(name_map)
+        self.name_map.add_names({self.entity_map[k]:v for k,v in name_map.items()})
 
     def make_name_map(self):
         non_name_vertices = {}

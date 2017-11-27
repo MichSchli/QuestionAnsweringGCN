@@ -7,10 +7,19 @@ class VertexFeatureModel:
     feature_map = None
     feature_projection = None
 
+    def __init__(self):
+        self.feature_map = {}
+        self.features = []
+        self.feature_projection = np.empty((0,2))
+
     def set_map(self, features, map):
         self.feature_map = map
         self.feature_projection = np.array(list(map.items()))
         self.features = features
+
+    def add_map(self, map):
+        print(map)
+        exit()
 
     def has_projection(self, key):
         return key in self.feature_map
