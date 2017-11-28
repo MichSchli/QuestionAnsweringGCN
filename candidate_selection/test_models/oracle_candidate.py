@@ -34,7 +34,7 @@ class OracleCandidate:
 
     def predict(self, element):
         candidate_set = element["neighborhood"].get_vertices(type="entities")
-        candidate_set = [element["neighborhood"].from_index(i) for i in range(candidate_set.shape[0])]
+        candidate_set = [self.to_answer(element, i) for i in range(candidate_set.shape[0])]
         gold_set = element["gold_entities"]
         gold_in_candidates = np.isin(gold_set, candidate_set)
         return gold_set[gold_in_candidates]
