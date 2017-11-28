@@ -48,9 +48,9 @@ class ExperimentFactory:
             previous_performance = performance
             next_configuration = strategy.next(previous_performance)
 
-        Static.logger.write("Parameter tuning done.", verbosity_priority=1)
-        Static.logger.write("Best setting: " + best_string, verbosity_priority=1)
-        Static.logger.write("Performance: " + str(best_performance), verbosity_priority=1)
+        Static.logger.write("Parameter tuning done.", "experiment", "messages")
+        Static.logger.write("Best setting: " + best_string, "experiment", "messages")
+        Static.logger.write("Performance: " + str(best_performance), "experiment", "messages")
 
         return best_configuration
 
@@ -60,7 +60,7 @@ class ExperimentFactory:
             for k, v in cfg.items():
                 config_items.append(h + ":" + k + "=" + v)
         parameter_string = ", ".join(config_items)
-        Static.logger.write(parameter_string, verbosity_priority=2)
+        Static.logger.write(parameter_string, "experiment", "parameters")
         facts = self.fact_factory.construct_facts(next_configuration)
         indexers = self.index_factory.construct_indexes(next_configuration)
         preprocessors = self.preprocessor_factory.construct_preprocessor(indexers, next_configuration)
@@ -82,9 +82,9 @@ class ExperimentFactory:
         return best_epochs, parameter_string, performance
 
     def evaluate(self, dataset_string):
-        Static.logger.write("Evaluating on \""+dataset_string+"\"...", verbosity_priority=1)
+        Static.logger.write("Evaluating on \""+dataset_string+"\"...", "experiment", "messages")
         performance = self.latest_experiment_runner.evaluate(self.settings["dataset"][dataset_string])
-        Static.logger.write("Performance: " + str(performance), verbosity_priority=1)
+        Static.logger.write("Performance: " + str(performance), "experiment", "messages")
 
     """
     Iterate all possible configurations of settings:

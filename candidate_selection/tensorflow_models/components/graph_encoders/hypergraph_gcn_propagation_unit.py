@@ -9,7 +9,9 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
     self_weight_type = None
     self_bias_type = None
 
-    def __init__(self, prefix, facts, variables, dimension, hypergraph, weights="block", biases="constant", self_weight="full"):
+    def __init__(self, prefix, facts, variables, dimension, hypergraph,
+                 weights="block", biases="constant", self_weight="full", self_bias="constant", add_inverse_relations=True):
+        self.add_inverse_relations = add_inverse_relations
         self.gcn_encoder_ev_to_en = GcnConcatMessagePasser(facts, variables, dimension,
                                                            variable_prefix=prefix+"_ev_to_en", senders="events",
                                                            receivers="entities",
@@ -25,17 +27,18 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
                                                            receivers="entities",
                                                            weights=weights,
                                                            biases=biases)
-        self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
+        if add_inverse_relations:
+            self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
                                                                   variable_prefix=prefix+"_ev_to_en", senders="events",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases)
-        self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(facts, variables, dimension,
+            self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(facts, variables, dimension,
                                                                   variable_prefix=prefix+"_en_to_ev", senders="entities",
                                                                   receivers="events", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases)
-        self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
+            self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
                                                                   variable_prefix=prefix+"_en_to_en", senders="entities",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
@@ -47,7 +50,7 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
         self.variable_prefix = prefix
 
         self.self_weight_type = self_weight
-        self.self_bias_type = "constant"
+        self.self_bias_type = self_bias
 
     def get_optimizable_parameters(self):
         params = [self.W_self_entities, self.W_self_events]
@@ -68,9 +71,11 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
         self.gcn_encoder_ev_to_en.prepare_variables()
         self.gcn_encoder_en_to_ev.prepare_variables()
         self.gcn_encoder_en_to_en.prepare_variables()
-        self.gcn_encoder_ev_to_en_invert.prepare_variables()
-        self.gcn_encoder_en_to_ev_invert.prepare_variables()
-        self.gcn_encoder_en_to_en_invert.prepare_variables()
+
+        if self.add_inverse_relations:
+            self.gcn_encoder_ev_to_en_invert.prepare_variables()
+            self.gcn_encoder_en_to_ev_invert.prepare_variables()
+            self.gcn_encoder_en_to_en_invert.prepare_variables()
 
         if self.self_weight_type == "full":
             initializer_v = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
@@ -87,29 +92,35 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
             self.b_self_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_event_weights")
 
     def propagate(self):
-
         # Propagate information to events:
-        if self.self_weight_type == "full":
-            self.hypergraph.event_vertex_embeddings = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
+        # For now apply no self transform to events
+        #if self.self_weight_type == "full":
+        #    event_self_loop_messages = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
 
-        if self.self_bias_type == "constant":
-            self.hypergraph.event_vertex_embeddings += self.b_self_events
+        #if self.self_bias_type == "constant":
+        #    event_self_loop_messages += self.b_self_events
 
-        self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph) \
-                                                  + self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
-
+        self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph)
+        if self.add_inverse_relations:
+            self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
 
         # Propagate information to vertices:
-        entity_vertex_embeddings = self.gcn_encoder_ev_to_en.get_update(self.hypergraph) \
-                                   + self.gcn_encoder_ev_to_en_invert.get_update(self.hypergraph)
-        entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph) \
-                                    + self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
 
         if self.self_weight_type == "full":
-            self.hypergraph.entity_vertex_embeddings += tf.matmul(self.hypergraph.entity_vertex_embeddings,
+            self_loop_messages = tf.matmul(self.hypergraph.entity_vertex_embeddings,
                                                                   self.W_self_entities)
+        else:
+            self_loop_messages = self.hypergraph.entity_vertex_embeddings
 
         if self.self_bias_type == "constant":
-            self.hypergraph.entity_vertex_embeddings += self.b_self_entities
+            self_loop_messages += self.b_self_entities
 
-        self.hypergraph.entity_vertex_embeddings += entity_vertex_embeddings
+        entity_vertex_embeddings = self.gcn_encoder_ev_to_en.get_update(self.hypergraph)
+        if self.add_inverse_relations:
+            entity_vertex_embeddings += self.gcn_encoder_ev_to_en_invert.get_update(self.hypergraph)
+
+        entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph)
+        if self.add_inverse_relations:
+            entity_vertex_embeddings += self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
+
+        self.hypergraph.entity_vertex_embeddings = entity_vertex_embeddings + self_loop_messages

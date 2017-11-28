@@ -13,6 +13,8 @@ class TensorflowModel:
     candidate_generator = None
     model = None
 
+    learning_rate = None
+
     def update_setting(self, setting_string, value):
         if setting_string == "epochs":
             self.epochs = int(value)
@@ -20,6 +22,8 @@ class TensorflowModel:
             self.batch_size = int(value)
         elif setting_string == "project_name":
             self.project_names = True if value == "True" else False
+        elif setting_string == "learning_rate":
+            self.learning_rate = float(value)
 
     def set_preprocessor(self, preprocessor):
         self.preprocessor = preprocessor
@@ -37,7 +41,7 @@ class TensorflowModel:
 
         self.model_loss = self.model.get_loss_graph()
         parameters_to_optimize = tf.trainable_variables()
-        opt_func = tf.train.AdamOptimizer(learning_rate=0.01)
+        opt_func = tf.train.AdamOptimizer(learning_rate=self.learning_rate)
         grad_func = tf.gradients(self.model_loss, parameters_to_optimize)
         self.optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
         init_op = tf.global_variables_initializer()
@@ -127,7 +131,7 @@ class TensorflowModel:
             epochs = self.epochs
 
         for epoch in range(epochs):
-            Static.logger.write("Starting epoch " + str(epoch), verbosity_priority=4)
+            Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)
             #epoch_iterator = self.project_gold(epoch_iterator)
@@ -146,7 +150,7 @@ class TensorflowModel:
                 loss = result[1]
 
 
-                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), verbosity_priority=2)
+                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
 
 
     def predict(self, test_file_iterator):
@@ -172,7 +176,8 @@ class TensorflowModel:
                 output = []
 
                 for prediction in best_predictions:
-                    print(example["neighborhood"].get_paths_to_neighboring_centroid(prediction))
+                    if Static.logger.should_log("testing", "paths"):
+                        Static.logger.write(example["neighborhood"].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
                     if example["neighborhood"].has_name(prediction):
                         output.append(example["neighborhood"].get_name(prediction))
                     else:

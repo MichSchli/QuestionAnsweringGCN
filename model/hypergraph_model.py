@@ -76,8 +76,6 @@ class HypergraphModel:
                     representation.extend(e)
                     l.append(representation)
 
-        print(l)
-        sleep(5)
         return l
 
 

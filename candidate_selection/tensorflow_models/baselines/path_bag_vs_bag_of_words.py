@@ -41,7 +41,10 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
                                                                                         self.model_settings["entity_embedding_dimension"],
                                                                                         self.hypergraph,
                                                                                         weights="identity",
-                                                                                        biases="relation_specific")
+                                                                                        biases="relation_specific",
+                                                                                        self_weight="identity",
+                                                                                        self_bias="zero",
+                                                                                        add_inverse_relations=False)
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
 
         if self.model_settings["use_transformation"]:
@@ -56,17 +59,6 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
     def set_indexers(self, indexers):
         self.word_indexer = indexers.word_indexer
         self.relation_indexer = indexers.relation_indexer
-
-    def OLD_initialize_indexers(self):
-        self.word_indexer = self.build_indexer(self.model_settings["word_embedding_type"], (40000, self.model_settings["word_dimension"]), self.model_settings["default_word_embedding"])
-        self.entity_indexer = self.build_indexer(self.model_settings["entity_embedding_type"],
-                                                 (self.model_settings["facts"].number_of_entities,
-                                                  self.model_settings["entity_dimension"]),
-                                                 self.model_settings["default_entity_embedding"])
-        self.relation_indexer = self.build_indexer(self.model_settings["relation_embedding_type"],
-                                                   (self.model_settings["facts"].number_of_relation_types,
-                                                    self.model_settings["entity_dimension"]),
-                                                   self.model_settings["default_relation_embedding"])
 
     def compute_entity_scores(self):
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])

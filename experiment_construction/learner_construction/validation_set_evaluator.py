@@ -36,7 +36,7 @@ class ValidationSetEvaluator:
         epoch = 0
         best_performance = -1
         best_epoch = 0
-        Static.logger.write("Beginning training with max_epochs="+str(self.max_epochs)+ (", not" if not self.early_stopping else ",") + " using early stopping.", verbosity_priority=4)
+        Static.logger.write("Beginning training with max_epochs="+str(self.max_epochs)+ (", not" if not self.early_stopping else ",") + " using early stopping.", area="training", subject="validation_messages")
         while epoch < self.max_epochs:
             epoch += self.epochs_between_tests
             self.inner.train(train_file_iterator, epochs=self.epochs_between_tests)
@@ -45,7 +45,7 @@ class ValidationSetEvaluator:
             evaluation = self.evaluator.evaluate(prediction)
             performance = evaluation.micro_f1
 
-            Static.logger.write("Performance at epoch "+str(epoch)+": "+str(performance), verbosity_priority=2)
+            Static.logger.write("Performance at epoch "+str(epoch)+": "+str(performance), "training", "validation_loss")
 
             if performance > best_performance:
                 best_performance = performance
@@ -53,6 +53,6 @@ class ValidationSetEvaluator:
             elif self.early_stopping:
                 break
 
-        Static.logger.write("Stopped at epoch "+str(best_epoch)+" with performance "+str(best_performance), verbosity_priority=2)
+        Static.logger.write("Stopped at epoch "+str(best_epoch)+" with performance "+str(best_performance), "training", "validation_messages")
         return best_epoch, best_performance
 
