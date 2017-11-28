@@ -26,6 +26,12 @@ class OracleCandidate:
     def initialize(self):
         pass
 
+    def to_answer(self, example, index):
+        if example["neighborhood"].has_name(index):
+            return example["neighborhood"].get_name(index)
+        else:
+            return example["neighborhood"].from_index(index)
+
     def predict(self, element):
         candidate_set = element["neighborhood"].get_vertices(type="entities")
         candidate_set = [element["neighborhood"].from_index(i) for i in range(candidate_set.shape[0])]
