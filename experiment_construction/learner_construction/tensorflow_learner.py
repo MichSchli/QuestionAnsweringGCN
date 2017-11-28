@@ -172,6 +172,7 @@ class TensorflowModel:
                 output = []
 
                 for prediction in best_predictions:
+                    print(example["neighborhood"].get_paths_to_neighboring_centroid(prediction))
                     if example["neighborhood"].has_name(prediction):
                         output.append(example["neighborhood"].get_name(prediction))
                     else:

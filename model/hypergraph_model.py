@@ -30,6 +30,58 @@ class HypergraphModel:
 
     name_map = None
 
+    event_centroid_map = None
+
+    def get_paths_to_neighboring_centroid(self, entity):
+        l = []
+
+        frontier = np.array([entity])
+
+        outgoing_v = self.entity_to_entity_edges[np.logical_and(np.isin(self.entity_to_entity_edges[:, 0], frontier),
+                                                                np.isin(self.entity_to_entity_edges[:, 2], self.centroids))]
+        ingoing_v = self.entity_to_entity_edges[np.logical_and(np.isin(self.entity_to_entity_edges[:, 2], frontier),
+                                                                np.isin(self.entity_to_entity_edges[:, 0], self.centroids))]
+
+        for edge in outgoing_v:
+            l.append([edge[0], "->", self.relation_map[edge[1]], self.from_index(edge[2])])
+
+        for edge in ingoing_v:
+            l.append([edge[2], "<-", self.relation_map[edge[1]], self.from_index(edge[0])])
+
+        if self.event_centroid_map is None:
+            self.event_centroid_map = {}
+            for edge in self.event_to_entity_edges:
+                if edge[2] in self.centroids:
+                    if edge[0] not in self.event_centroid_map:
+                        self.event_centroid_map[edge[0]] = []
+                    self.event_centroid_map[edge[0]].append(["->", self.relation_map[edge[1]], self.from_index(edge[2])])
+
+            for edge in self.entity_to_event_edges:
+                if edge[0] in self.centroids:
+                    if edge[2] not in self.event_centroid_map:
+                        self.event_centroid_map[edge[2]] = []
+                    self.event_centroid_map[edge[2]].append(["<-", self.relation_map[edge[1]], self.from_index(edge[0])])
+
+        for edge in self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:, 0], frontier)]:
+            if edge[2] in self.event_centroid_map:
+                for e in self.event_centroid_map[edge[2]]:
+                    representation = [edge[0], " ->", self.relation_map[edge[1]], "e"+str(edge[2])]
+                    representation.extend(e)
+                    l.append(representation)
+
+        for edge in self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:, 0], frontier)]:
+            if edge[0] in self.event_centroid_map:
+                for e in self.event_centroid_map[edge[0]]:
+                    representation = [edge[2], " <-", self.relation_map[edge[1]], "e"+str(edge[0])]
+                    representation.extend(e)
+                    l.append(representation)
+
+        print(l)
+        sleep(5)
+        return l
+
+
+
     def to_index(self, entity):
         return self.inverse_entity_map[entity]
 

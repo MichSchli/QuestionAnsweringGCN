@@ -24,20 +24,31 @@ class IndexedInterface:
 
         hypergraph.entity_vertices = self.entity_indexer.index(hypergraph.entity_vertices)
 
-        hypergraph.event_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.event_to_entity_edges[:,1])
-        hypergraph.entity_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_entity_edges[:,1])
-        hypergraph.entity_to_event_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_event_edges[:,1])
+        #hypergraph.event_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.event_to_entity_edges[:,1])
+        #hypergraph.entity_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_entity_edges[:,1])
+        #hypergraph.entity_to_event_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_event_edges[:,1])
+
+        hypergraph.relation_map = {}
 
         for i, edge in enumerate(hypergraph.event_to_entity_edges):
             hypergraph.event_to_entity_edges[i][0] = event_indexes[edge[0]]
+            indexed_relation = self.relation_indexer.index_single_element(edge[1])
+            hypergraph.relation_map[indexed_relation] = edge[1]
+            hypergraph.event_to_entity_edges[i][1] = indexed_relation
             hypergraph.event_to_entity_edges[i][2] = entity_indexes[edge[2]]
 
         for i, edge in enumerate(hypergraph.entity_to_event_edges):
             hypergraph.entity_to_event_edges[i][0] = entity_indexes[edge[0]]
+            indexed_relation = self.relation_indexer.index_single_element(edge[1])
+            hypergraph.relation_map[indexed_relation] = edge[1]
+            hypergraph.entity_to_event_edges[i][1] = indexed_relation
             hypergraph.entity_to_event_edges[i][2] = event_indexes[edge[2]]
 
         for i, edge in enumerate(hypergraph.entity_to_entity_edges):
             hypergraph.entity_to_entity_edges[i][0] = entity_indexes[edge[0]]
+            indexed_relation = self.relation_indexer.index_single_element(edge[1])
+            hypergraph.relation_map[indexed_relation] = edge[1]
+            hypergraph.entity_to_entity_edges[i][1] = indexed_relation
             hypergraph.entity_to_entity_edges[i][2] = entity_indexes[edge[2]]
 
         hypergraph.event_vertices = hypergraph.event_vertices.astype(np.int32)
