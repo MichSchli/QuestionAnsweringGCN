@@ -67,17 +67,6 @@ class EntityEmbeddingVsBagOfWords(AbstractTensorflowModel):
         self.word_indexer = indexers.word_indexer
         self.entity_indexer = indexers.entity_indexer
 
-    def OLD_initialize_indexers(self):
-        self.word_indexer = self.build_indexer(self.model_settings["word_embedding_type"], (40000, self.model_settings["word_dimension"]), self.model_settings["default_word_embedding"])
-        self.entity_indexer = self.build_indexer(self.model_settings["entity_embedding_type"],
-                                                 (self.model_settings["facts"].number_of_entities,
-                                                  self.model_settings["entity_dimension"]),
-                                                 self.model_settings["default_entity_embedding"])
-        self.relation_indexer = self.build_indexer(self.model_settings["relation_embedding_type"],
-                                                   (self.model_settings["facts"].number_of_relation_types,
-                                                    self.model_settings["entity_dimension"]),
-                                                   self.model_settings["default_relation_embedding"])
-
     def compute_entity_scores(self):
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
         word_embeddings = self.word_embedding.get_representations()
