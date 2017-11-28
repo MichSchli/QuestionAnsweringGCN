@@ -6,6 +6,7 @@ class LazyIndexer:
     global_map = None
     counter = None
     vocabulary_shape = None
+    vectors = None
 
     def __init__(self, vocabulary_shape):
         self.global_map = {}
@@ -27,9 +28,10 @@ class LazyIndexer:
         return self.get_all_vectors()[index]
 
     def get_all_vectors(self):
-        vectors = np.random.uniform(-1, 1, size=self.vocabulary_shape).astype(np.float32)
-        vectors[0] = 0
-        return vectors
+        if self.vectors is None:
+            self.vectors = np.random.uniform(-1, 1, size=self.vocabulary_shape).astype(np.float32)
+            self.vectors[0] = 0
+        return self.vectors
 
     def index(self, elements):
         local_map = np.empty(elements.shape, dtype=np.int32)

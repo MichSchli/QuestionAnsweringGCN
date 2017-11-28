@@ -58,7 +58,7 @@ class HypergraphModel:
     def add_names(self, name_map):
         self.name_map.add_features(name_map)
 
-    def make_name_map(self):
+    def OLD_make_name_map(self):
         non_name_vertices = {}
         non_name_edges = []
         name_vertices = {}
