@@ -3,9 +3,7 @@ import numpy as np
 
 class VertexFeatureModel:
 
-    features = None
     feature_map = None
-    feature_projection = None
 
     def __init__(self):
         self.feature_map = {}
@@ -21,7 +19,7 @@ class VertexFeatureModel:
 
     def project_singleton(self, key):
         if key in self.feature_map:
-            return self.features[self.feature_map[key]]
+            return self.feature_map[key]
         else:
             return "no_map_found"
 
@@ -34,8 +32,8 @@ class VertexFeatureModel:
     def inverse_project(self, features):
         vertices = {feature: [] for feature in features}
         for edge in self.feature_map.items():
-            if self.features[edge[1]] in features:
-                vertices[self.features[edge[1]]].append(edge[0])
+            if edge[1] in features:
+                vertices[edge[1]].append(edge[0])
 
         vertices = {n[0]: np.unique(n[1]) for n in vertices.items()}
         #print(vertices)
