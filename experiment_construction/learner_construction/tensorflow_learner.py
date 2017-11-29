@@ -130,7 +130,7 @@ class TensorflowModel:
         if epochs is None:
             epochs = self.epochs
 
-        for epoch in range(start_epoch, epochs):
+        for epoch in range(start_epoch, start_epoch+epochs):
             Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)
