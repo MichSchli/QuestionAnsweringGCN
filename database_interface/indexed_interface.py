@@ -59,7 +59,7 @@ class IndexedInterface:
 
         new_name_map = {}
         for key, value in hypergraph.name_map.feature_map.items():
-            new_name_map[self.entity_indexer.index_single_element(key)] = value
+            new_name_map[entity_indexes[key]] = value
         hypergraph.name_map.set_map(new_name_map)
 
         #hypergraph.name_edge_type = self.relation_indexer.index_single_element("http://www.w3.org/2000/01/rdf-schema#label")
