@@ -126,11 +126,11 @@ class TensorflowModel:
             example["gold_entities"] = gold_list
             yield example
 
-    def train(self, train_file_iterator, epochs=None):
+    def train(self, train_file_iterator, start_epoch=0, epochs=None):
         if epochs is None:
             epochs = self.epochs
 
-        for epoch in range(epochs):
+        for epoch in range(start_epoch, epochs):
             Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
             epoch_iterator = train_file_iterator.iterate()
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)

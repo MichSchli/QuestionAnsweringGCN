@@ -38,8 +38,8 @@ class ValidationSetEvaluator:
         best_epoch = 0
         Static.logger.write("Beginning training with max_epochs="+str(self.max_epochs)+ (", not" if not self.early_stopping else ",") + " using early stopping.", area="training", subject="validation_messages")
         while epoch < self.max_epochs:
+            self.inner.train(train_file_iterator, start_epoch=epoch, epochs=self.epochs_between_tests)
             epoch += self.epochs_between_tests
-            self.inner.train(train_file_iterator, epochs=self.epochs_between_tests)
 
             prediction = self.inner.predict(self.validation_file_iterator)
             evaluation = self.evaluator.evaluate(prediction)
