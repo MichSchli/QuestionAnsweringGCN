@@ -6,21 +6,26 @@ class ConllReader:
 
     output=None
     entity_prefix=None
+    max_elements = None
 
-    def __init__(self, filename, entity_prefix=""):
+    def __init__(self, filename, entity_prefix="", max_elements=None):
         self.filename = filename
         self.entity_prefix = entity_prefix
+        self.max_elements = max_elements
 
     def iterate(self, output=None):
         dictionary = {}
 
         with open(self.filename) as data_file:
+
             sentence_matrix = []
             gold_matrix = []
             entity_matrix = []
 
             reading_sentence = True
             reading_entities = False
+            counter = 0
+
             for line in data_file:
                 line = line.strip()
 
@@ -44,6 +49,10 @@ class ConllReader:
                     dictionary["gold_entities"] = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
 
                     yield dictionary
+
+                    counter += 1
+                    if self.max_elements is not None and counter == self.max_elements:
+                        break
 
                     """if output == "entities":
                         sentence_entities = np.unique(np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
