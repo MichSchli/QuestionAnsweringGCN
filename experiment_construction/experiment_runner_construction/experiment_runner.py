@@ -33,4 +33,4 @@ class ExperimentRunner:
         evaluator = Evaluator(ConllReader(file, self.kb_prefix))
 
         evaluation = evaluator.evaluate(predictions)
-        return evaluation.micro_f1
+        return evaluation.micro_precision, evaluation.micro_recall, evaluation.micro_f1
