@@ -21,7 +21,7 @@ class MeanGoldEmbeddingRetriever(AbstractComponent):
         entity_vertex_scores_distributed = tf.nn.embedding_lookup(entity_vertex_scores,
                                                                   self.variables.get_variable(self.variable_prefix + "gold_lookup_matrix"))
 
-        #entity_vertex_scores_distributed = tf.Print(entity_vertex_scores_distributed, [self.variables.get_variable(self.variable_prefix + "gold_lookup_matrix")], message="gold_lookup", summarize=25)
+        entity_vertex_scores_distributed = tf.Print(entity_vertex_scores_distributed, [self.variables.get_variable(self.variable_prefix + "gold_lookup_matrix")], message="gold_lookup", summarize=25)
 
         #entity_vertex_scores_distributed = tf.Print(entity_vertex_scores_distributed, [entity_vertex_scores_distributed], message="distributed embs", summarize=30)
         return tf.reduce_sum(entity_vertex_scores_distributed, axis=1) \

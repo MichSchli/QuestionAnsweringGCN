@@ -43,7 +43,7 @@ class EntityEmbeddingVsGold(AbstractTensorflowModel):
         #self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         #self.add_component(self.word_embedding)
 
-        self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence")
+        self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence", comparison="concat")
         self.add_component(self.target_comparator)
 
         self.decoder = SoftmaxDecoder(self.variables)
@@ -52,30 +52,46 @@ class EntityEmbeddingVsGold(AbstractTensorflowModel):
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
 
-        if self.model_settings["use_transformation"]:
-            self.transformation = MultilayerPerceptron([self.model_settings["entity_embedding_dimension"],
+        self.transformation = MultilayerPerceptron([self.model_settings["entity_embedding_dimension"],
                                                         self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
                                                        variable_prefix="transformation",
                                                        l2_scale=self.model_settings["regularization_scale"])
+        self.add_component(self.transformation)
 
-            self.add_component(self.transformation)
+        self.vertex_transformation = MultilayerPerceptron([self.model_settings["entity_embedding_dimension"],
+                                                    self.model_settings["entity_embedding_dimension"]],
+                                                   self.variables,
+                                                   variable_prefix="transformation",
+                                                   l2_scale=self.model_settings["regularization_scale"])
+        self.add_component(self.vertex_transformation)
+
+        self.final_transformation = MultilayerPerceptron([2*self.model_settings["entity_embedding_dimension"],
+                                                          4 * self.model_settings["entity_embedding_dimension"],
+                                                    1],
+                                                   self.variables,
+                                                   variable_prefix="transformation",
+                                                   l2_scale=self.model_settings["regularization_scale"])
+        self.add_component(self.final_transformation)
 
     def set_indexers(self, indexers):
         self.entity_indexer = indexers.entity_indexer
 
     def compute_entity_scores(self):
         self.hypergraph.entity_vertex_embeddings = self.entity_embedding.get_representations()
+        self.hypergraph.entity_vertex_embeddings = tf.Print(self.hypergraph.entity_vertex_embeddings, [self.hypergraph.entity_vertex_embeddings], message="embeddings", summarize=100)
         gold_embeddings = self.mean_gold_embedding_retriever.get_representations(self.hypergraph.entity_vertex_embeddings)
         #gold_embeddings = tf.Print(gold_embeddings, [gold_embeddings], message="Gold: ", summarize=5)
 
-        if self.model_settings["use_transformation"]:
-            gold_embeddings = self.transformation.transform(gold_embeddings)
+        #gold_embeddings = self.transformation.transform(gold_embeddings)
+        vertex_embeddings = self.hypergraph.entity_vertex_embeddings #self.vertex_transformation.transform(self.hypergraph.entity_vertex_embeddings)
 
         #gold_embeddings = tf.Print(gold_embeddings, [self.hypergraph.entity_vertex_embeddings], message="Vertices: ", summarize=100)
 
-        entity_scores = self.target_comparator.get_comparison_scores(gold_embeddings,
-                                                                         self.hypergraph.entity_vertex_embeddings)
+        hidden = self.target_comparator.get_comparison_scores(gold_embeddings, vertex_embeddings)
+        entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
+
+        entity_scores = tf.Print(entity_scores, [entity_scores], summarize=25, message="entity_scores: ")
 
         #entity_scores = tf.Print(entity_scores, [entity_scores], message="Scores: ", summarize=25)
 

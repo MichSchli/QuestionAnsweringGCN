@@ -84,9 +84,9 @@ class ExperimentFactory:
     def evaluate(self, dataset_string):
         Static.logger.write("Evaluating on \""+dataset_string+"\"...", "experiment", "messages")
         precision, recall, f1 = self.latest_experiment_runner.evaluate(self.settings["dataset"][dataset_string])
-        Static.logger.write("Performance: " + str(precision), "experiment", "messages")
-        Static.logger.write("Performance: " + str(recall), "experiment", "messages")
-        Static.logger.write("Performance: " + str(f1), "experiment", "messages")
+        Static.logger.write("Precision: " + str(precision), "experiment", "messages")
+        Static.logger.write("Recall: " + str(recall), "experiment", "messages")
+        Static.logger.write("F1: " + str(f1), "experiment", "messages")
 
     """
     Iterate all possible configurations of settings:

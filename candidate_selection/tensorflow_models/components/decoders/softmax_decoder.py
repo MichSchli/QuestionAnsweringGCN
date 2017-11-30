@@ -39,7 +39,7 @@ class SoftmaxDecoder(AbstractComponent):
             vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight)
 
             sigmoids = tf.nn.sigmoid(x[0][:x[1]])
-            #vals = tf.Print(vals, [golds, vals, sigmoids], message="cross entropy: ", summarize=25)
+            vals = tf.Print(vals, [golds, vals, sigmoids], message="cross entropy: ", summarize=25)
             vals = tf.reduce_mean(vals)
             return vals
 

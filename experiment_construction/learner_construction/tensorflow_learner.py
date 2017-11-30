@@ -172,7 +172,8 @@ class TensorflowModel:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                best_predictions = np.where(prediction[0] > 0.3)[0]
+                print(prediction)
+                best_predictions = np.where(prediction[0] > .5)[0]
                 output = []
 
                 for prediction in best_predictions:
@@ -182,5 +183,9 @@ class TensorflowModel:
                         output.append(example["neighborhood"].get_name(prediction))
                     else:
                         output.append(example["neighborhood"].from_index(prediction))
+
+                print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
+                print(output)
+                print("=====")
 
                 yield output

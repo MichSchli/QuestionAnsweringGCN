@@ -40,13 +40,13 @@ class MultilayerPerceptron(AbstractComponent):
     def transform(self, vectors):
         for i in range(len(self.transforms)-1):
             vectors = tf.matmul(vectors, self.weights[i]) + self.biases[i]
-            if i < len(self.transforms) - 1:
+            if i < len(self.transforms) - 2:
                 vectors = tf.nn.relu(vectors)
 
         return vectors
 
     def get_regularization_term(self):
-        return self.l2_scale * tf.reduce_sum(tf.square(self.weights))
+        return self.l2_scale * tf.reduce_sum([tf.reduce_sum(tf.square(w)) for w in self.weights])
 
     def handle_variable_assignment(self, batch, mode):
         pass
