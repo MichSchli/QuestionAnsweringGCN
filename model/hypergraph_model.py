@@ -43,10 +43,10 @@ class HypergraphModel:
                                                                 np.isin(self.entity_to_entity_edges[:, 0], self.centroids))]
 
         for edge in outgoing_v:
-            l.append([edge[0], "->", self.relation_map[edge[1]], self.from_index(edge[2])])
+            l.append([edge[0], "->", self.relation_map[edge[1]], self.from_index_with_names(edge[2])])
 
         for edge in ingoing_v:
-            l.append([edge[2], "<-", self.relation_map[edge[1]], self.from_index(edge[0])])
+            l.append([edge[2], "<-", self.relation_map[edge[1]], self.from_index_with_names(edge[0])])
 
         if self.event_centroid_map is None:
             self.event_centroid_map = {}
@@ -54,13 +54,13 @@ class HypergraphModel:
                 if edge[2] in self.centroids:
                     if edge[0] not in self.event_centroid_map:
                         self.event_centroid_map[edge[0]] = []
-                    self.event_centroid_map[edge[0]].append(["->", self.relation_map[edge[1]], idx, self.from_index(edge[2])])
+                    self.event_centroid_map[edge[0]].append(["->", self.relation_map[edge[1]], idx, self.from_index_with_names(edge[2])])
 
             for edge in self.entity_to_event_edges:
                 if edge[0] in self.centroids:
                     if edge[2] not in self.event_centroid_map:
                         self.event_centroid_map[edge[2]] = []
-                    self.event_centroid_map[edge[2]].append(["<-", self.relation_map[edge[1]], self.from_index(edge[0])])
+                    self.event_centroid_map[edge[2]].append(["<-", self.relation_map[edge[1]], self.from_index_with_names(edge[0])])
 
         for edge in self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:, 0], frontier)]:
             if edge[2] in self.event_centroid_map:
