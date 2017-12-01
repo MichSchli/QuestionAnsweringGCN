@@ -100,7 +100,9 @@ class FreebaseInterface:
     Retrieve the 1-neighborhood of a set of vertices in the hypergraph
     """
     def get_adjacent_edges(self, node_identifiers, target="entities", literals_only=False):
-        #print("retrieving")
+        print(target)
+        print(literals_only)
+        time.sleep(3)
         edge_query_result = EdgeQueryResult()
 
         self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True, target=target, literals_only=literals_only)
@@ -166,8 +168,6 @@ class FreebaseInterface:
 
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
-        tracker = {}
-
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             db_interface = self.initialize_sparql_interface()
 
@@ -190,12 +190,6 @@ class FreebaseInterface:
             #print(len(results["results"]["bindings"]))
 
             for j,result in enumerate(results["results"]["bindings"]):
-                edge_string = result["s"]["value"] + result["r"]["value"] + result["o"]["value"]
-                if edge_string in tracker:
-                    print("DUPLICATE")
-                    print(edge_string)
-                    time.sleep(5)
-                tracker[edge_string] = True
                 #print(result["s"]["value"])
                 #print(result["r"]["value"])
                 #print(result["o"]["value"])
