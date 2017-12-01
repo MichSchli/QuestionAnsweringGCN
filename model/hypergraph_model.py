@@ -69,7 +69,7 @@ class HypergraphModel:
                     representation.extend(e)
                     l.append(representation)
 
-        for edge in self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:, 0], frontier)]:
+        for edge in self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:, 2], frontier)]:
             if edge[0] in self.event_centroid_map:
                 for e in self.event_centroid_map[edge[0]]:
                     representation = [edge[2], " <-", self.relation_map[edge[1]], "e"+str(edge[0])]
