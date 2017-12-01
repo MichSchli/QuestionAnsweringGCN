@@ -50,11 +50,11 @@ class HypergraphModel:
 
         if self.event_centroid_map is None:
             self.event_centroid_map = {}
-            for edge in self.event_to_entity_edges:
+            for idx, edge in enumerate(self.event_to_entity_edges):
                 if edge[2] in self.centroids:
                     if edge[0] not in self.event_centroid_map:
                         self.event_centroid_map[edge[0]] = []
-                    self.event_centroid_map[edge[0]].append(["->", self.relation_map[edge[1]], self.from_index(edge[2])])
+                    self.event_centroid_map[edge[0]].append(["->", self.relation_map[edge[1]], idx, self.from_index(edge[2])])
 
             for edge in self.entity_to_event_edges:
                 if edge[0] in self.centroids:
@@ -78,7 +78,11 @@ class HypergraphModel:
 
         return l
 
-
+    def from_index_with_names(self, index):
+        if self.has_name(index):
+            return self.get_name(index)
+        else:
+            return self.from_index(index)
 
     def to_index(self, entity):
         return self.inverse_entity_map[entity]
