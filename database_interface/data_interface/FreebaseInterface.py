@@ -100,9 +100,6 @@ class FreebaseInterface:
     Retrieve the 1-neighborhood of a set of vertices in the hypergraph
     """
     def get_adjacent_edges(self, node_identifiers, target="entities", literals_only=False):
-        print(target)
-        print(literals_only)
-        time.sleep(3)
         edge_query_result = EdgeQueryResult()
 
         self.retrieve_edges_in_one_direction(node_identifiers, edge_query_result, subject=True, target=target, literals_only=literals_only)
