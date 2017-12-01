@@ -464,7 +464,13 @@ class HypergraphModel:
             return
 
         target = edges[:,2]
-        unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
+        # If source is events, frontier has already been expanded to nearby events.
+        if sources == "events":
+            unseen_or_frontier_targets = np.isin(target, self.get_vertices(targets), invert=True)
+        else:
+            unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
+
+        #unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
         self.append_edges(edges[unseen_or_frontier_targets], sources=sources, targets=targets)
 
