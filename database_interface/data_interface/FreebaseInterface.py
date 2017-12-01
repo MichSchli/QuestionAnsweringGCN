@@ -166,6 +166,8 @@ class FreebaseInterface:
 
         number_of_batches = math.ceil(center_vertices.shape[0] / self.max_entities_per_query)
 
+        tracker = {}
+
         for i,center_vertex_batch in enumerate(np.array_split(center_vertices, number_of_batches)):
             db_interface = self.initialize_sparql_interface()
 
@@ -188,6 +190,12 @@ class FreebaseInterface:
             #print(len(results["results"]["bindings"]))
 
             for j,result in enumerate(results["results"]["bindings"]):
+                edge_string = result["s"]["value"] + result["r"]["value"] + result["o"]["value"]
+                if edge_string in tracker:
+                    print("DUPLICATE")
+                    print(edge_string)
+                    time.sleep(5)
+                tracker[edge_string] = True
                 #print(result["s"]["value"])
                 #print(result["r"]["value"])
                 #print(result["o"]["value"])
