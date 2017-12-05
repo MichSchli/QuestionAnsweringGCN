@@ -37,7 +37,7 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         self.add_component(self.word_embedding)
 
-        self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence")
+        self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence", comparison="concat")
         self.add_component(self.target_comparator)
 
         self.decoder = SoftmaxDecoder(self.variables)
@@ -60,7 +60,7 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
 
-        if self.model_settings["use_transformation"]:
+        if False: #self.model_settings["use_transformation"]:
             self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
                                                         self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
@@ -76,6 +76,14 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
             self.add_component(self.centroid_transformation)
             self.add_component(self.transformation)
 
+        self.final_transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"] + self.model_settings["entity_embedding_dimension"],
+                                                          4 * self.model_settings["entity_embedding_dimension"],
+                                                    1],
+                                                   self.variables,
+                                                   variable_prefix="transformation",
+                                                   l2_scale=self.model_settings["regularization_scale"])
+        self.add_component(self.final_transformation)
+
 
     def set_indexers(self, indexers):
         self.word_indexer = indexers.word_indexer
@@ -83,15 +91,15 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
         self.entity_indexer = indexers.entity_indexer
 
     def compute_entity_scores(self):
-        entity_vertex_embeddings = self.entity_embedding.get_representations()
+        #entity_vertex_embeddings = self.entity_embedding.get_representations()
         word_embeddings = self.word_embedding.get_representations()
-        word_embedding_shape = tf.shape(word_embeddings)
-        word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
+        #word_embedding_shape = tf.shape(word_embeddings)
+        #word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
 
-        centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(entity_vertex_embeddings)
-        centroid_embeddings = self.centroid_transformation.transform(centroid_embeddings)
-        word_embeddings += self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)
-        word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
+        #centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(entity_vertex_embeddings)
+        #centroid_embeddings = self.centroid_transformation.transform(centroid_embeddings)
+        #word_embeddings += self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)
+        #word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
         for hgpu in self.hypergraph_gcn_propagation_units:
@@ -100,10 +108,16 @@ class PathBagVsBagOfWords(AbstractTensorflowModel):
         entity_scores = self.hypergraph.entity_vertex_embeddings
         bag_of_words = tf.reduce_sum(word_embeddings, 1)
 
-        if self.model_settings["use_transformation"]:
-            bag_of_words = self.transformation.transform(bag_of_words)
+        #if self.model_settings["use_transformation"]:
+        #    bag_of_words = self.transformation.transform(bag_of_words)
 
-        entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
-                                                                     entity_scores)
+
+        hidden = self.target_comparator.get_comparison_scores(bag_of_words, entity_scores)
+        entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
+
+        #entity_scores = tf.Print(entity_scores, [entity_scores], summarize=25, message="entity_scores: ")
+
+        #entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
+        #                                                             entity_scores)
 
         return entity_scores
