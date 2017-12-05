@@ -158,21 +158,23 @@ class TensorflowModel:
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
                 result = self.sess.run([self.optimize_func, self.model_loss, model_prediction], feed_dict=assignment_dict)
                 loss = result[1]
-                best_predictions = np.where(result[2] > .5)[2]
-                print(best_predictions)
+                #best_predictions = np.where(result[2] > .5)[2]
+                #print("\n========================")
+                #print(batch["gold_entities"][0])
+                #print(best_predictions)
 
-                for prediction in best_predictions:
-                    if Static.logger.should_log("testing", "paths"):
-                        Static.logger.write(batch_iterator["neighborhood"][0].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
-                    if batch_iterator["neighborhood"].has_name(prediction):
-                        print(batch_iterator["neighborhood"][0].get_name(prediction))
-                    else:
-                        print(batch_iterator["neighborhood"][0].from_index(prediction))
+                #for prediction in sorted(best_predictions, key=lambda x: result[2][0][0][x], reverse=True)[:10]:
+                #    print(result[2][0][0][prediction])
+                #    print(batch["neighborhood"][0].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
+                #    if batch["neighborhood"][0].has_name(prediction):
+                #        print(batch["neighborhood"][0].get_name(prediction))
+                #    else:
+                #        print(batch["neighborhood"][0].from_index(prediction))
 
-                time.sleep(5)
+                #time.sleep(2)
 
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
-
+                time.sleep(2)
 
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
@@ -196,7 +198,7 @@ class TensorflowModel:
             for i, prediction in enumerate(predictions):
                 #print(prediction)
                 best_predictions = np.where(prediction[0] > .5)[0]
-                print(best_predictions)
+                #print(best_predictions)
                 output = []
 
                 for prediction in best_predictions:
@@ -208,7 +210,7 @@ class TensorflowModel:
                         output.append(example["neighborhood"].from_index(prediction))
 
                 #print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
-                print(output)
+                #print(output)
                 print("=====")
 
                 yield output
