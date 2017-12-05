@@ -57,7 +57,9 @@ class TensorflowModel:
 
         index = 0
         for example in iterator:
+            print(index)
             if validate_batches and not self.model.validate_example(example):
+                print("invalid")
                 continue
 
             for k,v in example.items():
@@ -104,7 +106,7 @@ class TensorflowModel:
             example["gold_entities"] = gold_list
             yield example
 
-    def project_from_name_wrapper(self, iterator):
+    def project_from_name_wrapper(self, iterator, skip=True):
         for example in iterator:
             names = example["gold_entities"]
             graph = example["neighborhood"]
@@ -119,10 +121,15 @@ class TensorflowModel:
 
             # TODO CHECK SOMEWHERE ELSE
             if len(gold_list) == 0:
+                print("name " + str(names) + " does not match anything, discarding")
+                if not skip:
+                    yield example
+                    
                 continue
 
             gold_list = np.array(gold_list).astype(np.int32)
             #print(example["neighborhood"].entity_vertices.shape[0])
+            print("projected " + str(example["gold_entities"]) + " to " + str(gold_list))
             example["gold_entities"] = gold_list
             yield example
 
@@ -158,22 +165,24 @@ class TensorflowModel:
         example_iterator = self.candidate_generator.enrich(example_iterator)
 
         if self.project_names:
-            example_iterator = self.project_from_name_wrapper(example_iterator)
+            example_iterator = self.project_from_name_wrapper(example_iterator, skip=False)
         else:
             example_iterator = self.project_gold_to_index(example_iterator)
 
         model_prediction = self.model.get_prediction_graph()
-        for example in example_iterator:
+        for j,example in enumerate(example_iterator):
+            print("example "+str(j)+":\n - - - - - - - ")
 
             as_batch = {k:[v] for k,v in example.items()}
-            self.preprocessor.process(as_batch, mode='train')
+            self.preprocessor.process(as_batch, mode='predict')
 
             assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                print(prediction)
+                #print(prediction)
                 best_predictions = np.where(prediction[0] > .5)[0]
+                print(best_predictions)
                 output = []
 
                 for prediction in best_predictions:
@@ -184,7 +193,7 @@ class TensorflowModel:
                     else:
                         output.append(example["neighborhood"].from_index(prediction))
 
-                print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
+                #print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
                 print(output)
                 print("=====")
 
