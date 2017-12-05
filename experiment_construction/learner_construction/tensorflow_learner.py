@@ -185,6 +185,11 @@ class TensorflowModel:
 
         model_prediction = self.model.get_prediction_graph()
         for j,example in enumerate(example_iterator):
+
+            if example["neighborhood"].get_vertices(type="entities").shape[0] == 0:
+                yield []
+                continue
+
             print("example "+str(j)+":\n - - - - - - - ")
 
             as_batch = {k:[v] for k,v in example.items()}
