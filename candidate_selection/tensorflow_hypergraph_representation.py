@@ -88,13 +88,14 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
 
     def edge_dropout(self, edges, types, mode):
-        rate = 1-0.0
+        dropout_rate = 0
+        keep_rate = 1 - dropout_rate
         size = edges.shape[0]
 
         if size == 0 or mode != "train":
             return edges, types
 
-        sample = np.random.choice(np.arange(size), size=int(rate * size), replace=False)
+        sample = np.random.choice(np.arange(size), size=int(keep_rate * size), replace=False)
         return edges[sample], types[sample]
 
     def handle_variable_set_assignment(self, prefix, edges, types):
