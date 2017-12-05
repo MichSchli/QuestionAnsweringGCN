@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from helpers.static import Static
+import time
 
 
 class TensorflowModel:
@@ -157,9 +158,18 @@ class TensorflowModel:
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
                 result = self.sess.run([self.optimize_func, self.model_loss, model_prediction], feed_dict=assignment_dict)
                 loss = result[1]
-                best_predictions = np.where(result[2][0] > .5)[0]
+                best_predictions = np.where(result[2] > .5)[2]
                 print(best_predictions)
 
+                for prediction in best_predictions:
+                    if Static.logger.should_log("testing", "paths"):
+                        Static.logger.write(batch_iterator["neighborhood"][0].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
+                    if batch_iterator["neighborhood"].has_name(prediction):
+                        print(batch_iterator["neighborhood"][0].get_name(prediction))
+                    else:
+                        print(batch_iterator["neighborhood"][0].from_index(prediction))
+
+                time.sleep(5)
 
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
 
