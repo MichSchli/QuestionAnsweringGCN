@@ -137,6 +137,8 @@ class TensorflowModel:
         if epochs is None:
             epochs = self.epochs
 
+        model_prediction = self.model.get_prediction_graph()
+
         for epoch in range(start_epoch, start_epoch+epochs):
             Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
             epoch_iterator = train_file_iterator.iterate()
@@ -153,8 +155,10 @@ class TensorflowModel:
                 #print("asdf")
                 self.preprocessor.process(batch, mode="train")
                 assignment_dict = self.model.handle_variable_assignment(batch, mode='train')
-                result = self.sess.run([self.optimize_func, self.model_loss], feed_dict=assignment_dict)
+                result = self.sess.run([self.optimize_func, self.model_loss, model_prediction], feed_dict=assignment_dict)
                 loss = result[1]
+                best_predictions = np.where(result[2][0] > .5)[0]
+                print(best_predictions)
 
 
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
