@@ -77,10 +77,6 @@ class HypergraphInterface:
                                               sources,
                                               targets,
                                               literals_only=False):
-        print(sources)
-        print(targets)
-        print(literals_only)
-        sleep(5)
         edge_query_result = self.data_interface.get_adjacent_edges(frontier, target=targets, literals_only=literals_only)
         hypergraph.expand(edge_query_result.get_forward_edges(),
                           edge_query_result.get_backward_edges(),

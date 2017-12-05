@@ -1,5 +1,5 @@
 class Index:
 
-    word_index = None
-    relation_index = None
-    entity_index = None
+    word_indexer = None
+    relation_indexer = None
+    entity_indexer = None
