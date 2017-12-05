@@ -58,9 +58,7 @@ class TensorflowModel:
 
         index = 0
         for example in iterator:
-            print(index)
             if validate_batches and not self.model.validate_example(example):
-                print("invalid")
                 continue
 
             for k,v in example.items():
@@ -142,7 +140,7 @@ class TensorflowModel:
 
         for epoch in range(start_epoch, start_epoch+epochs):
             Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
-            epoch_iterator = train_file_iterator.iterate()
+            epoch_iterator = train_file_iterator.iterate(shuffle=True)
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)
             #epoch_iterator = self.project_gold(epoch_iterator)
 
@@ -174,7 +172,7 @@ class TensorflowModel:
                 #time.sleep(2)
 
                 Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
-                time.sleep(2)
+                #time.sleep(2)
 
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
@@ -201,12 +199,13 @@ class TensorflowModel:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                #print(prediction)
+                print([str(p) + ": " + example["neighborhood"].from_index(i) for i,p in enumerate(prediction[0])])
                 best_predictions = np.where(prediction[0] > .5)[0]
                 #print(best_predictions)
                 output = []
 
                 for prediction in best_predictions:
+                    print(example["neighborhood"].get_paths_to_neighboring_centroid(prediction))
                     if Static.logger.should_log("testing", "paths"):
                         Static.logger.write(example["neighborhood"].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
                     if example["neighborhood"].has_name(prediction):
@@ -214,8 +213,8 @@ class TensorflowModel:
                     else:
                         output.append(example["neighborhood"].from_index(prediction))
 
-                #print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
-                #print(output)
+                print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
+                print(output)
                 print("=====")
 
                 yield output

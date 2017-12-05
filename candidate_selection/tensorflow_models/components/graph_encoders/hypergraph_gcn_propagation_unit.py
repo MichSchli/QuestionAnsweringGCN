@@ -29,17 +29,17 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
                                                            biases=biases)
         if add_inverse_relations:
             self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
-                                                                  variable_prefix=prefix+"_ev_to_en", senders="events",
+                                                                  variable_prefix=prefix+"_ev_to_en_invert", senders="events",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases)
             self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(facts, variables, dimension,
-                                                                  variable_prefix=prefix+"_en_to_ev", senders="entities",
+                                                                  variable_prefix=prefix+"_en_to_ev_invert", senders="entities",
                                                                   receivers="events", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases)
             self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(facts, variables, dimension,
-                                                                  variable_prefix=prefix+"_en_to_en", senders="entities",
+                                                                  variable_prefix=prefix+"_en_to_en_invert", senders="entities",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases)

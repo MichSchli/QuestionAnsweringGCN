@@ -74,11 +74,28 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
 
     def handle_variable_assignment(self, batch_dict, mode):
         hypergraph_input_model = batch_dict["neighborhood_input_model"]
-        self.handle_variable_set_assignment(self.variable_prefix + "events_to_entities", hypergraph_input_model.event_to_entity_edges, hypergraph_input_model.event_to_entity_types)
-        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_events", hypergraph_input_model.entity_to_event_edges, hypergraph_input_model.entity_to_event_types)
-        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", hypergraph_input_model.entity_to_entity_edges, hypergraph_input_model.entity_to_entity_types)
+
+        edges, types = self.edge_dropout(hypergraph_input_model.event_to_entity_edges, hypergraph_input_model.event_to_entity_types, mode)
+        self.handle_variable_set_assignment(self.variable_prefix + "events_to_entities", edges, types)
+
+        edges, types = self.edge_dropout(hypergraph_input_model.entity_to_event_edges, hypergraph_input_model.entity_to_event_types, mode)
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_events", edges, types)
+
+        edges, types = self.edge_dropout(hypergraph_input_model.entity_to_entity_edges, hypergraph_input_model.entity_to_entity_types, mode)
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", edges, types)
+
         self.variables.assign_variable(self.variable_prefix + "n_entities", hypergraph_input_model.n_entities)
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
+
+    def edge_dropout(self, edges, types, mode):
+        rate = 1-0.0
+        size = edges.shape[0]
+
+        if size == 0 or mode != "train":
+            return edges, types
+
+        sample = np.random.choice(np.arange(size), size=int(rate * size), replace=False)
+        return edges[sample], types[sample]
 
     def handle_variable_set_assignment(self, prefix, edges, types):
         self.variables.assign_variable(prefix + "_edges", edges)

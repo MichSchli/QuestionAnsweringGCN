@@ -17,7 +17,7 @@ class GcnConcatMessagePasser(AbstractComponent):
 
     senders = None
     receivers = None
-    inverse_edges = None
+    use_inverse_edges_instead = None
 
     def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant"):
         self.facts = facts
@@ -36,8 +36,8 @@ class GcnConcatMessagePasser(AbstractComponent):
         self.use_inverse_edges_instead = inverse_edges
 
     def get_update(self, hypergraph):
-        sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.inverse_edges)
-        types = hypergraph.get_edge_types(senders=self.senders, receivers=self.receivers, inverse_edges=self.inverse_edges)
+        sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
+        types = hypergraph.get_edge_types(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
 
         sender_embeddings = hypergraph.get_embeddings(self.senders)
         receiver_embeddings = hypergraph.get_embeddings(self.receivers)
@@ -49,7 +49,6 @@ class GcnConcatMessagePasser(AbstractComponent):
 
         #For now just add event embeddings to entity embeddings
         messages = tf.nn.embedding_lookup(sender_embeddings, sender_indices)
-
 
         ###
         if self.weight_type == "blocks":
@@ -64,7 +63,6 @@ class GcnConcatMessagePasser(AbstractComponent):
         elif self.bias_type == "relation_specific":
             type_biases = tf.nn.embedding_lookup(self.b, types)
             messages += type_biases
-        ###
 
         sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, messages)
         return sent_messages
@@ -124,4 +122,4 @@ class GcnConcatMessagePasser(AbstractComponent):
         if self.bias_type == "constant":
             self.b = tf.Variable(np.zeros(self.dimension).astype(np.float32))
         elif self.bias_type == "relation_specific":
-            self.b = tf.Variable(np.zeros((self.facts.number_of_relation_types, self.dimension)).astype(np.float32))
+            self.b = tf.Variable(np.random.normal(0, 1, (self.facts.number_of_relation_types, self.dimension)).astype(np.float32))

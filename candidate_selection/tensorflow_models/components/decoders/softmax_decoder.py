@@ -25,8 +25,6 @@ class SoftmaxDecoder(AbstractComponent):
         return alternate
 
     def decode_to_loss(self, entity_scores, sum_examples=True):
-        #entity_scores = tf.Print(entity_scores, [entity_scores], message="entity scores: ", summarize=25)
-        #entity_scores = tf.Print(entity_scores, [self.variables.get_variable("vertex_lookup_matrix")], message="vertex_lookup_matrix: ", summarize=25)
         entity_vertex_scores = tf.concat((tf.constant([0], dtype=tf.float32), entity_scores), 0)
         entity_vertex_scores_distributed = tf.nn.embedding_lookup(entity_vertex_scores,
                                                                   self.variables.get_variable("vertex_lookup_matrix"))
@@ -38,7 +36,7 @@ class SoftmaxDecoder(AbstractComponent):
             pos_weight = tf.to_float(x[1])/tf.reduce_sum(tf.to_float(golds))
             vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight)
 
-            sigmoids = tf.nn.sigmoid(x[0][:x[1]])
+            sigmoids = x[0][:x[1]]
             #vals = tf.Print(vals, [golds, vals, sigmoids], message="cross entropy: ", summarize=25)
             vals = tf.reduce_mean(vals)
             return vals

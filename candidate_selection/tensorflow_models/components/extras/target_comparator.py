@@ -18,7 +18,6 @@ class TargetComparator(AbstractComponent):
         self.comparison = comparison
 
     def get_comparison_scores(self, all_target_embeddings, element_embeddings):
-        #all_target_embeddings = tf.Print(all_target_embeddings, [all_target_embeddings], summarize=25, message="Target embeddings: ")
         target_embeddings = tf.nn.embedding_lookup(all_target_embeddings, self.variables.get_variable(self.variable_prefix + "target_indices"))
         #target_embeddings = tf.Print(target_embeddings, [self.variables.get_variable(self.variable_prefix + "target_indices")], summarize=25)
 

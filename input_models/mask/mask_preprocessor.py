@@ -28,7 +28,7 @@ class LookupMaskPreprocessor(AbstractPreprocessor):
         mask = np.zeros_like(target.get(self.target_tensor), dtype=np.float32)
 
         for i, lookups in enumerate(batch_dictionary[self.input_string]):
-            mask[i][np.array(lookups)[:1]] = 1
+            mask[i][np.array(lookups)] = 1
 
         if self.clean_dictionary:
             del batch_dictionary[self.input_string]

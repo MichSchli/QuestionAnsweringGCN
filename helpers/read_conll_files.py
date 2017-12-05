@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import random
 
 
 class ConllReader:
@@ -11,9 +12,9 @@ class ConllReader:
     def __init__(self, filename, entity_prefix="", max_elements=None):
         self.filename = filename
         self.entity_prefix = entity_prefix
-        self.max_elements = max_elements
+        self.max_elements = None
 
-    def iterate(self, output=None):
+    def iterate(self, output=None, shuffle=False):
         dictionary = {}
 
         with open(self.filename) as data_file:
@@ -25,6 +26,8 @@ class ConllReader:
             reading_sentence = True
             reading_entities = False
             counter = 0
+
+            dicts = []
 
             for line in data_file:
                 line = line.strip()
@@ -48,7 +51,10 @@ class ConllReader:
                     dictionary["sentence_entity_map"] = np.array([[entry[0], entry[1], self.entity_prefix + entry[2], entry[3]] for entry in entity_matrix])
                     dictionary["gold_entities"] = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
 
-                    yield dictionary
+                    if shuffle:
+                        dicts.append(dictionary)
+                    else:
+                        yield dictionary
 
                     counter += 1
                     if self.max_elements is not None and counter == self.max_elements:
@@ -75,3 +81,7 @@ class ConllReader:
                     sentence_matrix = []
                     entity_matrix = []
                     gold_matrix = []
+
+            random.shuffle(dicts)
+            for dict in dicts:
+                yield dict
