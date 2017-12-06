@@ -91,7 +91,7 @@ class HypergraphModel:
         return entity in self.inverse_entity_map
 
     def from_index(self, index):
-        return self.entity_map[index]
+        return self.entity_map[index] if index in self.entity_map else "UNKNOWN_VERTEX"
 
     def __init__(self):
         self.event_vertices = np.empty(0)
