@@ -92,7 +92,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         keep_rate = 1 - dropout_rate
         size = edges.shape[0]
 
-        if size == 0 or mode != "train":
+        if size == 0 or dropout_rate == 0 or mode != "train":
             return edges, types
 
         sample = np.random.choice(np.arange(size), size=int(keep_rate * size), replace=False)
