@@ -43,11 +43,11 @@ class ValidationSetEvaluator:
 
             prediction = self.inner.predict(self.validation_file_iterator)
             evaluation = self.evaluator.evaluate(prediction)
-            performance = evaluation.micro_f1
+            performance = evaluation.macro_f1
 
             Static.logger.write("Performance at epoch "+str(epoch)+": "+str(performance), "training", "validation_loss")
-            Static.logger.write("Precision: "+str(evaluation.micro_precision), "training", "validation_loss")
-            Static.logger.write("Recall: "+str(evaluation.micro_recall), "training", "validation_loss")
+            Static.logger.write("Precision: "+str(evaluation.macro_precision), "training", "validation_loss")
+            Static.logger.write("Recall: "+str(evaluation.macro_recall), "training", "validation_loss")
 
             if performance > best_performance:
                 best_performance = performance
