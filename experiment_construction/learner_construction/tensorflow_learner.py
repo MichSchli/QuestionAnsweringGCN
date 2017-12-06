@@ -184,37 +184,32 @@ class TensorflowModel:
             example_iterator = self.project_gold_to_index(example_iterator)
 
         model_prediction = self.model.get_prediction_graph()
-        for j,example in enumerate(example_iterator):
+        batch_iterator = self.iterate_in_batches(example_iterator, validate_batches=False)
+        for j,batch in enumerate(batch_iterator):
+            print("batch "+str(j)+":\n - - - - - - - ")
 
-            if example["neighborhood"].get_vertices(type="entities").shape[0] == 0:
-                yield []
-                continue
+            self.preprocessor.process(batch, mode='predict')
 
-            print("example "+str(j)+":\n - - - - - - - ")
-
-            as_batch = {k:[v] for k,v in example.items()}
-            self.preprocessor.process(as_batch, mode='predict')
-
-            assignment_dict = self.model.handle_variable_assignment(as_batch, mode='predict')
+            assignment_dict = self.model.handle_variable_assignment(batch, mode='predict')
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
-                print([str(p) + ": " + example["neighborhood"].from_index(i) for i,p in enumerate(prediction[0])])
+                if batch["neighborhood"][i].get_vertices(type="entities").shape[0] == 0:
+                    yield []
+                    continue
+
                 best_predictions = np.where(prediction[0] > .5)[0]
                 #print(best_predictions)
                 output = []
 
                 for prediction in best_predictions:
-                    print(example["neighborhood"].get_paths_to_neighboring_centroid(prediction))
                     if Static.logger.should_log("testing", "paths"):
-                        Static.logger.write(example["neighborhood"].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
-                    if example["neighborhood"].has_name(prediction):
-                        output.append(example["neighborhood"].get_name(prediction))
+                        Static.logger.write(batch["neighborhood"][i].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
+                    if batch["neighborhood"][i].has_name(prediction):
+                        output.append(batch["neighborhood"][i].get_name(prediction))
                     else:
-                        output.append(example["neighborhood"].from_index(prediction))
-
-                print([example["neighborhood"].from_index(i) for i in example["gold_entities"]])
-                print(output)
+                        output.append(batch["neighborhood"][i].from_index(prediction))
+                        
                 print("=====")
 
                 yield output
