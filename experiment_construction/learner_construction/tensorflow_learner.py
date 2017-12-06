@@ -198,18 +198,23 @@ class TensorflowModel:
                     yield []
                     continue
 
+
                 best_predictions = np.where(prediction[0] > .5)[0]
                 #print(best_predictions)
                 output = []
 
-                for prediction in best_predictions:
+                for final_prediction in best_predictions:
                     if Static.logger.should_log("testing", "paths"):
-                        Static.logger.write(batch["neighborhood"][i].get_paths_to_neighboring_centroid(prediction), "testing", "paths")
-                    if batch["neighborhood"][i].has_name(prediction):
-                        output.append(batch["neighborhood"][i].get_name(prediction))
+                        Static.logger.write(batch["neighborhood"][i].get_paths_to_neighboring_centroid(final_prediction), "testing", "paths")
+                    if batch["neighborhood"][i].has_name(final_prediction):
+                        output.append(batch["neighborhood"][i].get_name(final_prediction))
                     else:
-                        output.append(batch["neighborhood"][i].from_index(prediction))
-                        
+                        output.append(batch["neighborhood"][i].from_index(final_prediction))
+
+                p_list_cap = min(5, batch["neighborhood"][i].entity_vertices.shape[0]-1)
+                l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))[:p_list_cap]
+                print([(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l])
+                print([batch["neighborhood"][i].from_index_with_names(g) for g in batch["gold_entities"][i]])
                 print("=====")
 
                 yield output
