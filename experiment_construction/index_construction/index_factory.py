@@ -1,5 +1,6 @@
 from experiment_construction.index_construction.index import Index
 from indexing.freebase_indexer import FreebaseIndexer
+from indexing.freebase_relation_indexer import FreebaseRelationIndexer
 from indexing.glove_indexer import GloveIndexer
 from indexing.lazy_indexer import LazyIndexer
 
@@ -59,6 +60,8 @@ class IndexFactory:
             indexer = GloveIndexer(shape[1])
         elif type == "Siva":
             indexer = FreebaseIndexer()
+        elif type == "Relation":
+            indexer = FreebaseRelationIndexer(shape, 1)
 
         self.indexes[key] = indexer
         return indexer
