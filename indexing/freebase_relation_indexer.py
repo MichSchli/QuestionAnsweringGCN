@@ -12,17 +12,17 @@ class FreebaseRelationIndexer:
     def load_file(self, cutoff_count):
         file = "/home/mschlic1/GCNQA/data/webquestions/filtered_edge_count.txt"
 
-        for line in file:
+        for line in open(file):
             line = line.strip()
             if line:
                 parts = line.split("\t")
                 relation_name = parts[0]
-                count = parts[1]
+                count = int(parts[1])
 
                 if count > cutoff_count:
-                    self.relation_indexer.index_single_element(relation_name)
+                    self.index_single_element(relation_name)
 
-        self.relation_indexer.freeze()
+        self.inner_indexer.freeze()
 
     def index_single_element(self, element):
         return self.inner_indexer.index_single_element(element)
