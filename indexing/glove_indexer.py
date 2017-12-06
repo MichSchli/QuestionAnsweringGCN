@@ -50,3 +50,5 @@ class GloveIndexer:
             parts = line.strip().split(" ")
             self.indexer.index_single_element(parts[0])
             self.vectors[counter] = parts[1:]
+
+        self.indexer.freeze()
