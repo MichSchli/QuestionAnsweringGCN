@@ -12,7 +12,7 @@ class ConllReader:
     def __init__(self, filename, entity_prefix="", max_elements=None):
         self.filename = filename
         self.entity_prefix = entity_prefix
-        self.max_elements = 100
+        self.max_elements = None
 
     def iterate(self, output=None, shuffle=False):
         dictionary = {}
