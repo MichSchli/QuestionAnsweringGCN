@@ -1,0 +1,3 @@
+class AbstractIndex:
+
+    pass

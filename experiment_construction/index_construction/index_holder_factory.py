@@ -1,11 +1,12 @@
-from experiment_construction.index_construction.index import Index
+from experiment_construction.index_construction.index_holder import IndexHolder
 from indexing.freebase_indexer import FreebaseIndexer
 from indexing.freebase_relation_indexer import FreebaseRelationIndexer
-from indexing.glove_indexer import GloveIndexer
 from indexing.lazy_indexer import LazyIndexer
 
+from experiment_construction.index_construction.indexes.glove_indexer import GloveIndexer
 
-class IndexFactory:
+
+class IndexHolderFactory:
 
     indexes = None
     max_words = 40000
@@ -28,7 +29,7 @@ class IndexFactory:
         entity_indexer = self.build_indexer(entity_embedding_type, [self.max_entities, entity_embedding_dimension])
         relation_indexer = self.build_indexer(relation_embedding_type, [self.max_relations, relation_embedding_dimension])
 
-        index = Index()
+        index = IndexHolder()
         index.word_indexer = word_indexer
         index.entity_indexer = entity_indexer
         index.relation_indexer = relation_indexer

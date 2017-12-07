@@ -1,4 +1,4 @@
-class Index:
+class IndexHolder:
 
     word_indexer = None
     relation_indexer = None

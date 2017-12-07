@@ -1,6 +1,8 @@
-import numpy as np
 import struct
-from indexing.lazy_indexer import LazyIndexer
+
+import numpy as np
+
+from experiment_construction.index_construction.indexes.lazy_indexer import LazyIndexer
 
 
 class FreebaseIndexer:
