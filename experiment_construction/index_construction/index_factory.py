@@ -61,7 +61,7 @@ class IndexFactory:
         elif type == "Siva":
             indexer = FreebaseIndexer()
         elif type == "Relation":
-            indexer = FreebaseRelationIndexer(shape, 1)
+            indexer = FreebaseRelationIndexer(shape, 10)
 
         self.indexes[key] = indexer
         return indexer
