@@ -1,9 +1,9 @@
 from experiment_construction.index_construction.index_holder import IndexHolder
-from indexing.freebase_indexer import FreebaseIndexer
-from indexing.freebase_relation_indexer import FreebaseRelationIndexer
-from indexing.lazy_indexer import LazyIndexer
+from experiment_construction.index_construction.indexes.freebase_indexer import FreebaseIndexer
+from experiment_construction.index_construction.indexes.freebase_relation_indexer import FreebaseRelationIndexer
 
 from experiment_construction.index_construction.indexes.glove_indexer import GloveIndexer
+from experiment_construction.index_construction.indexes.lazy_indexer import LazyIndexer
 
 
 class IndexHolderFactory:

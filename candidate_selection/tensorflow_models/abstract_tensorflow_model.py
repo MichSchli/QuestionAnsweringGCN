@@ -1,12 +1,9 @@
 from collections import defaultdict
 
+import numpy as np
+
 from candidate_selection.tensorflow_models.model_parts.preprocessor import PreprocessorPart
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
-from helpers.static import Static
-from indexing.freebase_indexer import FreebaseIndexer
-from indexing.glove_indexer import GloveIndexer
-from indexing.lazy_indexer import LazyIndexer
-import numpy as np
 
 
 class AbstractTensorflowModel:
@@ -72,24 +69,6 @@ class AbstractTensorflowModel:
             self.model_settings[setting_string] = float(value)
         else:
             self.model_settings[setting_string] = value
-
-    """
-    Methods to construct the model:
-    """
-
-    def build_indexer(self, string, shape, default_embedding):
-        if string is None or string == "none":
-            return LazyIndexer(shape)
-        elif string == "initialized" and default_embedding == "GloVe":
-            key = default_embedding + "_" + str(shape[1])
-            if key not in Static.embedding_indexers:
-                Static.embedding_indexers[key] = GloveIndexer(shape[1])
-            return Static.embedding_indexers[key]
-        elif string == "initialized" and default_embedding == "Siva":
-            key = default_embedding
-            if key not in Static.embedding_indexers:
-                Static.embedding_indexers[key] = FreebaseIndexer()
-            return Static.embedding_indexers[key]
 
     """
     Methods to run the model:

@@ -1,15 +1,15 @@
 import numpy as np
 import tensorflow as tf
-
 from candidate_selection.models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.models.components.extras.embedding_mapper import EmbeddingMapper
 from candidate_selection.models.components.extras.target_comparator import TargetComparator
 from candidate_selection.models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.models.components.graph_encoders.vertex_embedding import VertexEmbedding
+
 from candidate_selection.tensorflow_hypergraph_representation import TensorflowHypergraphRepresentation
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
-from indexing.lazy_indexer import LazyIndexer
+from experiment_construction.index_construction.indexes.lazy_indexer import LazyIndexer
 from input_models.hypergraph.hypergraph_preprocessor import HypergraphPreprocessor
 
 

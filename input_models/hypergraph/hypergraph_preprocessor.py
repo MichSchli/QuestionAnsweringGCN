@@ -1,6 +1,5 @@
 import numpy as np
 
-from indexing.lazy_indexer import LazyIndexer
 from input_models.abstract_preprocessor import AbstractPreprocessor
 from input_models.hypergraph.hypergraph_input_model import HypergraphInputModel
 

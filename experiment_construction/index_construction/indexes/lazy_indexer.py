@@ -1,7 +1,9 @@
 import numpy as np
 
+from experiment_construction.index_construction.abstract_indexer import AbstractIndexer
 
-class LazyIndexer:
+
+class LazyIndexer(AbstractIndexer):
 
     global_map = None
     counter = None
@@ -53,6 +55,3 @@ class LazyIndexer:
                 self.counter += 1
 
         return local_map
-
-    def freeze(self):
-        self.is_frozen = True

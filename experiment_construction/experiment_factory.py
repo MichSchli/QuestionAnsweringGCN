@@ -1,15 +1,17 @@
+import copy
+
 from experiment_construction.candidate_generator_construction.candidate_generator_factory import \
     CandidateGeneratorFactory
 from experiment_construction.candidate_selector_construction.candidate_selector_factory import CandidateSelectorFactory
 from experiment_construction.experiment_runner_construction.experiment_runner_factory import ExperimentRunnerFactory
 from experiment_construction.fact_construction.fact_factory import FactFactory
-from experiment_construction.index_construction.index_factory import IndexFactory
+from experiment_construction.index_construction.index_holder_factory import IndexHolderFactory
 from experiment_construction.learner_construction.learner_factory import LearnerFactory
 from experiment_construction.preprocessor_construction.preprocessor_factory import PreprocessorFactory
 from experiment_construction.search.greedy import GreedySearch
 from experiment_construction.search.grid import GridSearch
 from helpers.static import Static
-import copy
+
 
 class ExperimentFactory:
 
@@ -19,7 +21,7 @@ class ExperimentFactory:
 
     def __init__(self, settings):
         self.settings = settings
-        self.index_factory = IndexFactory()
+        self.index_factory = IndexHolderFactory()
         self.preprocessor_factory = PreprocessorFactory()
         self.candidate_generator_factory = CandidateGeneratorFactory()
         self.candidate_selector_factory = CandidateSelectorFactory()
