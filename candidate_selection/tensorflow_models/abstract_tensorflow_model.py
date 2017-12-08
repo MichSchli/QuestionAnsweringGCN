@@ -2,7 +2,6 @@ from collections import defaultdict
 
 import numpy as np
 
-from candidate_selection.tensorflow_models.model_parts.preprocessor import PreprocessorPart
 from candidate_selection.tensorflow_variables_holder import TensorflowVariablesHolder
 
 
@@ -43,13 +42,6 @@ class AbstractTensorflowModel:
             component.prepare_tensorflow_variables(mode=mode)
 
     def set_preprocessor(self, preprocessor):
-        self.preprocessor = preprocessor
-
-    def OLD_initialize_preprocessors(self):
-        preprocessor_stack_types = self.get_preprocessor_stack_types()
-        preprocessor = PreprocessorPart(preprocessor_stack_types, self.word_indexer, self.entity_indexer,
-                                        self.relation_indexer)
-        preprocessor.initialize_all_preprocessors()
         self.preprocessor = preprocessor
 
 
