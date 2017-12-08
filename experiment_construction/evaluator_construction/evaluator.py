@@ -1,22 +1,20 @@
-import numpy as np
-
 from experiment_construction.evaluator_construction.evaluation import Evaluation
-from helpers.read_conll_files import ConllReader
+import numpy as np
 
 
 class Evaluator:
 
-    predictor = None
     gold_reader = None
-    evaluation_file = None
+    logger = None
+    method = None
 
-    def __init__(self, gold_reader):
+    def __init__(self, gold_reader, cutoff, logger, method="macro"):
         self.gold_reader = gold_reader
+        self.logger = logger
+        self.method = method
+        self.cutoff = cutoff
 
-    def evaluate(self, model):
-        return self.parse_file(model, self.evaluation_file, verbose=False)
-
-    def parse_file(self, prediction_iterator, method="micro", verbose=True):
+    def evaluate(self, prediction_iterator):
         gold_iterator = self.gold_reader.iterate()
 
         evaluation = Evaluation()
@@ -60,8 +58,5 @@ class Evaluator:
         evaluation.macro_precision /= count
         evaluation.macro_recall /= count
         evaluation.macro_f1 /= count
-
-        if verbose:
-            evaluation.pretty_print(method=method)
 
         return evaluation
