@@ -44,9 +44,7 @@ class ValidationSetEvaluator:
             evaluation = self.evaluator.evaluate(prediction)
             performance = evaluation.macro_f1
 
-            Static.logger.write("Performance at epoch "+str(epoch)+": "+str(performance), "training", "validation_loss")
-            Static.logger.write("Precision: "+str(evaluation.macro_precision), "training", "validation_loss")
-            Static.logger.write("Recall: "+str(evaluation.macro_recall), "training", "validation_loss")
+            Static.logger.write(evaluation.summarize(), "training", "validation_loss")
 
             if performance > best_performance:
                 best_performance = performance

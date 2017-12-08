@@ -17,7 +17,7 @@ class Evaluator:
     def evaluate(self, prediction_iterator):
         gold_iterator = self.gold_reader.iterate()
 
-        evaluation = Evaluation()
+        evaluation = Evaluation(self.method)
         count = 0
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
@@ -59,6 +59,8 @@ class Evaluator:
         evaluation.macro_precision /= count
         evaluation.macro_recall /= count
         evaluation.macro_f1 /= count
+
+        evaluation.n_samples = count
 
         return evaluation
 

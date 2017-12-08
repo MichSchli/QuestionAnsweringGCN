@@ -12,7 +12,9 @@ class Evaluation:
     micro_recall = 0
     micro_f1 = 0
 
-    def __init__(self):
+    n_samples = 0
+
+    def __init__(self, method):
         self.total_true_positives = 0
         self.total_false_positives = 0
         self.total_false_negatives = 0
@@ -25,16 +27,28 @@ class Evaluation:
         self.micro_recall = 0
         self.micro_f1 = 0
 
-    def pretty_print(self, method="micro"):
+        self.default_method=method
+
+    def get_average_positives(self):
+        return (self.total_false_positives + self.total_true_positives)/self.n_samples
+
+    def summarize(self, method=None):
+        if method is None:
+            method = self.default_method
+
+        string = ""
         if method == "micro":
-            print("Final results (micro-averaged):")
-            print("===============================")
-            print("Precision: " + str(self.micro_precision))
-            print("Recall: " + str(self.micro_recall))
-            print("F1: " + str(self.micro_f1))
+            string += "Final results (micro-averaged):\n"
+            string += "===============================\n"
+            string += "Precision: " + str(self.micro_precision) + "\n"
+            string += "Recall: " + str(self.micro_recall) + "\n"
+            string += "F1: " + str(self.micro_f1) + "\n"
+            string += "Average positives: " + str(self.get_average_positives()) + "\n"
         else:
-            print("Final results (macro-averaged):")
-            print("===============================")
-            print("Precision: " + str(self.macro_precision))
-            print("Recall: " + str(self.macro_recall))
-            print("F1: " + str(self.macro_f1))
+            string += "Final results (macro-averaged):\n"
+            string += "===============================\n"
+            string += "Precision: " + str(self.macro_precision) + "\n"
+            string += "Recall: " + str(self.macro_recall) + "\n"
+            string += "F1: " + str(self.macro_f1) + "\n"
+            string += "Average positives: " + str(self.get_average_positives()) + "\n"
+        return string

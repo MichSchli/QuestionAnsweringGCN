@@ -54,4 +54,4 @@ class ExperimentRunner:
 
         predictions = self.learner.predict(iterator)
         evaluation = evaluator.evaluate(predictions)
-        return evaluation.macro_precision, evaluation.macro_recall, evaluation.macro_f1
+        return evaluation
