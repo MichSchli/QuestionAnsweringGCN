@@ -3,6 +3,7 @@ import copy
 from experiment_construction.candidate_generator_construction.candidate_generator_factory import \
     CandidateGeneratorFactory
 from experiment_construction.candidate_selector_construction.candidate_selector_factory import CandidateSelectorFactory
+from experiment_construction.evaluator_construction.evaluator_factory import EvaluatorFactory
 from experiment_construction.experiment_runner_construction.experiment_runner_factory import ExperimentRunnerFactory
 from experiment_construction.fact_construction.fact_factory import FactFactory
 from experiment_construction.index_construction.index_holder_factory import IndexHolderFactory
@@ -25,8 +26,9 @@ class ExperimentFactory:
         self.preprocessor_factory = PreprocessorFactory()
         self.candidate_generator_factory = CandidateGeneratorFactory()
         self.candidate_selector_factory = CandidateSelectorFactory()
-        self.learner_factory = LearnerFactory()
-        self.experiment_runner_factory = ExperimentRunnerFactory()
+        self.evaluator_factory = EvaluatorFactory(Static.logger)
+        self.learner_factory = LearnerFactory(self.evaluator_factory)
+        self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory)
         self.fact_factory = FactFactory()
 
     def search(self):
@@ -85,7 +87,7 @@ class ExperimentFactory:
 
     def evaluate(self, dataset_string):
         Static.logger.write("Evaluating on \""+dataset_string+"\"...", "experiment", "messages")
-        precision, recall, f1 = self.latest_experiment_runner.evaluate(self.settings["dataset"][dataset_string])
+        precision, recall, f1 = self.latest_experiment_runner.evaluate(dataset_string)
         Static.logger.write("Precision: " + str(precision), "experiment", "messages")
         Static.logger.write("Recall: " + str(recall), "experiment", "messages")
         Static.logger.write("F1: " + str(f1), "experiment", "messages")

@@ -11,10 +11,9 @@ class ValidationSetEvaluator:
     max_epochs = None
     early_stopping = None
 
-    def __init__(self, inner, validation_file_location, kb_prefix=""):
+    def __init__(self, inner, evaluator):
         self.inner = inner
-        self.validation_file_iterator = ConllReader(validation_file_location, entity_prefix=kb_prefix)
-        self.evaluator = Evaluator(self.validation_file_iterator)
+        self.evaluator = evaluator
 
     def initialize(self):
         self.inner.initialize()
@@ -32,7 +31,7 @@ class ValidationSetEvaluator:
     def predict(self, iterator):
         return self.inner.predict(iterator)
 
-    def train_and_validate(self, train_file_iterator):
+    def train_and_validate(self, train_file_iterator, validation_file_iterator):
         epoch = 0
         best_performance = -1
         best_epoch = 0
@@ -41,7 +40,7 @@ class ValidationSetEvaluator:
             self.inner.train(train_file_iterator, start_epoch=epoch, epochs=self.epochs_between_tests)
             epoch += self.epochs_between_tests
 
-            prediction = self.inner.predict(self.validation_file_iterator)
+            prediction = self.inner.predict(validation_file_iterator)
             evaluation = self.evaluator.evaluate(prediction)
             performance = evaluation.macro_f1
 

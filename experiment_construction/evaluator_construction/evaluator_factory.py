@@ -12,7 +12,8 @@ class EvaluatorFactory:
     def construct_evaluator(self, settings, file):
         evaluation_type = settings["evaluation"]["type"]
         method = settings["evaluation"]["method"]
-        file_reader = ConllReader(settings["dataset"][file], entity_prefix=settings["endpoint"]["prefix"])
+        prefix = settings["endpoint"]["prefix"] if "prefix" in settings["endpoint"] else ""
+        file_reader = ConllReader(settings["dataset"][file], entity_prefix=prefix)
 
         if evaluation_type == "cutoff":
             cutoff = float(settings["evaluation"]["cutoff"])

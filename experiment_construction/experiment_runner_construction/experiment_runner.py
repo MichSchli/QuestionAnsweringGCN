@@ -15,6 +15,21 @@ class ExperimentRunner:
     def set_train_file(self, train_file_location):
         self.train_file_iterator = ConllReader(train_file_location, self.kb_prefix, max_elements=self.max_elements_to_read)
 
+    def set_validation_file(self, validation_file_location):
+        self.validation_file_iterator = ConllReader(validation_file_location, self.kb_prefix, max_elements=self.max_elements_to_read)
+
+    def set_test_file(self, test_file_location):
+        self.test_file_iterator = ConllReader(test_file_location, self.kb_prefix, max_elements=self.max_elements_to_read)
+
+    def set_train_evaluator(self, train_evaluator):
+        self.train_evaluator = train_evaluator
+
+    def set_test_evaluator(self, test_evaluator):
+        self.test_evaluator = test_evaluator
+
+    def set_valid_evaluator(self, valid_evaluator):
+        self.valid_evaluator = valid_evaluator
+
     def set_kb_prefix(self, prefix):
         self.kb_prefix = prefix
 
@@ -23,14 +38,20 @@ class ExperimentRunner:
 
     def train_and_validate(self):
         self.learner.initialize()
-        best_epochs, performance = self.learner.train_and_validate(self.train_file_iterator)
+        best_epochs, performance = self.learner.train_and_validate(self.train_file_iterator, self.validation_file_iterator)
         return best_epochs, performance
 
     def evaluate(self, file):
-        iterator = ConllReader(file, self.kb_prefix, max_elements=self.max_elements_to_read)
+        if file == "train_file":
+            iterator = self.train_file_iterator
+            evaluator = self.train_evaluator
+        elif file == "valid_file":
+            iterator = self.validation_file_iterator
+            evaluator = self.valid_evaluator
+        elif file == "test_file":
+            iterator = self.test_file_iterator
+            evaluator = self.test_evaluator
 
         predictions = self.learner.predict(iterator)
-        evaluator = Evaluator(ConllReader(file, self.kb_prefix))
-
         evaluation = evaluator.evaluate(predictions)
-        return evaluation.micro_precision, evaluation.micro_recall, evaluation.micro_f1
+        return evaluation.macro_precision, evaluation.macro_recall, evaluation.macro_f1

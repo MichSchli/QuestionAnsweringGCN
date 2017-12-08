@@ -10,6 +10,9 @@ from experiment_construction.learner_construction.validation_set_evaluator impor
 
 class LearnerFactory:
 
+    def __init__(self, evaluator_factory):
+        self.evaluator_factory = evaluator_factory
+
     def construct_learner(self, preprocessor, candidate_generator, candidate_selector, settings):
         learner = self.get_base_learner(candidate_selector, settings)
         learner.set_preprocessor(preprocessor)
@@ -17,12 +20,8 @@ class LearnerFactory:
         learner.set_candidate_selector(candidate_selector)
 
         if "early_stopping" in settings["training"] or "epochs_between_tests" in settings["training"]:
-            if "prefix" in settings["endpoint"]:
-                prefix = settings["endpoint"]["prefix"]
-            else:
-                prefix = ""
-
-            learner = ValidationSetEvaluator(learner, settings["dataset"]["valid_file"], kb_prefix=prefix)
+            evaluator = self.evaluator_factory.construct_evaluator(settings, "valid_file")
+            learner = ValidationSetEvaluator(learner, evaluator)
 
         for k, v in settings["training"].items():
             learner.update_setting(k, v)

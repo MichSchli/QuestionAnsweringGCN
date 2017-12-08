@@ -21,6 +21,7 @@ class Evaluator:
         count = 0
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
+            prediction = self.apply_cutoff(prediction)
             gold = gold["gold_entities"]
             count += 1
             true_positives = np.isin(prediction, gold)
@@ -60,3 +61,9 @@ class Evaluator:
         evaluation.macro_f1 /= count
 
         return evaluation
+
+    def apply_cutoff(self, prediction):
+        i = 0
+        while i < len(prediction) and prediction[i][1] > self.cutoff:
+            i += 1
+        return prediction[:i]

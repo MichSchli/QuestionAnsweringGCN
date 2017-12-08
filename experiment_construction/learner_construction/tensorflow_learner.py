@@ -194,12 +194,15 @@ class TensorflowModel:
             predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
 
             for i, prediction in enumerate(predictions):
+                l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
+                yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
+                continue
+
                 if batch["neighborhood"][i].get_vertices(type="entities").shape[0] == 0:
                     yield []
                     continue
-
-
-                best_predictions = np.where(prediction[0] > .5)[0]
+                else:
+                    best_predictions = np.where(prediction[0] > .5)[0]
                 #print(best_predictions)
                 output = []
 
