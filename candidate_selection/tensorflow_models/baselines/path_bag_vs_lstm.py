@@ -36,7 +36,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
         self.add_component(self.hypergraph)
 
-        self.lstms = [BiLstm(self.variables, self.model_settings["word_embedding_dimension"], variable_prefix="lstm_" + str(i)) for i in
+        self.lstms = [BiLstm(self.variables, self.model_settings["word_embedding_dimension"]+1, variable_prefix="lstm_" + str(i)) for i in
                       range(self.model_settings["n_lstms"])]
         for lstm in self.lstms:
             self.add_component(lstm)
@@ -44,7 +44,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         self.add_component(self.word_embedding)
 
-        self.attention = Attention(self.model_settings["word_embedding_dimension"], self.variables, variable_prefix="attention", strategy="constant_query")
+        self.attention = Attention(self.model_settings["word_embedding_dimension"]+2, self.variables, variable_prefix="attention", strategy="constant_query")
         self.add_component(self.attention)
 
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence", comparison="concat")
@@ -86,7 +86,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
             self.add_component(self.centroid_transformation)
             self.add_component(self.transformation)
 
-        self.final_transformation = MultilayerPerceptron([int((self.model_settings["word_embedding_dimension"])/2) + self.model_settings["entity_embedding_dimension"],
+        self.final_transformation = MultilayerPerceptron([int((self.model_settings["word_embedding_dimension"]+2)/2) + self.model_settings["entity_embedding_dimension"],
                                                           4 * self.model_settings["entity_embedding_dimension"],
                                                     1],
                                                    self.variables,
@@ -119,13 +119,12 @@ class PathBagVsLstm(AbstractTensorflowModel):
 
         ###
 
-        #word_embedding_shape = tf.shape(word_embeddings)
-        #word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
+        word_embedding_shape = tf.shape(word_embeddings)
+        word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
 
-        #centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(tf.zeros([tf.shape(entity_scores)[0], 1]))
-        #sentence_centroid_embeddings = self.centroid_transformation.transform(centroid_embeddings)
-        #word_embeddings = tf.concat([word_embeddings, self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)], axis=1)
-        #word_embeddings = tf.reshape(word_embeddings, [word_embedding_shape[0],-1,self.model_settings["word_embedding_dimension"]+1])
+        centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(tf.ones([tf.shape(entity_scores)[0], 1]))
+        word_embeddings = tf.concat([word_embeddings, self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)], axis=1)
+        word_embeddings = tf.reshape(word_embeddings, [word_embedding_shape[0],-1,self.model_settings["word_embedding_dimension"]+1])
 
         ###
 
