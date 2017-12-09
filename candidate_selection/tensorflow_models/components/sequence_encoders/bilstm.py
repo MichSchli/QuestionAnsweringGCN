@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-
+import math
 from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
 
@@ -53,22 +53,9 @@ class BiLstm(AbstractComponent):
 
     def transform_sequences(self, sequences):
         with tf.variable_scope(self.variable_prefix):
-            cell_forward = tf.contrib.rnn.LSTMCell(self.dimension, num_proj=self.dimension/2)
-            cell_backward = tf.contrib.rnn.LSTMCell(self.dimension, num_proj=self.dimension/2)
+            cell_forward = tf.contrib.rnn.LSTMCell(self.dimension, num_proj=math.ceil(self.dimension/2))
+            cell_backward = tf.contrib.rnn.LSTMCell(self.dimension, num_proj=math.ceil(self.dimension/2))
             lengths = self.variables.get_variable(self.variable_prefix+"lengths")
             transformed_seqs = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
 
-        #print([vs.name for vs in tf.all_variables()])
-
-        #sequences = tf.transpose(sequences, perm=[1,0,2])
-        #t_mask = tf.transpose(self.variables.get_variable(self.variable_prefix+"mask"))
-        #transformed_seqs = tf.scan(self.lstm_cell, sequences, initializer=(initial_h, initial_c))[0]
-
-        #inverse = tf.reverse(sequences, [0])
-        #initial_h = tf.zeros_like(sequences[0])
-        #initial_c = tf.zeros_like(sequences[0])
-        #transformed_inverse = tf.scan(self.lstm_cell, inverse, initializer=(initial_h, initial_c))[0]
-        #proper_inverse = tf.reverse(transformed_inverse, [0])
-
-        #transformed_seqs = tf.transpose(transformed_seqs+proper_inverse, perm=[1,0,2])* tf.expand_dims(self.variables.get_variable(self.variable_prefix+"mask"), -1)
         return transformed_seqs

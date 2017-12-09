@@ -22,6 +22,11 @@ class Evaluator:
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
             prediction = self.apply_cutoff(prediction)
+
+            print(prediction[:min(5, len(prediction))])
+            print(gold["gold_entities"])
+
+            prediction = [p[0] for p in prediction]
             gold = gold["gold_entities"]
             count += 1
             true_positives = np.isin(prediction, gold)
