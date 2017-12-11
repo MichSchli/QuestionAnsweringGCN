@@ -91,7 +91,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
             self.add_component(self.transformation)
 
         self.final_transformation = MultilayerPerceptron([int(self.model_settings["lstm_hidden_state_dimension"]/2) + self.model_settings["entity_embedding_dimension"],
-                                                          4 * self.model_settings["entity_embedding_dimension"],
+                                                          self.model_settings["nn_hidden_state_dimension"],
                                                     1],
                                                    self.variables,
                                                    variable_prefix="transformation",
