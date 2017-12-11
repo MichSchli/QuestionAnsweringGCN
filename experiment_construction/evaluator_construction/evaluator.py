@@ -1,28 +1,32 @@
-import numpy as np
-
 from experiment_construction.evaluator_construction.evaluation import Evaluation
-from helpers.read_conll_files import ConllReader
+import numpy as np
 
 
 class Evaluator:
 
-    predictor = None
     gold_reader = None
-    evaluation_file = None
+    logger = None
+    method = None
 
-    def __init__(self, gold_reader):
+    def __init__(self, gold_reader, cutoff, logger, method="macro"):
         self.gold_reader = gold_reader
+        self.logger = logger
+        self.method = method
+        self.cutoff = cutoff
 
-    def evaluate(self, model):
-        return self.parse_file(model, self.evaluation_file, verbose=False)
-
-    def parse_file(self, prediction_iterator, method="micro", verbose=True):
+    def evaluate(self, prediction_iterator):
         gold_iterator = self.gold_reader.iterate()
 
-        evaluation = Evaluation()
+        evaluation = Evaluation(self.method)
         count = 0
 
         for prediction, gold in zip(prediction_iterator, gold_iterator):
+            prediction = self.apply_cutoff(prediction)
+
+            print(prediction[:min(5, len(prediction))])
+            print(gold["gold_entities"])
+
+            prediction = [p[0] for p in prediction]
             gold = gold["gold_entities"]
             count += 1
             true_positives = np.isin(prediction, gold)
@@ -61,7 +65,12 @@ class Evaluator:
         evaluation.macro_recall /= count
         evaluation.macro_f1 /= count
 
-        if verbose:
-            evaluation.pretty_print(method=method)
+        evaluation.n_samples = count
 
         return evaluation
+
+    def apply_cutoff(self, prediction):
+        i = 0
+        while i < len(prediction) and prediction[i][1] > self.cutoff:
+            i += 1
+        return prediction[:i]

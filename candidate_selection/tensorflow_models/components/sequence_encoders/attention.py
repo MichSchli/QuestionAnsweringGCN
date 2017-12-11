@@ -29,6 +29,8 @@ class Attention(AbstractComponent):
         #attention_weights = tf.Print(attention_weights, [padded_sequence_matrix], summarize=100)
         attention_weights = tf.Print(attention_weights, [attention_weights], summarize=100)
 
+        attention_weights = tf.Print(attention_weights, [attention_weights], summarize=200, message="Attention weights: ")
+
         return tf.reduce_sum(value_matrix*tf.expand_dims(attention_weights,2), 1)
 
     def prepare_tensorflow_variables(self, mode="train"):
