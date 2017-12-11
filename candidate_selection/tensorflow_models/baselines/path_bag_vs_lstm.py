@@ -29,13 +29,6 @@ class PathBagVsLstm(AbstractTensorflowModel):
         return preprocessor_stack_types
 
     def initialize_graph(self):
-        if not self.model_settings["static_entity_embeddings"]:
-            self.entity_embedding = VectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
-            self.add_component(self.entity_embedding)
-        else:
-            self.entity_embedding = StaticVectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
-            self.add_component(self.entity_embedding)
-
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables, edge_dropout_rate=self.model_settings["edge_dropout"])
         self.add_component(self.hypergraph)
 

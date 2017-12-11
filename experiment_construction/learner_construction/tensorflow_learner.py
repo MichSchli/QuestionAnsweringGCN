@@ -15,12 +15,15 @@ class TensorflowModel:
     model = None
 
     learning_rate = None
+    gradient_clipping = None
 
     def update_setting(self, setting_string, value):
         if setting_string == "epochs":
             self.epochs = int(value)
         elif setting_string == "batch_size":
             self.batch_size = int(value)
+        elif setting_string == "gradient_clipping":
+            self.gradient_clipping = float(value)
         elif setting_string == "project_name":
             self.project_names = True if value == "True" else False
         elif setting_string == "learning_rate":
@@ -43,7 +46,9 @@ class TensorflowModel:
         self.model_loss = self.model.get_loss_graph()
         parameters_to_optimize = tf.trainable_variables()
         opt_func = tf.train.AdamOptimizer(learning_rate=self.learning_rate)
-        grad_func = tf.gradients(self.model_loss, parameters_to_optimize)
+        gradients = tf.gradients(self.model_loss, parameters_to_optimize)
+        grad_func = tf.clip_by_global_norm(gradients, self.gradient_clipping)[0]
+        #grad_func = [tf.clip_by_norm(grad, self.gradient_clipping) if grad is not None else grad for grad in gradients]
         self.optimize_func = opt_func.apply_gradients(zip(grad_func, parameters_to_optimize))
         init_op = tf.global_variables_initializer()
 
@@ -197,27 +202,3 @@ class TensorflowModel:
                 l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
                 yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
                 continue
-
-                if batch["neighborhood"][i].get_vertices(type="entities").shape[0] == 0:
-                    yield []
-                    continue
-                else:
-                    best_predictions = np.where(prediction[0] > .5)[0]
-                #print(best_predictions)
-                output = []
-
-                for final_prediction in best_predictions:
-                    if Static.logger.should_log("testing", "paths"):
-                        Static.logger.write(batch["neighborhood"][i].get_paths_to_neighboring_centroid(final_prediction), "testing", "paths")
-                    if batch["neighborhood"][i].has_name(final_prediction):
-                        output.append(batch["neighborhood"][i].get_name(final_prediction))
-                    else:
-                        output.append(batch["neighborhood"][i].from_index(final_prediction))
-
-                p_list_cap = min(5, batch["neighborhood"][i].entity_vertices.shape[0]-1)
-                l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))[:p_list_cap]
-                print([(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l])
-                print([batch["neighborhood"][i].from_index_with_names(g) for g in batch["gold_entities"][i]])
-                print("=====")
-
-                yield output
