@@ -2,8 +2,10 @@ from candidate_selection.tensorflow_models.components.abstract_component import 
 import tensorflow as tf
 import numpy as np
 
+from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
 
-class Attention(AbstractComponent):
+
+class MultiheadAttention(AbstractComponent):
 
     query = None
     strategy = None
@@ -12,7 +14,7 @@ class Attention(AbstractComponent):
     variable_prefix = None
     variables = None
 
-    def __init__(self, input_dimension, variables, attention_heads=2, variable_prefix="", strategy=None):
+    def __init__(self, input_dimension, variables, attention_heads=1, variable_prefix="", strategy=None):
         self.strategy = strategy
         self.input_dimension = input_dimension
         self.heads = attention_heads
@@ -23,14 +25,34 @@ class Attention(AbstractComponent):
 
         self.variables = variables
 
+        self.linear_key = MultilayerPerceptron([int(0.5*self.input_dimension), int(0.5*self.input_dimension)], self.variables, self.variable_prefix+"_key_transform")
+        self.linear_value = MultilayerPerceptron([int(0.5*self.input_dimension), int(0.5*self.input_dimension)], self.variables, self.variable_prefix+"_value_transform")
+
     def attend(self, padded_sequence_matrix):
         key_matrix, value_matrix = tf.split(padded_sequence_matrix, [int(0.5*self.input_dimension),int(0.5*self.input_dimension)], 2)
-        norm_factor = np.sqrt(int(0.5*self.input_dimension))
-        attention_weights = tf.nn.softmax(tf.reduce_sum(key_matrix * self.query, axis=2)/norm_factor)
+        previous_shape = tf.shape(key_matrix)
 
-        return tf.reduce_sum(value_matrix*tf.expand_dims(attention_weights,2), 1)
+        transformed_key = self.linear_key.transform(tf.reshape(key_matrix, [previous_shape[0]*previous_shape[1], -1]))
+        transformed_value = self.linear_value.transform(tf.reshape(value_matrix, [previous_shape[0]*previous_shape[1], -1]))
+
+        dim = int(0.5*self.input_dimension / self.heads)
+        transformed_key = tf.reshape(transformed_key, [previous_shape[0], self.heads, previous_shape[1], dim])
+        transformed_value = tf.reshape(transformed_value, [previous_shape[0], self.heads, previous_shape[1], dim])
+        norm_factor = np.sqrt(dim)
+
+        attention_weights = tf.nn.softmax(tf.reduce_sum(transformed_key * self.query, axis=3)/norm_factor, dim=-1)
+        attention_weights = tf.Print(attention_weights, [attention_weights], message="attention_weights", summarize=100)
+        attention_weights = tf.expand_dims(attention_weights, 3)
+
+        weighted_value_matrix = tf.reduce_sum(transformed_value*attention_weights, 2)
+        return_value = tf.reshape(weighted_value_matrix, [previous_shape[0], -1])
+
+        return return_value
 
     def prepare_tensorflow_variables(self, mode="train"):
-        weight_initializer = np.random.uniform(-0.1, 0.1, size=(int(0.5*self.input_dimension))).astype(np.float32)
+        weight_initializer = np.random.uniform(-0.1, 0.1, size=(self.heads, 1, int(0.5*self.input_dimension/self.heads))).astype(np.float32)
         self.query = tf.Variable(weight_initializer, name=self.variable_prefix + "_query")
+
+        self.linear_key.prepare_tensorflow_variables(mode=mode)
+        self.linear_value.prepare_tensorflow_variables(mode=mode)
 

@@ -12,6 +12,7 @@ from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_
     HypergraphGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.sequence_encoders.attention import Attention
 from candidate_selection.tensorflow_models.components.sequence_encoders.bilstm import BiLstm
+from candidate_selection.tensorflow_models.components.sequence_encoders.multihead_attention import MultiheadAttention
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
 from experiment_construction.fact_construction.freebase_facts import FreebaseFacts
 
@@ -44,7 +45,10 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
         self.add_component(self.word_embedding)
 
-        self.attention = Attention(self.model_settings["word_embedding_dimension"], self.variables, variable_prefix="attention", strategy="constant_query")
+        #self.attention = Attention(self.model_settings["word_embedding_dimension"], self.variables, variable_prefix="attention", strategy="constant_query")
+        self.attention = MultiheadAttention(self.model_settings["word_embedding_dimension"], self.variables, attention_heads=4,
+                                   variable_prefix="attention", strategy="constant_query")
+
         self.add_component(self.attention)
 
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence", comparison="concat")
@@ -100,7 +104,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.relation_indexer = indexers.relation_indexer
         self.entity_indexer = indexers.entity_indexer
 
-    def compute_entity_scores(self):
+    def compute_entity_scores(self, mode="train"):
         #entity_vertex_embeddings = self.entity_embedding.get_representations()
         #word_embedding_shape = tf.shape(word_embeddings)
         #word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
