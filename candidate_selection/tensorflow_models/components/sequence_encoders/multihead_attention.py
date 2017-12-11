@@ -41,7 +41,7 @@ class MultiheadAttention(AbstractComponent):
         norm_factor = np.sqrt(dim)
 
         attention_weights = tf.nn.softmax(tf.reduce_sum(transformed_key * self.query, axis=3)/norm_factor, dim=-1)
-        attention_weights = tf.Print(attention_weights, [attention_weights], message="attention_weights", summarize=100)
+        #attention_weights = tf.Print(attention_weights, [attention_weights], message="attention_weights", summarize=100)
         attention_weights = tf.expand_dims(attention_weights, 3)
 
         weighted_value_matrix = tf.reduce_sum(transformed_value*attention_weights, 2)

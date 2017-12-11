@@ -10,6 +10,8 @@ from candidate_selection.tensorflow_models.components.extras.embedding_retriever
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
 from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
+from candidate_selection.tensorflow_models.components.meta_components.candidate_scoring.neural_network_or_factorization_scorer import \
+    NeuralNetworkOrFactorizationScorer
 from candidate_selection.tensorflow_models.components.sequence_encoders.attention import Attention
 from candidate_selection.tensorflow_models.components.sequence_encoders.bilstm import BiLstm
 from candidate_selection.tensorflow_models.components.sequence_encoders.multihead_attention import MultiheadAttention
@@ -56,6 +58,9 @@ class PathBagVsLstm(AbstractTensorflowModel):
 
         self.decoder = SoftmaxDecoder(self.variables)
         self.add_component(self.decoder)
+
+        self.candidate_scorer = NeuralNetworkOrFactorizationScorer(self.model_settings, self.variables, variable_prefix="scorer")
+        self.add_component(self.candidate_scorer)
 
         self.hypergraph_gcn_propagation_units = [None] * self.model_settings["n_layers"]
         for layer in range(self.model_settings["n_layers"]):
@@ -136,13 +141,15 @@ class PathBagVsLstm(AbstractTensorflowModel):
             word_embeddings = lstm.transform_sequences(word_embeddings)
         sentence_vector = self.attention.attend(word_embeddings)
 
+        return self.candidate_scorer.score(sentence_vector, entity_scores)
+
         #if self.model_settings["use_transformation"]:
         #    bag_of_words = self.transformation.transform(bag_of_words)
 
-        hidden = self.target_comparator.get_comparison_scores(sentence_vector, entity_scores)
-        entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
+        #hidden = self.target_comparator.get_comparison_scores(sentence_vector, entity_scores)
+        #entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
 
         #entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
         #                                                             entity_scores)
 
-        return entity_scores
+        #return entity_scores

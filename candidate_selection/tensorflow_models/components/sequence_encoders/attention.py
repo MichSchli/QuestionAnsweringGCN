@@ -26,11 +26,6 @@ class Attention(AbstractComponent):
         norm_factor = np.sqrt(int(0.5*self.input_dimension)).astype(np.float32)
         attention_weights = tf.nn.softmax(tf.reduce_sum(key_matrix * self.query, axis=2)/norm_factor, dim=-1)
 
-        #attention_weights = tf.Print(attention_weights, [padded_sequence_matrix], summarize=100)
-        attention_weights = tf.Print(attention_weights, [attention_weights], summarize=100)
-
-        attention_weights = tf.Print(attention_weights, [attention_weights], summarize=200, message="Attention weights: ")
-
         return tf.reduce_sum(value_matrix*tf.expand_dims(attention_weights,2), 1)
 
     def prepare_tensorflow_variables(self, mode="train"):
