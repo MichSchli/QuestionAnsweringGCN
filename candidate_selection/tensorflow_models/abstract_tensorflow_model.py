@@ -18,6 +18,8 @@ class AbstractTensorflowModel:
 
     entity_scores = None
 
+    graphs = None
+
     """
     Methods for model initialization:
     """
@@ -29,6 +31,7 @@ class AbstractTensorflowModel:
     def initialize(self):
         self.components = []
         self.variables = TensorflowVariablesHolder()
+        self.graphs = {}
 
         #self.initialize_indexers()
         #self.initialize_preprocessors()
@@ -57,7 +60,7 @@ class AbstractTensorflowModel:
             self.model_settings[setting_string] = int(value)
         elif setting_string in ["static_entity_embeddings", "use_transformation"]:
             self.model_settings[setting_string] = True if value == "True" else False
-        elif setting_string in ["regularization_scale"]:
+        elif setting_string in ["regularization_scale", "attention_dropout", "word_dropout", "transform_dropout", "edge_dropout"]:
             self.model_settings[setting_string] = float(value)
         else:
             self.model_settings[setting_string] = value
@@ -82,17 +85,17 @@ class AbstractTensorflowModel:
             regularization += component.get_regularization_term()
         return regularization
 
-    def get_loss_graph(self, sum_examples=True):
-        if self.entity_scores is None:
-            self.entity_scores = self.compute_entity_scores()
+    def get_loss_graph(self, sum_examples=True, mode="train"):
+        if mode not in self.graphs:
+            self.graphs[mode] = self.compute_entity_scores(mode=mode)
 
-        return self.decoder.decode_to_loss(self.entity_scores, sum_examples=sum_examples) + self.get_regularization()
+        return self.decoder.decode_to_loss(self.graphs[mode], sum_examples=sum_examples) + self.get_regularization()
 
-    def get_prediction_graph(self):
-        if self.entity_scores is None:
-            self.entity_scores = self.compute_entity_scores()
+    def get_prediction_graph(self, mode="predict"):
+        if mode not in self.graphs:
+            self.graphs[mode] = self.compute_entity_scores(mode=mode)
 
-        return self.decoder.decode_to_prediction(self.entity_scores)
+        return self.decoder.decode_to_prediction(self.graphs[mode])
 
 
     """

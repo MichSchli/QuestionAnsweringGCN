@@ -12,8 +12,9 @@ class MultilayerPerceptron(AbstractComponent):
     weights = None
     biases = None
     l2_scale = None
+    dropout_rate=None
 
-    def __init__(self, transforms, variables, variable_prefix="", l2_scale=0.0):
+    def __init__(self, transforms, variables, variable_prefix="", l2_scale=0.0, dropout_rate=0.0):
         self.transforms = transforms
 
         self.variable_prefix = variable_prefix
@@ -24,6 +25,7 @@ class MultilayerPerceptron(AbstractComponent):
         self.weights = [None]*(len(transforms)-1)
         self.biases = [None]*(len(transforms)-1)
         self.l2_scale=l2_scale
+        self.dropout_rate=dropout_rate
 
     def prepare_tensorflow_variables(self, mode="train"):
         for i in range(len(self.transforms)-1):
@@ -37,8 +39,10 @@ class MultilayerPerceptron(AbstractComponent):
             self.weights[i] = tf.Variable(weight_initializer, name=self.variable_prefix + "_W" + str(i))
             self.biases[i] = tf.Variable(bias_initializer, name=self.variable_prefix + "_b" + str(i))
 
-    def transform(self, vectors):
+    def transform(self, vectors, mode="train"):
         for i in range(len(self.transforms)-1):
+            if mode == "train" and self.dropout_rate > 0:
+                vectors = tf.nn.dropout(vectors, 1-self.dropout_rate)
             vectors = tf.matmul(vectors, self.weights[i]) + self.biases[i]
             if i < len(self.transforms) - 2:
                 vectors = tf.nn.relu(vectors)

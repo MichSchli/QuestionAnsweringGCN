@@ -10,11 +10,7 @@ class BiLstm(AbstractComponent):
     dimension = None
     variable_prefix = None
 
-    W_forget = None
-    W_input = None
-    W_output = None
-    W_update = None
-    W_hidden = None
+    stored = None
 
     def __init__(self, variables, in_dimension, out_dimension, variable_prefix=""):
         self.variables = variables
@@ -32,10 +28,11 @@ class BiLstm(AbstractComponent):
         self.variables.add_variable(self.variable_prefix+"lengths", tf.placeholder(tf.int32, [None], name=self.variable_prefix+"lengths"))
 
     def transform_sequences(self, sequences):
-        with tf.variable_scope(self.variable_prefix):
-            cell_forward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
-            cell_backward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
-            lengths = self.variables.get_variable(self.variable_prefix+"lengths")
-            transformed_seqs = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
+        if self.stored is None:
+            with tf.variable_scope(self.variable_prefix):
+                cell_forward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
+                cell_backward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
+                lengths = self.variables.get_variable(self.variable_prefix+"lengths")
+                self.stored = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
 
-        return transformed_seqs
+        return self.stored

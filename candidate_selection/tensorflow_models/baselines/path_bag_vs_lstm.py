@@ -36,7 +36,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
             self.entity_embedding = StaticVectorEmbedding(self.entity_indexer, self.variables, variable_prefix="entity")
             self.add_component(self.entity_embedding)
 
-        self.hypergraph = TensorflowHypergraphRepresentation(self.variables)
+        self.hypergraph = TensorflowHypergraphRepresentation(self.variables, edge_dropout_rate=self.model_settings["edge_dropout"])
         self.add_component(self.hypergraph)
 
         self.lstms = [BiLstm(self.variables, self.model_settings["word_embedding_dimension"]+1, self.model_settings["lstm_hidden_state_dimension"], variable_prefix="lstm_" + str(i)) for i in
@@ -44,12 +44,12 @@ class PathBagVsLstm(AbstractTensorflowModel):
         for lstm in self.lstms:
             self.add_component(lstm)
 
-        self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word")
+        self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word", word_dropout_rate=self.model_settings["word_dropout"])
         self.add_component(self.word_embedding)
 
         #self.attention = Attention(self.model_settings["word_embedding_dimension"], self.variables, variable_prefix="attention", strategy="constant_query")
         self.attention = MultiheadAttention(self.model_settings["lstm_hidden_state_dimension"], self.variables, attention_heads=4,
-                                   variable_prefix="attention", strategy="constant_query")
+                                   variable_prefix="attention", strategy="constant_query", attention_dropout=self.model_settings["attention_dropout"])
 
         self.add_component(self.attention)
 
@@ -124,7 +124,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings
 
-        word_embeddings = self.word_embedding.get_representations()
+        word_embeddings = self.word_embedding.get_representations(mode=mode)
 
         ###
 
@@ -139,9 +139,9 @@ class PathBagVsLstm(AbstractTensorflowModel):
 
         for lstm in self.lstms:
             word_embeddings = lstm.transform_sequences(word_embeddings)
-        sentence_vector = self.attention.attend(word_embeddings)
+        sentence_vector = self.attention.attend(word_embeddings, mode=mode)
 
-        return self.candidate_scorer.score(sentence_vector, entity_scores)
+        return self.candidate_scorer.score(sentence_vector, entity_scores, mode=mode)
 
         #if self.model_settings["use_transformation"]:
         #    bag_of_words = self.transformation.transform(bag_of_words)

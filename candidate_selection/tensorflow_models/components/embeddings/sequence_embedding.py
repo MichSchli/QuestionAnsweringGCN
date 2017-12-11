@@ -8,20 +8,26 @@ class SequenceEmbedding(AbstractComponent):
     variables = None
     random = None
     dimension = None
+    word_dropout_rate = None
 
-    def __init__(self, indexer, variables, variable_prefix=""):
+    def __init__(self, indexer, variables, variable_prefix="", word_dropout_rate=0.2):
         self.indexer = indexer
         self.variables = variables
+        self.word_dropout_rate=word_dropout_rate
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
             self.variable_prefix += "_"
 
-    def get_representations(self):
-        return self.get_embedding()
+    def get_representations(self, mode="train"):
+        return self.get_embedding(mode=mode)
 
-    def get_embedding(self):
+    def get_embedding(self, mode="train"):
         embedding = tf.nn.embedding_lookup(self.W, self.variables.get_variable(self.variable_prefix+"indices"))
+        if mode == "train" and self.word_dropout_rate > 0.0:
+            embedding_shape = tf.shape(embedding)
+            noise_shape = [embedding_shape[0], embedding_shape[1], 1]
+            embedding = tf.nn.dropout(embedding, 1-self.word_dropout_rate, noise_shape=noise_shape)
         return embedding * tf.expand_dims(self.variables.get_variable(self.variable_prefix+"mask"), -1)
 
     def prepare_tensorflow_variables(self, mode="train"):

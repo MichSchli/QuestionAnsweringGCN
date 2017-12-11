@@ -13,12 +13,14 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
 
     variables = None
 
-    def __init__(self, variables, variable_prefix=""):
+    def __init__(self, variables, variable_prefix="", edge_dropout_rate=0.0):
         self.variables = variables
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
             self.variable_prefix += "_"
+
+        self.edge_dropout_rate = edge_dropout_rate
 
     def initialize_zero_embeddings(self, dimension):
         self.entity_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_entities"), dimension))
@@ -88,7 +90,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
 
     def edge_dropout(self, edges, types, mode):
-        dropout_rate = 0
+        dropout_rate = self.edge_dropout_rate
         keep_rate = 1 - dropout_rate
         size = edges.shape[0]
 

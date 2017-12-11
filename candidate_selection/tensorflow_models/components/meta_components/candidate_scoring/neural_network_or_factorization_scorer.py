@@ -31,7 +31,8 @@ class NeuralNetworkOrFactorizationScorer(AbstractComponent):
                                                           1],
                                                          self.variables,
                                                          variable_prefix=self.variable_prefix+"transformation",
-                                                         l2_scale=self.model_settings["regularization_scale"])
+                                                         l2_scale=self.model_settings["regularization_scale"],
+                                                         dropout_rate=self.model_settings["transform_dropout"])
         self.target_comparator = TargetComparator(self.variables, variable_prefix=self.variable_prefix+"comparison_to_sentence", comparison="concat")
         self.sub_components = [self.target_comparator, self.final_transformation]
 
@@ -46,25 +47,26 @@ class NeuralNetworkOrFactorizationScorer(AbstractComponent):
                                                         self.model_settings["entity_embedding_dimension"]],
                                                        self.variables,
                                                        variable_prefix=self.variable_prefix+"transformation",
-                                                       l2_scale=self.model_settings["regularization_scale"])
+                                                       l2_scale=self.model_settings["regularization_scale"],
+                                                       dropout_rate=self.model_settings["transform_dropout"])
 
             self.sub_components += [self.transformation]
 
-    def score(self, sentence_embeddings, entity_embeddings):
+    def score(self, sentence_embeddings, entity_embeddings, mode="train"):
         if self.scoring_function_type == "neural_network":
-            return self.score_nn(sentence_embeddings, entity_embeddings)
+            return self.score_nn(sentence_embeddings, entity_embeddings, mode=mode)
         else:
-            return self.score_factorization(sentence_embeddings, entity_embeddings)
+            return self.score_factorization(sentence_embeddings, entity_embeddings, mode=mode)
 
-    def score_nn(self, sentence_embeddings, entity_embeddings):
+    def score_nn(self, sentence_embeddings, entity_embeddings, mode="train"):
         hidden = self.target_comparator.get_comparison_scores(sentence_embeddings, entity_embeddings)
-        entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
+        entity_scores = tf.squeeze(self.final_transformation.transform(hidden, mode=mode))
 
         return entity_scores
 
-    def score_factorization(self, sentence_embeddings, entity_embeddings):
+    def score_factorization(self, sentence_embeddings, entity_embeddings, mode="train"):
         if self.model_settings["use_transformation"]:
-            sentence_embeddings = self.transformation.transform(sentence_embeddings)
+            sentence_embeddings = self.transformation.transform(sentence_embeddings, mode=mode)
 
         entity_scores = self.target_comparator.get_comparison_scores(sentence_embeddings,
                                                                      entity_embeddings)
