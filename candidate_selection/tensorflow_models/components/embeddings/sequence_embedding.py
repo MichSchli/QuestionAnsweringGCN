@@ -10,10 +10,11 @@ class SequenceEmbedding(AbstractComponent):
     dimension = None
     word_dropout_rate = None
 
-    def __init__(self, indexer, variables, variable_prefix="", word_dropout_rate=0.2):
+    def __init__(self, indexer, variables, variable_prefix="", word_dropout_rate=0.2, is_static=False):
         self.indexer = indexer
         self.variables = variables
         self.word_dropout_rate=word_dropout_rate
+        self.is_static = is_static
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
@@ -36,7 +37,7 @@ class SequenceEmbedding(AbstractComponent):
 
         initializer = self.indexer.get_all_vectors()
 
-        self.W = tf.Variable(initializer, trainable=False)
+        self.W = tf.Variable(initializer, trainable=not self.is_static)
 
     def handle_variable_assignment(self, batch_dictionary, mode):
         self.variables.assign_variable(self.variable_prefix+"indices", batch_dictionary["question_sentence_input_model"].word_index_matrix)

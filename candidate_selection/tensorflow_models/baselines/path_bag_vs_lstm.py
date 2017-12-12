@@ -37,7 +37,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         for lstm in self.lstms:
             self.add_component(lstm)
 
-        self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word", word_dropout_rate=self.model_settings["word_dropout"])
+        self.word_embedding = SequenceEmbedding(self.word_indexer, self.variables, variable_prefix="word", word_dropout_rate=self.model_settings["word_dropout"], is_static=self.model_settings["static_word_embeddings"])
         self.add_component(self.word_embedding)
 
         #self.attention = Attention(self.model_settings["word_embedding_dimension"], self.variables, variable_prefix="attention", strategy="constant_query")
