@@ -17,6 +17,8 @@ class TensorflowModel:
     learning_rate = None
     gradient_clipping = None
 
+    average_loss_over_n = None
+
     def update_setting(self, setting_string, value):
         if setting_string == "epochs":
             self.epochs = int(value)
@@ -28,6 +30,8 @@ class TensorflowModel:
             self.project_names = True if value == "True" else False
         elif setting_string == "learning_rate":
             self.learning_rate = float(value)
+        elif setting_string == "average_loss_over_n":
+            self.average_loss_over_n = int(value)
 
     def set_preprocessor(self, preprocessor):
         self.preprocessor = preprocessor
@@ -155,6 +159,7 @@ class TensorflowModel:
                 epoch_iterator = self.project_gold_to_index(epoch_iterator)
 
             batch_iterator = self.iterate_in_batches(epoch_iterator, validate_batches=False)
+            loss_counter = 0
             for i,batch in enumerate(batch_iterator):
                 #print("asdf")
                 self.preprocessor.process(batch, mode="train")
@@ -175,8 +180,11 @@ class TensorflowModel:
                 #        print(batch["neighborhood"][0].from_index(prediction))
 
                 #time.sleep(2)
+                loss_counter += loss
 
-                Static.logger.write("Loss at batch "+str(i) + ": " + str(loss), "training", "iteration_loss")
+                if (i+1) % self.average_loss_over_n == 0:
+                    Static.logger.write("Average Loss for batch "+str(i+1-self.average_loss_over_n) + " to " + str(i) + ": " + str(loss_counter/self.average_loss_over_n), "training", "iteration_loss")
+                    loss_counter = 0
                 #time.sleep(2)
 
     def predict(self, test_file_iterator):
