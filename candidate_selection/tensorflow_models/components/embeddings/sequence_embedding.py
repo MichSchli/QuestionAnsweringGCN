@@ -36,7 +36,7 @@ class SequenceEmbedding(AbstractComponent):
 
         initializer = self.indexer.get_all_vectors()
 
-        self.W = tf.Variable(initializer)
+        self.W = tf.Variable(initializer, trainable=False)
 
     def handle_variable_assignment(self, batch_dictionary, mode):
         self.variables.assign_variable(self.variable_prefix+"indices", batch_dictionary["question_sentence_input_model"].word_index_matrix)
