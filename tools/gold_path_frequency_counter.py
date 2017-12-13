@@ -33,9 +33,6 @@ candidate_generator = CandidateGeneratorCache(candidate_generator,
                                               disk_cache=disk_cache)
 
 train_file_iterator = ConllReader("data/webquestions/train.split.conll", entity_prefix=prefix)
-epoch_iterator = train_file_iterator.iterate()
-epoch_iterator = candidate_generator.enrich(epoch_iterator)
-
 
 def project_from_name_wrapper(iterator, skip=True):
     for example in iterator:
@@ -64,7 +61,10 @@ def project_from_name_wrapper(iterator, skip=True):
         example["gold_entities"] = gold_list
         yield example
 
-epoch_iterator = list(project_from_name_wrapper(epoch_iterator))
+
+epoch_iterator = train_file_iterator.iterate()
+epoch_iterator = candidate_generator.enrich(epoch_iterator)
+epoch_iterator = project_from_name_wrapper(epoch_iterator)
 
 counter = defaultdict(int)
 
