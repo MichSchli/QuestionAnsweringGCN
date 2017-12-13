@@ -46,7 +46,8 @@ class ConllReader:
                 elif not line and not reading_sentence and not reading_entities:
                     reading_sentence = True
 
-                    entity_matrix = [entity_matrix[0]]
+                    if len(entity_matrix) > 0:
+                        entity_matrix = [entity_matrix[0]]
 
                     dictionary["mentioned_entities"] = np.unique(np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
                     dictionary["sentence"] = sentence_matrix
