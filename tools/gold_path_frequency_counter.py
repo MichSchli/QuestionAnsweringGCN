@@ -7,6 +7,7 @@ from experiment_construction.candidate_generator_construction.neighborhood_candi
     NeighborhoodCandidateGenerator
 from experiment_construction.index_construction.indexes.freebase_indexer import FreebaseIndexer
 from experiment_construction.index_construction.indexes.freebase_relation_indexer import FreebaseRelationIndexer
+from experiment_construction.index_construction.indexes.lazy_indexer import LazyIndexer
 from helpers.read_conll_files import ConllReader
 import numpy as np
 
@@ -21,7 +22,7 @@ database = HypergraphInterface(database_interface, expansion_strategy, prefix=pr
 candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                      extra_literals=True)
 
-e_indexer = FreebaseIndexer()
+e_indexer = LazyIndexer((40000,1))
 r_indexer = FreebaseRelationIndexer((6000,1), 10)
 
 database = IndexedInterface(database, e_indexer, r_indexer)
