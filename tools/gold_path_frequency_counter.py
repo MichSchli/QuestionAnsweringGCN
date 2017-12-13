@@ -66,3 +66,4 @@ epoch_iterator = project_from_name_wrapper(epoch_iterator)
 for example in epoch_iterator:
     for g in example["gold_entities"]:
         print(example["neighborhood"].get_paths_to_neighboring_centroid(g))
+    exit()
