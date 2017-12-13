@@ -1,3 +1,6 @@
+from collections import defaultdict
+from time import sleep
+
 from database_interface.data_interface.FreebaseInterface import FreebaseInterface
 from database_interface.expansion_strategies.only_freebase_element_strategy import OnlyFreebaseExpansionStrategy
 from database_interface.hypergraph_interface import HypergraphInterface
@@ -61,9 +64,18 @@ def project_from_name_wrapper(iterator, skip=True):
         example["gold_entities"] = gold_list
         yield example
 
-epoch_iterator = project_from_name_wrapper(epoch_iterator)
+epoch_iterator = list(project_from_name_wrapper(epoch_iterator))
+
+counter = defaultdict(int)
 
 for example in epoch_iterator:
     for g in example["gold_entities"]:
-        print(example["neighborhood"].get_paths_to_neighboring_centroid(g))
-    exit()
+        path = example["neighborhood"].get_paths_to_neighboring_centroid(g)
+        if len(path) == 4:
+            label = path[1] + path[2]
+        else:
+            label = path[1] + path[2] + path[4] + path[5]
+
+        print(label)
+
+    sleep(3)
