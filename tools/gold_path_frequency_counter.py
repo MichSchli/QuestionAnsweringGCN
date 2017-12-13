@@ -91,10 +91,12 @@ for i,example in enumerate(epoch_iterator):
     print(i)
     for g in example["gold_entities"]:
         example_seen = {}
-        print(g)
+        print(example["neighborhood"].from_index_with_names(g))
         print("")
 
         paths = example["neighborhood"].get_paths_to_neighboring_centroid(g)
+        print(len(paths))
+        print("")
         for path in paths:
             if len(path) == 4:
                 label = path[1] + path[2]
