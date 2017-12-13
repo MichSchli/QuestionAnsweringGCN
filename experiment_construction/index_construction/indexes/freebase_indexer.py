@@ -12,8 +12,8 @@ class FreebaseIndexer(AbstractIndexer):
     indexer = None
 
     def __init__(self):
-        vocab = self.load_file()
         self.dimension = 1000
+        vocab = self.load_file()
         inner = LazyIndexer((len(vocab), self.dimension))
         AbstractIndexer.__init__(self, inner)
 

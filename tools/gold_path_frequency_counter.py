@@ -8,6 +8,7 @@ from experiment_construction.candidate_generator_construction.neighborhood_candi
 from experiment_construction.index_construction.indexes.freebase_indexer import FreebaseIndexer
 from experiment_construction.index_construction.indexes.freebase_relation_indexer import FreebaseRelationIndexer
 from helpers.read_conll_files import ConllReader
+import numpy as np
 
 database_interface = FreebaseInterface()
 expansion_strategy = OnlyFreebaseExpansionStrategy()
@@ -21,16 +22,45 @@ candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_sear
                                                      extra_literals=True)
 
 e_indexer = FreebaseIndexer()
-r_indexer = FreebaseRelationIndexer(shape, 10)
+r_indexer = FreebaseRelationIndexer((6000,1), 10)
 
 database = IndexedInterface(database, e_indexer, r_indexer)
 candidate_generator = CandidateGeneratorCache(candidate_generator,
                                               disk_cache=disk_cache)
 
-train_file_iterator = ConllReader("data/webquestions/train.split.conll")
+train_file_iterator = ConllReader("data/webquestions/train.split.conll", entity_prefix=prefix)
 epoch_iterator = train_file_iterator.iterate()
 epoch_iterator = candidate_generator.enrich(epoch_iterator)
 
+
+def project_from_name_wrapper(iterator, skip=True):
+    for example in iterator:
+        names = example["gold_entities"]
+        graph = example["neighborhood"]
+        name_projection_dictionary = graph.get_inverse_name_connections(names)
+
+        gold_list = []
+        for name, l in name_projection_dictionary.items():
+            if len(l) > 0:
+                gold_list.extend(l)
+            elif graph.has_index(name):
+                gold_list.append(graph.to_index(name))
+
+        # TODO CHECK SOMEWHERE ELSE
+        if len(gold_list) == 0:
+            # print("name " + str(names) + " does not match anything, discarding")
+            if not skip:
+                yield example
+
+            continue
+
+        gold_list = np.array(gold_list).astype(np.int32)
+        # print(example["neighborhood"].entity_vertices.shape[0])
+        # print("projected " + str(example["gold_entities"]) + " to " + str(gold_list))
+        example["gold_entities"] = gold_list
+        yield example
+
+epoch_iterator = project_from_name_wrapper(epoch_iterator)
 
 for example in epoch_iterator:
     for edge in example["neighborhood"].entity_to_event_edges:
