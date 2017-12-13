@@ -64,13 +64,5 @@ def project_from_name_wrapper(iterator, skip=True):
 epoch_iterator = project_from_name_wrapper(epoch_iterator)
 
 for example in epoch_iterator:
-    for edge in example["neighborhood"].entity_to_event_edges:
-        print(edge[1])
-
-    for edge in example["neighborhood"].event_to_entity_edges:
-        print(edge[1])
-
-    for edge in example["neighborhood"].entity_to_entity_edges:
-        print(edge[1])
-
-    exit()
+    for g in example["gold_entities"]:
+        print(example["neighborhood"].get_paths_to_neighboring_centroid(g))
