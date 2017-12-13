@@ -1,10 +1,10 @@
 from helpers.read_conll_files import ConllReader
 import random
 
-reader = ConllReader()
+reader = ConllReader("/home/michael/Projects/QuestionAnswering/GCNQA/data/webquestions/train.internal.conll")
 sentences = []
-for line in reader.parse_file("data/webquestions/train.internal.conll", "sentences"):
-    sentence = " ".join([w[1] for w in line])
+for line in reader.iterate():
+    sentence = " ".join([w[1] for w in line["sentence"]])
     sentences.append(sentence)
 
 subset = random.sample(sentences, 50)
