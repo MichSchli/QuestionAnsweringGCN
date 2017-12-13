@@ -69,6 +69,7 @@ epoch_iterator = project_from_name_wrapper(epoch_iterator)
 all_seen_paths = defaultdict(int)
 
 for example in epoch_iterator:
+    example_seen = {}
     for g in example["gold_entities"]:
         paths = example["neighborhood"].get_paths_to_neighboring_centroid(g)
         for path in paths:
@@ -77,15 +78,22 @@ for example in epoch_iterator:
             else:
                 label = path[1] + path[2] + path[4] + path[5]
 
-            all_seen_paths[label] += 1
+            if label not in example_seen:
+                all_seen_paths[label] += 1
+                example_seen[label] = 1
 
 
 epoch_iterator = train_file_iterator.iterate()
 epoch_iterator = candidate_generator.enrich(epoch_iterator)
-epoch_iterator = project_from_name_wrapper(epoch_iterator)
+epoch_iterator = project_from_name_wrapper(epoch_iterator, skip=False)
 
-for example in epoch_iterator:
+for i,example in enumerate(epoch_iterator):
+    print(i)
     for g in example["gold_entities"]:
+        example_seen = {}
+        print(g)
+        print("")
+
         paths = example["neighborhood"].get_paths_to_neighboring_centroid(g)
         for path in paths:
             if len(path) == 4:
@@ -93,7 +101,12 @@ for example in epoch_iterator:
             else:
                 label = path[1] + path[2] + path[4] + path[5]
 
-            print(all_seen_paths[label])
+            if label not in example_seen:
+                print(label)
+                print(all_seen_paths[label])
+                example_seen[label] = 1
 
-    sleep(3)
+        print("")
+
+    print("")
 
