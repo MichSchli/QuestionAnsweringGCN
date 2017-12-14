@@ -208,5 +208,10 @@ class TensorflowModel:
 
             for i, prediction in enumerate(predictions):
                 l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
+
+                for index,prob in l[:5]:
+                    if prob > 0.5:
+                        print(batch["neighborhood"].get_paths_to_neighboring_centroid(index))
+
                 yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
                 continue
