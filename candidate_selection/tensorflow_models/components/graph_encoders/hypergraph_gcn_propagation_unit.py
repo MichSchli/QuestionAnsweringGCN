@@ -77,32 +77,41 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
             self.gcn_encoder_en_to_ev_invert.prepare_variables()
             self.gcn_encoder_en_to_en_invert.prepare_variables()
 
+        initializer_event_weight = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
+            np.float32)
+        self.W_events = tf.Variable(initializer_event_weight, name=self.variable_prefix + "event_transform_weights")
+        self.b_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "event_transform_bias")
+
         if self.self_weight_type == "full":
             initializer_v = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
                 np.float32)
+            self.W_self_entities = tf.Variable(initializer_v, name=self.variable_prefix + "self_entitity_weights")
 
             initializer_e = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
                 np.float32)
 
-            self.W_self_entities = tf.Variable(initializer_v, name=self.variable_prefix + "self_entitity_weights")
             self.W_self_events = tf.Variable(initializer_e, name=self.variable_prefix + "self_event_weights")
 
         if self.self_bias_type == "constant":
-            self.b_self_entities = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_entitity_weights")
-            self.b_self_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_event_weights")
+            self.b_self_entities = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_entitity_bias")
+            self.b_self_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_event_bias")
 
     def propagate(self):
         # Propagate information to events:
         # For now apply no self transform to events
-        #if self.self_weight_type == "full":
-        #    event_self_loop_messages = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
+        if self.self_weight_type == "full":
+            event_self_loop_messages = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
 
-        #if self.self_bias_type == "constant":
-        #    event_self_loop_messages += self.b_self_events
+        if self.self_bias_type == "constant":
+            event_self_loop_messages += self.b_self_events
 
         self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph)
         if self.add_inverse_relations:
             self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
+
+        self.hypergraph.event_vertex_embeddings = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_events)
+        self.hypergraph.event_vertex_embeddings += self.b_events
+        self.hypergraph.event_vertex_embeddings = tf.nn.relu(self.hypergraph.event_vertex_embeddings)
 
         # Propagate information to vertices:
 
