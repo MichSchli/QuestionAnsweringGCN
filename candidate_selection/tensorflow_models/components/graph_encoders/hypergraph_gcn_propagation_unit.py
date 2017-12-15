@@ -82,6 +82,11 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
         self.W_events = tf.Variable(initializer_event_weight, name=self.variable_prefix + "event_transform_weights")
         self.b_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "event_transform_bias")
 
+        initializer_event_weight_2 = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
+            np.float32)
+        self.W_events_2 = tf.Variable(initializer_event_weight_2, name=self.variable_prefix + "event_transform_weights_2")
+        self.b_events_2 = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "event_transform_bias_2")
+
         if self.self_weight_type == "full":
             initializer_v = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(
                 np.float32)
@@ -112,6 +117,8 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
         self.hypergraph.event_vertex_embeddings = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_events)
         self.hypergraph.event_vertex_embeddings += self.b_events
         self.hypergraph.event_vertex_embeddings = tf.nn.relu(self.hypergraph.event_vertex_embeddings)
+        self.hypergraph.event_vertex_embeddings = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_events_2)
+        self.hypergraph.event_vertex_embeddings += self.b_events_2
 
         # Propagate information to vertices:
 
