@@ -46,8 +46,8 @@ class ConllReader:
                 elif not line and not reading_sentence and not reading_entities:
                     reading_sentence = True
 
-                    if len(entity_matrix) > 0:
-                        entity_matrix = [entity_matrix[0]]
+                    #if len(entity_matrix) > 0:
+                    #    entity_matrix = [entity_matrix[0]]
 
                     dictionary["mentioned_entities"] = np.unique(np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
                     dictionary["sentence"] = sentence_matrix
@@ -84,6 +84,20 @@ class ConllReader:
                     sentence_matrix = []
                     entity_matrix = []
                     gold_matrix = []
+
+            if not reading_sentence and not reading_entities:
+                dictionary["mentioned_entities"] = np.unique(
+                    np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
+                dictionary["sentence"] = sentence_matrix
+                dictionary["sentence_entity_map"] = np.array(
+                    [[entry[0], entry[1], self.entity_prefix + entry[2], entry[3]] for entry in entity_matrix])
+                dictionary["gold_entities"] = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
+
+                if shuffle:
+                    dicts.append(dictionary)
+                else:
+                    yield dictionary
+
 
             random.shuffle(dicts)
             for dict in dicts:
