@@ -21,6 +21,9 @@ class EmbeddingRetriever(AbstractComponent):
     def get_backward_embeddings(self, embeddings):
         return tf.nn.embedding_lookup(embeddings, self.variables.get_variable(self.variable_prefix + "backward_indices"))
 
+    def get_link_scores(self):
+        return self.variables.get_variable(self.variable_prefix + "link_scores")
+
     def map_backwards(self, temporary_embeddings):
         if self.duplicate_policy == "average":
             pass
@@ -31,6 +34,23 @@ class EmbeddingRetriever(AbstractComponent):
 
             from_size = tf.shape(temporary_embeddings)[0]
             to_size = self.variables.get_variable(self.variable_prefix + "backward_total_size")
+
+            indices = tf.to_int64(tf.transpose(tf.stack([to_indices, from_indices])))
+            shape = tf.to_int64([to_size, from_size])
+
+            matrix = tf.SparseTensor(indices=indices, values=values, dense_shape=shape)
+            return tf.sparse_tensor_dense_matmul(matrix, temporary_embeddings)
+
+    def map_forwards(self, temporary_embeddings):
+        if self.duplicate_policy == "average":
+            pass
+        elif self.duplicate_policy == "sum":
+            from_indices = tf.range(tf.shape(temporary_embeddings)[0])
+            to_indices = self.variables.get_variable(self.variable_prefix + "forward_indices")
+            values = tf.ones_like(from_indices, dtype=tf.float32)
+
+            from_size = tf.shape(temporary_embeddings)[0]
+            to_size = self.variables.get_variable(self.variable_prefix + "forward_total_size")
 
             indices = tf.to_int64(tf.transpose(tf.stack([to_indices, from_indices])))
             shape = tf.to_int64([to_size, from_size])
@@ -65,6 +85,7 @@ class EmbeddingRetriever(AbstractComponent):
         self.variables.add_variable(self.variable_prefix + "backward_indices", tf.placeholder(tf.int32, shape=[None], name=self.variable_prefix + "backward_indices"))
         self.variables.add_variable(self.variable_prefix + "forward_total_size", tf.placeholder(tf.int32, shape=None, name=self.variable_prefix + "forward_total_size"))
         self.variables.add_variable(self.variable_prefix + "backward_total_size", tf.placeholder(tf.int32, shape=None, name=self.variable_prefix + "backward_total_size"))
+        self.variables.add_variable(self.variable_prefix + "link_scores", tf.placeholder(tf.float32, shape=[None], name=self.variable_prefix + "link_scores"))
 
     def handle_variable_assignment(self, batch, mode):
         map = batch["sentence_to_neighborhood_map"]
@@ -72,3 +93,4 @@ class EmbeddingRetriever(AbstractComponent):
         self.variables.assign_variable(self.variable_prefix + "backward_indices", map.flat_backward_map)
         self.variables.assign_variable(self.variable_prefix + "forward_total_size", map.forward_total_size)
         self.variables.assign_variable(self.variable_prefix + "backward_total_size", map.backward_total_size)
+        self.variables.assign_variable(self.variable_prefix + "link_scores", map.link_scores)

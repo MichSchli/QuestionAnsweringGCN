@@ -15,12 +15,14 @@ class SentenceToGraphMapPreprocessor(AbstractPreprocessor):
         centroid_map = batch_dictionary["sentence_entity_map"]
 
         edges = []
+        scores = []
         graph_total_vertices = 0
         for i,instance in enumerate(centroid_map):
             for centroid in instance:
                 centroid_index_in_graph = batch_dictionary["neighborhood"][i].to_index(centroid[2])
                 for j in range(int(centroid[0]), int(centroid[1])+1):
                     edges.append([i*max_sentence_length+j, graph_total_vertices + centroid_index_in_graph])
+                    scores.append(float(centroid[3]))
             graph_total_vertices += batch_dictionary["neighborhood"][i].entity_vertices.shape[0]
 
         edges = np.array(edges)
@@ -29,5 +31,6 @@ class SentenceToGraphMapPreprocessor(AbstractPreprocessor):
         input_model.flat_forward_map = edges[:,1]
         input_model.forward_total_size = graph_total_vertices
         input_model.backward_total_size = len(centroid_map)*max_sentence_length
+        input_model.link_scores = scores
 
         batch_dictionary["sentence_to_neighborhood_map"] = input_model
