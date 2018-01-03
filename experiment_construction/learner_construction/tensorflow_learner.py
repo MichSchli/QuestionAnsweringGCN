@@ -84,19 +84,6 @@ class TensorflowModel:
         if index != 0:
             yield {k:v[:index] for k,v in batch_dict.items()}
 
-    def project_gold(self, iterator):
-        for example in iterator:
-            candidates = example["neighborhood"].get_vertices(type="entities")
-            target_vertices = example["gold_entities"]
-            projected_target_vertices = np.array([example["neighborhood"].to_index(e) for e in target_vertices if example["neighborhood"].has_index(e)])
-            #target_vertices_in_candidates = np.isin(projected_target_vertices, candidates)
-
-            #print(projected_target_vertices.shape[0])
-            #print(projected_target_vertices)
-            if projected_target_vertices.shape[0] > 0:
-                example["gold_entities"] = projected_target_vertices
-                yield example
-
     def project_gold_to_index(self, iterator):
         for example in iterator:
             names = example["gold_entities"]
@@ -104,7 +91,7 @@ class TensorflowModel:
             gold_list = []
             for name in names:
                 if graph.has_index(name):
-                    gold_list.append(graph.to_index(name))
+                    gold_list.extend(graph.to_index(name))
 
             # TODO CHECK SOMEWHERE ELSE
             if len(gold_list) == 0:
@@ -125,7 +112,7 @@ class TensorflowModel:
                 if len(l) > 0:
                     gold_list.extend(l)
                 elif graph.has_index(name):
-                    gold_list.append(graph.to_index(name))
+                    gold_list.extend(graph.to_index(name))
 
             # TODO CHECK SOMEWHERE ELSE
             if len(gold_list) == 0:
@@ -141,6 +128,15 @@ class TensorflowModel:
             example["gold_entities"] = gold_list
             yield example
 
+    def split_graphs(self, iterator):
+        for example in iterator:
+            graph = example["neighborhood"]
+            example["neighborhood"] = graph.get_split_graph()
+            scores = example["sentence_entity_map"][:,3].astype(np.float32)
+            example["neighborhood"].propagate_scores(scores)
+
+            yield example
+
     def train(self, train_file_iterator, start_epoch=0, epochs=None):
         if epochs is None:
             epochs = self.epochs
@@ -151,6 +147,7 @@ class TensorflowModel:
             Static.logger.write("Starting epoch " + str(epoch), "training", "iteration_messages")
             epoch_iterator = train_file_iterator.iterate(shuffle=True)
             epoch_iterator = self.candidate_generator.enrich(epoch_iterator)
+            epoch_iterator = self.split_graphs(epoch_iterator)
             #epoch_iterator = self.project_gold(epoch_iterator)
 
             if self.project_names:
@@ -190,6 +187,7 @@ class TensorflowModel:
     def predict(self, test_file_iterator):
         example_iterator = test_file_iterator.iterate()
         example_iterator = self.candidate_generator.enrich(example_iterator)
+        example_iterator = self.split_graphs(example_iterator)
 
         if self.project_names:
             example_iterator = self.project_from_name_wrapper(example_iterator, skip=False)

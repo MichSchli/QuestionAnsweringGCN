@@ -19,7 +19,7 @@ class IndexedInterface:
         entity_indexes = {k:v for v, k in enumerate(hypergraph.entity_vertices)}
 
         hypergraph.entity_map = {k:v for k,v in enumerate(hypergraph.entity_vertices)}
-        hypergraph.inverse_entity_map = entity_indexes
+        hypergraph.inverse_entity_map = {k:[v] for k,v in entity_indexes.items()}
         hypergraph.event_vertices = np.arange(hypergraph.event_vertices.shape[0])
 
         hypergraph.entity_vertices = self.entity_indexer.index(hypergraph.entity_vertices)

@@ -32,6 +32,135 @@ class HypergraphModel:
 
     event_centroid_map = None
 
+    def propagate_scores(self, centroid_scores):
+        self.vertex_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
+        self.event_scores = np.zeros_like(self.event_vertices, dtype=np.float32)
+
+        centroid_score_map = {centroid: score for centroid, score in zip(self.centroids, centroid_scores)}
+
+        for centroid in self.centroids:
+            self.vertex_scores[centroid] = centroid_score_map[centroid]
+
+        for edge in self.entity_to_entity_edges:
+            if edge[0] in self.centroids:
+                self.vertex_scores[edge[2]] = max(self.vertex_scores[edge[0]], self.vertex_scores[edge[2]])
+            elif edge[2] in self.centroids:
+                self.vertex_scores[edge[0]] = max(self.vertex_scores[edge[2]], self.vertex_scores[edge[0]])
+
+        for edge in self.entity_to_event_edges:
+            self.event_scores[edge[2]] = max(self.event_scores[edge[2]], self.vertex_scores[edge[0]])
+
+        for edge in self.event_to_entity_edges:
+            self.event_scores[edge[0]] = max(self.event_scores[edge[0]], self.vertex_scores[edge[2]])
+
+        for edge in self.entity_to_event_edges:
+            self.vertex_scores[edge[0]] = max(self.vertex_scores[edge[0]], self.event_scores[edge[2]])
+
+        for edge in self.event_to_entity_edges:
+            self.vertex_scores[edge[2]] = max(self.vertex_scores[edge[2]], self.event_scores[edge[0]])
+
+        print(self.vertex_scores)
+        exit()
+
+    def get_split_graph(self):
+        new_graph = HypergraphModel()
+        new_graph.name_edge_type = self.name_edge_type
+        new_graph.type_edge_type = self.type_edge_type
+        new_graph.relation_map = self.relation_map
+
+        new_graph.entity_to_entity_edges = []
+        new_graph.entity_to_event_edges = []
+        new_graph.event_to_entity_edges = []
+        new_graph.centroids = []
+        v_counter = 0
+        e_counter = 0
+        new_graph.entity_map = {}
+        new_graph.inverse_entity_map = {}
+
+        new_graph.entity_vertices = []
+        new_graph.event_vertices = []
+
+        for centroid in self.centroids:
+            in_centroid_entity_map = {centroid: v_counter}
+            new_graph.centroids.append(v_counter)
+            new_graph.entity_vertices.append(self.entity_vertices[centroid])
+            v_counter += 1
+            for edge in self.entity_to_entity_edges:
+                if edge[0] == centroid or edge[2] == centroid:
+                    if edge[0] not in in_centroid_entity_map:
+                        in_centroid_entity_map[edge[0]] = v_counter
+                        new_graph.entity_vertices.append(self.entity_vertices[edge[0]])
+                        v_counter += 1
+                    if edge[2] not in in_centroid_entity_map:
+                        in_centroid_entity_map[edge[2]] = v_counter
+                        new_graph.entity_vertices.append(self.entity_vertices[edge[2]])
+                        v_counter += 1
+                    new_graph.entity_to_entity_edges.append([in_centroid_entity_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
+
+            in_centroid_event_map = {}
+            for edge in self.entity_to_event_edges:
+                if edge[0] == centroid:
+                    if edge[2] not in in_centroid_event_map:
+                        in_centroid_event_map[edge[2]] = e_counter
+                        new_graph.event_vertices.append(self.event_vertices[edge[2]])
+                        e_counter += 1
+                    new_graph.entity_to_event_edges.append(
+                        [in_centroid_entity_map[edge[0]], edge[1], in_centroid_event_map[edge[2]]])
+
+            for edge in self.event_to_entity_edges:
+                if edge[2] == centroid:
+                    if edge[0] not in in_centroid_event_map:
+                        in_centroid_event_map[edge[0]] = e_counter
+                        new_graph.event_vertices.append(self.event_vertices[edge[0]])
+                        e_counter += 1
+                    new_graph.event_to_entity_edges.append(
+                        [in_centroid_event_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
+
+            for edge in self.entity_to_event_edges:
+                if edge[0] != centroid and edge[2] in in_centroid_event_map:
+                    if edge[0] not in in_centroid_entity_map:
+                        in_centroid_entity_map[edge[0]] = v_counter
+                        new_graph.entity_vertices.append(self.entity_vertices[edge[0]])
+                        v_counter += 1
+                    new_graph.entity_to_event_edges.append(
+                        [in_centroid_entity_map[edge[0]], edge[1], in_centroid_event_map[edge[2]]])
+
+            for edge in self.event_to_entity_edges:
+                if edge[2] != centroid and edge[0] in in_centroid_event_map:
+                    if edge[2] not in in_centroid_entity_map:
+                        in_centroid_entity_map[edge[2]] = v_counter
+                        new_graph.entity_vertices.append(self.entity_vertices[edge[2]])
+                        v_counter += 1
+                    new_graph.event_to_entity_edges.append(
+                        [in_centroid_event_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
+
+            for k,v in in_centroid_entity_map.items():
+                new_graph.entity_map[v] = self.entity_map[k]
+                if self.entity_map[k] not in new_graph.inverse_entity_map:
+                    new_graph.inverse_entity_map[self.entity_map[k]] = []
+                new_graph.inverse_entity_map[self.entity_map[k]].append(v)
+
+        new_graph.centroids = np.array(new_graph.centroids, dtype=np.int32)
+        new_graph.entity_vertices = np.array(new_graph.entity_vertices, dtype=np.int32)
+        new_graph.event_vertices = np.array(new_graph.event_vertices, dtype=np.int32)
+
+        if len(new_graph.entity_to_entity_edges) > 0:
+            new_graph.entity_to_entity_edges = np.array(new_graph.entity_to_entity_edges, dtype=np.int32)
+        else:
+            new_graph.entity_to_entity_edges = np.empty((0,3), dtype=np.int32)
+
+        if len(new_graph.entity_to_event_edges) > 0:
+            new_graph.entity_to_event_edges = np.array(new_graph.entity_to_event_edges, dtype=np.int32)
+        else:
+            new_graph.entity_to_event_edges = np.empty((0,3), dtype=np.int32)
+
+        if len(new_graph.event_to_entity_edges) > 0:
+            new_graph.event_to_entity_edges = np.array(new_graph.event_to_entity_edges, dtype=np.int32)
+        else:
+            new_graph.event_to_entity_edges = np.empty((0,3), dtype=np.int32)
+
+        return new_graph
+
     def get_paths_to_neighboring_centroid(self, entity):
         l = []
 
@@ -111,77 +240,6 @@ class HypergraphModel:
 
     def add_names(self, name_map):
         self.name_map.add_features(name_map)
-
-    def OLD_make_name_map(self):
-        non_name_vertices = {}
-        non_name_edges = []
-        name_vertices = {}
-
-        non_name_counter = 0
-        name_counter = 0
-
-        self.name_map = VertexFeatureModel()
-        name_dict = {}
-
-        for edge in self.entity_to_entity_edges:
-            if edge[1] == self.name_edge_type:
-                if edge[0] in name_vertices:
-                    print("FOUND PROBLEM")
-                    print(edge)
-                    exit()
-
-                if edge[0] not in non_name_vertices:
-                    non_name_vertices[edge[0]] = non_name_counter
-                    non_name_counter += 1
-
-                if edge[2] not in name_vertices:
-                    name_vertices[edge[2]] = name_counter
-                    name_counter += 1
-
-                name_dict[non_name_vertices[edge[0]]] = name_vertices[edge[2]]
-            else:
-                if edge[0] not in non_name_vertices:
-                    non_name_vertices[edge[0]] = non_name_counter
-                    non_name_counter += 1
-
-                if edge[2] not in non_name_vertices:
-                    non_name_vertices[edge[2]] = non_name_counter
-                    non_name_counter += 1
-
-                non_name_edges.append([non_name_vertices[edge[0]], edge[1], non_name_vertices[edge[2]]])
-
-        for i,edge in enumerate(self.entity_to_event_edges):
-            if edge[0] not in non_name_vertices:
-                non_name_vertices[edge[0]] = non_name_counter
-                non_name_counter += 1
-            self.entity_to_event_edges[i][0] = non_name_vertices[edge[0]]
-
-        for i,edge in enumerate(self.event_to_entity_edges):
-            if edge[2] not in non_name_vertices:
-                non_name_vertices[edge[2]] = non_name_counter
-                non_name_counter += 1
-            self.event_to_entity_edges[i][2] = non_name_vertices[edge[2]]
-
-        for c in self.centroids:
-            if c not in non_name_vertices:
-                non_name_vertices[c] = non_name_counter
-                non_name_counter += 1
-
-        new_entity_map = {non_name_vertices[k]:v for k,v in self.entity_map.items() if k in non_name_vertices}
-        new_inverse_entity_map = {k:non_name_vertices[v] for k,v in self.inverse_entity_map.items() if v in non_name_vertices}
-        name_map_map = {self.entity_map[k]:v for k,v in name_vertices.items()}
-
-        self.name_map.set_map(np.array(sorted(name_map_map.keys(), key=lambda k: name_map_map[k])), name_dict)
-        self.entity_vertices = np.array(sorted(non_name_vertices.keys(), key=lambda k: non_name_vertices[k]))
-        self.entity_to_entity_edges = np.array(non_name_edges) if len(non_name_edges) > 0 else np.empty((0,3), dtype=np.int32)
-
-        #print(self.centroids)
-        #print([c in non_name_vertices for c in self.centroids])
-        #print([c in name_vertices for c in self.centroids])
-        self.centroids = np.array([non_name_vertices[c] for c in self.centroids])
-
-        self.entity_map = new_entity_map
-        self.inverse_entity_map = new_inverse_entity_map
 
     def has_name(self, entity):
         return self.name_map.has_projection(entity)

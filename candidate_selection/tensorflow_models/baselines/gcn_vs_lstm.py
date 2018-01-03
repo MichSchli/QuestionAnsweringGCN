@@ -62,9 +62,9 @@ class PathBagVsLstm(AbstractTensorflowModel):
                                                                                         self.variables,
                                                                                         self.model_settings["entity_embedding_dimension"],
                                                                                         self.hypergraph,
-                                                                                        weights="identity",
+                                                                                        weights="block",
                                                                                         biases="relation_specific",
-                                                                                        self_weight="identity",
+                                                                                        self_weight="full",
                                                                                         self_bias="zero",
                                                                                         add_inverse_relations=True)
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
@@ -113,6 +113,11 @@ class PathBagVsLstm(AbstractTensorflowModel):
         #word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
+        centroid_embeddings = tf.expand_dims(self.sentence_to_graph_mapper.get_link_scores(),-1) #self.sentence_to_graph_mapper.get_forward_embeddings(tf.ones([tf.shape(self.hypergraph.entity_vertex_embeddings)[0], 1]))
+        other_embeddings = tf.zeros([tf.shape(centroid_embeddings)[0], tf.shape(self.hypergraph.entity_vertex_embeddings)[1]-1])
+        centroid_embeddings = tf.concat([centroid_embeddings, other_embeddings], axis=-1)
+        self.hypergraph.entity_vertex_embeddings += self.sentence_to_graph_mapper.map_forwards(centroid_embeddings)
+
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings

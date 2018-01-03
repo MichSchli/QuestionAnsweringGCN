@@ -90,7 +90,7 @@ class ToyDatasetMaker:
           "who is R1 -d by E1 ? E2"]
          ),
         ("who is the R of E ? E",
-         [["E1", "R1+.of", "E2", "entity", "entity"]],
+         [["E2", "R1+.of", "E1", "entity", "entity"]],
          ["who is R1 to E1 ? E2",
           "who is E2 the R1 of ? E1",
           "who is E2 R1 to ? E1"]

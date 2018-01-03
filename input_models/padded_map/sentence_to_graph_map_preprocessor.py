@@ -18,8 +18,12 @@ class SentenceToGraphMapPreprocessor(AbstractPreprocessor):
         scores = []
         graph_total_vertices = 0
         for i,instance in enumerate(centroid_map):
+            true_centroid_indexes = batch_dictionary["neighborhood"][i].centroids
             for centroid in instance:
-                centroid_index_in_graph = batch_dictionary["neighborhood"][i].to_index(centroid[2])
+                centroid_indexes_in_graph = batch_dictionary["neighborhood"][i].to_index(centroid[2])
+                for centroid_index_in_graph in centroid_indexes_in_graph:
+                    if centroid_index_in_graph in true_centroid_indexes:
+                        break
                 for j in range(int(centroid[0]), int(centroid[1])+1):
                     edges.append([i*max_sentence_length+j, graph_total_vertices + centroid_index_in_graph])
                     scores.append(float(centroid[3]))
