@@ -131,6 +131,9 @@ class TensorflowModel:
     def split_graphs(self, iterator):
         for example in iterator:
             graph = example["neighborhood"]
+            centroids = [example["neighborhood"].to_index(c) for c in example["sentence_entity_map"][:,2]]
+            centroids = np.concatenate(centroids)
+            example["neighborhood"].set_centroids(centroids)
             example["neighborhood"] = graph.get_split_graph()
             scores = example["sentence_entity_map"][:,3].astype(np.float32)
             example["neighborhood"].propagate_scores(scores)

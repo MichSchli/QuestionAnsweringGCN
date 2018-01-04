@@ -19,7 +19,7 @@ class HypergraphInterface:
         hypergraph = HypergraphModel()
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
-        hypergraph.set_centroids(vertices)
+        #hypergraph.set_centroids(vertices)
 
         for i in range(hops):
             self.expand_hypergraph_to_one_neighborhood(hypergraph, use_event_edges=True, literals_only=False)

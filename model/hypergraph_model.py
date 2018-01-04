@@ -59,9 +59,6 @@ class HypergraphModel:
         for edge in self.event_to_entity_edges:
             self.vertex_scores[edge[2]] = max(self.vertex_scores[edge[2]], self.event_scores[edge[0]])
 
-        print(self.vertex_scores)
-        exit()
-
     def get_split_graph(self):
         new_graph = HypergraphModel()
         new_graph.name_edge_type = self.name_edge_type
@@ -172,10 +169,10 @@ class HypergraphModel:
                                                                 np.isin(self.entity_to_entity_edges[:, 0], self.centroids))]
 
         for edge in outgoing_v:
-            l.append([self.from_index_with_names(edge[0]), "->", self.relation_map[edge[1]], self.from_index_with_names(edge[2])])
+            l.append([self.from_index_with_names(edge[0]) + " " + str(self.vertex_scores[edge[0]]), "->", self.relation_map[edge[1]], self.from_index_with_names(edge[2])])
 
         for edge in ingoing_v:
-            l.append([self.from_index_with_names(edge[2]), "<-", self.relation_map[edge[1]], self.from_index_with_names(edge[0])])
+            l.append([self.from_index_with_names(edge[2]) + " " + str(self.vertex_scores[edge[2]]), "<-", self.relation_map[edge[1]], self.from_index_with_names(edge[0])])
 
         if self.event_centroid_map is None:
             self.event_centroid_map = {}
@@ -194,14 +191,14 @@ class HypergraphModel:
         for edge in self.entity_to_event_edges[np.isin(self.entity_to_event_edges[:, 0], frontier)]:
             if edge[2] in self.event_centroid_map:
                 for e in self.event_centroid_map[edge[2]]:
-                    representation = [self.from_index_with_names(edge[0]), " ->", self.relation_map[edge[1]], "e"+str(edge[2])]
+                    representation = [self.from_index_with_names(edge[0]) + " " + str(self.vertex_scores[edge[0]]), " ->", self.relation_map[edge[1]], "e"+str(edge[2])]
                     representation.extend(e)
                     l.append(representation)
 
         for edge in self.event_to_entity_edges[np.isin(self.event_to_entity_edges[:, 2], frontier)]:
             if edge[0] in self.event_centroid_map:
                 for e in self.event_centroid_map[edge[0]]:
-                    representation = [self.from_index_with_names(edge[2]), " <-", self.relation_map[edge[1]], "e"+str(edge[0])]
+                    representation = [self.from_index_with_names(edge[2]) + " " + str(self.vertex_scores[edge[2]]), " <-", self.relation_map[edge[1]], "e"+str(edge[0])]
                     representation.extend(e)
                     l.append(representation)
 
@@ -333,7 +330,7 @@ class HypergraphModel:
             self.expandable_event_vertices = np.concatenate((self.expandable_event_vertices, self.discovered_events))
             self.discovered_events = np.empty(0)
 
-    def join_other_hypergraph(self, other):
+    def OLD_join_other_hypergraph(self, other):
         # New edges have at least one vertex in the old graph.
         new_entity_vertices = other.entity_vertices[np.isin(other.entity_vertices, self.entity_vertices, assume_unique=True, invert=True)]
         new_event_vertices = other.event_vertices[np.isin(other.event_vertices, self.event_vertices, assume_unique=True, invert=True)]

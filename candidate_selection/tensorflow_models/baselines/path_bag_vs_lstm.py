@@ -116,6 +116,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings
+        entity_scores = tf.concat([entity_scores, tf.expand_dims(self.hypergraph.get_vertex_scores(),1)], axis=1)
 
         word_embeddings = self.word_embedding.get_representations(mode=mode)
 

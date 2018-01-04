@@ -16,6 +16,7 @@ class HypergraphInputModel:
     n_entities = None
     in_batch_indices = None
     entity_embeddings = None
+    entity_scores = None
 
     def get_max_graph_entities(self):
         return np.max(self.entity_vertex_slices)
