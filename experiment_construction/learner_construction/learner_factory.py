@@ -13,11 +13,12 @@ class LearnerFactory:
     def __init__(self, evaluator_factory):
         self.evaluator_factory = evaluator_factory
 
-    def construct_learner(self, preprocessor, candidate_generator, candidate_selector, settings):
+    def construct_learner(self, preprocessor, candidate_generator, candidate_selector, example_processor, settings):
         learner = self.get_base_learner(candidate_selector, settings)
         learner.set_preprocessor(preprocessor)
         learner.set_candidate_generator(candidate_generator)
         learner.set_candidate_selector(candidate_selector)
+        learner.set_example_processor(example_processor)
 
         if "early_stopping" in settings["training"] or "epochs_between_tests" in settings["training"]:
             evaluator = self.evaluator_factory.construct_evaluator(settings, "valid_file")

@@ -4,6 +4,7 @@ from experiment_construction.candidate_generator_construction.candidate_generato
     CandidateGeneratorFactory
 from experiment_construction.candidate_selector_construction.candidate_selector_factory import CandidateSelectorFactory
 from experiment_construction.evaluator_construction.evaluator_factory import EvaluatorFactory
+from experiment_construction.example_processor_construction.example_processor_factory import ExampleProcessorFactory
 from experiment_construction.experiment_runner_construction.experiment_runner_factory import ExperimentRunnerFactory
 from experiment_construction.fact_construction.fact_factory import FactFactory
 from experiment_construction.index_construction.index_holder_factory import IndexHolderFactory
@@ -26,6 +27,7 @@ class ExperimentFactory:
         self.preprocessor_factory = PreprocessorFactory()
         self.candidate_generator_factory = CandidateGeneratorFactory()
         self.candidate_selector_factory = CandidateSelectorFactory()
+        self.example_processor_factory = ExampleProcessorFactory()
         self.evaluator_factory = EvaluatorFactory(Static.logger)
         self.learner_factory = LearnerFactory(self.evaluator_factory)
         self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory)
@@ -73,7 +75,8 @@ class ExperimentFactory:
         candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers,
                                                                                              facts, preprocessors,
                                                                                           next_configuration)
-        learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector,
+        example_processor = self.example_processor_factory.construct_example_processor(next_configuration)
+        learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector, example_processor,
                                                          next_configuration)
         experiment_runner = self.experiment_runner_factory.construct_experiment_runner(preprocessors, learner,
                                                                                        next_configuration)
