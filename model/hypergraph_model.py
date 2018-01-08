@@ -131,11 +131,17 @@ class HypergraphModel:
                     new_graph.event_to_entity_edges.append(
                         [in_centroid_event_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
 
+            names = {}
             for k,v in in_centroid_entity_map.items():
                 new_graph.entity_map[v] = self.entity_map[k]
                 if self.entity_map[k] not in new_graph.inverse_entity_map:
                     new_graph.inverse_entity_map[self.entity_map[k]] = []
                 new_graph.inverse_entity_map[self.entity_map[k]].append(v)
+
+                if self.has_name(k):
+                    names[v] = self.get_name(k)
+
+            new_graph.add_names(names)
 
         new_graph.centroids = np.array(new_graph.centroids, dtype=np.int32)
         new_graph.entity_vertices = np.array(new_graph.entity_vertices, dtype=np.int32)
