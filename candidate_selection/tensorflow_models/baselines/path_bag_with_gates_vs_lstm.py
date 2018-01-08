@@ -66,7 +66,8 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
                                                                                         biases="relation_specific",
                                                                                         self_weight="identity",
                                                                                         self_bias="zero",
-                                                                                        add_inverse_relations=True)
+                                                                                        add_inverse_relations=True,
+                                                                                        gate_mode="features_given")
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
 
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
@@ -113,8 +114,9 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
         #word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
-        self.hypergraph.set_gate_features(tf.expand_dims(self.hypergraph.get_vertex_scores(),1), axis=1)
         for hgpu in self.hypergraph_gcn_propagation_units:
+            hgpu.set_gate_features(tf.expand_dims(self.hypergraph.get_vertex_scores(),1), "entities")
+            hgpu.set_gate_features(tf.expand_dims(self.hypergraph.get_event_scores(),1), "events")
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings
         entity_scores = tf.concat([entity_scores, tf.expand_dims(self.hypergraph.get_vertex_scores(),1)], axis=1)

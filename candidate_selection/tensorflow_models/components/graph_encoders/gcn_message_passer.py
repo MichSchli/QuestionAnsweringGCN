@@ -19,7 +19,7 @@ class GcnConcatMessagePasser(AbstractComponent):
     receivers = None
     use_inverse_edges_instead = None
 
-    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant"):
+    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant", gate_mode="none"):
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
@@ -34,6 +34,12 @@ class GcnConcatMessagePasser(AbstractComponent):
         self.senders = senders
         self.receivers = receivers
         self.use_inverse_edges_instead = inverse_edges
+        if gate_mode != "none":
+            self.use_gates = True
+        self.gate_mode = gate_mode
+
+    def set_gate_features(self, features):
+        self.gate_features = features
 
     def get_update(self, hypergraph):
         sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
@@ -47,8 +53,11 @@ class GcnConcatMessagePasser(AbstractComponent):
         #                                                                      types,
         #                                                                      tf.shape(receiver_embeddings)[0])
 
-        #For now just add event embeddings to entity embeddings
         messages = tf.nn.embedding_lookup(sender_embeddings, sender_indices)
+        if self.use_gates and self.gate_mode == "features_given":
+            gate_features = tf.nn.embedding_lookup(self.gate_features, sender_indices)
+            gate_values = tf.matmul(gate_features, self.gate_transform) + self.gate_bias
+            gates = tf.nn.sigmoid(gate_values)
 
         ###
         if self.weight_type == "blocks":
@@ -63,6 +72,9 @@ class GcnConcatMessagePasser(AbstractComponent):
         elif self.bias_type == "relation_specific":
             type_biases = tf.nn.embedding_lookup(self.b, types)
             messages += type_biases
+
+        if self.use_gates:
+            messages = messages * gates
 
         sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, messages)
         return sent_messages
@@ -113,8 +125,13 @@ class GcnConcatMessagePasser(AbstractComponent):
 
         return tf.sparse_reduce_sum_sparse(tensor, 0)
 
-
     def prepare_variables(self):
+        if self.use_gates:
+            n_gate_features = 1
+            initializer = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
+            self.gate_transform = tf.Variable(initializer, name=self.variable_prefix + "weights")
+            self.gate_bias = tf.Variable(np.zeros(self.dimension).astype(np.float32))
+
         if self.weight_type == "blocks":
             initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
             self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")

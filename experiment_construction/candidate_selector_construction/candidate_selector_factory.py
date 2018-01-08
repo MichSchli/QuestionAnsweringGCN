@@ -6,6 +6,7 @@ from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_gold im
 from candidate_selection.tensorflow_models.baselines.entity_embedding_vs_lstm import EntityEmbeddingVsLstm
 from candidate_selection.tensorflow_models.baselines.path_bag_vs_bag_of_words import PathBagVsBagOfWords
 from candidate_selection.tensorflow_models.baselines.path_bag_vs_lstm import PathBagVsLstm
+from candidate_selection.tensorflow_models.baselines.path_bag_with_gates_vs_lstm import PathBagWithGatesVsLstm
 from candidate_selection.tensorflow_models.components.extras.mean_gold_embedding_retriever import \
     MeanGoldEmbeddingRetriever
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
@@ -43,6 +44,9 @@ class CandidateSelectorFactory:
 
         if stack_name == "lstm+path":
             return PathBagVsLstm
+
+        if stack_name == "lstm+path+gates":
+            return PathBagWithGatesVsLstm
 
         if stack_name == "bow+path":
             return PathBagVsBagOfWords

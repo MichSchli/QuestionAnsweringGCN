@@ -59,6 +59,8 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
             variable_name = receivers + "_to_" + senders + "_" + suffix
         return self.variable_prefix + variable_name
 
+    def get_event_scores(self):
+        return self.variables.get_variable(self.variable_prefix + "event_scores")
 
     def get_vertex_scores(self):
         return self.variables.get_variable(self.variable_prefix + "vertex_scores")
@@ -74,6 +76,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.add_variable(self.variable_prefix + "n_entities", tf.placeholder(tf.int32, name=self.variable_prefix+"n_entities"))
         self.variables.add_variable(self.variable_prefix + "n_events", tf.placeholder(tf.int32, name=self.variable_prefix+"n_events"))
         self.variables.add_variable(self.variable_prefix + "vertex_scores", tf.placeholder(tf.float32, name=self.variable_prefix + "vertex_scores"))
+        self.variables.add_variable(self.variable_prefix + "event_scores", tf.placeholder(tf.float32, name=self.variable_prefix + "event_scores"))
 
     def prepare_variable_set(self, prefix):
         self.variables.add_variable(prefix+"_edges", tf.placeholder(tf.int32, name=prefix+"_edges"))
@@ -94,6 +97,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.assign_variable(self.variable_prefix + "n_entities", hypergraph_input_model.n_entities)
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
         self.variables.assign_variable(self.variable_prefix + "vertex_scores", hypergraph_input_model.entity_scores)
+        self.variables.assign_variable(self.variable_prefix + "event_scores", hypergraph_input_model.event_scores)
 
     def edge_dropout(self, edges, types, mode):
         dropout_rate = self.edge_dropout_rate

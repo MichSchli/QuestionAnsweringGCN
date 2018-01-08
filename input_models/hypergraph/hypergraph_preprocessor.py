@@ -46,6 +46,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
 
         entity_map = np.empty(0, dtype=np.int32)
         entity_scores = np.empty(0, dtype=np.float32)
+        event_scores = np.empty(0, dtype=np.float32)
 
         event_start_index = 0
         entity_start_index = 0
@@ -72,6 +73,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
 
             entity_map = np.concatenate((entity_map, phg[8]))
             entity_scores = np.concatenate((entity_scores, hypergraph.vertex_scores))
+            event_scores = np.concatenate((entity_scores, hypergraph.event_scores))
 
         entity_vertex_slices = vertex_list_slices[:,1]
         #print("Getting vertex lookup matrix")
@@ -96,6 +98,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         input_model.n_events = n_events
         input_model.n_entities = n_entities
         input_model.entity_scores = entity_scores
+        input_model.event_scores = event_scores
 
         input_model.in_batch_indices = self.in_batch_indices
 
