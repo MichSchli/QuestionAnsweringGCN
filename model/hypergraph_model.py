@@ -32,6 +32,10 @@ class HypergraphModel:
 
     event_centroid_map = None
 
+    def set_scores_to_zeros(self):
+        self.vertex_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
+        self.event_scores = np.zeros_like(self.event_vertices, dtype=np.float32)
+
     def propagate_scores(self, centroid_scores):
         self.vertex_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
         self.event_scores = np.zeros_like(self.event_vertices, dtype=np.float32)

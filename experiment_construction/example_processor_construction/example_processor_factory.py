@@ -16,10 +16,10 @@ class ExampleProcessorFactory:
     def construct_example_processor(self, settings):
         processor = None
 
-        if "split_graph" in settings["training"]:
+        if "split_graph" in settings["training"] and settings["training"]["split_graph"] == "True":
             processor = GraphSplitExampleProcessor(processor)
 
-        if "propagate_scores" in settings["training"]:
+        if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
             processor = PropagateScoresExampleProcessor(processor)
 
         if "project_name" in settings["training"]:

@@ -5,6 +5,10 @@ import numpy as np
 class PropagateScoresExampleProcessor(AbstractExampleProcessor):
 
     def process_example(self, example, mode="train"):
+        if len(example["sentence_entity_map"]) == 0:
+            example["neighborhood"].set_scores_to_zero()
+            return mode != "train"
+
         scores = example["sentence_entity_map"][:, 3].astype(np.float32)
         if example["neighborhood"].centroids is None:
             centroids = [example["neighborhood"].to_index(c) for c in example["sentence_entity_map"][:, 2]]
