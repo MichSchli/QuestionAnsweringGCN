@@ -11,6 +11,7 @@ class GraphSplitExampleProcessor(AbstractExampleProcessor):
             return True
 
         centroids = [example["neighborhood"].to_index(c) for c in example["sentence_entity_map"][:, 2]]
+        centroids = np.concatenate(centroids)
         example["neighborhood"].set_centroids(centroids)
         example["neighborhood"] = graph.get_split_graph()
 
