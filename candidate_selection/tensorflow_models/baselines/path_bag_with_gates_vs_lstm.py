@@ -65,7 +65,7 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
                                                          dropout_rate=self.model_settings["transform_dropout"])
             self.add_component(self.gate_transform)
 
-            self.gate_gcns = [None] * self.model_settings["n_layers"]
+            self.gate_gcns = [None] * self.model_settings["gate_input_layers"]
             for layer in range(self.model_settings["gate_input_layers"]):
                 self.gate_gcns[layer] = HypergraphGcnPropagationUnit("gate_layer_" + str(layer),
                                                                      self.facts,
