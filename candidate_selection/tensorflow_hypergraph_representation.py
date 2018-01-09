@@ -30,6 +30,10 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.entity_vertex_embeddings = embeddings
         self.entity_vertex_dimension = dimension
 
+    def update_event_embeddings(self, embeddings, dimension):
+        self.event_vertex_embeddings = embeddings
+        self.event_vertex_dimension = dimension
+
     def get_embeddings(self, reference):
         if reference == "entities":
             return self.entity_vertex_embeddings

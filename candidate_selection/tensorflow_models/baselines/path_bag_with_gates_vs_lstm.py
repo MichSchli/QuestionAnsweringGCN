@@ -55,6 +55,32 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
         self.candidate_scorer = NeuralNetworkOrFactorizationScorer(self.model_settings, self.variables, variable_prefix="scorer")
         self.add_component(self.candidate_scorer)
 
+        if self.model_settings["gate_input"] == "GCN":
+            gate_input_dim = self.model_settings["gate_input_dim"]
+
+            self.gate_transform = MultilayerPerceptron([1, gate_input_dim],
+                                                         self.variables,
+                                                         variable_prefix="gate_transformation",
+                                                         l2_scale=self.model_settings["regularization_scale"],
+                                                         dropout_rate=self.model_settings["transform_dropout"])
+            self.add_component(self.gate_transform)
+
+            self.gate_gcns = [None] * self.model_settings["n_layers"]
+            for layer in range(self.model_settings["gate_input_layers"]):
+                self.gate_gcns[layer] = HypergraphGcnPropagationUnit("gate_layer_" + str(layer),
+                                                                     self.facts,
+                                                                     self.variables,
+                                                                     gate_input_dim,
+                                                                     self.hypergraph,
+                                                                     weights="single",
+                                                                     biases="constant",
+                                                                     self_weight="full",
+                                                                     self_bias="constant",
+                                                                     add_inverse_relations=True,)
+                self.add_component(self.gate_gcns[layer])
+        else:
+            gate_input_dim = 1
+
         self.hypergraph_gcn_propagation_units = [None] * self.model_settings["n_layers"]
         for layer in range(self.model_settings["n_layers"]):
             self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
@@ -67,11 +93,13 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
                                                                                         self_weight="identity",
                                                                                         self_bias="zero",
                                                                                         add_inverse_relations=True,
-                                                                                        gate_mode="features_given")
+                                                                                        gate_mode="features_given",
+                                                                                        gate_input_dim=gate_input_dim)
             self.add_component(self.hypergraph_gcn_propagation_units[layer])
 
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
+
 
         if False: #self.model_settings["use_transformation"]:
             self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
@@ -113,10 +141,27 @@ class PathBagWithGatesVsLstm(AbstractTensorflowModel):
         #word_embeddings += self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)
         #word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
+
+        if self.model_settings["gate_input"] == "GCN":
+            v_features = self.gate_transform.transform(tf.expand_dims(self.hypergraph.get_vertex_scores(),1), mode=mode)
+            e_features = self.gate_transform.transform(tf.expand_dims(self.hypergraph.get_event_scores(),1), mode=mode)
+
+            self.hypergraph.update_entity_embeddings(v_features, self.model_settings["gate_input_dim"])
+            self.hypergraph.update_event_embeddings(e_features, self.model_settings["gate_input_dim"])
+
+            for gate_layer in self.gate_gcns:
+                gate_layer.propagate()
+
+            v_features = self.hypergraph.entity_vertex_embeddings
+            e_features = self.hypergraph.event_vertex_embeddings
+        else:
+            v_features = tf.expand_dims(self.hypergraph.get_vertex_scores(),1)
+            e_features = tf.expand_dims(self.hypergraph.get_event_scores(),1)
+
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
         for hgpu in self.hypergraph_gcn_propagation_units:
-            hgpu.set_gate_features(tf.expand_dims(self.hypergraph.get_vertex_scores(),1), "entities")
-            hgpu.set_gate_features(tf.expand_dims(self.hypergraph.get_event_scores(),1), "events")
+            hgpu.set_gate_features(v_features, "entities")
+            hgpu.set_gate_features(e_features, "events")
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings
         entity_scores = tf.concat([entity_scores, tf.expand_dims(self.hypergraph.get_vertex_scores(),1)], axis=1)

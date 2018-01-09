@@ -19,7 +19,7 @@ class GcnConcatMessagePasser(AbstractComponent):
     receivers = None
     use_inverse_edges_instead = None
 
-    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant", gate_mode="none"):
+    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant", gate_mode="none", gate_input_dim=1):
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
@@ -36,7 +36,10 @@ class GcnConcatMessagePasser(AbstractComponent):
         self.use_inverse_edges_instead = inverse_edges
         if gate_mode != "none":
             self.use_gates = True
+        else:
+            self.use_gates = False
         self.gate_mode = gate_mode
+        self.gate_input_dim = gate_input_dim
 
     def set_gate_features(self, features):
         self.gate_features = features
@@ -66,6 +69,8 @@ class GcnConcatMessagePasser(AbstractComponent):
             transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
             transformed_messages = tf.reshape(transformed_messages, [-1, self.dimension])
             messages = transformed_messages
+        elif self.weight_type == "single":
+            messages = tf.matmul(messages, self.W)
 
         if self.bias_type == "constant":
             messages += self.b
@@ -127,7 +132,7 @@ class GcnConcatMessagePasser(AbstractComponent):
 
     def prepare_variables(self):
         if self.use_gates:
-            n_gate_features = 1
+            n_gate_features = self.gate_input_dim
             initializer = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
             self.gate_transform = tf.Variable(initializer, name=self.variable_prefix + "weights")
             self.gate_bias = tf.Variable(np.zeros(self.dimension).astype(np.float32))
@@ -135,6 +140,10 @@ class GcnConcatMessagePasser(AbstractComponent):
         if self.weight_type == "blocks":
             initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
             self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
+        elif self.weight_type == "single":
+            initializer = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(np.float32)
+            self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
+
 
         if self.bias_type == "constant":
             self.b = tf.Variable(np.zeros(self.dimension).astype(np.float32))
