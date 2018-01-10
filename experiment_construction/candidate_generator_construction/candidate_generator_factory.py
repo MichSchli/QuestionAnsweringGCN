@@ -11,7 +11,11 @@ from experiment_construction.candidate_generator_construction.neighborhood_candi
 
 class CandidateGeneratorFactory:
 
-    def construct_candidate_generator(self, index, settings):
+    def __init__(self, index_factory):
+        self.index_factory = index_factory
+
+    def construct_candidate_generator(self, settings):
+        index = self.index_factory.construct_indexes(settings)
         if "prefix" in settings["endpoint"]:
             prefix = settings["endpoint"]["prefix"]
         else:

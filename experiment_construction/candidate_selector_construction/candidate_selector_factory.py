@@ -14,10 +14,13 @@ from candidate_selection.test_models.oracle_candidate import OracleCandidate
 
 class CandidateSelectorFactory:
 
-    def __init__(self):
-        pass
+    def __init__(self, index_factory, fact_factory):
+        self.index_factory = index_factory
+        self.fact_factory = fact_factory
 
-    def construct_candidate_selector(self, indexers, facts, preprocessors, settings):
+    def construct_candidate_selector(self, settings):
+        index = self.index_factory.construct_indexes(settings)
+        facts = self.fact_factory.construct_facts(settings)
         model_class = self.retrieve_class_name(settings["model"]["stack_name"])
         model = model_class(facts)
 
@@ -27,8 +30,7 @@ class CandidateSelectorFactory:
             else:
                 model.update_setting(k, v)
 
-        model.set_indexers(indexers)
-        model.set_preprocessor(preprocessors)
+        model.set_indexers(index)
 
         return model
 

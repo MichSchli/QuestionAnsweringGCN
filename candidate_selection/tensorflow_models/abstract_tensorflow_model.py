@@ -33,8 +33,6 @@ class AbstractTensorflowModel:
         self.variables = TensorflowVariablesHolder()
         self.graphs = {}
 
-        #self.initialize_indexers()
-        #self.initialize_preprocessors()
         self.initialize_graph()
 
     def add_component(self, component):
@@ -43,9 +41,6 @@ class AbstractTensorflowModel:
     def prepare_tensorflow_variables(self, mode='train'):
         for component in self.components:
             component.prepare_tensorflow_variables(mode=mode)
-
-    def set_preprocessor(self, preprocessor):
-        self.preprocessor = preprocessor
 
 
     """
@@ -108,13 +103,3 @@ class AbstractTensorflowModel:
         target_vertices_in_candidates = np.isin(target_vertices, candidates)
 
         return target_vertices_in_candidates.any()
-
-    """
-    Interface:
-    """
-
-    def get_preprocessor(self):
-        return self.preprocessor
-
-    def retrieve_entities(self, graph_index, entity_index):
-        return self.preprocessor.retrieve_entities(graph_index, entity_index)

@@ -13,6 +13,11 @@ class IndexHolderFactory:
     max_entities = 40000
     max_relations = 6000
 
+    # Hold a single index of each type in memory:
+    index_cache = {"word": [None,None],
+                   "entity": [None,None],
+                   "relation": [None,None]}
+
     def __init__(self):
         self.indexes = {}
 
@@ -25,9 +30,22 @@ class IndexHolderFactory:
         entity_embedding_dimension = self.get_embedding_width("entity_embedding_dimension", settings)
         relation_embedding_dimension = self.get_embedding_width("relation_embedding_dimension", settings)
 
-        word_indexer = self.build_indexer(word_embedding_type, [self.max_words, word_embedding_dimension])
-        entity_indexer = self.build_indexer(entity_embedding_type, [self.max_entities, entity_embedding_dimension])
-        relation_indexer = self.build_indexer(relation_embedding_type, [self.max_relations, relation_embedding_dimension])
+        word_cache_string = word_embedding_type + "_" + str(word_embedding_dimension)
+        if self.index_cache["word"][0] != word_cache_string:
+            self.index_cache["word"][1] = self.build_indexer(word_embedding_type, [self.max_words, word_embedding_dimension])
+        word_indexer = self.index_cache["word"][1]
+
+        entity_cache_string = entity_embedding_type + "_" + str(entity_embedding_dimension)
+        if self.index_cache["entity"][0] != entity_cache_string:
+            self.index_cache["entity"][1] = self.build_indexer(entity_embedding_type,
+                                                             [self.max_entities, entity_embedding_dimension])
+        entity_indexer = self.index_cache["entity"][1]
+
+        relation_cache_string = relation_embedding_type + "_" + str(relation_embedding_dimension)
+        if self.index_cache["relation"][0] != relation_cache_string:
+            self.index_cache["relation"][1] = self.build_indexer(relation_embedding_type,
+                                                             [self.max_relations, relation_embedding_dimension])
+        relation_indexer = self.index_cache["relation"][1]
 
         index = IndexHolder()
         index.word_indexer = word_indexer

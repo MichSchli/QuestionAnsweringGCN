@@ -3,10 +3,12 @@ from experiment_construction.experiment_runner_construction.experiment_runner im
 
 class ExperimentRunnerFactory:
 
-    def __init__(self, evaluator_factory):
+    def __init__(self, evaluator_factory, learner_factory):
         self.evaluator_factory = evaluator_factory
+        self.learner_factory = learner_factory
 
-    def construct_experiment_runner(self, preprocessors, learner, settings):
+    def construct_experiment_runner(self, settings):
+        learner = self.learner_factory.construct_learner(settings)
         experiment_runner = ExperimentRunner()
         experiment_runner.learner = learner
         experiment_runner.limit_elements(3)

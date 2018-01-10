@@ -24,14 +24,18 @@ class ExperimentFactory:
     def __init__(self, settings):
         self.settings = settings
         self.index_factory = IndexHolderFactory()
-        self.preprocessor_factory = PreprocessorFactory()
-        self.candidate_generator_factory = CandidateGeneratorFactory()
-        self.candidate_selector_factory = CandidateSelectorFactory()
+        self.preprocessor_factory = PreprocessorFactory(self.index_factory)
+        self.candidate_generator_factory = CandidateGeneratorFactory(self.index_factory)
+        self.fact_factory = FactFactory()
+        self.candidate_selector_factory = CandidateSelectorFactory(self.index_factory, self.fact_factory)
         self.example_processor_factory = ExampleProcessorFactory()
         self.evaluator_factory = EvaluatorFactory(Static.logger)
-        self.learner_factory = LearnerFactory(self.evaluator_factory)
-        self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory)
-        self.fact_factory = FactFactory()
+        self.learner_factory = LearnerFactory(self.evaluator_factory,
+                                              self.preprocessor_factory,
+                                              self.candidate_generator_factory,
+                                              self.candidate_selector_factory,
+                                              self.example_processor_factory)
+        self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory, self.learner_factory)
 
     def search(self):
         strategy = self.iterate_settings()
@@ -67,19 +71,7 @@ class ExperimentFactory:
                 config_items.append(h + ":" + k + "=" + v)
         parameter_string = ", ".join(config_items)
         Static.logger.write(parameter_string, "experiment", "parameters")
-        facts = self.fact_factory.construct_facts(next_configuration)
-        indexers = self.index_factory.construct_indexes(next_configuration)
-        preprocessors = self.preprocessor_factory.construct_preprocessor(indexers, next_configuration)
-        candidate_generator = self.candidate_generator_factory.construct_candidate_generator(indexers,
-                                                                                             next_configuration)
-        candidate_selector = self.candidate_selector_factory.construct_candidate_selector(indexers,
-                                                                                             facts, preprocessors,
-                                                                                          next_configuration)
-        example_processor = self.example_processor_factory.construct_example_processor(next_configuration)
-        learner = self.learner_factory.construct_learner(preprocessors, candidate_generator, candidate_selector, example_processor,
-                                                         next_configuration)
-        experiment_runner = self.experiment_runner_factory.construct_experiment_runner(preprocessors, learner,
-                                                                                       next_configuration)
+        experiment_runner = self.experiment_runner_factory.construct_experiment_runner(next_configuration)
         best_epochs, performance = experiment_runner.train_and_validate()
         self.latest_experiment_runner = experiment_runner
 

@@ -8,10 +8,13 @@ from input_models.static_embedding.static_entity_embedding_preprocessor import S
 
 class PreprocessorFactory:
 
-    def __init__(self):
-        pass
+    index_factory = None
 
-    def construct_preprocessor(self, index, settings):
+    def __init__(self, index_factory):
+        self.index_factory = index_factory
+
+    def construct_preprocessor(self, settings):
+        index = self.index_factory.construct_indexes(settings)
         stack_types = self.get_preprocessor_stack_types(settings)
         preprocessor = Preprocessor()
 
