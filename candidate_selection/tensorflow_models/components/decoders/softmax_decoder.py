@@ -1,7 +1,9 @@
 import tensorflow as tf
-
 from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
 
+
+from tensorflow.python.ops import array_ops
+from tensorflow.python.ops import math_ops
 
 class SoftmaxDecoder(AbstractComponent):
 
@@ -24,6 +26,31 @@ class SoftmaxDecoder(AbstractComponent):
         alternate = tf.map_fn(map_function, elems, dtype=tf.float32)
         return alternate
 
+
+    def inner_sigmoid(self, logits, labels):
+        zeros = array_ops.zeros_like(logits, dtype=logits.dtype)
+        cond = (logits >= zeros)
+        relu_logits = array_ops.where(cond, logits, zeros)
+        neg_abs_logits = array_ops.where(cond, -logits, logits)
+
+        losses= math_ops.add(
+            relu_logits - logits * labels,
+            math_ops.log1p(math_ops.exp(neg_abs_logits)))
+
+        #labels = tf.Print(labels, data=[labels], summarize=100, message="labels")
+        positive_cond = (labels > zeros)
+        negative_losses = array_ops.where(tf.logical_not(positive_cond), losses, zeros)
+
+        positive_losses = array_ops.where(positive_cond, losses, tf.ones_like(logits)*3000)
+        #positive_losses = tf.Print(positive_losses, data=[positive_losses], summarize=100, message="losses")
+
+        total_negative_loss = tf.reduce_mean(negative_losses)
+        total_positive_loss = tf.reduce_min(positive_losses)
+
+        total_loss = total_negative_loss + total_positive_loss
+
+        return total_loss
+
     def decode_to_loss(self, entity_scores, sum_examples=True):
         entity_vertex_scores = tf.concat((tf.constant([0], dtype=tf.float32), entity_scores), 0)
         entity_vertex_scores_distributed = tf.nn.embedding_lookup(entity_vertex_scores,
@@ -34,12 +61,13 @@ class SoftmaxDecoder(AbstractComponent):
         def map_function(x):
             golds = x[2][:x[1]]
             pos_weight = tf.to_float(x[1])/tf.reduce_sum(tf.to_float(golds))
-            vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight)
+            loss = self.inner_sigmoid(x[0][:x[1]], golds)
+            #vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight)
 
             sigmoids = x[0][:x[1]]
             #vals = tf.Print(vals, [golds, vals, sigmoids], message="cross entropy: ", summarize=25)
-            vals = tf.reduce_mean(vals)
-            return vals
+            #vals = tf.reduce_mean(vals)
+            return loss
 
         elems = (entity_vertex_scores_distributed, self.variables.get_variable("vertex_count_per_hypergraph"), gold_scores)
         alternate = tf.map_fn(map_function, elems, dtype=tf.float32)
