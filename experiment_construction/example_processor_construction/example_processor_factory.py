@@ -6,6 +6,8 @@ from experiment_construction.example_processor_construction.name_to_index_exampl
     NameToIndexExampleProcessor
 from experiment_construction.example_processor_construction.propagate_scores_example_processor import \
     PropagateScoresExampleProcessor
+from experiment_construction.example_processor_construction.subsample_vertices_example_processor import \
+    SubsampleVerticesExampleProcessor
 
 
 class ExampleProcessorFactory:
@@ -23,6 +25,10 @@ class ExampleProcessorFactory:
             processor = PropagateScoresExampleProcessor(processor)
 
         if "project_name" in settings["training"]:
-            return NameToIndexExampleProcessor(processor)
+            processor = NameToIndexExampleProcessor(processor)
         else:
-            return GoldToIndexExampleProcessor(processor)
+            processor = GoldToIndexExampleProcessor(processor)
+
+        processor = SubsampleVerticesExampleProcessor(processor)
+
+        return processor

@@ -15,6 +15,8 @@ class SubsampleVerticesService:
         new_graph.type_edge_type = graph.type_edge_type
         new_graph.relation_map = graph.relation_map
 
-        negatives = np.where()
+        print(graph.entity_vertices)
+        negatives = np.isin(graph.entity_vertices, positives, invert=True)
+        print(negatives)
 
         return new_graph
