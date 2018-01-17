@@ -26,7 +26,8 @@ class ExampleProcessorFactory:
         else:
             processor = GoldToIndexExampleProcessor(processor)
 
-        processor = SubsampleVerticesExampleProcessor(processor)
+        if "subsampling" in settings["training"] and settings["training"]["subsampling"] != "None":
+            processor = SubsampleVerticesExampleProcessor(processor, rate=int(settings["training"]["subsampling"]))
 
         if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
             processor = PropagateScoresExampleProcessor(processor)

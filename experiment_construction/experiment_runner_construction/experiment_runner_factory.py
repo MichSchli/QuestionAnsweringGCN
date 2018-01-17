@@ -9,7 +9,8 @@ class ExperimentRunnerFactory:
 
     def construct_experiment_runner(self, settings):
         learner = self.learner_factory.construct_learner(settings)
-        experiment_runner = ExperimentRunner()
+        greedy_disambiguation = settings["other"]["greedy_disambiguation"] == "True"
+        experiment_runner = ExperimentRunner(greedy_disambiguation=greedy_disambiguation)
         experiment_runner.learner = learner
         experiment_runner.limit_elements(3)
 

@@ -7,15 +7,18 @@ from model.services.subsample_vertices_service import SubsampleVerticesService
 
 class SubsampleVerticesExampleProcessor(AbstractExampleProcessor):
 
+    def __init__(self, next, rate):
+        self.next = next
+        self.service = SubsampleVerticesService(rate)
+
     def process_example(self, example, mode="train"):
         if mode != "train":
             return True
 
-        service = SubsampleVerticesService(10)
         graph = example["neighborhood"]
         gold_indexes = example["gold_entities"]
 
-        new_graph, new_golds = service.subsample_vertices(graph, gold_indexes)
+        new_graph, new_golds = self.service.subsample_vertices(graph, gold_indexes)
         example["neighborhood"] = new_graph
         example["gold_entities"] = new_golds
 

@@ -72,21 +72,6 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
 
-        if False: #self.model_settings["use_transformation"]:
-            self.transformation = MultilayerPerceptron([self.model_settings["word_embedding_dimension"],
-                                                        self.model_settings["entity_embedding_dimension"]],
-                                                       self.variables,
-                                                       variable_prefix="transformation",
-                                                       l2_scale=self.model_settings["regularization_scale"])
-
-
-            self.centroid_transformation = MultilayerPerceptron([self.model_settings["entity_embedding_dimension"],
-                                                                 self.model_settings["word_embedding_dimension"]],
-                                                                self.variables,
-                                                                variable_prefix="centroid_transformation",
-                                                                l2_scale=self.model_settings["regularization_scale"])
-            self.add_component(self.centroid_transformation)
-            self.add_component(self.transformation)
 
         self.final_transformation = MultilayerPerceptron([int(self.model_settings["lstm_hidden_state_dimension"]/2) + self.model_settings["entity_embedding_dimension"],
                                                           self.model_settings["nn_hidden_state_dimension"],
@@ -103,47 +88,24 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.entity_indexer = indexers.entity_indexer
 
     def compute_entity_scores(self, mode="train"):
-        #entity_vertex_embeddings = self.entity_embedding.get_representations()
-        #word_embedding_shape = tf.shape(word_embeddings)
-        #word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
-
-        #centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(entity_vertex_embeddings)
-        #centroid_embeddings = self.centroid_transformation.transform(centroid_embeddings)
-        #word_embeddings += self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)
-        #word_embeddings = tf.reshape(word_embeddings, word_embedding_shape)
 
         self.hypergraph.initialize_zero_embeddings(self.model_settings["entity_embedding_dimension"])
         for hgpu in self.hypergraph_gcn_propagation_units:
             hgpu.propagate()
         entity_scores = self.hypergraph.entity_vertex_embeddings
-        entity_scores = tf.concat([entity_scores, tf.expand_dims(self.hypergraph.get_vertex_scores(),1)], axis=1)
+
+        if self.model_settings["concatenate_scores"]:
+            entity_scores = tf.concat([entity_scores, tf.expand_dims(self.hypergraph.get_vertex_scores(),1)], axis=1)
 
         word_embeddings = self.word_embedding.get_representations(mode=mode)
-
-        ###
-
         word_embedding_shape = tf.shape(word_embeddings)
         word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
-
         centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(tf.ones([tf.shape(entity_scores)[0], 1]))
         word_embeddings = tf.concat([word_embeddings, self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)], axis=1)
         word_embeddings = tf.reshape(word_embeddings, [word_embedding_shape[0],-1,self.model_settings["word_embedding_dimension"]+1])
-
-        ###
 
         for lstm in self.lstms:
             word_embeddings = lstm.transform_sequences(word_embeddings)
         sentence_vector = self.attention.attend(word_embeddings, mode=mode)
 
         return self.candidate_scorer.score(sentence_vector, entity_scores, mode=mode)
-
-        #if self.model_settings["use_transformation"]:
-        #    bag_of_words = self.transformation.transform(bag_of_words)
-
-        #hidden = self.target_comparator.get_comparison_scores(sentence_vector, entity_scores)
-        #entity_scores = tf.squeeze(self.final_transformation.transform(hidden))
-
-        #entity_scores = self.target_comparator.get_comparison_scores(bag_of_words,
-        #                                                             entity_scores)
-
-        #return entity_scores

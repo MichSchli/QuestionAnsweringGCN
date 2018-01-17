@@ -26,7 +26,8 @@ class NeuralNetworkOrFactorizationScorer(AbstractComponent):
     def initialize_as_nn(self):
         self.scoring_function_type = "neural_network"
         self.final_transformation = MultilayerPerceptron([int(self.model_settings["lstm_hidden_state_dimension"] / 2) +
-                                                          self.model_settings["entity_embedding_dimension"] + 1,
+                                                          self.model_settings["entity_embedding_dimension"]
+                                                          + self.model_settings["concatenate_scores"],
                                                           self.model_settings["nn_hidden_state_dimension"],
                                                           1],
                                                          self.variables,
