@@ -256,8 +256,8 @@ class HypergraphModel:
 
         en_to_ev_keep = np.logical_and(np.isin(self.entity_to_event_edges[:, 0], target_entities),
                                         np.isin(self.entity_to_event_edges[:, 2], events_to_keep))
-        ev_to_en_keep = np.logical_and(np.isin(self.event_to_entity_edges[:, 2], events_to_keep),
-                                        np.isin(self.event_to_entity_edges[:, 0], target_entities))
+        ev_to_en_keep = np.logical_and(np.isin(self.event_to_entity_edges[:, 0], events_to_keep),
+                                        np.isin(self.event_to_entity_edges[:, 2], target_entities))
 
         entity_to_entity = self.entity_to_entity_edges[en_to_en_keep]
         entity_to_event = self.entity_to_event_edges[en_to_ev_keep]
