@@ -44,8 +44,8 @@ class SubsampleVerticesService:
             entity_to_event[i][2] = event_map[entity_to_event[i][2]]
 
         for i in range(event_to_entity.shape[0]):
-            event_to_entity[i][0] = event_map[entity_to_entity[i][0]]
-            event_to_entity[i][2] = entity_map[entity_to_entity[i][2]]
+            event_to_entity[i][0] = event_map[event_to_entity[i][0]]
+            event_to_entity[i][2] = entity_map[event_to_entity[i][2]]
 
         new_graph.entity_to_entity_edges = entity_to_entity
         new_graph.event_to_entity_edges = event_to_entity
