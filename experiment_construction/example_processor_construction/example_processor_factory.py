@@ -21,14 +21,14 @@ class ExampleProcessorFactory:
         if "split_graph" in settings["training"] and settings["training"]["split_graph"] == "True":
             processor = GraphSplitExampleProcessor(processor)
 
-        if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
-            processor = PropagateScoresExampleProcessor(processor)
-
         if "project_name" in settings["training"]:
             processor = NameToIndexExampleProcessor(processor)
         else:
             processor = GoldToIndexExampleProcessor(processor)
 
         processor = SubsampleVerticesExampleProcessor(processor)
+
+        if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
+            processor = PropagateScoresExampleProcessor(processor)
 
         return processor

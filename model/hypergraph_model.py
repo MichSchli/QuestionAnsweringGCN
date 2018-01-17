@@ -214,6 +214,57 @@ class HypergraphModel:
 
         return l
 
+    def get_paths_to_neighboring_centroid_formal_todo_rename(self, target_entities):
+        known_events = []
+        entity_to_entity = []
+        event_to_entity = []
+        entity_to_event = []
+
+        outgoing_v = np.logical_and(np.isin(self.entity_to_entity_edges[:, 0], target_entities),
+                                            np.isin(self.entity_to_entity_edges[:, 2], self.centroids))
+        ingoing_v = np.logical_and(np.isin(self.entity_to_entity_edges[:, 2], target_entities),
+                                            np.isin(self.entity_to_entity_edges[:, 0], self.centroids))
+
+        en_to_en_keep = np.logical_or(ingoing_v, outgoing_v)
+
+        has_centroid_connection = np.zeros_like(self.event_vertices, dtype=np.bool)
+        has_multiple_centroid_connections = np.zeros_like(self.event_vertices, dtype=np.bool)
+        has_kept_connection = np.zeros_like(self.event_vertices, dtype=np.bool)
+
+        for edge in self.event_to_entity_edges:
+            if edge[2] in self.centroids:
+                if has_centroid_connection[edge[0]]:
+                    has_multiple_centroid_connections[edge[0]]
+                else:
+                    has_centroid_connection[edge[0]] = True
+            elif edge[2] in target_entities:
+                has_kept_connection[edge[0]] = True
+
+        for edge in self.entity_to_event_edges:
+            if edge[0] in self.centroids:
+                if has_centroid_connection[edge[2]]:
+                    has_multiple_centroid_connections[edge[2]]
+                else:
+                    has_centroid_connection[edge[2]] = True
+            elif edge[0] in target_entities:
+                has_kept_connection[edge[2]] = True
+
+        events_to_keep = np.logical_or(np.logical_and(has_centroid_connection, has_kept_connection),
+                                       has_multiple_centroid_connections)
+        events_to_keep = self.event_vertices[events_to_keep]
+
+
+        en_to_ev_keep = np.logical_and(np.isin(self.entity_to_event_edges[:, 0], target_entities),
+                                        np.isin(self.entity_to_event_edges[:, 2], events_to_keep))
+        ev_to_en_keep = np.logical_and(np.isin(self.event_to_entity_edges[:, 2], events_to_keep),
+                                        np.isin(self.event_to_entity_edges[:, 0], target_entities))
+
+        entity_to_entity = self.entity_to_entity_edges[en_to_en_keep]
+        entity_to_event = self.entity_to_event_edges[en_to_ev_keep]
+        event_to_entity = self.event_to_entity_edges[ev_to_en_keep]
+
+        return entity_to_entity, entity_to_event, event_to_entity, events_to_keep
+
     def from_index_with_names(self, index):
         if self.has_name(index):
             return self.get_name(index)

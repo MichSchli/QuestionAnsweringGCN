@@ -44,7 +44,7 @@ class SplitGraphService:
                 if edge[0] == centroid:
                     if edge[2] not in in_centroid_event_map:
                         in_centroid_event_map[edge[2]] = e_counter
-                        new_graph.event_vertices.append(graph.event_vertices[edge[2]])
+                        new_graph.event_vertices.append(e_counter)
                         e_counter += 1
                     new_graph.entity_to_event_edges.append(
                         [in_centroid_entity_map[edge[0]], edge[1], in_centroid_event_map[edge[2]]])
@@ -53,7 +53,7 @@ class SplitGraphService:
                 if edge[2] == centroid:
                     if edge[0] not in in_centroid_event_map:
                         in_centroid_event_map[edge[0]] = e_counter
-                        new_graph.event_vertices.append(graph.event_vertices[edge[0]])
+                        new_graph.event_vertices.append(e_counter)
                         e_counter += 1
                     new_graph.event_to_entity_edges.append(
                         [in_centroid_event_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
@@ -62,7 +62,7 @@ class SplitGraphService:
                 if edge[0] != centroid and edge[2] in in_centroid_event_map:
                     if edge[0] not in in_centroid_entity_map:
                         in_centroid_entity_map[edge[0]] = v_counter
-                        new_graph.entity_vertices.append(graph.entity_vertices[edge[0]])
+                        new_graph.entity_vertices.append(e_counter)
                         v_counter += 1
                     new_graph.entity_to_event_edges.append(
                         [in_centroid_entity_map[edge[0]], edge[1], in_centroid_event_map[edge[2]]])
@@ -71,7 +71,7 @@ class SplitGraphService:
                 if edge[2] != centroid and edge[0] in in_centroid_event_map:
                     if edge[2] not in in_centroid_entity_map:
                         in_centroid_entity_map[edge[2]] = v_counter
-                        new_graph.entity_vertices.append(graph.entity_vertices[edge[2]])
+                        new_graph.entity_vertices.append(e_counter)
                         v_counter += 1
                     new_graph.event_to_entity_edges.append(
                         [in_centroid_event_map[edge[0]], edge[1], in_centroid_entity_map[edge[2]]])
