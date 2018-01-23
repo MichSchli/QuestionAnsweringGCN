@@ -214,6 +214,38 @@ class HypergraphModel:
 
         return l
 
+    def get_nearby_centroids(self, target_entity):
+        outgoing_v = np.logical_and(self.entity_to_entity_edges[:, 0] == target_entity,
+                                    np.isin(self.entity_to_entity_edges[:, 2], self.centroids))
+        ingoing_v = np.logical_and(self.entity_to_entity_edges[:, 2] == target_entity,
+                                   np.isin(self.entity_to_entity_edges[:, 0], self.centroids))
+
+        centroids = np.concatenate((self.entity_to_entity_edges[:,2][outgoing_v], self.entity_to_entity_edges[:,0][ingoing_v]))
+        centroid_event_map = {}
+
+        for edge in self.entity_to_event_edges:
+            if edge[0] in self.centroids:
+                if edge[2] not in centroid_event_map:
+                    centroid_event_map[edge[2]] = []
+                centroid_event_map[edge[2]].append(edge[0])
+
+        for edge in self.event_to_entity_edges:
+            if edge[2] in self.centroids:
+                if edge[0] not in centroid_event_map:
+                    centroid_event_map[edge[0]] = []
+                centroid_event_map[edge[0]].append(edge[2])
+
+        for edge in self.entity_to_event_edges:
+            if edge[0] == target_entity and edge[2] in centroid_event_map:
+                centroids = np.concatenate((centroids, centroid_event_map[edge[2]]))
+
+        for edge in self.event_to_entity_edges:
+            if edge[2] == target_entity and edge[0] in centroid_event_map:
+                centroids = np.concatenate((centroids, centroid_event_map[edge[0]]))
+
+        centroids = np.unique(centroids)
+        return centroids
+
     def get_paths_to_neighboring_centroid_formal_todo_rename(self, target_entities):
         known_events = []
         entity_to_entity = []

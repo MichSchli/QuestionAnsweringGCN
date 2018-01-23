@@ -28,4 +28,5 @@ class NameToIndexExampleProcessor(AbstractExampleProcessor):
         # print(example["neighborhood"].entity_vertices.shape[0])
         # print("projected " + str(example["gold_entities"]) + " to " + str(gold_list))
         example["gold_entities"] = gold_list
+        example["true_gold"] = names
         return True

@@ -15,4 +15,5 @@ class GoldToIndexExampleProcessor(AbstractExampleProcessor):
 
         gold_list = np.array(gold_list).astype(np.int32)
         example["gold_entities"] = gold_list
+        example["true_gold"] = names
         return True

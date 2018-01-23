@@ -1,3 +1,5 @@
+from experiment_construction.example_processor_construction.gold_by_f1_filter_example_processor import \
+    GoldByF1FilterExampleProcessor
 from experiment_construction.example_processor_construction.gold_to_index_example_processor import \
     GoldToIndexExampleProcessor
 from experiment_construction.example_processor_construction.graph_split_example_processor import \
@@ -23,12 +25,12 @@ class ExampleProcessorFactory:
         if "split_graph" in settings["training"] and settings["training"]["split_graph"] == "True":
             processor = GraphSplitExampleProcessor(processor)
 
-        processor = SimpleSplitExampleProcessor(processor)
-
         if "project_name" in settings["training"]:
             processor = NameToIndexExampleProcessor(processor)
         else:
             processor = GoldToIndexExampleProcessor(processor)
+
+        processor = GoldByF1FilterExampleProcessor(processor)
 
         if "subsampling" in settings["training"] and settings["training"]["subsampling"] != "None":
             processor = SubsampleVerticesExampleProcessor(processor, rate=int(settings["training"]["subsampling"]))

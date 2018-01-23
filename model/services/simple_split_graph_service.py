@@ -19,7 +19,7 @@ class SimpleSplitGraphService:
         centroid_map = {c:i for i,c in enumerate(new_e_to_e)}
 
 
-        # Add all en to en edges, splitting
+        # We need eveyr single centroid-entity edge, so it is safe to add all of them:
         fixed_edges = []
         for edge in graph.entity_to_entity_edges:
             if edge[0] in centroids:
@@ -31,7 +31,7 @@ class SimpleSplitGraphService:
                 fixed_edge = [len(new_e_to_e)-1, edge[1], centroid_map[edge[2]]]
                 fixed_edges.append(fixed_edge)
 
-        # Add all ev-en edges with a centroid at one end.
+        # We need every single centroi-event edge, so all those and all events can be added:
 
         # Add all ev-en edges without a centroid, splitting ens
 
