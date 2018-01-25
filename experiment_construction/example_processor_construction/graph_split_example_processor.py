@@ -13,9 +13,9 @@ class GraphSplitExampleProcessor(AbstractExampleProcessor):
         if len(example["sentence_entity_map"]) == 0:
             return True
 
-        centroids = [example["neighborhood"].to_index(c) for c in example["sentence_entity_map"][:, 2]]
-        centroids = np.concatenate(centroids)
-        example["neighborhood"].set_centroids(centroids)
-        example["neighborhood"] = split_graph_service.split_graph(graph)
+        new_graph, new_golds = split_graph_service.split_graph(graph, example["gold_entities"])
+
+        example["neighborhood"] = new_graph
+        example["gold_entities"] = new_golds
 
         return True

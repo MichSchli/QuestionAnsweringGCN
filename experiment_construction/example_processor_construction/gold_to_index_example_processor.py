@@ -8,6 +8,7 @@ class GoldToIndexExampleProcessor(AbstractExampleProcessor):
     def process_example(self, example, mode="train"):
         names = example["gold_entities"]
         graph = example["neighborhood"]
+
         gold_list = []
         for name in names:
             if graph.has_index(name):

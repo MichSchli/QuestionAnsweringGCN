@@ -22,7 +22,9 @@ class GoldByF1FilterExampleProcessor(AbstractExampleProcessor):
         best_centroid = None
         best_f1 = -1
         for centroid,centroid_golds in centroid_dict.items():
-            f1 = self.calculate_f1([example["neighborhood"].from_index_with_names(cg) for cg in centroid_golds], true_golds)
+            prediction = [example["neighborhood"].from_index_with_names(cg) for cg in centroid_golds]
+            prediction = np.unique(prediction)
+            f1 = self.calculate_f1(prediction, true_golds)
             if f1 > best_f1:
                 best_f1 = f1
                 best_centroid = centroid

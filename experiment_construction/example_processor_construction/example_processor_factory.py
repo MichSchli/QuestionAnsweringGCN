@@ -20,22 +20,43 @@ class ExampleProcessorFactory:
         pass
 
     def construct_example_processor(self, settings):
-        processor = None
+        processor = self.add_gold_label_projectors(None, settings)
+        processor = self.add_graph_editing_processors(processor, settings)
+        processor = self.add_gold_label_filters(processor, settings)
 
+        if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
+            processor = PropagateScoresExampleProcessor(processor)
+
+        return processor
+
+    '''
+    Edit the graph to fit the model:
+    '''
+    def add_graph_editing_processors(self, processor, settings):
         if "split_graph" in settings["training"] and settings["training"]["split_graph"] == "True":
             processor = GraphSplitExampleProcessor(processor)
+        if "subsampling" in settings["training"] and settings["training"]["subsampling"] != "None":
+            processor = SubsampleVerticesExampleProcessor(processor, rate=int(settings["training"]["subsampling"]))
+        return processor
 
-        if "project_name" in settings["training"]:
+    '''
+    Process gold labels:
+    '''
+    def add_gold_label_projectors(self, processor, settings):
+        if "project_name" in settings["training"] and settings["training"]["project_name"] == "True":
             processor = NameToIndexExampleProcessor(processor)
         else:
             processor = GoldToIndexExampleProcessor(processor)
 
-        processor = GoldByF1FilterExampleProcessor(processor)
+        return processor
 
-        if "subsampling" in settings["training"] and settings["training"]["subsampling"] != "None":
-            processor = SubsampleVerticesExampleProcessor(processor, rate=int(settings["training"]["subsampling"]))
-
-        if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
-            processor = PropagateScoresExampleProcessor(processor)
+    '''
+    Filter gold labels:
+    '''
+    def add_gold_label_filters(self, processor, settings):
+        if settings["training"]["gold_labels"] == "maximize_f1":
+            processor = GoldByF1FilterExampleProcessor(processor)
+        if settings["training"]["gold_labels"] == "span_maximize_f1":
+            exit()
 
         return processor
