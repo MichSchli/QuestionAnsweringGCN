@@ -49,7 +49,7 @@ class PathBagVsLstm(AbstractTensorflowModel):
         self.target_comparator = TargetComparator(self.variables, variable_prefix="comparison_to_sentence", comparison="concat")
         self.add_component(self.target_comparator)
 
-        self.decoder = SoftmaxDecoder(self.variables)
+        self.decoder = SoftmaxDecoder(self.variables, self.model_settings["loss"])
         self.add_component(self.decoder)
 
         self.candidate_scorer = NeuralNetworkOrFactorizationScorer(self.model_settings, self.variables, variable_prefix="scorer")

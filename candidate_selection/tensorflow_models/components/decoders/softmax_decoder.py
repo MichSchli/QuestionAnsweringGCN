@@ -9,8 +9,9 @@ class SoftmaxDecoder(AbstractComponent):
 
     variables = None
 
-    def __init__(self, tensorflow_variables_holder):
+    def __init__(self, tensorflow_variables_holder, loss_type):
         self.variables = tensorflow_variables_holder
+        self.loss_type = loss_type
 
     def decode_to_prediction(self, entity_scores):
         entity_vertex_scores = tf.concat((tf.constant([0], dtype=tf.float32), entity_scores), 0)
@@ -60,13 +61,18 @@ class SoftmaxDecoder(AbstractComponent):
 
         def map_function(x):
             golds = x[2][:x[1]]
-            pos_weight = tf.to_float(x[1])/tf.reduce_sum(tf.to_float(golds))
-            loss = self.inner_sigmoid(x[0][:x[1]], golds)
-            #vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds, pos_weight=pos_weight)
 
-            sigmoids = x[0][:x[1]]
-            #vals = tf.Print(vals, [golds, vals, sigmoids], message="cross entropy: ", summarize=25)
-            #vals = tf.reduce_mean(vals)
+            if self.loss_type == "sigmoid":
+                vals = tf.nn.sigmoid_cross_entropy_with_logits(logits=x[0][:x[1]], labels=golds)
+                loss = tf.reduce_mean(vals)
+            elif self.loss_type == "weighted_sigmoid":
+                pos_weight = tf.to_float(x[1]) / tf.reduce_sum(tf.to_float(golds))
+                vals = tf.nn.weighted_cross_entropy_with_logits(logits=x[0][:x[1]], targets=golds,
+                                                                pos_weight=pos_weight)
+                loss = tf.reduce_mean(vals)
+            elif self.loss_type == "argmax_sigmoid":
+                loss = self.inner_sigmoid(x[0][:x[1]], golds)
+
             return loss
 
         elems = (entity_vertex_scores_distributed, self.variables.get_variable("vertex_count_per_hypergraph"), gold_scores)
