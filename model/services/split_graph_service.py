@@ -106,6 +106,8 @@ class SplitGraphService:
         else:
             new_graph.event_to_entity_edges = np.empty((0,3), dtype=np.int32)
 
+        new_graph.compute_event_dictionary_for_subsampling()
+
         return new_graph, new_golds
 
     def add_new_vertex(self, old_index, graph, new_graph, v_counter, gold_indexes, new_golds):

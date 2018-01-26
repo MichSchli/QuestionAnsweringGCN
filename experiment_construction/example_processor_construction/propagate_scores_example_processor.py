@@ -10,10 +10,6 @@ class PropagateScoresExampleProcessor(AbstractExampleProcessor):
             return mode != "train"
 
         scores = example["sentence_entity_map"][:, 3].astype(np.float32)
-        if example["neighborhood"].centroids is None:
-            centroids = [example["neighborhood"].to_index(c) for c in example["sentence_entity_map"][:, 2]]
-            centroids = np.concatenate(centroids)
-            example["neighborhood"].set_centroids(centroids)
         example["neighborhood"].propagate_scores(scores)
 
         return True

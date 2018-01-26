@@ -10,6 +10,9 @@ class SubsampleVerticesService:
         self.negative_sample_rate = negative_sample_rate
 
     def subsample_vertices(self, graph, positives):
+        if self.negative_sample_rate > graph.entity_vertices.shape[0]:
+            return graph, positives
+
         new_graph = HypergraphModel()
         new_graph.name_edge_type = graph.name_edge_type
         new_graph.type_edge_type = graph.type_edge_type
@@ -18,8 +21,7 @@ class SubsampleVerticesService:
         new_graph.inverse_entity_map = {}
 
         centroids = graph.centroids
-        potential_negatives = np.random.randint(0,graph.entity_vertices.shape[0], size=self.negative_sample_rate)
-
+        potential_negatives = np.random.choice(graph.entity_vertices.shape[0], self.negative_sample_rate, replace=False)
         kept_vertices = np.unique(np.concatenate((positives, centroids, potential_negatives)))
 
         new_centroids = np.array([np.squeeze(np.argwhere(kept_vertices == e)) for e in centroids])

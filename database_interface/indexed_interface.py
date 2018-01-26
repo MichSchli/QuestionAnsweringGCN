@@ -64,6 +64,9 @@ class IndexedInterface:
 
         #hypergraph.name_edge_type = self.relation_indexer.index_single_element("http://www.w3.org/2000/01/rdf-schema#label")
 
-        #hypergraph.set_centroids([entity_indexes[c] for c in hypergraph.centroids])
+        hypergraph.set_centroids([entity_indexes[c] for c in hypergraph.centroids])
+
+        #TODO a bit confusing that this is here, but to save space we use indexes and only compute once
+        hypergraph.compute_event_dictionary_for_subsampling()
 
         return hypergraph

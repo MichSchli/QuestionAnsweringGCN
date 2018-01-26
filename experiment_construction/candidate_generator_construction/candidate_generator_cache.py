@@ -30,17 +30,6 @@ class CandidateGeneratorCache:
 
                 print(key in self.cache)
             else:
-                #print("retrieval")
                 instance["neighborhood"] = self.cache[key]
-
-                # TODO: This should not be here, but to move it I have to rebuild the cache
-                if instance["neighborhood"].centroids is None:
-                    centroids = [instance["neighborhood"].to_index(c) for c in instance["sentence_entity_map"][:, 2]]
-                    centroids = np.concatenate(centroids)
-                    instance["neighborhood"].set_centroids(centroids)
-                #print("retrieved")
-
-            #print(instance)
-            #instance["neighborhood"].get_edges_and_hyperedges(instance["mentioned_entities"], instance["gold_entities"])
 
             yield instance

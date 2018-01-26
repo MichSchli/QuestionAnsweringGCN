@@ -247,11 +247,6 @@ class HypergraphModel:
         return centroids
 
     def get_paths_to_neighboring_centroid_formal_todo_rename(self, target_entities):
-        known_events = []
-        entity_to_entity = []
-        event_to_entity = []
-        entity_to_event = []
-
         outgoing_v = np.logical_and(np.isin(self.entity_to_entity_edges[:, 0], target_entities),
                                             np.isin(self.entity_to_entity_edges[:, 2], self.centroids))
         ingoing_v = np.logical_and(np.isin(self.entity_to_entity_edges[:, 2], target_entities),
@@ -259,30 +254,12 @@ class HypergraphModel:
 
         en_to_en_keep = np.logical_or(ingoing_v, outgoing_v)
 
-        has_centroid_connection = np.zeros_like(self.event_vertices, dtype=np.bool)
-        has_multiple_centroid_connections = np.zeros_like(self.event_vertices, dtype=np.bool)
+        connected_events = np.unique(np.concatenate([np.array(self.event_connections[v], dtype=np.int32) for v in target_entities]))
         has_kept_connection = np.zeros_like(self.event_vertices, dtype=np.bool)
+        has_kept_connection[connected_events] = True
 
-        for edge in self.event_to_entity_edges:
-            if edge[2] in self.centroids:
-                if has_centroid_connection[edge[0]]:
-                    has_multiple_centroid_connections[edge[0]]
-                else:
-                    has_centroid_connection[edge[0]] = True
-            elif edge[2] in target_entities:
-                has_kept_connection[edge[0]] = True
-
-        for edge in self.entity_to_event_edges:
-            if edge[0] in self.centroids:
-                if has_centroid_connection[edge[2]]:
-                    has_multiple_centroid_connections[edge[2]]
-                else:
-                    has_centroid_connection[edge[2]] = True
-            elif edge[0] in target_entities:
-                has_kept_connection[edge[2]] = True
-
-        events_to_keep = np.logical_or(np.logical_and(has_centroid_connection, has_kept_connection),
-                                       has_multiple_centroid_connections)
+        events_to_keep = np.logical_or(np.logical_and(self.has_centroid_connection, has_kept_connection),
+                                       self.has_multiple_centroid_connections)
         events_to_keep = self.event_vertices[events_to_keep]
 
 
@@ -296,6 +273,27 @@ class HypergraphModel:
         event_to_entity = self.event_to_entity_edges[ev_to_en_keep]
 
         return entity_to_entity, entity_to_event, event_to_entity, events_to_keep
+
+    def compute_event_dictionary_for_subsampling(self):
+        self.has_centroid_connection = np.zeros_like(self.event_vertices, dtype=np.bool)
+        self.has_multiple_centroid_connections = np.zeros_like(self.event_vertices, dtype=np.bool)
+        self.event_connections = {v: [] for v in np.arange(self.entity_vertices.shape[0])}
+        for edge in self.event_to_entity_edges:
+            if edge[2] in self.centroids:
+                if self.has_centroid_connection[edge[0]]:
+                    self.has_multiple_centroid_connections[edge[0]]
+                else:
+                    self.has_centroid_connection[edge[0]] = True
+            else:
+                self.event_connections[edge[2]].append(edge[0])
+        for edge in self.entity_to_event_edges:
+            if edge[0] in self.centroids:
+                if self.has_centroid_connection[edge[2]]:
+                    self.has_multiple_centroid_connections[edge[2]]
+                else:
+                    self.has_centroid_connection[edge[2]] = True
+            else:
+                self.event_connections[edge[0]].append(edge[2])
 
     def from_index_with_names(self, index):
         if self.has_name(index):
