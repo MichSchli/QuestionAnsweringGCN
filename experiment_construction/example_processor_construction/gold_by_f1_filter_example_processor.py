@@ -30,6 +30,9 @@ class GoldByF1FilterExampleProcessor(AbstractExampleProcessor):
                 best_f1 = f1
                 best_centroid = centroid
 
+        if best_centroid is None:
+            return False
+
         example["gold_entities"] = centroid_dict[best_centroid]
 
         return True
