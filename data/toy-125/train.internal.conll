@@ -5,8 +5,8 @@
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
-2	2	alice	0.3
+2	2	fay	1.0	0
+2	2	alice	0.3	0
 
 bob	bob
 
@@ -17,8 +17,8 @@ bob	bob
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-5	5	alicecorp	0.3
-5	5	bobcorp	0.01
+5	5	alicecorp	0.3	0
+5	5	bobcorp	0.01	0
 
 alice	alice
 bob	bob
@@ -32,8 +32,8 @@ fay	fay
 5	2004	_	_	_
 6	?	_	_	_
 
-3	3	emma	1.0
-5	5	emma	0.1
+3	3	emma	1.0	0
+5	5	emma	0.1	1
 
 carl	carl
 
@@ -45,9 +45,9 @@ carl	carl
 5	denniscorp	_	_	_
 6	?	_	_	_
 
-5	5	denniscorp	1.0
-5	5	dennis	0.3
-5	5	alicecorp	0.01
+5	5	denniscorp	1.0	0
+5	5	dennis	0.3	0
+5	5	alicecorp	0.01	0
 
 gary	gary
 
@@ -58,8 +58,8 @@ gary	gary
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	alice	0.99
-2	2	alicecorp	0.2
+2	2	alice	0.99	0
+2	2	alicecorp	0.2	0
 
 ceo	ceo
 
@@ -70,7 +70,7 @@ ceo	ceo
 4	someschool	_	_	_
 5	?	_	_	_
 
-5	5	someschool	1.0
+5	5	someschool	1.0	0
 
 henry	henry
 
@@ -81,8 +81,8 @@ henry	henry
 4	2002	_	_	_
 5	?	_	_	_
 
-3	3	maths	1.0
-5	5	someschool	0.0001
+3	3	maths	1.0	0
+5	5	someschool	0.0001	1
 
 henry	henry
 
@@ -94,8 +94,8 @@ henry	henry
 5	emma	_	_	_
 6	?	_	_	_
 
-5	5	emma	0.6
-5	5	dennis	0.2
+5	5	emma	0.6	0
+5	5	dennis	0.2	0
 
 dennis	dennis
 
@@ -106,8 +106,8 @@ dennis	dennis
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	gary	1.0
-2	2	emma	0.001
+2	2	gary	1.0	0
+2	2	emma	0.001	0
 
 denniscorp	denniscorp
 
@@ -118,7 +118,7 @@ denniscorp	denniscorp
 4	2005	_	_	_
 5	?	_	_	_
 
-3	3	physics	0.7
+3	3	physics	0.7	0
 
 henry	henry
 
@@ -129,9 +129,9 @@ henry	henry
 4	dennis	_	_	_
 5	?	_	_	_
 
-4	4	dennis	0.8
-2	2	dennis	0.1
-2	5	dennis	0.1
+4	4	dennis	0.8	0
+2	2	dennis	0.1	1
+2	5	dennis	0.1	2
 
 emma	emma
 
@@ -142,7 +142,7 @@ emma	emma
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	carl	0.1
+2	2	carl	0.1	0
 
 denniscorp	denniscorp
 alicecorp	alicecorp
@@ -154,7 +154,7 @@ alicecorp	alicecorp
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 carl	carl
 
@@ -165,8 +165,8 @@ carl	carl
 4	bob	_	_	_
 5	?	_	_	_
 
-5	5	bob	0.3
-5	5	bobcorp	0.4
+5	5	bob	0.3	0
+5	5	bobcorp	0.4	0
 
 alice	alice
 
@@ -177,9 +177,9 @@ alice	alice
 4	carl	_	_	_
 5	?	_	_	_
 
-4	4	carl	0.3
-4	4	dennis	0.1
-4	4	alice	0.0001
+4	4	carl	0.3	0
+4	4	dennis	0.1	0
+4	4	alice	0.0001	0
 
 alice	alice
 
@@ -191,7 +191,7 @@ alice	alice
 5	carl	_	_	_
 6	?	_	_	_
 
-5	5	carl	1.0
+5	5	carl	1.0	0
 
 bob	bob
 
@@ -203,8 +203,8 @@ bob	bob
 5	carl	_	_	_
 6	?	_	_	_
 
-4	4	carl	0.8
-4	4	dennis	0.4
+4	4	carl	0.8	0
+4	4	dennis	0.4	0
 
 alice	alice
 bob	bob
@@ -214,7 +214,7 @@ bob	bob
 2	physics	_	_	_
 3	?	_	_	_
 
-3	3	physics	1.0
+3	3	physics	1.0	0
 
 henry	henry
 
@@ -225,8 +225,8 @@ henry	henry
 4	copenhagen	_	_	_
 5	?	_	_	_
 
-4	4	copenhagen	1.0
-4	4	amsterdam	0.13
+4	4	copenhagen	1.0	0
+4	4	amsterdam	0.13	0
 
 henry	henry
 fay	fay
@@ -237,8 +237,8 @@ fay	fay
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	emma	1.0
-3	3	amsterdam	0.001
+2	2	emma	1.0	0
+3	3	amsterdam	0.001	1
 
 amsterdam	amsterdam
 
@@ -250,8 +250,8 @@ amsterdam	amsterdam
 5	denniscorp	_	_	_
 6	?	_	_	_
 
-5	5	denniscorp	1.0
-3	3	amsterdam	0.001
+5	5	denniscorp	1.0	0
+3	3	amsterdam	0.001	1
 
 dennis	dennis
 
@@ -264,11 +264,11 @@ dennis	dennis
 6	gary	_	_	_
 7	?	_	_	_
 
-2	2	dennis	1.0
-4	4	denniscorp	0.9
-6	6	gary	1.0
-6	6	emma	0.2
-3	3	amsterdam	0.001
+2	2	dennis	1.0	0
+4	4	denniscorp	0.9	1
+6	6	gary	1.0	2
+6	6	emma	0.2	2
+3	3	amsterdam	0.001	3
 
 1996	1996
 
@@ -279,7 +279,7 @@ dennis	dennis
 4	emma	_	_	_
 5	?	_	_	_
 
-4	4	emma	1.0
+4	4	emma	1.0	0
 
 dennis	dennis
 
@@ -288,8 +288,8 @@ dennis	dennis
 2	denniscorp	_	_	_
 3	?	_	_	_
 
-3	3	denniscorp	1.0
-1	1	gary	0.9
+3	3	denniscorp	1.0	0
+1	1	gary	0.9	1
 
 dennis	dennis
 
@@ -300,7 +300,7 @@ dennis	dennis
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
+2	2	emma	1.0	0
 
 denniscorp	denniscorp
 othercorp	othercorp
@@ -312,9 +312,9 @@ othercorp	othercorp
 4	bob	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-4	4	bob	0.9
-4	4	gary	0.4
+2	2	alice	1.0	0
+4	4	bob	0.9	1
+4	4	gary	0.4	1
 
 2003	2003
 
@@ -325,7 +325,7 @@ othercorp	othercorp
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 othercorp	othercorp
 
@@ -337,9 +337,9 @@ othercorp	othercorp
 5	2003	_	_	_
 6	?	_	_	_
 
-2	2	alice	0.5
-5	5	gary	0.2
-2	2	gary	0.2
+2	2	alice	0.5	0
+5	5	gary	0.2	1
+2	2	gary	0.2	0
 
 bob	bob
 
@@ -350,8 +350,8 @@ bob	bob
 4	carl	_	_	_
 5	?	_	_	_
 
-5	5	carl	0.5
-5	5	emma	0.4
+5	5	carl	0.5	0
+5	5	emma	0.4	0
 
 emma	emma
 
@@ -363,9 +363,9 @@ emma	emma
 5	2000	_	_	_
 6	?	_	_	_
 
-2	2	henry	1.0
-2	2	carl	1.0
-2	2	alice	1.0
+2	2	henry	1.0	0
+2	2	carl	1.0	0
+2	2	alice	1.0	0
 
 maths	maths
 
@@ -374,7 +374,7 @@ maths	maths
 2	maths	_	_	_
 3	?	_	_	_
 
-3	3	maths	1.0
+3	3	maths	1.0	0
 
 henry	henry
 
@@ -385,8 +385,8 @@ henry	henry
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
-2	2	carl	0.01
+2	2	fay	1.0	0
+2	2	carl	0.01	0
 
 alicecorp	alicecorp
 
@@ -396,7 +396,7 @@ alicecorp	alicecorp
 3	alice	_	_	_
 4	?	_	_	_
 
-4	4	alice	1.0
+4	4	alice	1.0	0
 
 bob	bob
 
@@ -408,9 +408,9 @@ bob	bob
 5	dennis	_	_	_
 6	?	_	_	_
 
-5	5	dennis	1.0
-2	2	fay	0.2
-2	2	dennis	0.4
+5	5	dennis	1.0	0
+2	2	fay	0.2	1
+2	2	dennis	0.4	1
 
 emma	emma
 
@@ -421,7 +421,7 @@ emma	emma
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 developer	developer
 
@@ -432,8 +432,8 @@ developer	developer
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	emma	0.8
-2	2	fay	0.2
+2	2	emma	0.8	0
+2	2	fay	0.2	0
 
 carl	carl
 
@@ -444,10 +444,10 @@ carl	carl
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
-2	2	bob	0.2
-2	2	fay	0.1
-4	4	fay	0.7
+2	2	emma	1.0	0
+2	2	bob	0.2	0
+2	2	fay	0.1	0
+4	4	fay	0.7	1
 
 carl	carl
 
@@ -458,7 +458,7 @@ carl	carl
 4	denniscorp	_	_	_
 5	?	_	_	_
 
-5	5	denniscorp	1.0
+5	5	denniscorp	1.0	0
 
 alice	alice
 emma	emma
@@ -470,8 +470,8 @@ carl	carl
 3	amsterdam	_	_	_
 4	?	_	_	_
 
-4	4	amsterdam	1.0
-2	4	copenhagen	0.9
+4	4	amsterdam	1.0	0
+2	4	copenhagen	0.9	1
 
 gary	gary
 dennis	dennis
@@ -485,8 +485,8 @@ emma	emma
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
-2	2	fay	0.45678
+2	2	emma	1.0	0
+2	2	fay	0.45678	0
 
 ceo	ceo
 
@@ -496,7 +496,7 @@ ceo	ceo
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	gary	1.0
+2	2	gary	1.0	0
 
 amsterdam	amsterdam
 
@@ -506,8 +506,8 @@ amsterdam	amsterdam
 3	taught	_	_	_
 4	?	_	_	_
 
-2	2	physics	1.0
-2	2	alice	1.0
+2	2	physics	1.0	0
+2	2	alice	1.0	0
 
 2006	2006
 2005	2005
@@ -521,8 +521,8 @@ amsterdam	amsterdam
 5	fay	_	_	_
 6	?	_	_	_
 
-5	5	fay	0.9
-2	2	alice	0.3
+5	5	fay	0.9	0
+2	2	alice	0.3	1
 
 henry	henry
 
@@ -533,9 +533,9 @@ henry	henry
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-5	5	alicecorp	1.0
-2	2	alicecorp	0.4
-3	3	alicecorp	0.3
+5	5	alicecorp	1.0	0
+2	2	alicecorp	0.4	1
+3	3	alicecorp	0.3	2
 
 gary	gary
 alice	alice
@@ -549,7 +549,7 @@ carl	carl
 4	1997	_	_	_
 5	?	_	_	_
 
-3	3	alicecorp	1.0
+3	3	alicecorp	1.0	0
 
 alice	alice
 
@@ -561,8 +561,8 @@ alice	alice
 5	denniscorp	_	_	_
 6	?	_	_	_
 
-5	5	denniscorp	1.0
-2	2	alicecorp	0.000001
+5	5	denniscorp	1.0	0
+2	2	alicecorp	0.000001	1
 
 emma	emma
 
@@ -573,8 +573,8 @@ emma	emma
 4	fay	_	_	_
 5	?	_	_	_
 
-5	5	fay	1.0
-2	2	alicecorp	1.0
+5	5	fay	1.0	0
+2	2	alicecorp	1.0	1
 
 henry	henry
 
@@ -586,8 +586,8 @@ henry	henry
 5	1999	_	_	_
 6	?	_	_	_
 
-2	2	henry	1.0
-2	2	alicecorp	1.0
+2	2	henry	1.0	0
+2	2	alicecorp	1.0	0
 
 fay	fay
 
@@ -598,7 +598,7 @@ fay	fay
 4	bob	_	_	_
 5	?	_	_	_
 
-4	4	bob	1.0
+4	4	bob	1.0	0
 
 alice	alice
 
@@ -609,9 +609,9 @@ alice	alice
 4	bob	_	_	_
 5	?	_	_	_
 
-5	5	bob	1.0
-2	2	bob	0.2
-5	5	alice	0.4
+5	5	bob	1.0	0
+2	2	bob	0.2	1
+5	5	alice	0.4	0
 
 fay	fay
 
@@ -621,7 +621,7 @@ fay	fay
 3	emma	_	_	_
 4	?	_	_	_
 
-4	4	emma	1.0
+4	4	emma	1.0	0
 
 carl	carl
 
@@ -631,8 +631,8 @@ carl	carl
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	emma	1.0
-2	3	bob	0.1
+2	2	emma	1.0	0
+2	3	bob	0.1	1
 
 amsterdam	amsterdam
 
@@ -644,7 +644,7 @@ amsterdam	amsterdam
 5	2003	_	_	_
 6	?	_	_	_
 
-3	3	alice	1.0
+3	3	alice	1.0	0
 
 bob	bob
 
@@ -655,8 +655,8 @@ bob	bob
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	carl	0.4
-2	2	alice	0.35
+2	2	carl	0.4	0
+2	2	alice	0.35	0
 
 developer	developer
 
@@ -668,8 +668,8 @@ developer	developer
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
-2	2	alicecorp	1.0
+2	2	alice	1.0	0
+2	2	alicecorp	1.0	0
 
 carl	carl
 
@@ -680,7 +680,7 @@ carl	carl
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 alice	alice
 
@@ -692,7 +692,7 @@ alice	alice
 5	2004	_	_	_
 6	?	_	_	_
 
-2	2	emma	1.0
+2	2	emma	1.0	0
 
 carl	carl
 
@@ -703,9 +703,9 @@ carl	carl
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
-2	2	emma	0.8
-2	2	bob	0.3
+2	2	dennis	1.0	0
+2	2	emma	0.8	0
+2	2	bob	0.3	0
 
 ceo	ceo
 
@@ -716,7 +716,7 @@ ceo	ceo
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
+2	2	fay	1.0	0
 
 alicecorp	alicecorp
 
@@ -728,8 +728,8 @@ alicecorp	alicecorp
 5	1999	_	_	_
 6	?	_	_	_
 
-3	3	henry	0.6
-3	3	emma	0.5
+3	3	henry	0.6	0
+3	3	emma	0.5	0
 
 fay	fay
 
@@ -741,8 +741,8 @@ fay	fay
 5	alicecorp	_	_	_
 6	?	_	_	_
 
-5	5	alicecorp	1.0
-4	5	alicecorp	0.7
+5	5	alicecorp	1.0	0
+4	5	alicecorp	0.7	1
 
 alice	alice
 
@@ -752,7 +752,7 @@ alice	alice
 3	edinburgh	_	_	_
 4	?	_	_	_
 
-4	4	edinburgh	1.0
+4	4	edinburgh	1.0	0
 
 henry	henry
 alice	alice
@@ -767,8 +767,8 @@ fay	fay
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
-4	4	edinburgh	0.01
+2	2	alice	1.0	0
+4	4	edinburgh	0.01	1
 
 carl	carl
 
@@ -780,8 +780,8 @@ carl	carl
 5	carl	_	_	_
 6	?	_	_	_
 
-5	5	carl	1.0
-4	4	edinburgh	0.01
+5	5	carl	1.0	0
+4	4	edinburgh	0.01	1
 
 alice	alice
 
@@ -792,7 +792,7 @@ alice	alice
 4	teacher	_	_	_
 5	?	_	_	_
 
-5	5	teacher	1.0
+5	5	teacher	1.0	0
 
 henry	henry
 
@@ -804,8 +804,8 @@ henry	henry
 5	2004	_	_	_
 6	?	_	_	_
 
-3	3	carl	1.0
-5	5	teacher	0.7
+3	3	carl	1.0	0
+5	5	teacher	0.7	1
 
 emma	emma
 
@@ -816,7 +816,7 @@ emma	emma
 4	2001	_	_	_
 5	?	_	_	_
 
-3	3	maths	1.0
+3	3	maths	1.0	0
 
 henry	henry
 
@@ -826,7 +826,7 @@ henry	henry
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 edinburgh	edinburgh
 
@@ -837,7 +837,7 @@ edinburgh	edinburgh
 4	amsterdam	_	_	_
 5	?	_	_	_
 
-4	4	amsterdam	1.0
+4	4	amsterdam	1.0	0
 
 denniscorp	denniscorp
 
@@ -847,8 +847,8 @@ denniscorp	denniscorp
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	carl	0.3
-3	3	carl	0.2
+2	2	carl	0.3	0
+3	3	carl	0.2	1
 
 edinburgh	edinburgh
 
@@ -859,7 +859,7 @@ edinburgh	edinburgh
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 bob	bob
 
@@ -870,8 +870,8 @@ bob	bob
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
-2	2	carl	0.7
+2	2	emma	1.0	0
+2	2	carl	0.7	0
 
 denniscorp	denniscorp
 othercorp	othercorp
@@ -882,8 +882,8 @@ othercorp	othercorp
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	gary	1.0
-2	2	carl	0.7
+2	2	gary	1.0	0
+2	2	carl	0.7	0
 
 amsterdam	amsterdam
 
@@ -894,8 +894,8 @@ amsterdam	amsterdam
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	henry	0.9
-2	2	carl	0.7
+2	2	henry	0.9	0
+2	2	carl	0.7	0
 
 someschool	someschool
 
@@ -905,7 +905,7 @@ someschool	someschool
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	denniscorp	1.0
+2	2	denniscorp	1.0	0
 
 amsterdam	amsterdam
 
@@ -916,10 +916,10 @@ amsterdam	amsterdam
 4	maths	_	_	_
 5	?	_	_	_
 
-2	2	henry	0.9
-4	4	maths	0.2
-2	2	carl	0.8
-4	4	alicecorp	0.1
+2	2	henry	0.9	0
+4	4	maths	0.2	1
+2	2	carl	0.8	0
+4	4	alicecorp	0.1	1
 
 2002	2002
 2000	2000
@@ -934,7 +934,7 @@ amsterdam	amsterdam
 5	bob	_	_	_
 6	?	_	_	_
 
-5	5	bob	1.0
+5	5	bob	1.0	0
 
 carl	carl
 
@@ -945,8 +945,8 @@ carl	carl
 4	carl	_	_	_
 5	?	_	_	_
 
-4	4	carl	1.0
-4	4	maths	0.1
+4	4	carl	1.0	0
+4	4	maths	0.1	0
 
 bob	bob
 
@@ -957,7 +957,7 @@ bob	bob
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
+2	2	emma	1.0	0
 
 denniscorp	denniscorp
 
@@ -968,8 +968,8 @@ denniscorp	denniscorp
 4	fay	_	_	_
 5	?	_	_	_
 
-4	4	fay	1.0
-4	4	copenhagen	0.9
+4	4	fay	1.0	0
+4	4	copenhagen	0.9	0
 
 henry	henry
 
@@ -980,7 +980,7 @@ henry	henry
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
+2	2	dennis	1.0	0
 
 othercorp	othercorp
 
@@ -992,8 +992,8 @@ othercorp	othercorp
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	bob	0.8
-2	2	dennis	0.2
+2	2	bob	0.8	0
+2	2	dennis	0.2	0
 
 carl	carl
 
@@ -1003,7 +1003,7 @@ carl	carl
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 copenhagen	copenhagen
 
@@ -1014,8 +1014,8 @@ copenhagen	copenhagen
 4	alice	_	_	_
 5	?	_	_	_
 
-4	4	alice	1.0
-2	2	dennis	0.3
+4	4	alice	1.0	0
+2	2	dennis	0.3	1
 
 carl	carl
 
@@ -1027,7 +1027,7 @@ carl	carl
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 alicecorp	alicecorp
 
@@ -1038,8 +1038,8 @@ alicecorp	alicecorp
 4	1990	_	_	_
 5	?	_	_	_
 
-3	3	denniscorp	1.0
-3	3	alicecorp	0.02
+3	3	denniscorp	1.0	0
+3	3	alicecorp	0.02	0
 
 dennis	dennis
 
@@ -1051,7 +1051,7 @@ dennis	dennis
 5	2002	_	_	_
 6	?	_	_	_
 
-3	3	bob	1.0
+3	3	bob	1.0	0
 
 alicecorp	alicecorp
 
@@ -1062,8 +1062,8 @@ alicecorp	alicecorp
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	emma	0.9
-3	3	emma	0.2
+2	2	emma	0.9	0
+3	3	emma	0.2	1
 
 dennis	dennis
 
@@ -1073,7 +1073,7 @@ dennis	dennis
 3	henry	_	_	_
 4	?	_	_	_
 
-4	4	henry	1.0
+4	4	henry	1.0	0
 
 fay	fay
 
@@ -1084,7 +1084,7 @@ fay	fay
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 alice	alice
 bob	bob
@@ -1096,11 +1096,11 @@ bob	bob
 4	henry	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
-2	2	carl	0.1
-2	2	emma	0.2
-2	2	alicecorp	0.3
-4	4	henry	1.0
+2	2	fay	1.0	0
+2	2	carl	0.1	0
+2	2	emma	0.2	0
+2	2	alicecorp	0.3	0
+4	4	henry	1.0	1
 
 1999	1999
 
@@ -1110,7 +1110,7 @@ bob	bob
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 edinburgh	edinburgh
 
@@ -1121,8 +1121,8 @@ edinburgh	edinburgh
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	alice	0.9
-2	2	dennis	0.1
+2	2	alice	0.9	0
+2	2	dennis	0.1	0
 
 alicecorp	alicecorp
 
@@ -1132,8 +1132,8 @@ alicecorp	alicecorp
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	dennis	0.4
-2	2	alice	0.3
+2	2	dennis	0.4	0
+2	2	alice	0.3	0
 
 amsterdam	amsterdam
 
@@ -1144,9 +1144,9 @@ amsterdam	amsterdam
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-4	4	alicecorp	0.2
-2	2	dennis	0.9
+2	2	alice	1.0	0
+4	4	alicecorp	0.2	1
+2	2	dennis	0.9	0
 
 1997	1997
 
@@ -1156,7 +1156,7 @@ amsterdam	amsterdam
 3	taught	_	_	_
 4	?	_	_	_
 
-2	2	maths	1.0
+2	2	maths	1.0	0
 
 2002	2002
 2000	2000
@@ -1169,7 +1169,7 @@ amsterdam	amsterdam
 3	carl	_	_	_
 4	?	_	_	_
 
-4	4	carl	1.0
+4	4	carl	1.0	0
 
 emma	emma
 
@@ -1180,8 +1180,8 @@ emma	emma
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
-2	2	dennis	0.9
+2	2	carl	1.0	0
+2	2	dennis	0.9	0
 
 emma	emma
 
@@ -1192,9 +1192,9 @@ emma	emma
 4	edinburgh	_	_	_
 5	?	_	_	_
 
-4	4	edinburgh	0.3
-4	4	amsterdam	0.2
-4	4	bob	0.9
+4	4	edinburgh	0.3	0
+4	4	amsterdam	0.2	0
+4	4	bob	0.9	0
 
 alice	alice
 bob	bob
@@ -1207,7 +1207,7 @@ carl	carl
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 alice	alice
 
@@ -1217,7 +1217,7 @@ alice	alice
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	denniscorp	1.0
+2	2	denniscorp	1.0	0
 
 1990	1990
 
@@ -1227,8 +1227,8 @@ alice	alice
 3	developer	_	_	_
 4	?	_	_	_
 
-4	4	developer	1.0
-2	2	denniscorp	0.2
+4	4	developer	1.0	0
+2	2	denniscorp	0.2	1
 
 bob	bob
 fay	fay
@@ -1242,8 +1242,8 @@ carl	carl
 5	othercorp	_	_	_
 6	?	_	_	_
 
-5	5	othercorp	1.0
-2	2	denniscorp	0.2
+5	5	othercorp	1.0	0
+2	2	denniscorp	0.2	1
 
 dennis	dennis
 
@@ -1253,8 +1253,8 @@ dennis	dennis
 3	othercorp	_	_	_
 4	?	_	_	_
 
-4	4	othercorp	1.0
-2	2	denniscorp	0.2
+4	4	othercorp	1.0	0
+2	2	denniscorp	0.2	1
 
 alice	alice
 emma	emma
@@ -1267,7 +1267,7 @@ fay	fay
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
+2	2	dennis	1.0	0
 
 othercorp	othercorp
 
@@ -1279,9 +1279,9 @@ othercorp	othercorp
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	fay	1.0
-2	2	dennis	0.9
-2	2	carl	0.001
+2	2	fay	1.0	0
+2	2	dennis	0.9	0
+2	2	carl	0.001	0
 
 henry	henry
 
@@ -1292,7 +1292,7 @@ henry	henry
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
+2	2	dennis	1.0	0
 
 emma	emma
 
@@ -1304,8 +1304,8 @@ emma	emma
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	bob	1.0
-2	2	dennis	0.2
+2	2	bob	1.0	0
+2	2	dennis	0.2	0
 
 carl	carl
 
@@ -1316,7 +1316,7 @@ carl	carl
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
+2	2	fay	1.0	0
 
 othercorp	othercorp
 
@@ -1328,9 +1328,9 @@ othercorp	othercorp
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	carl	0.6
-2	2	bob	0.4
-2	2	dennis	0.4
+2	2	carl	0.6	0
+2	2	bob	0.4	0
+2	2	dennis	0.4	0
 
 emma	emma
 
@@ -1341,8 +1341,8 @@ emma	emma
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	alice	0.5
-2	2	denniscorp	0.5
+2	2	alice	0.5	0
+2	2	denniscorp	0.5	0
 
 denniscorp	denniscorp
 alicecorp	alicecorp
@@ -1356,8 +1356,8 @@ othercorp	othercorp
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	emma	1.0
-2	2	denniscorp	0.5
+2	2	emma	1.0	0
+2	2	denniscorp	0.5	0
 
 dennis	dennis
 
@@ -1368,7 +1368,7 @@ dennis	dennis
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 teacher	teacher
 
@@ -1378,8 +1378,8 @@ teacher	teacher
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	alicecorp	1.0
-2	2	denniscorp	0.5
+2	2	alicecorp	1.0	0
+2	2	denniscorp	0.5	0
 
 1997	1997
 
@@ -1390,7 +1390,7 @@ teacher	teacher
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
+2	2	emma	1.0	0
 
 denniscorp	denniscorp
 
@@ -1401,8 +1401,8 @@ denniscorp	denniscorp
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-2	2	denniscorp	0.5
+2	2	bob	1.0	0
+2	2	denniscorp	0.5	0
 
 fay	fay
 
@@ -1414,9 +1414,9 @@ fay	fay
 5	gary	_	_	_
 6	?	_	_	_
 
-2	2	denniscorp	1.0
-2	2	alicecorp	0.5
-6	6	gary	1.0
+2	2	denniscorp	1.0	0
+2	2	alicecorp	0.5	0
+6	6	gary	1.0	1
 
 1996	1996
 
@@ -1426,7 +1426,7 @@ fay	fay
 3	denniscorp	_	_	_
 4	?	_	_	_
 
-4	4	denniscorp	1.0
+4	4	denniscorp	1.0	0
 
 emma	emma
 
@@ -1437,7 +1437,7 @@ emma	emma
 4	denniscorp	_	_	_
 5	?	_	_	_
 
-5	5	denniscorp	1.0
+5	5	denniscorp	1.0	0
 
 emma	emma
 
@@ -1448,8 +1448,8 @@ emma	emma
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	emma	0.2
-2	2	bob	0.1
+2	2	emma	0.2	0
+2	2	bob	0.1	0
 
 denniscorp	denniscorp
 
@@ -1459,7 +1459,7 @@ denniscorp	denniscorp
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 amsterdam	amsterdam
 
@@ -1471,7 +1471,7 @@ amsterdam	amsterdam
 5	2003	_	_	_
 6	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 alice	alice
 
@@ -1482,7 +1482,7 @@ alice	alice
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
+2	2	emma	1.0	0
 
 ceo	ceo
 
@@ -1492,10 +1492,10 @@ ceo	ceo
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	dennis	0.4
-2	2	emma	0.1
-2	2	carl	0.1
-2	2	alice	0.3
+2	2	dennis	0.4	0
+2	2	emma	0.1	0
+2	2	carl	0.1	0
+2	2	alice	0.3	0
 
 amsterdam	amsterdam
 
@@ -1506,9 +1506,9 @@ amsterdam	amsterdam
 4	emma	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
-4	4	emma	1.0
-4	4	dennis	0.2
+2	2	carl	1.0	0
+4	4	emma	1.0	1
+4	4	dennis	0.2	1
 
 2004	2004
 
@@ -1520,7 +1520,7 @@ amsterdam	amsterdam
 5	2002	_	_	_
 6	?	_	_	_
 
-2	2	alicecorp	1.0
+2	2	alicecorp	1.0	0
 
 bob	bob
 
@@ -1531,7 +1531,7 @@ bob	bob
 4	bob	_	_	_
 5	?	_	_	_
 
-4	4	bob	1.0
+4	4	bob	1.0	0
 
 carl	carl
 
@@ -1543,8 +1543,8 @@ carl	carl
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	emma	1.0
-2	2	alice	0.4
+2	2	emma	1.0	0
+2	2	alice	0.4	0
 
 carl	carl
 
@@ -1555,8 +1555,8 @@ carl	carl
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
-2	2	emma	0.4
+2	2	dennis	1.0	0
+2	2	emma	0.4	0
 
 emma	emma
 
@@ -1567,7 +1567,7 @@ emma	emma
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-4	4	alicecorp	1.0
+4	4	alicecorp	1.0	0
 
 alice	alice
 
@@ -1579,8 +1579,8 @@ alice	alice
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	henry	1.0
-2	2	henry	0.8
+2	2	henry	1.0	0
+2	2	henry	0.8	0
 
 fay	fay
 
@@ -1591,8 +1591,8 @@ fay	fay
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-2	2	henry	0.2
+2	2	bob	1.0	0
+2	2	henry	0.2	0
 
 carl	carl
 
@@ -1604,7 +1604,7 @@ carl	carl
 5	1999	_	_	_
 6	?	_	_	_
 
-3	3	fay	1.0
+3	3	fay	1.0	0
 
 henry	henry
 
@@ -1615,8 +1615,8 @@ henry	henry
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-2	2	henry	0.4
+2	2	alice	1.0	0
+2	2	henry	0.4	0
 
 alicecorp	alicecorp
 
@@ -1626,8 +1626,8 @@ alicecorp	alicecorp
 3	ceo	_	_	_
 4	?	_	_	_
 
-4	4	ceo	1.0
-4	4	developer	0.1
+4	4	ceo	1.0	0
+4	4	developer	0.1	0
 
 dennis	dennis
 alice	alice
@@ -1639,8 +1639,8 @@ emma	emma
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	henry	1.0
-3	3	developer	0.1
+2	2	henry	1.0	0
+3	3	developer	0.1	1
 
 edinburgh	edinburgh
 
@@ -1652,8 +1652,8 @@ edinburgh	edinburgh
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	dennis	1.0
-4	4	developer	0.1
+2	2	dennis	1.0	0
+4	4	developer	0.1	1
 
 emma	emma
 
@@ -1665,8 +1665,8 @@ emma	emma
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	gary	1.0
-4	4	developer	0.1
+2	2	gary	1.0	0
+4	4	developer	0.1	1
 
 denniscorp	denniscorp
 
@@ -1677,8 +1677,8 @@ denniscorp	denniscorp
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-4	4	ceo	0.9
+2	2	bob	1.0	0
+4	4	ceo	0.9	1
 
 developer	developer
 
@@ -1688,7 +1688,7 @@ developer	developer
 3	someschool	_	_	_
 4	?	_	_	_
 
-4	4	someschool	1.0
+4	4	someschool	1.0	0
 
 henry	henry
 
@@ -1699,7 +1699,7 @@ henry	henry
 4	emma	_	_	_
 5	?	_	_	_
 
-5	5	emma	1.0
+5	5	emma	1.0	0
 
 carl	carl
 
@@ -1710,10 +1710,10 @@ carl	carl
 4	carl	_	_	_
 5	?	_	_	_
 
-2	2	emma	0.23
-4	4	carl	0.99
-2	2	bob	0.2
-4	4	alice	0.9
+2	2	emma	0.23	0
+4	4	carl	0.99	1
+2	2	bob	0.2	0
+4	4	alice	0.9	1
 
 2004	2004
 
@@ -1725,7 +1725,7 @@ carl	carl
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	dennis	1.0
+2	2	dennis	1.0	0
 
 denniscorp	denniscorp
 
@@ -1736,8 +1736,8 @@ denniscorp	denniscorp
 4	henry	_	_	_
 5	?	_	_	_
 
-4	4	henry	0.5
-4	4	carl	0.5
+4	4	henry	0.5	0
+4	4	carl	0.5	0
 
 fay	fay
 
@@ -1748,7 +1748,7 @@ fay	fay
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
+2	2	fay	1.0	0
 
 developer	developer
 
@@ -1759,8 +1759,8 @@ developer	developer
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-2	2	fay	1.0
+2	2	alice	1.0	0
+2	2	fay	1.0	0
 
 alicecorp	alicecorp
 
@@ -1771,7 +1771,7 @@ alicecorp	alicecorp
 4	alice	_	_	_
 5	?	_	_	_
 
-5	5	alice	1.0
+5	5	alice	1.0	0
 
 bob	bob
 
@@ -1782,8 +1782,8 @@ bob	bob
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-2	2	fay	0.00000001
+2	2	bob	1.0	0
+2	2	fay	0.00000001	0
 
 alicecorp	alicecorp
 
@@ -1794,8 +1794,8 @@ alicecorp	alicecorp
 4	othercorp	_	_	_
 5	?	_	_	_
 
-4	4	othercorp	1.0
-2	2	fay	0.4
+4	4	othercorp	1.0	0
+2	2	fay	0.4	1
 
 dennis	dennis
 
@@ -1805,7 +1805,7 @@ dennis	dennis
 3	alicecorp	_	_	_
 4	?	_	_	_
 
-4	4	alicecorp	1.0
+4	4	alicecorp	1.0	0
 
 gary	gary
 alice	alice
@@ -1819,8 +1819,8 @@ carl	carl
 4	amsterdam	_	_	_
 5	?	_	_	_
 
-4	4	amsterdam	1.0
-2	2	fay	0.1
+4	4	amsterdam	1.0	0
+2	2	fay	0.1	1
 
 dennis	dennis
 gary	gary
@@ -1834,8 +1834,8 @@ emma	emma
 5	2004	_	_	_
 6	?	_	_	_
 
-2	2	henry	1.0
-5	5	henry	1.0
+2	2	henry	1.0	0
+5	5	henry	1.0	1
 
 physics	physics
 
@@ -1847,7 +1847,7 @@ physics	physics
 5	1999	_	_	_
 6	?	_	_	_
 
-2	2	fay	1.0
+2	2	fay	1.0	0
 
 henry	henry
 
@@ -1858,8 +1858,8 @@ henry	henry
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	dennis	1.0
-2	2	henry	1.0
+2	2	dennis	1.0	0
+2	2	henry	1.0	0
 
 denniscorp	denniscorp
 
@@ -1870,8 +1870,8 @@ denniscorp	denniscorp
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	emma	1.0
-2	2	henry	1.0
+2	2	emma	1.0	0
+2	2	henry	1.0	0
 
 dennis	dennis
 
@@ -1882,7 +1882,7 @@ dennis	dennis
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 carl	carl
 
@@ -1893,7 +1893,7 @@ carl	carl
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 denniscorp	denniscorp
 alicecorp	alicecorp
@@ -1906,8 +1906,8 @@ othercorp	othercorp
 4	2000	_	_	_
 5	?	_	_	_
 
-3	3	maths	1.0
-4	4	dennis	1.0
+3	3	maths	1.0	0
+4	4	dennis	1.0	1
 
 henry	henry
 
@@ -1918,7 +1918,7 @@ henry	henry
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 fay	fay
 
@@ -1930,7 +1930,7 @@ fay	fay
 5	dennis	_	_	_
 6	?	_	_	_
 
-5	5	dennis	1.0
+5	5	dennis	1.0	0
 
 emma	emma
 
@@ -1942,8 +1942,8 @@ emma	emma
 5	2002	_	_	_
 6	?	_	_	_
 
-2	2	henry	0.4
-4	4	denniscorp	1.0
+2	2	henry	0.4	0
+4	4	denniscorp	1.0	1
 
 maths	maths
 
@@ -1954,7 +1954,7 @@ maths	maths
 4	denniscorp	_	_	_
 5	?	_	_	_
 
-4	4	denniscorp	0.001
+4	4	denniscorp	0.001	0
 
 emma	emma
 
@@ -1964,7 +1964,7 @@ emma	emma
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	alicecorp	0.7
+2	2	alicecorp	0.7	0
 
 edinburgh	edinburgh
 
@@ -1975,8 +1975,8 @@ edinburgh	edinburgh
 4	ceo	_	_	_
 5	?	_	_	_
 
-5	5	ceo	0.3
-4	4	denniscorp	0.2
+5	5	ceo	0.3	0
+4	4	denniscorp	0.2	1
 
 dennis	dennis
 alice	alice
@@ -1989,7 +1989,7 @@ emma	emma
 4	carl	_	_	_
 5	?	_	_	_
 
-4	4	carl	1.0
+4	4	carl	1.0	0
 
 emma	emma
 
@@ -1999,8 +1999,8 @@ emma	emma
 3	bob	_	_	_
 4	?	_	_	_
 
-4	4	bob	0.2
-4	4	carl	0.1
+4	4	bob	0.2	0
+4	4	carl	0.1	0
 
 alice	alice
 
@@ -2012,8 +2012,8 @@ alice	alice
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
-2	2	carl	0.7
+2	2	alice	1.0	0
+2	2	carl	0.7	0
 
 bob	bob
 
@@ -2023,7 +2023,7 @@ bob	bob
 3	bob	_	_	_
 4	?	_	_	_
 
-4	4	bob	1.0
+4	4	bob	1.0	0
 
 fay	fay
 
@@ -2034,8 +2034,8 @@ fay	fay
 4	carl	_	_	_
 5	?	_	_	_
 
-4	4	carl	1.0
-2	2	dennis	0.8
+4	4	carl	1.0	0
+2	2	dennis	0.8	1
 
 alice	alice
 bob	bob
@@ -2048,7 +2048,7 @@ bob	bob
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	dennis	1.0
+2	2	dennis	1.0	0
 
 othercorp	othercorp
 
@@ -2060,8 +2060,8 @@ othercorp	othercorp
 5	2001	_	_	_
 6	?	_	_	_
 
-2	2	henry	0.9
-2	2	dennis	0.9
+2	2	henry	0.9	0
+2	2	dennis	0.9	0
 
 maths	maths
 
@@ -2073,7 +2073,7 @@ maths	maths
 5	henry	_	_	_
 6	?	_	_	_
 
-5	5	henry	1.0
+5	5	henry	1.0	0
 
 fay	fay
 
@@ -2084,9 +2084,9 @@ fay	fay
 4	denniscorp	_	_	_
 5	?	_	_	_
 
-2	2	dennis	0.7
-4	4	denniscorp	0.8
-4	4	dennis	0.8
+2	2	dennis	0.7	0
+4	4	denniscorp	0.8	1
+4	4	dennis	0.8	1
 
 1990	1990
 
@@ -2097,9 +2097,9 @@ fay	fay
 4	henry	_	_	_
 5	?	_	_	_
 
-5	5	henry	0.35
-5	5	fay	0.1
-5	5	carl	0.3
+5	5	henry	0.35	0
+5	5	fay	0.1	0
+5	5	carl	0.3	0
 
 fay	fay
 
@@ -2110,7 +2110,7 @@ fay	fay
 4	fay	_	_	_
 5	?	_	_	_
 
-5	5	fay	1.0
+5	5	fay	1.0	0
 
 bob	bob
 
@@ -2121,8 +2121,8 @@ bob	bob
 4	emma	_	_	_
 5	?	_	_	_
 
-4	4	emma	1.0
-4	4	fay	0.8
+4	4	emma	1.0	0
+4	4	fay	0.8	0
 
 dennis	dennis
 
@@ -2133,7 +2133,7 @@ dennis	dennis
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 bob	bob
 
@@ -2144,8 +2144,8 @@ bob	bob
 4	othercorp	_	_	_
 5	?	_	_	_
 
-5	5	othercorp	1.0
-5	5	alicecorp	0.0001
+5	5	othercorp	1.0	0
+5	5	alicecorp	0.0001	0
 
 alice	alice
 emma	emma
@@ -2158,8 +2158,8 @@ fay	fay
 4	bob	_	_	_
 5	?	_	_	_
 
-2	2	alicecorp	1.0
-4	4	bob	1.0
+2	2	alicecorp	1.0	0
+4	4	bob	1.0	1
 
 2002	2002
 
@@ -2170,9 +2170,9 @@ fay	fay
 4	othercorp	_	_	_
 5	?	_	_	_
 
-5	5	othercorp	1.0
-5	5	alicecorp	0.0001
-5	5	carl	0.0001
+5	5	othercorp	1.0	0
+5	5	alicecorp	0.0001	0
+5	5	carl	0.0001	0
 
 dennis	dennis
 carl	carl
@@ -2184,7 +2184,7 @@ carl	carl
 4	2003	_	_	_
 5	?	_	_	_
 
-3	3	maths	1.0
+3	3	maths	1.0	0
 
 henry	henry
 
@@ -2195,7 +2195,7 @@ henry	henry
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 denniscorp	denniscorp
 alicecorp	alicecorp
@@ -2207,9 +2207,9 @@ alicecorp	alicecorp
 4	alice	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-4	4	alice	0.4
-3	3	maths	1.0
+2	2	bob	1.0	0
+4	4	alice	0.4	1
+3	3	maths	1.0	2
 
 2003	2003
 
@@ -2220,7 +2220,7 @@ alicecorp	alicecorp
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 alicecorp	alicecorp
 
@@ -2232,8 +2232,8 @@ alicecorp	alicecorp
 5	alicecorp	_	_	_
 6	?	_	_	_
 
-5	5	alicecorp	1.0
-3	3	maths	1.0
+5	5	alicecorp	1.0	0
+3	3	maths	1.0	1
 
 alice	alice
 
@@ -2244,7 +2244,7 @@ alice	alice
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-4	4	alicecorp	1.0
+4	4	alicecorp	1.0	0
 
 alice	alice
 
@@ -2255,8 +2255,8 @@ alice	alice
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
-3	3	maths	1.0
+2	2	bob	1.0	0
+3	3	maths	1.0	1
 
 alicecorp	alicecorp
 
@@ -2267,7 +2267,7 @@ alicecorp	alicecorp
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 teacher	teacher
 
@@ -2279,8 +2279,8 @@ teacher	teacher
 5	2004	_	_	_
 6	?	_	_	_
 
-2	2	carl	0.5
-2	2	henry	0.4
+2	2	carl	0.5	0
+2	2	henry	0.4	0
 
 emma	emma
 
@@ -2291,7 +2291,7 @@ emma	emma
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	fay	1.0
+2	2	fay	1.0	0
 
 henry	henry
 
@@ -2302,7 +2302,7 @@ henry	henry
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 fay	fay
 
@@ -2313,8 +2313,8 @@ fay	fay
 4	to	_	_	_
 5	?	_	_	_
 
-2	2	bob	0.7
-2	2	henry	0.4
+2	2	bob	0.7	0
+2	2	henry	0.4	0
 
 carl	carl
 
@@ -2326,7 +2326,7 @@ carl	carl
 5	2005	_	_	_
 6	?	_	_	_
 
-2	2	henry	1.0
+2	2	henry	1.0	0
 
 physics	physics
 
@@ -2338,9 +2338,9 @@ physics	physics
 5	of	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
-4	4	alice	0.5
-4	4	ceo	0.2
+2	2	alice	1.0	0
+4	4	alice	0.5	1
+4	4	ceo	0.2	1
 
 alicecorp	alicecorp
 
@@ -2351,7 +2351,7 @@ alicecorp	alicecorp
 4	denniscorp	_	_	_
 5	?	_	_	_
 
-4	4	denniscorp	1.0
+4	4	denniscorp	1.0	0
 
 dennis	dennis
 
@@ -2361,8 +2361,8 @@ dennis	dennis
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	fay	1.0
-2	2	bob	0.1
+2	2	fay	1.0	0
+2	2	bob	0.1	0
 
 edinburgh	edinburgh
 
@@ -2373,7 +2373,7 @@ edinburgh	edinburgh
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 alicecorp	alicecorp
 
@@ -2383,8 +2383,8 @@ alicecorp	alicecorp
 3	othercorp	_	_	_
 4	?	_	_	_
 
-4	4	othercorp	1.0
-2	2	bob	0.2
+4	4	othercorp	1.0	0
+2	2	bob	0.2	1
 
 dennis	dennis
 carl	carl
@@ -2396,8 +2396,8 @@ carl	carl
 4	fay	_	_	_
 5	?	_	_	_
 
-2	2	henry	1.0
-4	4	fay	1.0
+2	2	henry	1.0	0
+4	4	fay	1.0	1
 
 1999	1999
 
@@ -2408,9 +2408,9 @@ carl	carl
 4	2004	_	_	_
 5	?	_	_	_
 
-3	3	physics	1.0
-1	3	physics	0.9
-1	4	henry	0.6
+3	3	physics	1.0	0
+1	3	physics	0.9	1
+1	4	henry	0.6	2
 
 henry	henry
 
@@ -2421,7 +2421,7 @@ henry	henry
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 ceo	ceo
 
@@ -2432,7 +2432,7 @@ ceo	ceo
 4	dennis	_	_	_
 5	?	_	_	_
 
-4	4	dennis	0.6
-4	4	alicecorp	0.7
+4	4	dennis	0.6	0
+4	4	alicecorp	0.7	0
 
 emma	emma
