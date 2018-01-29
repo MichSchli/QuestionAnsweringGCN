@@ -15,6 +15,13 @@ class GoldToIndexExampleProcessor(AbstractExampleProcessor):
                 gold_list.extend(graph.to_index(name))
 
         gold_list = np.array(gold_list).astype(np.int32)
+
+        if len(gold_list) == 0:
+            if mode == "predict":
+                return True
+
+            return False
+
         example["gold_entities"] = gold_list
         example["true_gold"] = names
         return True

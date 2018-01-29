@@ -9,11 +9,12 @@ class ConllReader:
     entity_prefix=None
     max_elements = None
 
-    def __init__(self, filename, entity_prefix="", max_elements=None, greedy_disambiguation=False):
+    def __init__(self, filename, entity_prefix="", max_elements=None, disambiguation=None, score_transform = None):
         self.filename = filename
         self.entity_prefix = entity_prefix
         self.max_elements = None
-        self.greedy_disambiguation = greedy_disambiguation
+        self.disambiguation = disambiguation
+        self.score_transform = score_transform
 
     def iterate(self, output=None, shuffle=False):
         dictionary = {}
@@ -72,15 +73,30 @@ class ConllReader:
 
     def yield_example(self, dictionary, dicts, entity_matrix, gold_matrix, sentence_matrix, shuffle):
 
-        if self.greedy_disambiguation and len(entity_matrix) > 0:
+        if self.disambiguation == "greedy" and len(entity_matrix) > 0:
             entity_matrix = [entity_matrix[0]]
+        elif self.disambiguation == "alignment" and len(entity_matrix) > 0:
+            max_by_alignment = {}
+            for idx,line in enumerate(entity_matrix):
+                if line[4] not in max_by_alignment or max_by_alignment[line[4]][1] < float(line[3]):
+                    max_by_alignment[line[4]] = [idx, float(line[3])]
 
+            new_entity_matrix = []
+
+            for idx,_ in max_by_alignment.values():
+                new_entity_matrix.append(entity_matrix[idx])
+
+            entity_matrix = new_entity_matrix
+
+        if self.score_transform == "log":
+            for i in range(len(entity_matrix)):
+                entity_matrix[i][3] = np.log(float(entity_matrix[i][3]))
 
         dictionary["mentioned_entities"] = np.unique(
             np.array([self.entity_prefix + entry[2] for entry in entity_matrix]))
         dictionary["sentence"] = sentence_matrix
         dictionary["sentence_entity_map"] = np.array(
-            [[entry[0], entry[1], self.entity_prefix + entry[2], entry[3]] for entry in entity_matrix])
+            [[entry[0], entry[1], self.entity_prefix + entry[2], entry[3], entry[4]] for entry in entity_matrix])
         dictionary["gold_entities"] = np.array([e[0] if e[0] != "_" else e[1] for e in gold_matrix])
         if shuffle:
             dicts.append(dictionary)

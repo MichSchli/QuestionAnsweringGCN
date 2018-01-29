@@ -9,10 +9,10 @@ class ExperimentRunnerFactory:
 
     def construct_experiment_runner(self, settings):
         learner = self.learner_factory.construct_learner(settings)
-        greedy_disambiguation = settings["other"]["greedy_disambiguation"] == "True"
-        experiment_runner = ExperimentRunner(greedy_disambiguation=greedy_disambiguation)
+        disambiguation = settings["other"]["disambiguation"]
+        score_transform = settings["other"]["transform_disambiguation_scores"]
+        experiment_runner = ExperimentRunner(disambiguation=disambiguation, score_transform=score_transform)
         experiment_runner.learner = learner
-        experiment_runner.limit_elements(3)
 
         if "prefix" in settings["endpoint"]:
             experiment_runner.set_kb_prefix(settings["endpoint"]["prefix"])

@@ -9,18 +9,28 @@ class ExperimentRunner:
     kb_prefix = None
     max_elements_to_read = None
 
-    def __init__(self, greedy_disambiguation=False):
+    def __init__(self, disambiguation=None, score_transform=None):
         self.kb_prefix = ""
-        self.greedy_disambiguation = greedy_disambiguation
+        self.disambiguation = disambiguation
+        self.score_transform = score_transform
 
     def set_train_file(self, train_file_location):
-        self.train_file_iterator = ConllReader(train_file_location, self.kb_prefix, max_elements=self.max_elements_to_read, greedy_disambiguation=self.greedy_disambiguation)
+        self.train_file_iterator = ConllReader(train_file_location, self.kb_prefix,
+                                               max_elements=self.max_elements_to_read,
+                                               disambiguation=self.disambiguation,
+                                               score_transform=self.score_transform)
 
     def set_validation_file(self, validation_file_location):
-        self.validation_file_iterator = ConllReader(validation_file_location, self.kb_prefix, max_elements=self.max_elements_to_read, greedy_disambiguation=self.greedy_disambiguation)
+        self.validation_file_iterator = ConllReader(validation_file_location, self.kb_prefix,
+                                                    max_elements=self.max_elements_to_read,
+                                                    disambiguation=self.disambiguation,
+                                                    score_transform=self.score_transform)
 
     def set_test_file(self, test_file_location):
-        self.test_file_iterator = ConllReader(test_file_location, self.kb_prefix, max_elements=self.max_elements_to_read, greedy_disambiguation=self.greedy_disambiguation)
+        self.test_file_iterator = ConllReader(test_file_location, self.kb_prefix,
+                                              max_elements=self.max_elements_to_read,
+                                              disambiguation=self.disambiguation,
+                                              score_transform=self.score_transform)
 
     def set_train_evaluator(self, train_evaluator):
         self.train_evaluator = train_evaluator

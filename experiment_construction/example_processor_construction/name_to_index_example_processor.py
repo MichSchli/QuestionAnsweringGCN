@@ -17,7 +17,6 @@ class NameToIndexExampleProcessor(AbstractExampleProcessor):
             elif graph.has_index(name):
                 gold_list.extend(graph.to_index(name))
 
-        # TODO CHECK SOMEWHERE ELSE
         if len(gold_list) == 0:
             if mode == "predict":
                 return True
