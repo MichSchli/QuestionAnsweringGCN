@@ -22,7 +22,7 @@ class SubsampleVerticesService:
 
         centroids = graph.centroids
         potential_negatives = np.random.choice(graph.entity_vertices.shape[0], self.negative_sample_rate, replace=False)
-        kept_vertices = np.unique(np.concatenate((positives, centroids, potential_negatives)))
+        kept_vertices = np.unique(np.concatenate((positives, centroids, potential_negatives))).astype(np.int32)
 
         new_centroids = np.array([np.squeeze(np.argwhere(kept_vertices == e)) for e in centroids])
         new_golds = np.array([np.squeeze(np.argwhere(kept_vertices == e)) for e in positives])
