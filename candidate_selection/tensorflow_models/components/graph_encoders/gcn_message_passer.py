@@ -47,6 +47,12 @@ class GcnConcatMessagePasser(AbstractComponent):
     def set_gate_key(self, gate_key):
         self.gate_key = gate_key
 
+    def get_regularization_term(self):
+        if self.use_gates and self.gate_mode == "type_key_comparison":
+            return 0.0001 * self.gate_sum
+        else:
+            return 0
+
     def distribute_to_edges(self, hypergraph, vectors_by_sentences):
         return hypergraph.distribute_to_edges(vectors_by_sentences, senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
 
@@ -75,6 +81,7 @@ class GcnConcatMessagePasser(AbstractComponent):
             gate_values = tf.nn.relu(tf.matmul(gate_values, self.gate_transform) + self.gate_bias)
             gate_values = gate_values * self.gate_transform_2 + self.gate_bias_2
             gates = tf.nn.sigmoid(gate_values)
+            self.gate_sum = tf.reduce_sum(gates)
 
         ###
         if self.weight_type == "blocks":

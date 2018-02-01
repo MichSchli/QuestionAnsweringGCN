@@ -73,6 +73,17 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
     def handle_variable_assignment(self, batch_dict, mode):
         pass
 
+    def get_regularization_term(self):
+        reg = self.gcn_encoder_ev_to_en.get_regularization_term()
+        reg += self.gcn_encoder_en_to_ev.get_regularization_term()
+        reg += self.gcn_encoder_en_to_en.get_regularization_term()
+        if self.add_inverse_relations:
+            reg += self.gcn_encoder_ev_to_en_invert.get_regularization_term()
+            reg += self.gcn_encoder_en_to_ev_invert.get_regularization_term()
+            reg += self.gcn_encoder_en_to_en_invert.get_regularization_term()
+
+        return reg
+
     def set_gate_features(self, features, type):
         if type == "entities":
             self.gcn_encoder_en_to_ev.set_gate_features(features)
