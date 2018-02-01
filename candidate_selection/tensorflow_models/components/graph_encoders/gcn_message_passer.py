@@ -44,6 +44,12 @@ class GcnConcatMessagePasser(AbstractComponent):
     def set_gate_features(self, features):
         self.gate_features = features
 
+    def set_gate_key(self, gate_key):
+        self.gate_key = gate_key
+
+    def distribute_to_edges(self, hypergraph, vectors_by_sentences):
+        return hypergraph.distribute_to_edges(vectors_by_sentences, senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
+
     def get_update(self, hypergraph):
         sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
         types = hypergraph.get_edge_types(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
@@ -51,7 +57,7 @@ class GcnConcatMessagePasser(AbstractComponent):
         sender_embeddings = hypergraph.get_embeddings(self.senders)
         receiver_embeddings = hypergraph.get_embeddings(self.receivers)
 
-        event_to_entity_matrix = self.get_globally_normalized_incidence_matrix(receiver_indices, tf.shape(receiver_embeddings)[0])
+        event_to_entity_matrix = self.get_unnormalized_incidence_matrix(receiver_indices, tf.shape(receiver_embeddings)[0])
         #event_to_entity_matrix = self.get_locally_normalized_incidence_matrix(receiver_indices,
         #                                                                      types,
         #                                                                      tf.shape(receiver_embeddings)[0])
@@ -60,6 +66,14 @@ class GcnConcatMessagePasser(AbstractComponent):
         if self.use_gates and self.gate_mode == "features_given":
             gate_features = tf.nn.embedding_lookup(self.gate_features, sender_indices)
             gate_values = tf.matmul(gate_features, self.gate_transform) + self.gate_bias
+            gates = tf.nn.sigmoid(gate_values)
+        elif self.use_gates and self.gate_mode == "type_key_comparison":
+            message_features = tf.nn.embedding_lookup(self.gate_type_embeddings, types)
+            gate_keys = self.distribute_to_edges(hypergraph, self.gate_key)
+            #gate_values = tf.expand_dims(tf.reduce_mean(message_features * gate_keys, axis=-1), -1)
+            gate_values = tf.concat((message_features, gate_keys), -1)
+            gate_values = tf.nn.relu(tf.matmul(gate_values, self.gate_transform) + self.gate_bias)
+            gate_values = gate_values * self.gate_transform_2 + self.gate_bias_2
             gates = tf.nn.sigmoid(gate_values)
 
         ###
@@ -132,10 +146,23 @@ class GcnConcatMessagePasser(AbstractComponent):
 
     def prepare_variables(self):
         if self.use_gates:
-            n_gate_features = self.gate_input_dim
-            initializer = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
-            self.gate_transform = tf.Variable(initializer, name=self.variable_prefix + "weights")
-            self.gate_bias = tf.Variable(np.zeros(self.dimension).astype(np.float32))
+            if self.gate_mode == "features_given":
+                n_gate_features = self.gate_input_dim
+                initializer = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
+                self.gate_transform = tf.Variable(initializer, name=self.variable_prefix + "gate_weights")
+                self.gate_bias = tf.Variable(np.zeros(self.dimension).astype(np.float32))
+            elif self.gate_mode == "type_key_comparison":
+                initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.dimension)).astype(np.float32) * 0
+                self.gate_type_embeddings = tf.Variable(initializer, name=self.variable_prefix + "gate_type_features")
+                n_gate_features = self.dimension * 2
+
+                initializer2 = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
+                self.gate_transform = tf.Variable(initializer2, name=self.variable_prefix + "gate_weights_1")
+                self.gate_bias = tf.Variable(np.zeros(self.dimension).astype(np.float32))
+
+                initializer3 = np.random.normal(0, 0.01, size=self.dimension).astype(np.float32)
+                self.gate_transform_2 = tf.Variable(initializer3, name=self.variable_prefix + "gate_weights_2")
+                self.gate_bias_2 = tf.Variable(np.zeros(1).astype(np.float32))
 
         if self.weight_type == "blocks":
             initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)

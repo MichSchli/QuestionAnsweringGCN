@@ -38,6 +38,7 @@ class MultiheadAttention(AbstractComponent):
         transformed_value = self.linear_value.transform(tf.reshape(value_matrix, [previous_shape[0]*previous_shape[1], -1]))
 
         dim = int(0.5*self.input_dimension / self.heads)
+        print([previous_shape[0], self.heads, previous_shape[1], dim])
         transformed_key = tf.reshape(transformed_key, [previous_shape[0], self.heads, previous_shape[1], dim])
         transformed_value = tf.reshape(transformed_value, [previous_shape[0], self.heads, previous_shape[1], dim])
         norm_factor = np.sqrt(dim)

@@ -50,6 +50,12 @@ class HypergraphPreprocessor(AbstractPreprocessor):
 
         event_start_index = 0
         entity_start_index = 0
+
+        vertex_batch_map = [None] * len(hypergraph_batch)
+        en_to_en_batch_map = [None] * len(hypergraph_batch)
+        en_to_ev_batch_map = [None] * len(hypergraph_batch)
+        ev_to_en_batch_map = [None] * len(hypergraph_batch)
+
         for i,hypergraph in enumerate(hypergraph_batch):
             #print("Element started")
             phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
@@ -75,6 +81,11 @@ class HypergraphPreprocessor(AbstractPreprocessor):
             entity_scores = np.concatenate((entity_scores, hypergraph.vertex_scores))
             event_scores = np.concatenate((entity_scores, hypergraph.event_scores))
 
+            vertex_batch_map[i] = np.ones(phg[1], dtype=np.int32)*i
+            en_to_en_batch_map[i] = np.ones(phg[6].shape[0], dtype=np.int32)*i
+            en_to_ev_batch_map[i] = np.ones(phg[4].shape[0], dtype=np.int32)*i
+            ev_to_en_batch_map[i] = np.ones(phg[2].shape[0], dtype=np.int32)*i
+
         entity_vertex_slices = vertex_list_slices[:,1]
         #print("Getting vertex lookup matrix")
         entity_vertex_matrix = self.get_padded_vertex_lookup_matrix(entity_vertex_slices, hypergraph_batch)
@@ -99,6 +110,11 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         input_model.n_entities = n_entities
         input_model.entity_scores = entity_scores
         input_model.event_scores = event_scores
+
+        input_model.vertex_to_batch_map = np.concatenate(vertex_batch_map)
+        input_model.en_to_ev_to_batch_map = np.concatenate(en_to_ev_batch_map)
+        input_model.ev_to_en_to_batch_map = np.concatenate(ev_to_en_batch_map)
+        input_model.en_to_en_to_batch_map = np.concatenate(en_to_en_batch_map)
 
         input_model.in_batch_indices = self.in_batch_indices
 

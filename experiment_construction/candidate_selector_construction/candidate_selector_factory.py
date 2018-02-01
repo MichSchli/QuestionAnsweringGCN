@@ -9,6 +9,7 @@ from candidate_selection.tensorflow_models.baselines.path_bag_vs_lstm import Pat
 from candidate_selection.tensorflow_models.baselines.path_bag_with_gates_vs_lstm import PathBagWithGatesVsLstm
 from candidate_selection.tensorflow_models.components.extras.mean_gold_embedding_retriever import \
     MeanGoldEmbeddingRetriever
+from candidate_selection.tensorflow_models.models.path_bag_with_type_gates_vs_lstm import PathBagWithTypeGatesVsLstm
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
 
 
@@ -55,5 +56,8 @@ class CandidateSelectorFactory:
 
         if stack_name == "gold_retriever":
             return EntityEmbeddingVsGold
+
+        if stack_name == "lstm+relation_type_gates":
+            return PathBagWithTypeGatesVsLstm
 
         return None

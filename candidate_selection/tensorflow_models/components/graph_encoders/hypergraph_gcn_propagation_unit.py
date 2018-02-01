@@ -87,6 +87,17 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
             if self.add_inverse_relations:
                 self.gcn_encoder_ev_to_en_invert.set_gate_features(features)
 
+    def set_gate_key(self, key):
+        self.gcn_encoder_en_to_ev.set_gate_key(key)
+        self.gcn_encoder_en_to_en.set_gate_key(key)
+        self.gcn_encoder_ev_to_en.set_gate_key(key)
+
+        if self.add_inverse_relations:
+            self.gcn_encoder_en_to_ev_invert.set_gate_key(key)
+            self.gcn_encoder_en_to_en_invert.set_gate_key(key)
+            self.gcn_encoder_ev_to_en_invert.set_gate_key(key)
+
+
     def prepare_tensorflow_variables(self, mode="train"):
         self.gcn_encoder_ev_to_en.prepare_variables()
         self.gcn_encoder_en_to_ev.prepare_variables()

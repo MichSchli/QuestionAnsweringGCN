@@ -51,6 +51,13 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         else:
             return variable[:,1], variable[:,0]
 
+    def distribute_to_edges(self, vectors_by_batch, senders="events", receivers="entities", inverse_edges=False):
+        variable_name = self.compute_variable_name("edge_to_batch_indices", senders, receivers, inverse_edges)
+        indices = self.variables.get_variable(variable_name)
+        distributed_vectors = tf.nn.embedding_lookup(vectors_by_batch, indices)
+
+        return distributed_vectors
+
     def get_edge_types(self, senders="events", receivers="entities", inverse_edges=False):
         variable_name = self.compute_variable_name("edge_types", senders, receivers, inverse_edges)
 
@@ -85,18 +92,19 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
     def prepare_variable_set(self, prefix):
         self.variables.add_variable(prefix+"_edges", tf.placeholder(tf.int32, name=prefix+"_edges"))
         self.variables.add_variable(prefix+"_edge_types", tf.placeholder(tf.int32, name=prefix+"_edge_types"))
+        self.variables.add_variable(prefix+"_edge_to_batch_indices", tf.placeholder(tf.int32, name=prefix+"_edge_to_batch_indices"))
 
     def handle_variable_assignment(self, batch_dict, mode):
         hypergraph_input_model = batch_dict["neighborhood_input_model"]
 
         edges, types = self.edge_dropout(hypergraph_input_model.event_to_entity_edges, hypergraph_input_model.event_to_entity_types, mode)
-        self.handle_variable_set_assignment(self.variable_prefix + "events_to_entities", edges, types)
+        self.handle_variable_set_assignment(self.variable_prefix + "events_to_entities", edges, types, hypergraph_input_model.ev_to_en_to_batch_map)
 
         edges, types = self.edge_dropout(hypergraph_input_model.entity_to_event_edges, hypergraph_input_model.entity_to_event_types, mode)
-        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_events", edges, types)
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_events", edges, types, hypergraph_input_model.en_to_ev_to_batch_map)
 
         edges, types = self.edge_dropout(hypergraph_input_model.entity_to_entity_edges, hypergraph_input_model.entity_to_entity_types, mode)
-        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", edges, types)
+        self.handle_variable_set_assignment(self.variable_prefix + "entities_to_entities", edges, types, hypergraph_input_model.en_to_en_to_batch_map)
 
         self.variables.assign_variable(self.variable_prefix + "n_entities", hypergraph_input_model.n_entities)
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
@@ -114,6 +122,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         sample = np.random.choice(np.arange(size), size=int(keep_rate * size), replace=False)
         return edges[sample], types[sample]
 
-    def handle_variable_set_assignment(self, prefix, edges, types):
+    def handle_variable_set_assignment(self, prefix, edges, types, batch_indices):
         self.variables.assign_variable(prefix + "_edges", edges)
         self.variables.assign_variable(prefix + "_edge_types", types)
+        self.variables.assign_variable(prefix + "_edge_to_batch_indices", batch_indices)
