@@ -2,6 +2,16 @@ import tensorflow as tf
 import numpy as np
 
 from candidate_selection.tensorflow_models.components.abstract_component import AbstractComponent
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.external_batch_features import \
+    ExternalBatchFeatures
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.sender_features import SenderFeatures
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.affine_transform import \
+    AffineGcnTransform
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.relu_transform import ReluTransform
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.type_bias_transform import \
+    TypeBiasTransform
+from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_gates import GcnGates
+from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_messages import GcnMessages
 
 
 class GcnConcatMessagePasser(AbstractComponent):
@@ -19,13 +29,14 @@ class GcnConcatMessagePasser(AbstractComponent):
     receivers = None
     use_inverse_edges_instead = None
 
-    def __init__(self, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant", gate_mode="none", gate_input_dim=1):
+    def __init__(self, hypergraph, facts, variables, dimension, variable_prefix="", senders="events", receivers="entities", inverse_edges=False, weights="block", biases="constant", gate_mode="none", gate_input_dim=1):
         self.facts = facts
         self.variables = variables
         self.dimension = dimension
         self.submatrix_d = int(dimension / self.n_coefficients)
         self.weight_type = weights
         self.bias_type = biases
+        self.hypergraph = hypergraph
 
         self.variable_prefix = variable_prefix
         if self.variable_prefix != "":
@@ -41,68 +52,55 @@ class GcnConcatMessagePasser(AbstractComponent):
         self.gate_mode = gate_mode
         self.gate_input_dim = gate_input_dim
 
+        gcn_instructions = {"sender_tags": self.senders,
+                            "receiver_tags": self.receivers,
+                            "invert": self.use_inverse_edges_instead}
+
+        self.sentence_features = ExternalBatchFeatures(self.hypergraph, gcn_instructions)
+        message_features = [SenderFeatures(self.hypergraph, gcn_instructions),
+                            self.sentence_features]
+        message_transforms = [AffineGcnTransform(self.dimension*2, self.dimension),
+                              TypeBiasTransform(self.dimension, self.facts.number_of_relation_types, self.hypergraph, gcn_instructions),
+                              ReluTransform(self.dimension)]
+
+        gate_features = [SenderFeatures(self.hypergraph, gcn_instructions),
+                         self.sentence_features]
+        gate_transforms = [AffineGcnTransform(self.dimension*2, self.dimension),
+                           TypeBiasTransform(self.dimension, self.facts.number_of_relation_types, self.hypergraph, gcn_instructions),
+                           ReluTransform(self.dimension),
+                           AffineGcnTransform(self.dimension, 1)]
+
+        self.messages = GcnMessages(message_features,
+                                    message_transforms)
+        self.gates = GcnGates(gate_features,
+                              gate_transforms)
+
     def set_gate_features(self, features):
         self.gate_features = features
 
     def set_gate_key(self, gate_key):
-        self.gate_key = gate_key
+        self.sentence_features.set_batch_features(gate_key)
 
     def get_regularization_term(self):
-        if self.use_gates and self.gate_mode == "type_key_comparison":
-            return 0.0001 * self.gate_sum
-        else:
-            return 0
+        if self.use_gates:
+            return self.gates.get_regularization_term()
 
     def distribute_to_edges(self, hypergraph, vectors_by_sentences):
         return hypergraph.distribute_to_edges(vectors_by_sentences, senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
 
     def get_update(self, hypergraph):
         sender_indices, receiver_indices = hypergraph.get_edges(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
-        types = hypergraph.get_edge_types(senders=self.senders, receivers=self.receivers, inverse_edges=self.use_inverse_edges_instead)
-
-        sender_embeddings = hypergraph.get_embeddings(self.senders)
         receiver_embeddings = hypergraph.get_embeddings(self.receivers)
+        incidence_matrix = self.get_unnormalized_incidence_matrix(receiver_indices, tf.shape(receiver_embeddings)[0])
+        messages = self.messages.get_messages()
 
-        event_to_entity_matrix = self.get_unnormalized_incidence_matrix(receiver_indices, tf.shape(receiver_embeddings)[0])
-        #event_to_entity_matrix = self.get_locally_normalized_incidence_matrix(receiver_indices,
-        #                                                                      types,
-        #                                                                      tf.shape(receiver_embeddings)[0])
-
-        messages = tf.nn.embedding_lookup(sender_embeddings, sender_indices)
-        if self.use_gates and self.gate_mode == "features_given":
-            gate_features = tf.nn.embedding_lookup(self.gate_features, sender_indices)
-            gate_values = tf.matmul(gate_features, self.gate_transform) + self.gate_bias
-            gates = tf.nn.sigmoid(gate_values)
-        elif self.use_gates and self.gate_mode == "type_key_comparison":
-            message_features = tf.nn.embedding_lookup(self.gate_type_embeddings, types)
-            gate_keys = self.distribute_to_edges(hypergraph, self.gate_key)
-            #gate_values = tf.expand_dims(tf.reduce_mean(message_features * gate_keys, axis=-1), -1)
-            gate_values = tf.concat((message_features, gate_keys), -1)
-            gate_values = tf.nn.relu(tf.matmul(gate_values, self.gate_transform) + self.gate_bias)
-            gate_values = gate_values * self.gate_transform_2 + self.gate_bias_2
-            gates = tf.nn.sigmoid(gate_values)
-            self.gate_sum = tf.reduce_sum(gates)
-
-        ###
-        if self.weight_type == "blocks":
-            transformations = tf.nn.embedding_lookup(self.W, types)
-            reshape_embeddings = tf.reshape(messages, [-1, self.n_coefficients, self.submatrix_d])
-            transformed_messages = tf.squeeze(tf.matmul(transformations, tf.expand_dims(reshape_embeddings, -1)))
-            transformed_messages = tf.reshape(transformed_messages, [-1, self.dimension])
-            messages = transformed_messages
-        elif self.weight_type == "single":
-            messages = tf.matmul(messages, self.W)
-
-        if self.bias_type == "constant":
-            messages += self.b
-        elif self.bias_type == "relation_specific":
-            type_biases = tf.nn.embedding_lookup(self.b, types)
-            messages += type_biases
+        if self.use_gates:
+            gates = self.gates.get_gates()
 
         if self.use_gates:
             messages = messages * gates
 
-        sent_messages = tf.sparse_tensor_dense_matmul(event_to_entity_matrix, messages)
+        sent_messages = tf.sparse_tensor_dense_matmul(incidence_matrix, messages)
         return sent_messages
 
     def get_unnormalized_incidence_matrix(self, receiver_indices, number_of_receivers):
@@ -153,6 +151,8 @@ class GcnConcatMessagePasser(AbstractComponent):
 
     def prepare_variables(self):
         if self.use_gates:
+            self.gates.prepare_variables()
+        if False: #self.use_gates:
             if self.gate_mode == "features_given":
                 n_gate_features = self.gate_input_dim
                 initializer = np.random.normal(0, 0.01, size=(n_gate_features, self.dimension)).astype(np.float32)
@@ -171,15 +171,4 @@ class GcnConcatMessagePasser(AbstractComponent):
                 self.gate_transform_2 = tf.Variable(initializer3, name=self.variable_prefix + "gate_weights_2")
                 self.gate_bias_2 = tf.Variable(np.zeros(1).astype(np.float32))
 
-        if self.weight_type == "blocks":
-            initializer = np.random.normal(0, 0.01, size=(self.facts.number_of_relation_types, self.n_coefficients, self.submatrix_d, self.submatrix_d)).astype(np.float32)
-            self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
-        elif self.weight_type == "single":
-            initializer = np.random.normal(0, 0.01, size=(self.dimension, self.dimension)).astype(np.float32)
-            self.W = tf.Variable(initializer, name=self.variable_prefix + "weights")
-
-
-        if self.bias_type == "constant":
-            self.b = tf.Variable(np.zeros(self.dimension).astype(np.float32))
-        elif self.bias_type == "relation_specific":
-            self.b = tf.Variable(np.random.normal(0, 1, (self.facts.number_of_relation_types, self.dimension)).astype(np.float32))
+        self.messages.prepare_variables()
