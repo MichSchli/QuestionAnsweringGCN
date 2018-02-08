@@ -9,41 +9,41 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
     self_weight_type = None
     self_bias_type = None
 
-    def __init__(self, prefix, facts, variables, dimension, hypergraph,
+    def __init__(self, prefix, number_of_relation_types, variables, dimension, hypergraph,
                  weights="block", biases="constant", self_weight="full", self_bias="constant", add_inverse_relations=True, gate_mode="none", gate_input_dim=1):
         self.add_inverse_relations = add_inverse_relations
-        self.gcn_encoder_ev_to_en = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+        self.gcn_encoder_ev_to_en = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                            variable_prefix=prefix+"_ev_to_en", senders="events",
                                                            receivers="entities",
                                                            weights=weights,
                                                            biases=biases,
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
-        self.gcn_encoder_en_to_ev = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+        self.gcn_encoder_en_to_ev = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                            variable_prefix=prefix+"_en_to_ev", senders="entities",
                                                            receivers="events",
                                                            weights=weights,
                                                            biases=biases,
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
-        self.gcn_encoder_en_to_en = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+        self.gcn_encoder_en_to_en = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                            variable_prefix=prefix+"_en_to_en", senders="entities",
                                                            receivers="entities",
                                                            weights=weights,
                                                            biases=biases,
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
         if add_inverse_relations:
-            self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+            self.gcn_encoder_ev_to_en_invert = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                                   variable_prefix=prefix+"_ev_to_en_invert", senders="events",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases,
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
-            self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+            self.gcn_encoder_en_to_ev_invert = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                                   variable_prefix=prefix+"_en_to_ev_invert", senders="entities",
                                                                   receivers="events", inverse_edges=True,
                                                            weights=weights,
                                                            biases=biases,
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
-            self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(hypergraph, facts, variables, dimension,
+            self.gcn_encoder_en_to_en_invert = GcnConcatMessagePasser(hypergraph, number_of_relation_types, variables, dimension,
                                                                   variable_prefix=prefix+"_en_to_en_invert", senders="entities",
                                                                   receivers="entities", inverse_edges=True,
                                                            weights=weights,
@@ -51,7 +51,6 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
                                                            gate_mode=gate_mode, gate_input_dim=gate_input_dim)
 
         self.hypergraph = hypergraph
-        self.facts = facts
         self.dimension = dimension
         self.variable_prefix = prefix
 

@@ -8,6 +8,7 @@ from candidate_selection.tensorflow_models.components.embeddings.static_vector_e
 from candidate_selection.tensorflow_models.components.embeddings.vector_embedding import VectorEmbedding
 from candidate_selection.tensorflow_models.components.extras.embedding_retriever import EmbeddingRetriever
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_factory import GcnFactory
 from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.meta_components.candidate_scoring.neural_network_or_factorization_scorer import \
@@ -55,20 +56,14 @@ class PathBagWithTypeGatesVsLstm(AbstractTensorflowModel):
         self.candidate_scorer = NeuralNetworkOrFactorizationScorer(self.model_settings, self.variables, variable_prefix="scorer")
         self.add_component(self.candidate_scorer)
 
-        self.hypergraph_gcn_propagation_units = [None] * self.model_settings["n_layers"]
-        for layer in range(self.model_settings["n_layers"]):
-            self.hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
-                                                                                        self.facts,
-                                                                                        self.variables,
-                                                                                        self.model_settings["entity_embedding_dimension"],
-                                                                                        self.hypergraph,
-                                                                                        weights="identity",
-                                                                                        biases="relation_specific",
-                                                                                        self_weight="identity",
-                                                                                        self_bias="zero",
-                                                                                        add_inverse_relations=True,
-                                                                                        gate_mode="type_key_comparison")
-            self.add_component(self.hypergraph_gcn_propagation_units[layer])
+        gcn_factory = GcnFactory()
+        gcn_settings = {"n_layers": self.model_settings["n_layers"],
+                        "embedding_dimension": self.model_settings["entity_embedding_dimension"],
+                        "n_relation_types": self.facts.number_of_relation_types}
+
+        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_type_only_gcn(self.hypergraph, self.variables, gcn_settings)
+        for layer in self.hypergraph_gcn_propagation_units:
+            self.add_component(layer)
 
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
