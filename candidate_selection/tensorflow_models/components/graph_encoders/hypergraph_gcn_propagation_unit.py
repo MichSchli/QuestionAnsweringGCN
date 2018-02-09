@@ -113,7 +113,7 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
         if self.self_bias_type == "constant":
             event_self_loop_messages += self.b_self_events
 
-        self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev.get_update(self.hypergraph)
+        self.hypergraph.event_vertex_embeddings = self.gcn_encoder_en_to_ev.get_update(self.hypergraph)
         if self.add_inverse_relations:
             self.hypergraph.event_vertex_embeddings += self.gcn_encoder_en_to_ev_invert.get_update(self.hypergraph)
 

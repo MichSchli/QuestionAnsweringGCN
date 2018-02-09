@@ -26,6 +26,12 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.entity_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_entities"), dimension))
         self.event_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_events"), dimension))
 
+    def initialize_with_centroid_scores(self):
+        self.entity_vertex_embeddings = tf.expand_dims(self.variables.get_variable(self.variable_prefix + "centroid_scores"), -1)
+
+        #TODO: Somewhere in the code is a bug that requires this to be there. Dim doesn't matter, this is never used. Just needs to be non-null.
+        self.event_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_events"), 42))
+
     def update_entity_embeddings(self, embeddings, dimension):
         self.entity_vertex_embeddings = embeddings
         self.entity_vertex_dimension = dimension
@@ -88,6 +94,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.add_variable(self.variable_prefix + "n_events", tf.placeholder(tf.int32, name=self.variable_prefix+"n_events"))
         self.variables.add_variable(self.variable_prefix + "vertex_scores", tf.placeholder(tf.float32, name=self.variable_prefix + "vertex_scores"))
         self.variables.add_variable(self.variable_prefix + "event_scores", tf.placeholder(tf.float32, name=self.variable_prefix + "event_scores"))
+        self.variables.add_variable(self.variable_prefix + "centroid_scores", tf.placeholder(tf.float32, name=self.variable_prefix + "vertex_scores"))
 
     def prepare_variable_set(self, prefix):
         self.variables.add_variable(prefix+"_edges", tf.placeholder(tf.int32, name=prefix+"_edges"))
@@ -110,6 +117,7 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.variables.assign_variable(self.variable_prefix + "n_events", hypergraph_input_model.n_events)
         self.variables.assign_variable(self.variable_prefix + "vertex_scores", hypergraph_input_model.entity_scores)
         self.variables.assign_variable(self.variable_prefix + "event_scores", hypergraph_input_model.event_scores)
+        self.variables.assign_variable(self.variable_prefix + "centroid_scores", hypergraph_input_model.centroid_scores)
 
     def edge_dropout(self, edges, types, mode):
         dropout_rate = self.edge_dropout_rate

@@ -47,6 +47,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         entity_map = np.empty(0, dtype=np.int32)
         entity_scores = np.empty(0, dtype=np.float32)
         event_scores = np.empty(0, dtype=np.float32)
+        centroid_scores = np.empty(0, dtype=np.float32)
 
         event_start_index = 0
         entity_start_index = 0
@@ -80,6 +81,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
             entity_map = np.concatenate((entity_map, phg[8]))
             entity_scores = np.concatenate((entity_scores, hypergraph.vertex_scores))
             event_scores = np.concatenate((entity_scores, hypergraph.event_scores))
+            centroid_scores = np.concatenate((centroid_scores, hypergraph.centroid_scores))
 
             vertex_batch_map[i] = np.ones(phg[1], dtype=np.int32)*i
             en_to_en_batch_map[i] = np.ones(phg[6].shape[0], dtype=np.int32)*i
@@ -110,6 +112,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         input_model.n_entities = n_entities
         input_model.entity_scores = entity_scores
         input_model.event_scores = event_scores
+        input_model.centroid_scores = centroid_scores
 
         input_model.vertex_to_batch_map = np.concatenate(vertex_batch_map)
         input_model.en_to_ev_to_batch_map = np.concatenate(en_to_ev_batch_map)

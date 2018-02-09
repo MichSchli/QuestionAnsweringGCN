@@ -50,8 +50,9 @@ class ValidationSetEvaluator:
                 best_performance = performance
                 best_epoch = epoch
             elif self.early_stopping:
+                Static.logger.write("Stopping early.", "training", "validation_messages")
                 break
 
-        Static.logger.write("Stopped at epoch "+str(best_epoch)+" with performance "+str(best_performance), "training", "validation_messages")
+        Static.logger.write("Best epoch was "+str(best_epoch)+" with performance "+str(best_performance), "training", "validation_messages")
         return best_epoch, best_performance
 

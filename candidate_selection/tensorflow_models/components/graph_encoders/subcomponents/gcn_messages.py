@@ -12,7 +12,10 @@ class GcnMessages:
         self.transforms = transforms
 
     def get_messages(self):
-        message_features = tf.concat([f.get() for f in self.features], -1)
+        if len(self.features) > 0:
+            message_features = tf.concat([f.get() for f in self.features], -1)
+        else:
+            message_features = 0
         transformed_messages = message_features
         for transform in self.transforms:
             transformed_messages = transform.apply(transformed_messages)
