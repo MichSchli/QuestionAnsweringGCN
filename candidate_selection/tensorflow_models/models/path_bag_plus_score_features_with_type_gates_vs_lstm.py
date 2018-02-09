@@ -91,7 +91,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
         return self.edge_gates
 
     def compute_entity_scores(self, mode="train"):
-        self.hypergraph.initialize_with_centroid_scores()
+        self.hypergraph.initialize_with_centroid_scores(self.model_settings["entity_embedding_dimension"])
 
         word_embeddings = self.word_embedding.get_representations(mode=mode)
         word_embedding_shape = tf.shape(word_embeddings)
