@@ -8,8 +8,6 @@ from experiment_construction.example_processor_construction.name_to_index_exampl
     NameToIndexExampleProcessor
 from experiment_construction.example_processor_construction.propagate_scores_example_processor import \
     PropagateScoresExampleProcessor
-from experiment_construction.example_processor_construction.simple_split_example_processor import \
-    SimpleSplitExampleProcessor
 from experiment_construction.example_processor_construction.subsample_vertices_example_processor import \
     SubsampleVerticesExampleProcessor
 

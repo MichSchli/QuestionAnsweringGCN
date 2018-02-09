@@ -104,6 +104,18 @@ class HypergraphGcnPropagationUnit(AbstractComponent):
             self.b_self_entities = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_entitity_bias")
             self.b_self_events = tf.Variable(np.zeros(self.dimension).astype(np.float32), name=self.variable_prefix + "self_event_bias")
 
+    def get_edge_gates(self):
+        edge_gates = [None]*6
+
+        edge_gates[0] = self.gcn_encoder_en_to_ev.get_edge_gates()
+        edge_gates[1] = self.gcn_encoder_ev_to_en.get_edge_gates()
+        edge_gates[2] = self.gcn_encoder_en_to_en.get_edge_gates()
+        edge_gates[3] = self.gcn_encoder_en_to_ev_invert.get_edge_gates()
+        edge_gates[4] = self.gcn_encoder_ev_to_en_invert.get_edge_gates()
+        edge_gates[5] = self.gcn_encoder_en_to_en_invert.get_edge_gates()
+
+        return edge_gates
+
     def propagate(self):
         # Propagate information to events:
         # For now apply no self transform to events

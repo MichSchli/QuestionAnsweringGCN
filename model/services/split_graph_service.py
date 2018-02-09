@@ -90,6 +90,7 @@ class SplitGraphService:
         new_graph.centroids = np.array(new_graph.centroids, dtype=np.int32)
         new_graph.entity_vertices = np.array(new_graph.entity_vertices, dtype=np.int32)
         new_graph.event_vertices = np.array(new_graph.event_vertices, dtype=np.int32)
+        new_graph.centroid_map = graph.centroid_map
 
         if len(new_graph.entity_to_entity_edges) > 0:
             new_graph.entity_to_entity_edges = np.array(new_graph.entity_to_entity_edges, dtype=np.int32)

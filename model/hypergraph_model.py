@@ -37,12 +37,22 @@ class HypergraphModel:
         self.event_scores = np.zeros_like(self.event_vertices, dtype=np.float32)
         self.centroid_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
 
-    def propagate_scores(self, centroid_scores):
+    def set_centroid_map(self, centroid_map):
+        self.centroid_map = centroid_map
+
+    def propagate_scores(self, centroid_scores, centroid_names):
         self.vertex_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
         self.event_scores = np.zeros_like(self.event_vertices, dtype=np.float32)
         self.centroid_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)
 
-        centroid_score_map = {centroid: score for centroid, score in zip(self.centroids, centroid_scores)}
+        centroid_score_map = {}
+
+        centroid_to_index_map = {name:index for name,index in zip(self.centroid_map, self.centroids)}
+
+        for name,score in zip(centroid_names, centroid_scores):
+            name = centroid_to_index_map[name]
+            if name not in centroid_score_map or centroid_score_map[name] < score:
+                centroid_score_map[name] = score
 
         for centroid in self.centroids:
             self.vertex_scores[centroid] = centroid_score_map[centroid]

@@ -1,5 +1,7 @@
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.external_batch_features import \
     ExternalBatchFeatures
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.receiver_features import \
+    ReceiverFeatures
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.sender_features import SenderFeatures
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.affine_transform import \
@@ -151,14 +153,21 @@ class GcnFactory:
         else:
             input_dim = dimension
 
+        if message_instructions["receiver_tags"] == "entities" and current_layer == 0:
+            input_dim += 1
+        else:
+            input_dim += dimension
+
         message_passer.sentence_features = ExternalBatchFeatures(hypergraph, message_instructions)
-        message_features = [SenderFeatures(hypergraph, message_instructions)]
+        message_features = [SenderFeatures(hypergraph, message_instructions),
+                            ReceiverFeatures(hypergraph, message_instructions)]
         message_transforms = [AffineGcnTransform(input_dim, dimension),
                               TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
                                                 message_instructions),
                               ReluTransform(dimension)]
 
         gate_features = [SenderFeatures(hypergraph, message_instructions),
+                         ReceiverFeatures(hypergraph, message_instructions),
                          message_passer.sentence_features]
         gate_transforms = [AffineGcnTransform(dimension + input_dim, dimension),
                            TypeBiasTransform(dimension, number_of_relation_types, hypergraph,

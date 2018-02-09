@@ -20,7 +20,7 @@ from candidate_selection.tensorflow_models.components.vector_encoders.multilayer
 from experiment_construction.fact_construction.freebase_facts import FreebaseFacts
 
 
-class PathBagPlusSenderFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
+class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
 
 
     def get_preprocessor_stack_types(self):
@@ -82,6 +82,13 @@ class PathBagPlusSenderFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
         self.word_indexer = indexers.word_indexer
         self.relation_indexer = indexers.relation_indexer
         self.entity_indexer = indexers.entity_indexer
+
+    edge_gates = None
+
+    def get_edge_gates(self):
+        if self.edge_gates is None:
+            self.edge_gates = [hpgu.get_edge_gates() for hpgu in self.hypergraph_gcn_propagation_units]
+        return self.edge_gates
 
     def compute_entity_scores(self, mode="train"):
         self.hypergraph.initialize_with_centroid_scores()

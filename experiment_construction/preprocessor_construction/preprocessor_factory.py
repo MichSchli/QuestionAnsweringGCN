@@ -34,7 +34,7 @@ class PreprocessorFactory:
                                                 "gold_mask", preprocessor.stack, clean_dictionary=False, mode="train")
         elif preprocessor_type == "sentence":
             preprocessor.stack = SentencePreprocessor(index.word_indexer, "sentence", "question_sentence_input_model",
-                                                      preprocessor.stack)
+                                                      preprocessor.stack, clean_dictionary=False)
             preprocessor.stack = SentenceToGraphMapPreprocessor(preprocessor.stack)
         elif preprocessor_type == "static_entity_embeddings":
             preprocessor.stack = StaticEntityEmbeddingPreprocessor(index.entity_indexer, "neighborhood_input_model", preprocessor.stack)

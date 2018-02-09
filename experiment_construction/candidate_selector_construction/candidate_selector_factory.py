@@ -9,8 +9,8 @@ from candidate_selection.tensorflow_models.baselines.path_bag_vs_lstm import Pat
 from candidate_selection.tensorflow_models.baselines.path_bag_with_gates_vs_lstm import PathBagWithGatesVsLstm
 from candidate_selection.tensorflow_models.components.extras.mean_gold_embedding_retriever import \
     MeanGoldEmbeddingRetriever
-from candidate_selection.tensorflow_models.models.path_bag_plus_sender_features_with_type_gates_vs_lstm import \
-    PathBagPlusSenderFeaturesWithTypeGatesVsLstm
+from candidate_selection.tensorflow_models.models.path_bag_plus_score_features_with_type_gates_vs_lstm import \
+    PathBagPlusScoreFeaturesWithTypeGatesVsLstm
 from candidate_selection.tensorflow_models.models.path_bag_with_type_gates_vs_lstm import PathBagWithTypeGatesVsLstm
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
 
@@ -62,7 +62,7 @@ class CandidateSelectorFactory:
         if stack_name == "lstm+relation_type_gates":
             return PathBagWithTypeGatesVsLstm
 
-        if stack_name == "lstm+sender_gcn_gates":
-            return PathBagPlusSenderFeaturesWithTypeGatesVsLstm
+        if stack_name == "lstm+score_gcn_gates":
+            return PathBagPlusScoreFeaturesWithTypeGatesVsLstm
 
         return None

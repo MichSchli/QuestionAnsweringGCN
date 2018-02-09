@@ -65,4 +65,5 @@ class SubsampleVerticesService:
                 names[v] = graph.get_name(k)
 
         new_graph.add_names(names)
+        new_graph.centroid_map = graph.centroid_map
         return new_graph, new_golds

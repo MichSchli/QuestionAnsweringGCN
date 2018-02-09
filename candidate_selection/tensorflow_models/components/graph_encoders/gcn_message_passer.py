@@ -36,6 +36,9 @@ class GcnConcatMessagePasser(AbstractComponent):
     def set_gate_key(self, gate_key):
         self.sentence_features.set_batch_features(gate_key)
 
+    def get_edge_gates(self):
+        return self.gates.get_gates()
+
     def get_regularization_term(self):
         if self.use_gates:
             return self.gates.get_regularization_term()

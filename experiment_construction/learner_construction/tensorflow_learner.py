@@ -139,6 +139,7 @@ class TensorflowModel:
         example_iterator = self.example_processor.process_stream(example_iterator, mode="predict")
 
         model_prediction = self.model.get_prediction_graph()
+        edge_gates = self.model.get_edge_gates()
         batch_iterator = self.iterate_in_batches(example_iterator, validate_batches=False)
         for j,batch in enumerate(batch_iterator):
             print("batch "+str(j)+":\n - - - - - - - ")
@@ -146,14 +147,148 @@ class TensorflowModel:
             self.preprocessor.process(batch, mode='predict')
 
             assignment_dict = self.model.handle_variable_assignment(batch, mode='predict')
-            predictions = self.sess.run(model_prediction, feed_dict=assignment_dict)
+            predictions, gates = self.sess.run([model_prediction, edge_gates], feed_dict=assignment_dict)
+            edge_counts = [0,0,0]
 
             for i, prediction in enumerate(predictions):
                 l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
+
+                #formatted_gate_information, edge_counts = self.format_gate_information(batch["neighborhood"][i], batch["gold_entities"][i], prediction[0], gates, edge_counts)
+                #self.print_formatted_gate_information(formatted_gate_information, batch["sentence"][i])
 
                 for index,prob in l[:5]:
                     if prob > 0.5:
                         print(batch["neighborhood"][i].get_paths_to_neighboring_centroid(index))
 
                 yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
-                continue
+
+    def print_formatted_gate_information(self, formatted_gate_information, sentence):
+        print(" ".join([w[1] for w in sentence]))
+        print("-----")
+
+        for edge in formatted_gate_information[0]:
+            print("\t".join(edge))
+        print("-----")
+        for edge in formatted_gate_information[1]:
+            print("\t".join(edge))
+        print("-----")
+        for edge in formatted_gate_information[2]:
+            print("\t".join(edge))
+
+        print("\n")
+
+
+    def format_gate_information(self, hypergraph, gold, predictions, all_gates_in_batch, edge_counts):
+        layer = 0
+        centroid_scores = hypergraph.centroid_scores
+        all_formated_edges = []
+
+        formatted_gate_information = self.get_formatted_en_to_ev(all_gates_in_batch, centroid_scores, edge_counts,
+                                                                 gold, hypergraph, layer,
+                                                                 predictions)
+        all_formated_edges.append(formatted_gate_information)
+
+
+        formatted_gate_information = self.get_formatted_ev_to_en(all_gates_in_batch, centroid_scores, edge_counts,
+                                                                 gold, hypergraph, layer,
+                                                                 predictions)
+        all_formated_edges.append(formatted_gate_information)
+
+
+        formatted_gate_information = self.get_formatted_en_to_en(all_gates_in_batch, centroid_scores, edge_counts,
+                                                                 gold, hypergraph, layer,
+                                                                 predictions)
+        all_formated_edges.append(formatted_gate_information)
+
+        return all_formated_edges, edge_counts
+
+    def get_formatted_en_to_ev(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
+                               layer, predictions):
+        en_to_ev_edges = hypergraph.entity_to_event_edges
+        n_en_to_ev_edges = hypergraph.entity_to_event_edges.shape[0]
+
+        en_to_ev_gates = all_gates_in_batch[layer][0][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges]
+        en_to_ev_invert_gates = all_gates_in_batch[layer][4][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges]
+        formatted_gate_information = [["_"] * 12 for _ in range(n_en_to_ev_edges)]
+        pointer = 0
+        for edge, gate, invert_gate in zip(en_to_ev_edges, en_to_ev_gates, en_to_ev_invert_gates):
+            formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
+            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][2] = "cvt|id=" + str(hypergraph.event_vertices[edge[2]])
+            formatted_gate_information[pointer][3] = str(gate[0])
+            formatted_gate_information[pointer][4] = str(invert_gate[0])
+
+            if edge[0] in gold:
+                formatted_gate_information[pointer][6] = "subject_is_gold"
+
+            if centroid_scores[edge[0]] > 0:
+                formatted_gate_information[pointer][8] = "subject_is_centroid|score=" + str(centroid_scores[edge[0]])
+
+            formatted_gate_information[pointer][10] = str(predictions[edge[0]])
+
+            pointer += 1
+        edge_counts[0] += n_en_to_ev_edges
+        return formatted_gate_information
+
+    def get_formatted_ev_to_en(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
+                               layer, predictions):
+        edges = hypergraph.event_to_entity_edges
+        n_edges = hypergraph.event_to_entity_edges.shape[0]
+
+        gates = all_gates_in_batch[layer][1][edge_counts[1]:edge_counts[1] + n_edges]
+        invert_gates = all_gates_in_batch[layer][3][edge_counts[1]:edge_counts[1] + n_edges]
+        formatted_gate_information = [["_"] * 12 for _ in range(n_edges)]
+        pointer = 0
+        for edge, gate, invert_gate in zip(edges, gates, invert_gates):
+            formatted_gate_information[pointer][0] = "cvt|id=" + str(hypergraph.event_vertices[edge[0]])
+            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
+            formatted_gate_information[pointer][3] = str(gate[0])
+            formatted_gate_information[pointer][4] = str(invert_gate[0])
+
+            if edge[2] in gold:
+                formatted_gate_information[pointer][7] = "object_is_gold"
+
+            if centroid_scores[edge[2]] > 0:
+                formatted_gate_information[pointer][9] = "object_is_centroid|score=" + str(centroid_scores[edge[2]])
+
+            formatted_gate_information[pointer][11] = str(predictions[edge[2]])
+
+            pointer += 1
+        edge_counts[1] += n_edges
+        return formatted_gate_information
+
+    def get_formatted_en_to_en(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
+                               layer, predictions):
+        edges = hypergraph.entity_to_entity_edges
+        n_edges = hypergraph.entity_to_entity_edges.shape[0]
+
+        gates = all_gates_in_batch[layer][2][edge_counts[2]:edge_counts[2] + n_edges]
+        invert_gates = all_gates_in_batch[layer][5][edge_counts[2]:edge_counts[2] + n_edges]
+        formatted_gate_information = [["_"] * 12 for _ in range(n_edges)]
+        pointer = 0
+        for edge, gate, invert_gate in zip(edges, gates, invert_gates):
+            formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
+            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
+            formatted_gate_information[pointer][3] = str(gate[0])
+            formatted_gate_information[pointer][4] = str(invert_gate[0])
+
+            if edge[0] in gold:
+                formatted_gate_information[pointer][6] = "subject_is_gold"
+
+            if edge[2] in gold:
+                formatted_gate_information[pointer][7] = "object_is_gold"
+
+            if centroid_scores[edge[0]] > 0:
+                formatted_gate_information[pointer][8] = "subject_is_centroid|score=" + str(centroid_scores[edge[0]])
+
+            if centroid_scores[edge[2]] > 0:
+                formatted_gate_information[pointer][9] = "object_is_centroid|score=" + str(centroid_scores[edge[2]])
+
+            formatted_gate_information[pointer][10] = str(predictions[edge[0]])
+            formatted_gate_information[pointer][11] = str(predictions[edge[2]])
+
+            pointer += 1
+        edge_counts[2] += n_edges
+        return formatted_gate_information

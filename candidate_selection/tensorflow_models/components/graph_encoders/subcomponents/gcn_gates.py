@@ -7,7 +7,12 @@ class GcnGates:
         self.features = features
         self.transforms = transforms
 
+    gates = None
+
     def get_gates(self):
+        if self.gates is not None:
+            return self.gates
+
         gate_features = tf.concat([f.get() for f in self.features], -1)
         transformed_gates = gate_features
         for transform in self.transforms:
@@ -15,6 +20,8 @@ class GcnGates:
 
         gates = tf.nn.sigmoid(transformed_gates)
         self.gate_sum = tf.reduce_sum(gates)
+
+        self.gates = gates
 
         return gates
 

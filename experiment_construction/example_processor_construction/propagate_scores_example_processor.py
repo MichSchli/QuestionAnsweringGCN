@@ -10,6 +10,7 @@ class PropagateScoresExampleProcessor(AbstractExampleProcessor):
             return mode != "train"
 
         scores = example["sentence_entity_map"][:, 3].astype(np.float32)
-        example["neighborhood"].propagate_scores(scores)
+        names = example["sentence_entity_map"][:, 2]
+        example["neighborhood"].propagate_scores(scores,names)
 
         return True
