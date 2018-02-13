@@ -53,7 +53,7 @@ class Graph:
         centroids = []
         for label, vertex in self.vertices.items():
             if vertex["is_centroid"]:
-                centroids.append([label, vertex["score"], vertex["connections"]])
+                centroids.append([label, vertex["score"], vertex["strongest_connection"], vertex["prediction_probability"], vertex["is_gold"]])
 
         return centroids
 
@@ -61,12 +61,12 @@ class Graph:
         vs = []
         for label, vertex in self.vertices.items():
             if not vertex["is_centroid"]:
-                vs.append(label)
+                vs.append((label, vertex["strongest_connection"], vertex["prediction_probability"], vertex["is_gold"]))
 
         return vs
 
     def get_events(self):
-        return self.events
+        return [(label, vertex["strongest_connection"]) for label,vertex in self.events.items()]
 
     def get_all_edges(self):
         all_edges = []
@@ -83,7 +83,8 @@ class Graph:
                 vertices[edge[0]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "connections": 0}
+                                     "strongest_connection": 0,
+                                     "prediction_probability": float(edge[10])}
 
                 if edge[8] != "_":
                     score = float(edge[8].split("=")[-1])
@@ -93,10 +94,14 @@ class Graph:
                 if edge[6] != "_":
                     vertices[edge[0]]["is_gold"] = True
 
-            vertices[edge[0]]["connections"] += 1
+            score_forward = float(edge[3])
+            score_backward = float(edge[4])
+            max_score = max(score_forward, score_backward)
+            vertices[edge[0]]["strongest_connection"] = max(vertices[edge[0]]["strongest_connection"], max_score)
 
             if edge[2] not in events:
-                events[edge[2]] = True
+                events[edge[2]] = {"strongest_connection": 0}
+            events[edge[2]]["strongest_connection"] = max(events[edge[2]]["strongest_connection"], max_score)
 
 
         for edge in example["event_to_entity_edges"]:
@@ -104,7 +109,8 @@ class Graph:
                 vertices[edge[2]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "connections": 0}
+                                     "strongest_connection": 0,
+                                     "prediction_probability": float(edge[11])}
 
                 if edge[9] != "_":
                     score = float(edge[9].split("=")[-1])
@@ -114,10 +120,14 @@ class Graph:
                 if edge[7] != "_":
                     vertices[edge[2]]["is_gold"] = True
 
-            vertices[edge[2]]["connections"] += 1
+            score_forward = float(edge[3])
+            score_backward = float(edge[4])
+            max_score = max(score_forward, score_backward)
+            vertices[edge[2]]["strongest_connection"] = max(vertices[edge[2]]["strongest_connection"], max_score)
 
             if edge[0] not in events:
-                events[edge[0]] = True
+                events[edge[0]] = {"strongest_connection": 0}
+            events[edge[0]]["strongest_connection"] = max(events[edge[0]]["strongest_connection"], max_score)
 
 
         for edge in example["entity_to_entity_edges"]:
@@ -125,7 +135,8 @@ class Graph:
                 vertices[edge[0]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "connections": 0}
+                                     "strongest_connection": 0,
+                                     "prediction_probability": float(edge[10])}
 
                 if edge[8] != "_":
                     score = float(edge[8].split("=")[-1])
@@ -136,7 +147,8 @@ class Graph:
                 vertices[edge[2]] = {"is_gold": None,
                                      "is_centroid": None,
                                      "score": None,
-                                     "connections": 0}
+                                     "strongest_connection": 0,
+                                     "prediction_probability": float(edge[11])}
 
                 if edge[9] != "_":
                     score = float(edge[9].split("=")[-1])
@@ -146,8 +158,12 @@ class Graph:
                 if edge[7] != "_":
                    vertices[edge[2]]["is_gold"] = True
 
-            vertices[edge[0]]["connections"] += 1
-            vertices[edge[2]]["connections"] += 1
+
+            score_forward = float(edge[3])
+            score_backward = float(edge[4])
+            max_score = max(score_forward, score_backward)
+            vertices[edge[0]]["strongest_connection"] = max(vertices[edge[0]]["strongest_connection"], max_score)
+            vertices[edge[2]]["strongest_connection"] = max(vertices[edge[2]]["strongest_connection"], max_score)
 
         self.vertices = vertices
         self.events = events
@@ -155,179 +171,227 @@ class Graph:
 
 
 
+class AnalysisTool:
 
-root = Tk()
-frame = Frame(root)
+    root = None
+    canvas = None
 
-canvas_width = 1024
-canvas_height = 720
+    canvas_width = 1024
+    canvas_height = 720
 
-cv = Canvas(frame, width=canvas_width, height=canvas_height, bg='white')
-cv.grid(row=0, columnspan=4)
+    example_pointer = None
+    examples = None
 
+    edge_objects = None
 
-def save_button():
-    cv.postscript(file="graph_cap.eps")
-    img = Image.open("graph_cap.eps")
-    img.save("graph_cap.png", "png")
-    print("done")
+    apply_cutoff_to_vertices = True
+    preserve_predictions = True
+    preserve_gold = True
+    cutoff_percentage = 0.0
 
-save = Button(frame, text="save", fg="black", command=save_button)
-save.grid(row=1, column=2)
+    def __init__(self):
+        self.example_pointer = 0
 
+        self.root = Tk()
+        frame = Frame(self.root)
+        self.canvas = Canvas(frame, width=self.canvas_width, height=self.canvas_height, bg='white')
+        self.canvas.grid(row=0, columnspan=4)
 
-def forward_button():
-    global example_pointer
-    if example_pointer == len(examples) -1:
-        return
-    example_pointer += 1
-    draw_example(example_pointer)
+        save = Button(frame, text="save", fg="black", command=self.save_button)
+        save.grid(row=1, column=2)
 
-edge_objects = None
+        back = Button(frame, text="<", fg="black", command=self.backward_button)
+        back.grid(row=1, column=0)
 
-location_map = {}
-graph = None
+        forward = Button(frame, text=">", fg="black", command=self.forward_button)
+        forward.grid(row=1, column=3)
 
-def draw_example(example_pointer):
-    global location_map
-    global graph
-    cv.delete("all")
-    cv.create_text(canvas_width / 2, canvas_height - 50, text=examples[example_pointer]["sentence"], anchor="s",
-                   fill="black", font=("Helvetica", 24))
-    graph = Graph(examples[example_pointer])
-    centroids = graph.get_centroids()
-    padding = 50
-    bottom_padding = 200
-    text_height = 30
-    vertex_radius = 5
-    draw_width = canvas_width - padding*2
-    centroid_locations = [draw_width / len(centroids) * (i+0.5) + padding for i in range(len(centroids))]
+        w = Scale(frame, orient=HORIZONTAL, from_=0, to=100, command=self.use_slider)
+        w.grid(row=1, column=1)
 
-    location_map = {}
+        frame.pack()
 
-    for centroid, location in zip(centroids, centroid_locations):
-        vertical = canvas_height - bottom_padding - text_height*2 - 10
-        cv.create_oval(location-vertex_radius,
-                       vertical - vertex_radius,
-                       location+vertex_radius,
-                       vertical + vertex_radius)
-        cv.create_text(location, canvas_height - bottom_padding - text_height, text=centroid[0], anchor="s",
-                   fill="black", font=("Helvetica", 12))
+    def read_examples(self, examples):
+        self.examples = [(example["sentence"], Graph(example)) for example in examples]
+        self.draw_example()
 
-        cv.create_text(location, canvas_height - bottom_padding, text=centroid[1], anchor="s",
-                   fill="black", font=("Helvetica", 12))
+    def run(self):
+        self.root.mainloop()
 
-        location_map[centroid[0]] = [location, vertical]
+    def save_button(self):
+        self.canvas.postscript(file="graph_cap.eps")
+        img = Image.open("graph_cap.eps")
+        img.save("graph_cap.png", "png")
 
-    forest_border = 30
+    def forward_button(self):
+        if self.example_pointer == len(self.examples) - 1:
+            return
+        self.example_pointer += 1
+        self.draw_example()
 
-    forest_top = forest_border
-    forest_bottom = canvas_height - forest_border - bottom_padding - 2*text_height - 10
-    forest_left = forest_border
-    forest_right = canvas_width - forest_border
+    def backward_button(self):
+        if self.example_pointer == 0:
+            return
+        self.example_pointer -= 1
+        self.draw_example()
 
-    for vertex in graph.get_other_vertices():
-        vertical = random.randint(forest_top, forest_bottom)
-        horizontal = random.randint(forest_left, forest_right)
+    def use_slider(self, event):
+        self.cutoff_percentage = float(event) / 100
 
-        cv.create_oval(horizontal - vertex_radius,
-                       vertical - vertex_radius,
-                       horizontal + vertex_radius,
-                       vertical + vertex_radius)
-        cv.create_text(horizontal, vertical + text_height, text=vertex, anchor="s",
-                       fill="black", font=("Helvetica", 12))
-
-        if vertex not in location_map:
-            location_map[vertex] = [horizontal, vertical]
-
-    cvt_radius = 2
-    cvt_extra_border = 40
-
-    for vertex in graph.get_events():
-        vertical = random.randint(forest_top+cvt_extra_border, forest_bottom-cvt_extra_border)
-        horizontal = random.randint(forest_left+cvt_extra_border, forest_right-cvt_extra_border)
-
-        cv.create_rectangle(horizontal - cvt_radius,
-                            vertical - cvt_radius,
-                            horizontal + cvt_radius,
-                            vertical + cvt_radius)
-        #cv.create_text(horizontal, vertical + text_height, text=vertex, anchor="s",
-        #               fill="black", font=("Helvetica", 12))
-
-        if vertex not in location_map:
-            location_map[vertex] = [horizontal, vertical]
-
-    gate_cutoff = 0.0
-
-    draw_edges(gate_cutoff, graph, location_map)
-
-
-def draw_edges(gate_cutoff, graph, location_map):
-    global edge_objects
-
-    if edge_objects is not None:
-        for e in edge_objects:
-            cv.delete(e)
-
-    edge_objects = []
-    for edge in graph.get_all_edges():
-
-        forward_gate = float(edge[3])
-        backward_gate = float(edge[4])
-
-        if forward_gate < gate_cutoff and backward_gate < gate_cutoff:
-            continue
-        elif forward_gate > gate_cutoff and backward_gate > gate_cutoff:
-            arrows = tk.BOTH
-        elif forward_gate > gate_cutoff:
-            arrows = tk.LAST
+        if self.apply_cutoff_to_vertices:
+            self.draw_example(maintain_locations=True)
         else:
-            arrows = tk.FIRST
+            self.draw_edges()
 
-        location_subject = location_map[edge[0]]
-        location_object = location_map[edge[2]]
+    """
+    Drawing methods:
+    """
 
-        line = cv.create_line(location_subject[0], location_subject[1], location_object[0], location_object[1], arrow=arrows)
+    def draw_example(self, maintain_locations=False):
+        sentence = self.examples[self.example_pointer][0]
+        graph = self.examples[self.example_pointer][1]
 
-        middle_horizontal = int(location_subject[0] + location_object[0]) / 2
-        middle_vertical = int(location_subject[1] + location_object[1]) / 2
+        self.canvas.delete("all")
+        self.canvas.create_text(self.canvas_width / 2, self.canvas_height - 50, text=sentence, anchor="s",
+                       fill="black", font=("Helvetica", 24))
 
-        text = cv.create_text(middle_horizontal, middle_vertical + 4, text=edge[1], anchor="s",
-                       fill="black", font=("Helvetica", 8))
+        centroids = graph.get_centroids()
+        padding = 50
+        prediction_circle_extra_radius = 4
+        bottom_padding = 200
+        text_height = 30
+        vertex_radius = 5
+        draw_width = self.canvas_width - padding * 2
+        centroid_locations = [draw_width / len(centroids) * (i + 0.5) + padding for i in range(len(centroids))]
 
-        edge_objects.append(line)
-        edge_objects.append(text)
+        if not maintain_locations:
+            self.current_location_map = {}
 
-    return edge_objects
+        for centroid, location in zip(centroids, centroid_locations):
+            vertical = self.canvas_height - bottom_padding - text_height * 2 - 10
+            prediction_probability = centroid[3]
+
+            if prediction_probability > 0.5:
+                self.canvas.create_oval(location - vertex_radius-prediction_circle_extra_radius,
+                                        vertical - vertex_radius-prediction_circle_extra_radius,
+                                        location + vertex_radius+prediction_circle_extra_radius,
+                                        vertical + vertex_radius+prediction_circle_extra_radius,
+                                        fill="green")
+
+            color = "yellow" if centroid[4] else "red"
+
+            self.canvas.create_oval(location - vertex_radius,
+                           vertical - vertex_radius,
+                           location + vertex_radius,
+                           vertical + vertex_radius, fill=color)
+            self.canvas.create_text(location, self.canvas_height - bottom_padding - text_height, text=centroid[0], anchor="s",
+                           fill="black", font=("Helvetica", 12))
+
+            self.canvas.create_text(location, self.canvas_height - bottom_padding, text=centroid[1], anchor="s",
+                           fill="black", font=("Helvetica", 12))
+
+            self.current_location_map[centroid[0]] = [location, vertical]
+
+        forest_border = 30
+
+        forest_top = forest_border
+        forest_bottom = self.canvas_height - forest_border - bottom_padding - 2 * text_height - 10
+        forest_left = forest_border
+        forest_right = self.canvas_width - forest_border
+
+        for vertex in graph.get_other_vertices():
+            if self.apply_cutoff_to_vertices \
+                    and vertex[1] < self.cutoff_percentage\
+                    and not (vertex[3] and self.preserve_gold)\
+                    and not (vertex[2] > 0.5 and self.preserve_predictions):
+                continue
+            prediction_probability = vertex[2]
+            color = "yellow" if vertex[3] else "black"
+            vertex = vertex[0]
+
+            if vertex in self.current_location_map:
+                vertical = self.current_location_map[vertex][1]
+                horizontal = self.current_location_map[vertex][0]
+            else:
+                vertical = random.randint(forest_top, forest_bottom)
+                horizontal = random.randint(forest_left, forest_right)
+                self.current_location_map[vertex] = [horizontal, vertical]
+
+            if prediction_probability > 0.5:
+                self.canvas.create_oval(horizontal - vertex_radius-prediction_circle_extra_radius,
+                                        vertical - vertex_radius-prediction_circle_extra_radius,
+                                        horizontal + vertex_radius+prediction_circle_extra_radius,
+                                        vertical + vertex_radius+prediction_circle_extra_radius,
+                                        fill="green")
+
+            self.canvas.create_oval(horizontal - vertex_radius,
+                           vertical - vertex_radius,
+                           horizontal + vertex_radius,
+                           vertical + vertex_radius,
+                                    fill=color)
+            self.canvas.create_text(horizontal, vertical + text_height, text=vertex, anchor="s",
+                           fill="black", font=("Helvetica", 12))
+
+        cvt_radius = 2
+        cvt_extra_border = 40
+
+        for vertex in graph.get_events():
+            if self.apply_cutoff_to_vertices and vertex[1] < self.cutoff_percentage:
+                continue
+            vertex = vertex[0]
+
+            if vertex in self.current_location_map:
+                vertical = self.current_location_map[vertex][1]
+                horizontal = self.current_location_map[vertex][0]
+            else:
+                vertical = random.randint(forest_top + cvt_extra_border, forest_bottom - cvt_extra_border)
+                horizontal = random.randint(forest_left + cvt_extra_border, forest_right - cvt_extra_border)
+                self.current_location_map[vertex] = [horizontal, vertical]
+
+            self.canvas.create_rectangle(horizontal - cvt_radius,
+                                vertical - cvt_radius,
+                                horizontal + cvt_radius,
+                                vertical + cvt_radius)
+
+        self.draw_edges()
+
+    def draw_edges(self):
+        graph = self.examples[self.example_pointer][1]
+        if self.edge_objects is not None:
+            for e in self.edge_objects:
+                self.canvas.delete(e)
+
+        self.edge_objects = []
+        for edge in graph.get_all_edges():
+
+            forward_gate = float(edge[3])
+            backward_gate = float(edge[4])
+
+            if forward_gate < self.cutoff_percentage and backward_gate < self.cutoff_percentage:
+                continue
+            elif forward_gate > self.cutoff_percentage and backward_gate > self.cutoff_percentage:
+                arrows = tk.BOTH
+            elif forward_gate > self.cutoff_percentage:
+                arrows = tk.LAST
+            else:
+                arrows = tk.FIRST
+
+            location_subject = self.current_location_map[edge[0]]
+            location_object = self.current_location_map[edge[2]]
+
+            line = self.canvas.create_line(location_subject[0], location_subject[1], location_object[0], location_object[1],
+                                  arrow=arrows)
+
+            middle_horizontal = int(location_subject[0] + location_object[0]) / 2
+            middle_vertical = int(location_subject[1] + location_object[1]) / 2
+
+            text = self.canvas.create_text(middle_horizontal, middle_vertical + 4, text=edge[1], anchor="s",
+                                  fill="black", font=("Helvetica", 8))
+
+            self.edge_objects.append(line)
+            self.edge_objects.append(text)
 
 
-example_pointer = 0
-draw_example(example_pointer)
-
-
-def backward_button():
-    global example_pointer
-    if example_pointer == 0:
-        return
-    example_pointer -= 1
-    draw_example(example_pointer)
-
-back = Button(frame, text="<", fg="black", command=backward_button)
-back.grid(row=1, column=0)
-
-forward = Button(frame, text=">", fg="black", command=forward_button)
-forward.grid(row=1, column=3)
-
-
-
-def use_slider(event):
-    global location_map
-    percentage = float(event) / 100
-    draw_edges(percentage, graph, location_map)
-
-w = Scale(frame, orient=HORIZONTAL, from_=0, to=100, command=use_slider)
-w.grid(row=1, column=1)
-
-
-frame.pack()
-root.mainloop()
+analysis_tool = AnalysisTool()
+analysis_tool.read_examples(examples)
+analysis_tool.run()
