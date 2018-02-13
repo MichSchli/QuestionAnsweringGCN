@@ -1,0 +1,1940 @@
+who is emma the daughter of ?
+-----
+dennis	founded.1	cvt|id=2	1.40094e-08	0.320498	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	_
+dennis	sell.1	cvt|id=3	2.40551e-08	0.101579	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	_
+carl	meet.1	cvt|id=4	1.1952e-08	0.220678	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	_
+emma	meet.2	cvt|id=4	9.92862e-08	0.232024	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	_
+emma	meet.1	cvt|id=5	7.91146e-09	0.203296	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	_
+carl	meet.2	cvt|id=5	1.47071e-07	0.250632	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	_
+fay	meet.2	cvt|id=0	1.47071e-07	0.250632	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	_
+fay	meet.1	cvt|id=1	1.1952e-08	0.220678	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	_
+denniscorp	founded.2	cvt|id=2	1.19481e-08	0.110747	_	_	_	_	_	0.00281014	_
+1990	founded.in	cvt|id=2	7.76908e-09	0.105092	_	_	_	_	_	4.72192e-06	_
+denniscorp	sell.2	cvt|id=3	2.52093e-08	0.338603	_	_	_	_	_	0.00281014	_
+gary	sell.3	cvt|id=3	2.0272e-08	0.214524	_	_	_	_	_	1.50558e-05	_
+1996	sell.in	cvt|id=3	2.36297e-08	0.0760775	_	_	_	_	_	5.59054e-06	_
+2004	meet.in	cvt|id=4	7.06282e-09	0.208296	_	_	_	_	_	2.38348e-05	_
+2004	meet.in	cvt|id=5	7.06282e-09	0.208296	_	_	_	_	_	2.38348e-05	_
+henry	meet.1	cvt|id=0	1.25846e-08	0.223226	_	_	_	_	_	0.0302453	_
+1999	meet.in	cvt|id=0	7.06282e-09	0.208296	_	_	_	_	_	1.90937e-05	_
+henry	meet.2	cvt|id=1	1.54321e-07	0.253075	_	_	_	_	_	0.0302453	_
+1999	meet.in	cvt|id=1	7.06282e-09	0.208296	_	_	_	_	_	1.90937e-05	_
+-----
+-----
+carl	mother.of	alice	0.496733	0.20508	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.302372
+carl	father.of	bob	0.702288	0.398503	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.825854
+dennis	daughter.of	emma	0.502696	0.314365	_	subject_is_gold	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.9	0.963331	2.93236e-06
+emma	father.of	dennis	0.724894	0.384952	_	_	object_is_gold	subject_is_centroid|score=0.9	object_is_centroid|score=0.1	2.93236e-06	0.963331
+dennis	child.of	emma	0.702271	0.31952	_	subject_is_gold	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.9	0.963331	2.93236e-06
+emma	parent.of	dennis	0.675624	0.496352	_	_	object_is_gold	subject_is_centroid|score=0.9	object_is_centroid|score=0.1	2.93236e-06	0.963331
+carl	parent.of	alice	0.656791	0.51158	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.302372
+carl	parent.of	bob	0.656791	0.51158	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.825854
+carl	partner.of	emma	0.508742	0.257989	_	_	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.9	0.0562622	2.93236e-06
+emma	partner.of	carl	0.573822	0.226929	_	_	_	subject_is_centroid|score=0.9	object_is_centroid|score=0.1	2.93236e-06	0.0562622
+fay	live.in	edinburgh	0.170419	0.19406	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	2.69252e-06
+fay	works.for	alicecorp	0.157967	0.157171	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	5.62406e-05
+fay	works.as	developer	0.318632	0.235054	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	3.85016e-06
+fay	works.with	bob	0.72609	0.31826	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	0.825854
+dennis	live.in	amsterdam	0.170419	0.19406	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	4.96942e-06
+dennis	works.as	ceo	0.318632	0.235054	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	5.4123e-06
+emma	works.for	denniscorp	0.173217	0.147103	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	0.00281014
+emma	works.as	ceo	0.34364	0.227231	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	5.4123e-06
+dennis	works.for	othercorp	0.157967	0.157171	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	0.000562223
+emma	live.in	amsterdam	0.188091	0.186009	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	4.96942e-06
+carl	live.in	amsterdam	0.170419	0.19406	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	4.96942e-06
+carl	works.for	othercorp	0.157967	0.157171	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.000562223
+carl	works.as	developer	0.318632	0.235054	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	3.85016e-06
+carl	lives.with	emma	0.533994	0.301663	_	_	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.9	0.0562622	2.93236e-06
+emma	lives.with	carl	0.590936	0.267282	_	_	_	subject_is_centroid|score=0.9	object_is_centroid|score=0.1	2.93236e-06	0.0562622
+emma	invests.in	othercorp	0.682202	0.0979287	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	0.000562223
+emma	invests.in	denniscorp	0.682202	0.0979287	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	0.00281014
+carl	invests.in	alicecorp	0.660084	0.101035	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	5.62406e-05
+carl	invests.in	denniscorp	0.660084	0.101035	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	0.00281014
+fay	invests.in	othercorp	0.660084	0.101035	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	0.000562223
+fay	partner.of	henry	0.549254	0.238544	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	0.0302453
+fay	lives.with	henry	0.563276	0.280177	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	0.0302453
+carl	born.in	edinburgh	0.364256	0.252461	_	_	_	subject_is_centroid|score=0.1	_	0.0562622	2.69252e-06
+dennis	born.in	amsterdam	0.364256	0.252461	_	subject_is_gold	_	subject_is_centroid|score=0.1	_	0.963331	4.96942e-06
+emma	born.in	amsterdam	0.384222	0.241451	_	_	_	subject_is_centroid|score=0.9	_	2.93236e-06	4.96942e-06
+fay	born.in	copenhagen	0.364256	0.252461	_	_	_	subject_is_centroid|score=0.1	_	0.00224001	1.17212e-06
+alice	son.of	carl	0.745946	0.449783	_	_	_	_	object_is_centroid|score=0.1	0.302372	0.0562622
+bob	son.of	carl	0.745946	0.449783	_	_	_	_	object_is_centroid|score=0.1	0.825854	0.0562622
+bob	works.with	fay	0.719969	0.322648	_	_	_	_	object_is_centroid|score=0.1	0.825854	0.00224001
+denniscorp	founder.of	dennis	0.418128	0.283403	_	_	object_is_gold	_	object_is_centroid|score=0.1	0.00281014	0.963331
+denniscorp	director.of	emma	0.385324	0.0796265	_	_	_	_	object_is_centroid|score=0.9	0.00281014	2.93236e-06
+othercorp	director.of	dennis	0.41006	0.074045	_	_	object_is_gold	_	object_is_centroid|score=0.1	0.000562223	0.963331
+henry	partner.of	fay	0.541132	0.242466	_	_	_	_	object_is_centroid|score=0.1	0.0302453	0.00224001
+henry	lives.with	fay	0.55613	0.284297	_	_	_	_	object_is_centroid|score=0.1	0.0302453	0.00224001
+
+what does fay invest in ?
+-----
+dennis	founded.1	cvt|id=2	9.42556e-05	0.674356	_	_	_	subject_is_centroid|score=0.2	_	0.139986	_
+dennis	sell.1	cvt|id=3	0.000235611	0.470112	_	_	_	subject_is_centroid|score=0.2	_	0.139986	_
+emma	meet.2	cvt|id=4	0.00171881	0.485907	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	_
+emma	meet.1	cvt|id=5	5.87543e-05	0.241929	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	_
+fay	meet.2	cvt|id=0	0.001635	0.481054	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	_
+fay	meet.1	cvt|id=1	5.59563e-05	0.238338	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	_
+denniscorp	founded.2	cvt|id=2	8.17281e-05	0.288387	_	_	_	_	_	0.842407	_
+1990	founded.in	cvt|id=2	7.65347e-05	0.352913	_	_	_	_	_	0.0040983	_
+denniscorp	sell.2	cvt|id=3	0.000197208	0.595798	_	_	_	_	_	0.842407	_
+gary	sell.3	cvt|id=3	0.000220894	0.62809	_	_	_	_	_	0.0232025	_
+1996	sell.in	cvt|id=3	0.000176031	0.430285	_	_	_	_	_	0.00790906	_
+carl	meet.1	cvt|id=4	9.07518e-05	0.276232	_	_	_	_	_	0.812781	_
+2004	meet.in	cvt|id=4	5.99487e-05	0.585498	_	_	_	_	_	0.00425843	_
+carl	meet.2	cvt|id=5	0.00268978	0.529492	_	_	_	_	_	0.812781	_
+2004	meet.in	cvt|id=5	5.99487e-05	0.585498	_	_	_	_	_	0.00425843	_
+henry	meet.1	cvt|id=0	9.07518e-05	0.276232	_	_	_	_	_	0.82481	_
+1999	meet.in	cvt|id=0	5.99487e-05	0.585498	_	_	_	_	_	0.00441238	_
+henry	meet.2	cvt|id=1	0.00268978	0.529492	_	_	_	_	_	0.82481	_
+1999	meet.in	cvt|id=1	5.99487e-05	0.585498	_	_	_	_	_	0.00441238	_
+-----
+-----
+dennis	daughter.of	emma	0.00458989	0.460593	_	_	_	subject_is_centroid|score=0.2	object_is_centroid|score=0.9	0.139986	3.13812e-05
+emma	father.of	dennis	0.00463162	0.202748	_	_	_	subject_is_centroid|score=0.9	object_is_centroid|score=0.2	3.13812e-05	0.139986
+dennis	child.of	emma	0.0032133	0.456642	_	_	_	subject_is_centroid|score=0.2	object_is_centroid|score=0.9	0.139986	3.13812e-05
+emma	parent.of	dennis	0.00982745	0.399257	_	_	_	subject_is_centroid|score=0.9	object_is_centroid|score=0.2	3.13812e-05	0.139986
+emma	partner.of	carl	0.00688939	0.340316	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.812781
+fay	live.in	edinburgh	0.00022557	0.647762	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.00426951
+fay	works.for	alicecorp	0.00289049	0.223034	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.0043653
+fay	works.as	developer	0.000329498	0.322839	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.00426842
+fay	works.with	bob	0.0160612	0.614134	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.384842
+dennis	live.in	amsterdam	0.000201625	0.69905	_	_	_	subject_is_centroid|score=0.2	_	0.139986	0.00417776
+dennis	works.as	ceo	0.000295238	0.365181	_	_	_	subject_is_centroid|score=0.2	_	0.139986	0.00418062
+emma	works.for	denniscorp	0.00284104	0.227536	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.842407
+emma	works.as	ceo	0.000325026	0.327829	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.00418062
+dennis	works.for	othercorp	0.00251773	0.260299	_	_	object_is_gold	subject_is_centroid|score=0.2	_	0.139986	0.110684
+emma	live.in	amsterdam	0.000222197	0.654513	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.00417776
+emma	lives.with	carl	0.00206801	0.232102	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.812781
+emma	invests.in	othercorp	0.114089	0.638411	_	_	object_is_gold	subject_is_centroid|score=0.9	_	3.13812e-05	0.110684
+emma	invests.in	denniscorp	0.114089	0.638411	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.842407
+fay	invests.in	othercorp	0.115799	0.631991	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.46047e-05	0.110684
+fay	partner.of	henry	0.00700245	0.334769	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.82481
+fay	lives.with	henry	0.00210275	0.228337	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.82481
+dennis	born.in	amsterdam	0.000886637	0.313826	_	_	_	subject_is_centroid|score=0.2	_	0.139986	0.00417776
+emma	born.in	amsterdam	0.000990681	0.281181	_	_	_	subject_is_centroid|score=0.9	_	3.13812e-05	0.00417776
+fay	born.in	copenhagen	0.00100654	0.276725	_	_	_	subject_is_centroid|score=1.0	_	3.46047e-05	0.00426289
+carl	partner.of	emma	0.00503551	0.434848	_	_	_	_	object_is_centroid|score=0.9	0.812781	3.13812e-05
+bob	works.with	fay	0.0106879	0.716781	_	_	_	_	object_is_centroid|score=1.0	0.384842	3.46047e-05
+denniscorp	founder.of	dennis	0.00179087	0.339282	_	_	_	_	object_is_centroid|score=0.2	0.842407	0.139986
+denniscorp	director.of	emma	0.000735226	0.152579	_	_	_	_	object_is_centroid|score=0.9	0.842407	3.13812e-05
+othercorp	director.of	dennis	0.000805813	0.134886	_	subject_is_gold	_	_	object_is_centroid|score=0.2	0.110684	0.139986
+carl	lives.with	emma	0.00159515	0.302146	_	_	_	_	object_is_centroid|score=0.9	0.812781	3.13812e-05
+henry	partner.of	fay	0.00494194	0.439669	_	_	_	_	object_is_centroid|score=1.0	0.82481	3.46047e-05
+henry	lives.with	fay	0.00157386	0.306467	_	_	_	_	object_is_centroid|score=1.0	0.82481	3.46047e-05
+
+what is gary investing in ?
+-----
+alice	founded.1	cvt|id=0	0.000161384	0.574636	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	_
+alice	meet.1	cvt|id=1	0.000141502	0.187503	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	_
+alice	meet.2	cvt|id=2	0.00545721	0.380073	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	_
+gary	sell.3	cvt|id=3	0.000284861	0.525603	_	_	_	subject_is_centroid|score=1.0	_	0.000453609	_
+alicecorp	founded.2	cvt|id=0	0.000162669	0.220112	_	subject_is_gold	_	_	_	0.988108	_
+1997	founded.in	cvt|id=0	0.000198881	0.273653	_	_	_	_	_	0.00319421	_
+bob	meet.2	cvt|id=1	0.00813318	0.417421	_	_	_	_	_	0.814567	_
+2003	meet.in	cvt|id=1	0.000136567	0.500167	_	_	_	_	_	0.00259883	_
+bob	meet.1	cvt|id=2	0.000205706	0.209317	_	_	_	_	_	0.814567	_
+2003	meet.in	cvt|id=2	0.000136567	0.497758	_	_	_	_	_	0.00259883	_
+dennis	sell.1	cvt|id=3	0.000597903	0.360288	_	_	_	_	_	0.0278205	_
+denniscorp	sell.2	cvt|id=3	0.000380735	0.496733	_	_	_	_	_	0.994268	_
+1996	sell.in	cvt|id=3	0.00035444	0.335874	_	_	_	_	_	0.00606266	_
+-----
+-----
+alice	son.of	carl	0.0271341	0.49489	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.107903
+alice	partner.of	bob	0.070508	0.326899	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.814567
+alice	works.for	alicecorp	0.0274174	0.290335	_	_	object_is_gold	subject_is_centroid|score=0.8	_	6.20527e-05	0.988108
+alice	works.as	ceo	0.00369451	0.404166	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.00361638
+alice	live.in	edinburgh	0.0022361	0.726301	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.00354842
+alice	lives.with	bob	0.0258526	0.24572	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.814567
+gary	live.in	amsterdam	0.00229954	0.713996	_	_	_	subject_is_centroid|score=1.0	_	0.000453609	0.00367807
+alice	invests.in	alicecorp	0.520531	0.66372	_	_	object_is_gold	subject_is_centroid|score=0.8	_	6.20527e-05	0.988108
+alice	invests.in	denniscorp	0.520531	0.66372	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.994268
+alice	invests.in	othercorp	0.520531	0.66372	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.640857
+gary	invests.in	alicecorp	0.52762	0.652571	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.000453609	0.988108
+alice	born.in	edinburgh	0.013832	0.31811	_	_	_	subject_is_centroid|score=0.8	_	6.20527e-05	0.00354842
+gary	born.in	amsterdam	0.0142264	0.308233	_	_	_	subject_is_centroid|score=1.0	_	0.000453609	0.00367807
+carl	mother.of	alice	0.0388686	0.487453	_	_	_	_	object_is_centroid|score=0.8	0.107903	6.20527e-05
+bob	partner.of	alice	0.0529958	0.414364	_	_	_	_	object_is_centroid|score=0.8	0.814567	6.20527e-05
+carl	parent.of	alice	0.0757957	0.59438	_	_	_	_	object_is_centroid|score=0.8	0.107903	6.20527e-05
+alicecorp	founder.of	alice	0.0198342	0.471777	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.988108	6.20527e-05
+alicecorp	director.of	alice	0.0074308	0.167137	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.988108	6.20527e-05
+bob	lives.with	alice	0.0203447	0.326321	_	_	_	_	object_is_centroid|score=0.8	0.814567	6.20527e-05
+alicecorp	owner.of	alice	0.0484828	0.348799	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.988108	6.20527e-05
+denniscorp	owner.of	gary	0.0470056	0.358589	_	_	_	_	object_is_centroid|score=1.0	0.994268	0.000453609
+
+who is alice the owner of ?
+-----
+alice	founded.1	cvt|id=0	8.26471e-10	0.679379	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	_
+alice	meet.1	cvt|id=1	7.80201e-10	0.533115	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	_
+alice	meet.2	cvt|id=2	1.70262e-08	0.65963	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	_
+emma	meet.2	cvt|id=3	1.79482e-08	0.662486	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	_
+emma	meet.1	cvt|id=4	8.22221e-10	0.537403	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	_
+alicecorp	founded.2	cvt|id=0	7.97129e-10	0.286951	_	subject_is_gold	_	_	_	0.976481	_
+1997	founded.in	cvt|id=0	9.70505e-10	0.278283	_	_	_	_	_	5.63946e-07	_
+bob	meet.2	cvt|id=1	2.10245e-08	0.67082	_	_	_	_	_	0.000371771	_
+2003	meet.in	cvt|id=1	6.96309e-10	0.546161	_	_	_	_	_	1.24534e-06	_
+bob	meet.1	cvt|id=2	9.62352e-10	0.550232	_	_	_	_	_	0.000371771	_
+2003	meet.in	cvt|id=2	6.96309e-10	0.546161	_	_	_	_	_	1.24534e-06	_
+carl	meet.1	cvt|id=3	9.62352e-10	0.550232	_	_	_	_	_	1.37531e-05	_
+2004	meet.in	cvt|id=3	6.96309e-10	0.546161	_	_	_	_	_	1.24534e-06	_
+carl	meet.2	cvt|id=4	2.10245e-08	0.67082	_	_	_	_	_	1.37531e-05	_
+2004	meet.in	cvt|id=4	6.96309e-10	0.546161	_	_	_	_	_	1.24534e-06	_
+-----
+-----
+alice	son.of	carl	0.805615	0.796988	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	1.37531e-05
+alice	partner.of	bob	0.83392	0.679649	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	0.000371771
+emma	father.of	dennis	0.82254	0.730798	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	0.0314912
+emma	parent.of	dennis	0.754962	0.829613	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	0.0314912
+emma	partner.of	carl	0.832364	0.683743	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	1.37531e-05
+alice	works.for	alicecorp	0.764801	0.696779	_	_	object_is_gold	subject_is_centroid|score=0.4	_	1.48768e-09	0.976481
+alice	works.as	ceo	0.527353	0.503828	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	5.62003e-06
+alice	live.in	edinburgh	0.515385	0.681454	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	6.77055e-07
+alice	lives.with	bob	0.687065	0.653794	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	0.000371771
+emma	works.for	denniscorp	0.763297	0.701938	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	0.912771
+emma	works.as	ceo	0.524665	0.508547	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	5.62003e-06
+emma	live.in	amsterdam	0.511818	0.686916	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	5.88182e-07
+emma	lives.with	carl	0.684673	0.658689	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	1.37531e-05
+alice	invests.in	alicecorp	0.667405	0.303233	_	_	object_is_gold	subject_is_centroid|score=0.4	_	1.48768e-09	0.976481
+alice	invests.in	denniscorp	0.667405	0.303233	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	0.912771
+alice	invests.in	othercorp	0.667405	0.303233	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	0.0131903
+emma	invests.in	othercorp	0.663675	0.30801	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	0.0131903
+emma	invests.in	denniscorp	0.663675	0.30801	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	0.912771
+alice	born.in	edinburgh	0.697367	0.601913	_	_	_	subject_is_centroid|score=0.4	_	1.48768e-09	6.77055e-07
+emma	born.in	amsterdam	0.695436	0.606761	_	_	_	subject_is_centroid|score=0.3	_	3.39724e-09	5.88182e-07
+carl	mother.of	alice	0.730496	0.610254	_	_	_	_	object_is_centroid|score=0.4	1.37531e-05	1.48768e-09
+bob	partner.of	alice	0.819363	0.705626	_	_	_	_	object_is_centroid|score=0.4	0.000371771	1.48768e-09
+dennis	daughter.of	emma	0.724059	0.780541	_	_	_	_	object_is_centroid|score=0.3	0.0314912	3.39724e-09
+dennis	child.of	emma	0.713438	0.826485	_	_	_	_	object_is_centroid|score=0.3	0.0314912	3.39724e-09
+carl	parent.of	alice	0.738854	0.844071	_	_	_	_	object_is_centroid|score=0.4	1.37531e-05	1.48768e-09
+carl	partner.of	emma	0.821457	0.703082	_	_	_	_	object_is_centroid|score=0.3	1.37531e-05	3.39724e-09
+alicecorp	founder.of	alice	0.753435	0.73421	_	subject_is_gold	_	_	object_is_centroid|score=0.4	0.976481	1.48768e-09
+alicecorp	director.of	alice	0.609124	0.370841	_	subject_is_gold	_	_	object_is_centroid|score=0.4	0.976481	1.48768e-09
+bob	lives.with	alice	0.667006	0.686342	_	_	_	_	object_is_centroid|score=0.4	0.000371771	1.48768e-09
+alicecorp	owner.of	alice	0.753318	0.657365	_	subject_is_gold	_	_	object_is_centroid|score=0.4	0.976481	1.48768e-09
+denniscorp	director.of	emma	0.612553	0.367575	_	_	_	_	object_is_centroid|score=0.3	0.912771	3.39724e-09
+carl	lives.with	emma	0.669618	0.683124	_	_	_	_	object_is_centroid|score=0.3	1.37531e-05	3.39724e-09
+
+what did dennis found in 1990 ?
+-----
+dennis	founded.1	cvt|id=0	6.40547e-07	0.552787	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	_
+denniscorp	founded.2	cvt|id=0	4.7317e-07	0.320551	_	subject_is_gold	_	subject_is_centroid|score=0.6	_	3.2162e-05	_
+dennis	sell.1	cvt|id=1	1.32466e-06	0.403819	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	_
+denniscorp	sell.2	cvt|id=1	1.19684e-06	0.538158	_	subject_is_gold	_	subject_is_centroid|score=0.6	_	3.2162e-05	_
+1990	founded.in	cvt|id=0	4.47987e-07	0.19775	_	_	_	_	_	0.0718901	_
+gary	sell.3	cvt|id=1	1.40498e-06	0.593453	_	_	_	_	_	0.141063	_
+1996	sell.in	cvt|id=1	1.44574e-06	0.321315	_	_	_	_	_	0.10165	_
+-----
+-----
+dennis	daughter.of	emma	0.20081	0.481503	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.0858839
+dennis	child.of	emma	0.179695	0.50596	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.0858839
+denniscorp	founder.of	dennis	0.0783443	0.412283	_	subject_is_gold	_	subject_is_centroid|score=0.6	object_is_centroid|score=0.5	3.2162e-05	0.000157719
+denniscorp	owner.of	gary	0.29401	0.22054	_	subject_is_gold	_	subject_is_centroid|score=0.6	_	3.2162e-05	0.141063
+denniscorp	founded.in	amsterdam	0.0789576	0.316751	_	subject_is_gold	_	subject_is_centroid|score=0.6	_	3.2162e-05	0.0755031
+dennis	live.in	amsterdam	0.00881994	0.659192	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.0755031
+dennis	works.as	ceo	0.0217572	0.383375	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.0722399
+denniscorp	director.of	emma	0.0583204	0.183993	_	subject_is_gold	_	subject_is_centroid|score=0.6	_	3.2162e-05	0.0858839
+dennis	works.for	othercorp	0.0768522	0.253369	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.131049
+dennis	born.in	amsterdam	0.0432435	0.464813	_	_	_	subject_is_centroid|score=0.5	_	0.000157719	0.0755031
+emma	father.of	dennis	0.130198	0.364952	_	_	_	_	object_is_centroid|score=0.5	0.0858839	0.000157719
+emma	parent.of	dennis	0.226739	0.591295	_	_	_	_	object_is_centroid|score=0.5	0.0858839	0.000157719
+emma	works.for	denniscorp	0.0654637	0.293476	_	_	object_is_gold	_	object_is_centroid|score=0.6	0.0858839	3.2162e-05
+othercorp	director.of	dennis	0.0506157	0.219829	_	_	_	_	object_is_centroid|score=0.5	0.131049	0.000157719
+alice	invests.in	denniscorp	0.595774	0.637986	_	_	object_is_gold	_	object_is_centroid|score=0.6	0.137354	3.2162e-05
+emma	invests.in	denniscorp	0.595774	0.637986	_	_	object_is_gold	_	object_is_centroid|score=0.6	0.0858839	3.2162e-05
+carl	invests.in	denniscorp	0.595774	0.637986	_	_	object_is_gold	_	object_is_centroid|score=0.6	0.137354	3.2162e-05
+
+who taught physics in 2006 ?
+-----
+dennis	founded.1	cvt|id=3	1.51742e-06	0.530767	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	_
+dennis	sell.1	cvt|id=4	2.76294e-06	0.324908	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	_
+physics	taught.2	cvt|id=0	1.48056e-06	0.304443	_	_	_	subject_is_centroid|score=1.0	_	0.0198013	_
+physics	taught.2	cvt|id=1	1.48056e-06	0.304443	_	_	_	subject_is_centroid|score=1.0	_	0.0198013	_
+physics	taught.2	cvt|id=2	1.48056e-06	0.304443	_	_	_	subject_is_centroid|score=1.0	_	0.0198013	_
+denniscorp	founded.2	cvt|id=3	1.95481e-06	0.250164	_	_	_	_	_	0.386911	_
+1990	founded.in	cvt|id=3	1.24572e-06	0.293056	_	_	_	_	_	0.00239921	_
+denniscorp	sell.2	cvt|id=4	4.79209e-06	0.44303	_	_	_	_	_	0.386911	_
+gary	sell.3	cvt|id=4	4.02013e-06	0.522652	_	_	_	_	_	0.0157033	_
+1996	sell.in	cvt|id=4	3.89084e-06	0.334821	_	_	_	_	_	0.00404529	_
+henry	taught.1	cvt|id=0	8.66551e-06	0.491502	_	subject_is_gold	_	_	_	0.981999	_
+2004	taught.in	cvt|id=0	8.55001e-07	0.384746	_	_	_	_	_	0.00150742	_
+henry	taught.1	cvt|id=1	8.66551e-06	0.491502	_	subject_is_gold	_	_	_	0.981999	_
+2005	taught.in	cvt|id=1	8.55001e-07	0.384746	_	_	_	_	_	0.00150742	_
+henry	taught.1	cvt|id=2	8.66551e-06	0.491502	_	subject_is_gold	_	_	_	0.981999	_
+2006	taught.in	cvt|id=2	8.55001e-07	0.384746	_	_	_	_	_	0.00150742	_
+-----
+-----
+dennis	daughter.of	emma	0.000217505	0.190774	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.0329305
+dennis	child.of	emma	0.000167364	0.175171	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.0329305
+dennis	live.in	amsterdam	8.58828e-06	0.395862	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.00220268
+dennis	works.as	ceo	1.23807e-05	0.182302	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.00220262
+dennis	works.for	othercorp	7.01743e-05	0.0889825	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.00334552
+dennis	born.in	amsterdam	2.90129e-05	0.145902	_	_	_	subject_is_centroid|score=1.0	_	0.00830523	0.00220268
+emma	father.of	dennis	9.06992e-05	0.141447	_	_	_	_	object_is_centroid|score=1.0	0.0329305	0.00830523
+emma	parent.of	dennis	0.000317194	0.298091	_	_	_	_	object_is_centroid|score=1.0	0.0329305	0.00830523
+denniscorp	founder.of	dennis	5.26753e-05	0.197522	_	_	_	_	object_is_centroid|score=1.0	0.386911	0.00830523
+othercorp	director.of	dennis	3.02915e-05	0.0796505	_	_	_	_	object_is_centroid|score=1.0	0.00334552	0.00830523
+
+what is fay working as ?
+-----
+fay	meet.2	cvt|id=0	0.482259	0.970945	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	_
+fay	meet.1	cvt|id=1	0.404249	0.964322	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	_
+henry	meet.1	cvt|id=0	0.404366	0.964366	_	_	_	_	_	1.80981e-22	_
+1999	meet.in	cvt|id=0	0.32214	0.980728	_	_	_	_	_	3.6192e-21	_
+henry	meet.2	cvt|id=1	0.482291	0.970969	_	_	_	_	_	1.80981e-22	_
+1999	meet.in	cvt|id=1	0.32214	0.980724	_	_	_	_	_	3.6192e-21	_
+-----
+-----
+fay	live.in	edinburgh	0.937954	0.994409	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	0.0105665
+fay	works.for	alicecorp	0.967051	0.984702	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	0.0327249
+fay	works.as	developer	0.879735	0.974875	_	_	object_is_gold	subject_is_centroid|score=0.01	_	8.61799e-27	0.961967
+fay	works.with	bob	0.983445	0.995832	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	0.000162791
+fay	invests.in	othercorp	0.980957	0.982081	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	0.00510388
+fay	partner.of	henry	0.972003	0.955698	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	1.80981e-22
+fay	lives.with	henry	0.970217	0.963594	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	1.80981e-22
+fay	born.in	copenhagen	0.950022	0.978441	_	_	_	subject_is_centroid|score=0.01	_	8.61799e-27	0.0422138
+bob	works.with	fay	0.983376	0.995863	_	_	_	_	object_is_centroid|score=0.01	0.000162791	8.61799e-27
+henry	partner.of	fay	0.97191	0.955995	_	_	_	_	object_is_centroid|score=0.01	1.80981e-22	8.61799e-27
+henry	lives.with	fay	0.970131	0.963858	_	_	_	_	object_is_centroid|score=0.01	1.80981e-22	8.61799e-27
+
+what did alice found in 1997 ?
+-----
+alice	founded.1	cvt|id=0	2.64535e-08	0.590367	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	_
+alice	meet.1	cvt|id=3	2.31997e-08	0.335293	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	_
+alice	meet.2	cvt|id=4	3.43306e-07	0.614385	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	_
+fay	meet.2	cvt|id=1	3.5207e-07	0.616195	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	_
+fay	meet.1	cvt|id=2	2.38002e-08	0.337428	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	_
+alicecorp	founded.2	cvt|id=0	3.45603e-08	0.377823	_	subject_is_gold	_	_	_	0.0852161	_
+1997	founded.in	cvt|id=0	2.50691e-08	0.271887	_	_	_	_	_	0.0284986	_
+bob	meet.2	cvt|id=3	5.542e-07	0.650074	_	_	_	_	_	0.312574	_
+2003	meet.in	cvt|id=3	2.44397e-08	0.697687	_	_	_	_	_	0.354951	_
+bob	meet.1	cvt|id=4	3.76994e-08	0.377594	_	_	_	_	_	0.312574	_
+2003	meet.in	cvt|id=4	2.44397e-08	0.697687	_	_	_	_	_	0.354951	_
+henry	meet.1	cvt|id=1	3.76994e-08	0.377594	_	_	_	_	_	0.472944	_
+1999	meet.in	cvt|id=1	2.44397e-08	0.697687	_	_	_	_	_	0.350135	_
+henry	meet.2	cvt|id=2	5.542e-07	0.650074	_	_	_	_	_	0.472944	_
+1999	meet.in	cvt|id=2	2.44397e-08	0.697687	_	_	_	_	_	0.350135	_
+-----
+-----
+alice	son.of	carl	0.0199229	0.402738	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.25904
+alice	partner.of	bob	0.0185826	0.415855	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.312574
+alice	works.for	alicecorp	0.00697775	0.189939	_	_	object_is_gold	subject_is_centroid|score=0.95	_	5.54146e-07	0.0852161
+alice	works.as	ceo	0.00164164	0.314922	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.0289807
+alice	live.in	edinburgh	0.000728069	0.497006	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.0290069
+fay	live.in	edinburgh	0.000722362	0.500064	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.0290069
+fay	works.for	alicecorp	0.00692151	0.190939	_	_	object_is_gold	subject_is_centroid|score=0.9	_	4.88391e-06	0.0852161
+fay	works.as	developer	0.00162952	0.316559	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.0286043
+fay	works.with	bob	0.0913911	0.613973	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.312574
+alice	lives.with	bob	0.00656036	0.364759	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.312574
+alice	invests.in	alicecorp	0.212732	0.473401	_	_	object_is_gold	subject_is_centroid|score=0.95	_	5.54146e-07	0.0852161
+alice	invests.in	denniscorp	0.212732	0.473401	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.0381482
+alice	invests.in	othercorp	0.212732	0.473401	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.0390504
+fay	invests.in	othercorp	0.211037	0.475564	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.0390504
+fay	partner.of	henry	0.0183945	0.417568	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.472944
+fay	lives.with	henry	0.00649668	0.366683	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.472944
+alice	born.in	edinburgh	0.00291151	0.386509	_	_	_	subject_is_centroid|score=0.95	_	5.54146e-07	0.0290069
+fay	born.in	copenhagen	0.00288835	0.388571	_	_	_	subject_is_centroid|score=0.9	_	4.88391e-06	0.0285808
+carl	mother.of	alice	0.0109961	0.395052	_	_	_	_	object_is_centroid|score=0.95	0.25904	5.54146e-07
+bob	partner.of	alice	0.0127858	0.480058	_	_	_	_	object_is_centroid|score=0.95	0.312574	5.54146e-07
+carl	parent.of	alice	0.0241106	0.424287	_	_	_	_	object_is_centroid|score=0.95	0.25904	5.54146e-07
+alicecorp	founder.of	alice	0.0050779	0.38432	_	subject_is_gold	_	_	object_is_centroid|score=0.95	0.0852161	5.54146e-07
+alicecorp	director.of	alice	0.00406507	0.20594	_	subject_is_gold	_	_	object_is_centroid|score=0.95	0.0852161	5.54146e-07
+bob	works.with	fay	0.0630179	0.688681	_	_	_	_	object_is_centroid|score=0.9	0.312574	4.88391e-06
+bob	lives.with	alice	0.00477629	0.434977	_	_	_	_	object_is_centroid|score=0.95	0.312574	5.54146e-07
+alicecorp	owner.of	alice	0.0273325	0.193987	_	subject_is_gold	_	_	object_is_centroid|score=0.95	0.0852161	5.54146e-07
+henry	partner.of	fay	0.0129088	0.478571	_	_	_	_	object_is_centroid|score=0.9	0.472944	4.88391e-06
+henry	lives.with	fay	0.00480803	0.433307	_	_	_	_	object_is_centroid|score=0.9	0.472944	4.88391e-06
+
+who founded alicecorp ?
+-----
+alicecorp	founded.2	cvt|id=0	0.00435512	0.177208	_	_	_	subject_is_centroid|score=1.0	_	3.88603e-06	_
+alicecorp	hire.1	cvt|id=1	0.001481	0.259673	_	_	_	subject_is_centroid|score=1.0	_	3.88603e-06	_
+alice	founded.1	cvt|id=0	0.00789797	0.527042	_	subject_is_gold	_	_	_	0.958573	_
+1997	founded.in	cvt|id=0	0.00513067	0.164323	_	_	_	_	_	0.00254428	_
+bob	hire.2	cvt|id=1	0.0103314	0.354521	_	_	_	_	_	0.758513	_
+2002	hire.in	cvt|id=1	0.00996792	0.415413	_	_	_	_	_	0.00427989	_
+-----
+-----
+alicecorp	founder.of	alice	0.1152	0.407797	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.88603e-06	0.958573
+alicecorp	director.of	alice	0.0646875	0.150347	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.88603e-06	0.958573
+alicecorp	founded.in	edinburgh	0.0866459	0.363932	_	_	_	subject_is_centroid|score=1.0	_	3.88603e-06	0.00281063
+alicecorp	owner.of	alice	0.293332	0.231822	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.88603e-06	0.958573
+othercorp	director.of	dennis	0.0571	0.175571	_	_	_	subject_is_centroid|score=0.2	_	0.0204367	0.206704
+alice	works.for	alicecorp	0.0922242	0.476635	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.958573	3.88603e-06
+bob	works.for	alicecorp	0.0922242	0.476635	_	_	_	_	object_is_centroid|score=1.0	0.758513	3.88603e-06
+fay	works.for	alicecorp	0.0922242	0.476635	_	_	_	_	object_is_centroid|score=1.0	0.782972	3.88603e-06
+dennis	works.for	othercorp	0.10415	0.442826	_	_	_	_	object_is_centroid|score=0.2	0.206704	0.0204367
+carl	works.for	othercorp	0.10415	0.442826	_	_	_	_	object_is_centroid|score=0.2	0.742676	0.0204367
+alice	invests.in	alicecorp	0.515903	0.529978	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.958573	3.88603e-06
+alice	invests.in	othercorp	0.545059	0.493901	_	subject_is_gold	_	_	object_is_centroid|score=0.2	0.958573	0.0204367
+bob	invests.in	alicecorp	0.515903	0.529978	_	_	_	_	object_is_centroid|score=1.0	0.758513	3.88603e-06
+gary	invests.in	alicecorp	0.515903	0.529978	_	_	_	_	object_is_centroid|score=1.0	0.0968611	3.88603e-06
+emma	invests.in	othercorp	0.545059	0.493901	_	_	_	_	object_is_centroid|score=0.2	0.0321978	0.0204367
+carl	invests.in	alicecorp	0.515903	0.529978	_	_	_	_	object_is_centroid|score=1.0	0.742676	3.88603e-06
+fay	invests.in	othercorp	0.545059	0.493901	_	_	_	_	object_is_centroid|score=0.2	0.782972	0.0204367
+
+who invests in denniscorp ?
+-----
+alicecorp	founded.2	cvt|id=0	0.060076	0.24004	_	_	_	subject_is_centroid|score=0.1	_	0.18421	_
+alicecorp	hire.1	cvt|id=1	0.021351	0.455898	_	_	_	subject_is_centroid|score=0.1	_	0.18421	_
+denniscorp	founded.2	cvt|id=2	0.0462372	0.220478	_	_	_	subject_is_centroid|score=0.9	_	6.30463e-05	_
+denniscorp	sell.2	cvt|id=3	0.0952789	0.691365	_	_	_	subject_is_centroid|score=0.9	_	6.30463e-05	_
+alice	founded.1	cvt|id=0	0.05853	0.611099	_	subject_is_gold	_	_	_	0.878674	_
+1997	founded.in	cvt|id=0	0.0531621	0.359829	_	_	_	_	_	0.0346536	_
+bob	hire.2	cvt|id=1	0.106728	0.398154	_	_	_	_	_	0.510044	_
+2002	hire.in	cvt|id=1	0.0629354	0.526172	_	_	_	_	_	0.0215687	_
+dennis	founded.1	cvt|id=2	0.05853	0.606222	_	_	_	_	_	0.06628	_
+1990	founded.in	cvt|id=2	0.0531621	0.351776	_	_	_	_	_	0.036641	_
+dennis	sell.1	cvt|id=3	0.086753	0.666171	_	_	_	_	_	0.06628	_
+gary	sell.3	cvt|id=3	0.111222	0.741904	_	_	_	_	_	0.00281182	_
+1996	sell.in	cvt|id=3	0.0759894	0.607243	_	_	_	_	_	0.0162301	_
+-----
+-----
+alicecorp	founder.of	alice	8.34645e-05	0.297193	_	_	object_is_gold	subject_is_centroid|score=0.1	_	0.18421	0.878674
+alicecorp	director.of	alice	4.61895e-05	0.122788	_	_	object_is_gold	subject_is_centroid|score=0.1	_	0.18421	0.878674
+alicecorp	founded.in	edinburgh	6.11034e-05	0.22314	_	_	_	subject_is_centroid|score=0.1	_	0.18421	0.0568819
+denniscorp	founder.of	dennis	9.63428e-05	0.269208	_	_	_	subject_is_centroid|score=0.9	_	6.30463e-05	0.06628
+alicecorp	owner.of	alice	0.000458121	0.149289	_	_	object_is_gold	subject_is_centroid|score=0.1	_	0.18421	0.878674
+denniscorp	owner.of	gary	0.000518276	0.13095	_	_	_	subject_is_centroid|score=0.9	_	6.30463e-05	0.00281182
+denniscorp	founded.in	amsterdam	6.89581e-05	0.19867	_	_	_	subject_is_centroid|score=0.9	_	6.30463e-05	0.0789831
+denniscorp	director.of	emma	5.10894e-05	0.10693	_	_	object_is_gold	subject_is_centroid|score=0.9	_	6.30463e-05	0.928683
+alice	works.for	alicecorp	9.512e-05	0.220477	_	subject_is_gold	_	_	object_is_centroid|score=0.1	0.878674	0.18421
+bob	works.for	alicecorp	9.512e-05	0.220477	_	_	_	_	object_is_centroid|score=0.1	0.510044	0.18421
+fay	works.for	alicecorp	9.512e-05	0.220477	_	_	_	_	object_is_centroid|score=0.1	0.245888	0.18421
+emma	works.for	denniscorp	8.5181e-05	0.243457	_	subject_is_gold	_	_	object_is_centroid|score=0.9	0.928683	6.30463e-05
+alice	invests.in	alicecorp	0.00430262	0.570714	_	subject_is_gold	_	_	object_is_centroid|score=0.1	0.878674	0.18421
+alice	invests.in	denniscorp	0.00386259	0.607239	_	subject_is_gold	_	_	object_is_centroid|score=0.9	0.878674	6.30463e-05
+bob	invests.in	alicecorp	0.00430262	0.570714	_	_	_	_	object_is_centroid|score=0.1	0.510044	0.18421
+gary	invests.in	alicecorp	0.00430262	0.570714	_	_	_	_	object_is_centroid|score=0.1	0.00281182	0.18421
+emma	invests.in	denniscorp	0.00386259	0.607239	_	subject_is_gold	_	_	object_is_centroid|score=0.9	0.928683	6.30463e-05
+carl	invests.in	alicecorp	0.00430262	0.570714	_	subject_is_gold	_	_	object_is_centroid|score=0.1	0.898888	0.18421
+carl	invests.in	denniscorp	0.00386259	0.607239	_	subject_is_gold	_	_	object_is_centroid|score=0.9	0.898888	6.30463e-05
+
+who did dennis sell denniscorp to in 1996 ?
+-----
+dennis	founded.1	cvt|id=3	1.47733e-05	0.63882	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	_
+denniscorp	founded.2	cvt|id=3	1.22733e-05	0.298694	_	_	_	subject_is_centroid|score=1.0	_	0.00128341	_
+dennis	sell.1	cvt|id=4	2.99495e-05	0.393166	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	_
+denniscorp	sell.2	cvt|id=4	3.36334e-05	0.581677	_	_	_	subject_is_centroid|score=1.0	_	0.00128341	_
+physics	taught.2	cvt|id=0	2.57722e-05	0.320662	_	_	_	subject_is_centroid|score=0.2	_	0.199488	_
+physics	taught.2	cvt|id=1	2.57722e-05	0.320662	_	_	_	subject_is_centroid|score=0.2	_	0.199488	_
+physics	taught.2	cvt|id=2	2.57722e-05	0.320662	_	_	_	subject_is_centroid|score=0.2	_	0.199488	_
+1990	founded.in	cvt|id=3	1.22325e-05	0.376303	_	_	_	_	_	0.00157078	_
+gary	sell.3	cvt|id=4	4.1095e-05	0.622151	_	subject_is_gold	_	_	_	0.029451	_
+1996	sell.in	cvt|id=4	3.97489e-05	0.354947	_	_	_	_	_	0.00282251	_
+henry	taught.1	cvt|id=0	9.41529e-05	0.59343	_	_	_	_	_	0.959634	_
+2004	taught.in	cvt|id=0	9.71009e-06	0.519542	_	_	_	_	_	0.000546737	_
+henry	taught.1	cvt|id=1	9.41529e-05	0.59343	_	_	_	_	_	0.959634	_
+2005	taught.in	cvt|id=1	9.71009e-06	0.519542	_	_	_	_	_	0.000546737	_
+henry	taught.1	cvt|id=2	9.41529e-05	0.59343	_	_	_	_	_	0.959634	_
+2006	taught.in	cvt|id=2	9.71009e-06	0.519542	_	_	_	_	_	0.000546737	_
+-----
+-----
+dennis	daughter.of	emma	0.00707346	0.250973	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.748133
+dennis	child.of	emma	0.00678843	0.233793	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.748133
+denniscorp	founder.of	dennis	0.00204014	0.315483	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	0.00128341	0.000566457
+denniscorp	owner.of	gary	0.0144279	0.131675	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.00128341	0.029451
+denniscorp	founded.in	amsterdam	0.0019948	0.207532	_	_	_	subject_is_centroid|score=1.0	_	0.00128341	0.00140414
+dennis	live.in	amsterdam	0.00027181	0.423839	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.00140414
+dennis	works.as	ceo	0.000447207	0.271157	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.0013995
+denniscorp	director.of	emma	0.00123341	0.103305	_	_	_	subject_is_centroid|score=1.0	_	0.00128341	0.748133
+dennis	works.for	othercorp	0.00181513	0.144408	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.00300674
+dennis	born.in	amsterdam	0.00100574	0.291218	_	_	_	subject_is_centroid|score=1.0	_	0.000566457	0.00140414
+emma	father.of	dennis	0.00362435	0.221049	_	_	_	_	object_is_centroid|score=1.0	0.748133	0.000566457
+emma	parent.of	dennis	0.0087206	0.349515	_	_	_	_	object_is_centroid|score=1.0	0.748133	0.000566457
+emma	works.for	denniscorp	0.00142611	0.176303	_	_	_	_	object_is_centroid|score=1.0	0.748133	0.00128341
+othercorp	director.of	dennis	0.000934178	0.132954	_	_	_	_	object_is_centroid|score=1.0	0.00300674	0.000566457
+alice	invests.in	denniscorp	0.0608533	0.38458	_	_	_	_	object_is_centroid|score=1.0	0.0267579	0.00128341
+emma	invests.in	denniscorp	0.0608533	0.38458	_	_	_	_	object_is_centroid|score=1.0	0.748133	0.00128341
+carl	invests.in	denniscorp	0.0608533	0.38458	_	_	_	_	object_is_centroid|score=1.0	0.0267579	0.00128341
+
+who is partner to emma ?
+-----
+denniscorp	founded.2	cvt|id=0	5.43422e-11	0.418168	_	_	_	subject_is_centroid|score=0.3	_	0.0138193	_
+denniscorp	sell.2	cvt|id=1	1.18977e-10	0.768642	_	_	_	subject_is_centroid|score=0.3	_	0.0138193	_
+emma	meet.2	cvt|id=2	8.04454e-10	0.71009	_	_	_	subject_is_centroid|score=0.3	_	0.070327	_
+emma	meet.1	cvt|id=3	5.68528e-11	0.602178	_	_	_	subject_is_centroid|score=0.3	_	0.070327	_
+dennis	founded.1	cvt|id=0	8.17924e-11	0.771451	_	_	_	_	_	0.36437	_
+1990	founded.in	cvt|id=0	4.75468e-11	0.488667	_	_	_	_	_	5.80404e-08	_
+dennis	sell.1	cvt|id=1	1.5606e-10	0.470102	_	_	_	_	_	0.36437	_
+gary	sell.3	cvt|id=1	1.23143e-10	0.639595	_	_	_	_	_	1.37763e-06	_
+1996	sell.in	cvt|id=1	1.32e-10	0.417759	_	_	_	_	_	1.0893e-07	_
+carl	meet.1	cvt|id=2	6.64845e-11	0.612082	_	subject_is_gold	_	_	_	0.949708	_
+2004	meet.in	cvt|id=2	4.22647e-11	0.560965	_	_	_	_	_	9.13746e-06	_
+carl	meet.2	cvt|id=3	9.37744e-10	0.717654	_	subject_is_gold	_	_	_	0.949708	_
+2004	meet.in	cvt|id=3	4.22647e-11	0.560965	_	_	_	_	_	9.13746e-06	_
+-----
+-----
+emma	father.of	dennis	4.92344e-05	0.251239	_	_	_	subject_is_centroid|score=0.3	_	0.070327	0.36437
+emma	parent.of	dennis	0.000138019	0.283916	_	_	_	subject_is_centroid|score=0.3	_	0.070327	0.36437
+emma	partner.of	carl	5.79803e-05	0.46543	_	_	object_is_gold	subject_is_centroid|score=0.3	_	0.070327	0.949708
+denniscorp	founder.of	dennis	2.56544e-05	0.327766	_	_	_	subject_is_centroid|score=0.3	_	0.0138193	0.36437
+denniscorp	owner.of	gary	0.000230048	0.148499	_	_	_	subject_is_centroid|score=0.3	_	0.0138193	1.37763e-06
+denniscorp	founded.in	amsterdam	1.93229e-05	0.246356	_	_	_	subject_is_centroid|score=0.3	_	0.0138193	5.31668e-08
+denniscorp	director.of	emma	1.49509e-05	0.150333	_	_	_	subject_is_centroid|score=0.3	object_is_centroid|score=0.3	0.0138193	0.070327
+emma	works.for	denniscorp	1.99064e-05	0.16872	_	_	_	subject_is_centroid|score=0.3	object_is_centroid|score=0.3	0.070327	0.0138193
+emma	works.as	ceo	5.8276e-06	0.290934	_	_	_	subject_is_centroid|score=0.3	_	0.070327	5.31674e-08
+emma	live.in	amsterdam	2.93351e-06	0.297592	_	_	_	subject_is_centroid|score=0.3	_	0.070327	5.31668e-08
+emma	lives.with	carl	2.63548e-05	0.518074	_	_	object_is_gold	subject_is_centroid|score=0.3	_	0.070327	0.949708
+emma	invests.in	othercorp	0.000728767	0.240352	_	_	_	subject_is_centroid|score=0.3	_	0.070327	5.32944e-08
+emma	invests.in	denniscorp	0.000702783	0.246136	_	_	_	subject_is_centroid|score=0.3	object_is_centroid|score=0.3	0.070327	0.0138193
+emma	born.in	amsterdam	1.1094e-05	0.345345	_	_	_	subject_is_centroid|score=0.3	_	0.070327	5.31668e-08
+dennis	daughter.of	emma	9.05891e-05	0.302469	_	_	_	_	object_is_centroid|score=0.3	0.36437	0.070327
+dennis	child.of	emma	6.7281e-05	0.271054	_	_	_	_	object_is_centroid|score=0.3	0.36437	0.070327
+carl	partner.of	emma	5.34954e-05	0.476651	_	subject_is_gold	_	_	object_is_centroid|score=0.3	0.949708	0.070327
+carl	lives.with	emma	2.4006e-05	0.529529	_	subject_is_gold	_	_	object_is_centroid|score=0.3	0.949708	0.070327
+alice	invests.in	denniscorp	0.000668734	0.24909	_	_	_	_	object_is_centroid|score=0.3	1.92556e-07	0.0138193
+carl	invests.in	denniscorp	0.000668734	0.24909	_	subject_is_gold	_	_	object_is_centroid|score=0.3	0.949708	0.0138193
+
+what does carl work as ?
+-----
+denniscorp	founded.2	cvt|id=0	0.141404	0.417125	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	_
+denniscorp	sell.2	cvt|id=1	0.279133	0.91991	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	_
+carl	meet.1	cvt|id=2	0.204854	0.828631	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	_
+carl	meet.2	cvt|id=3	0.399708	0.860177	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	_
+dennis	founded.1	cvt|id=0	0.264059	0.734445	_	_	_	_	_	6.64817e-12	_
+1990	founded.in	cvt|id=0	0.199823	0.542741	_	_	_	_	_	0.0073616	_
+dennis	sell.1	cvt|id=1	0.354163	0.910273	_	_	_	_	_	6.64817e-12	_
+gary	sell.3	cvt|id=1	0.307896	0.939539	_	_	_	_	_	8.62156e-11	_
+1996	sell.in	cvt|id=1	0.262568	0.896256	_	_	_	_	_	7.91257e-09	_
+emma	meet.2	cvt|id=2	0.404459	0.86535	_	_	_	_	_	3.05069e-15	_
+2004	meet.in	cvt|id=2	0.180313	0.903765	_	_	_	_	_	2.15282e-14	_
+emma	meet.1	cvt|id=3	0.21842	0.841567	_	_	_	_	_	3.05069e-15	_
+2004	meet.in	cvt|id=3	0.180313	0.905375	_	_	_	_	_	2.15282e-14	_
+-----
+-----
+carl	mother.of	alice	0.733504	0.746792	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.000466958
+carl	father.of	bob	0.85066	0.844852	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.00173282
+carl	parent.of	alice	0.81796	0.937408	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.000466958
+carl	parent.of	bob	0.81796	0.937408	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.00173282
+carl	partner.of	emma	0.823114	0.676259	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	3.05069e-15
+denniscorp	founder.of	dennis	0.757447	0.817378	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	6.64817e-12
+denniscorp	owner.of	gary	0.819482	0.731391	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	8.62156e-11
+denniscorp	founded.in	amsterdam	0.644624	0.789368	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	0.00444781
+denniscorp	director.of	emma	0.662847	0.493652	_	_	_	subject_is_centroid|score=0.7	_	6.752e-17	3.05069e-15
+carl	live.in	amsterdam	0.41166	0.923145	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.00444781
+carl	works.for	othercorp	0.76966	0.847463	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.167692
+carl	works.as	developer	0.370687	0.745596	_	_	object_is_gold	subject_is_centroid|score=0.6	_	6.94606e-24	0.915865
+carl	lives.with	emma	0.762223	0.72131	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	3.05069e-15
+carl	invests.in	alicecorp	0.859181	0.778608	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.0232822
+carl	invests.in	denniscorp	0.840789	0.803831	_	_	_	subject_is_centroid|score=0.6	object_is_centroid|score=0.7	6.94606e-24	6.752e-17
+carl	born.in	edinburgh	0.629418	0.808641	_	_	_	subject_is_centroid|score=0.6	_	6.94606e-24	0.132814
+alice	son.of	carl	0.861011	0.936927	_	_	_	_	object_is_centroid|score=0.6	0.000466958	6.94606e-24
+bob	son.of	carl	0.861011	0.936927	_	_	_	_	object_is_centroid|score=0.6	0.00173282	6.94606e-24
+emma	partner.of	carl	0.7895	0.744588	_	_	_	_	object_is_centroid|score=0.6	3.05069e-15	6.94606e-24
+emma	works.for	denniscorp	0.720421	0.89014	_	_	_	_	object_is_centroid|score=0.7	3.05069e-15	6.752e-17
+emma	lives.with	carl	0.726042	0.788465	_	_	_	_	object_is_centroid|score=0.6	3.05069e-15	6.94606e-24
+alice	invests.in	denniscorp	0.826183	0.836313	_	_	_	_	object_is_centroid|score=0.7	0.000466958	6.752e-17
+emma	invests.in	denniscorp	0.826183	0.836313	_	_	_	_	object_is_centroid|score=0.7	3.05069e-15	6.752e-17
+
+what did henry teach in 2006 ?
+-----
+alice	founded.1	cvt|id=0	5.00089e-08	0.622613	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	_
+alice	meet.1	cvt|id=9	4.36706e-08	0.291575	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	_
+alice	meet.2	cvt|id=10	7.17466e-07	0.592744	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	_
+henry	taught.1	cvt|id=11	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=1	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=2	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=3	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=4	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=5	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	taught.1	cvt|id=6	1.77135e-07	0.548881	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	meet.1	cvt|id=7	4.14931e-08	0.287205	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+henry	meet.2	cvt|id=8	6.81315e-07	0.587781	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	_
+alicecorp	founded.2	cvt|id=0	6.45453e-08	0.419166	_	_	_	_	_	0.339068	_
+1997	founded.in	cvt|id=0	5.3279e-08	0.335152	_	_	_	_	_	0.0811825	_
+bob	meet.2	cvt|id=9	1.13566e-06	0.636448	_	_	_	_	_	0.373213	_
+2003	meet.in	cvt|id=9	4.66592e-08	0.735907	_	_	_	_	_	0.00937384	_
+bob	meet.1	cvt|id=10	6.88837e-08	0.333273	_	_	_	_	_	0.373213	_
+2003	meet.in	cvt|id=10	4.66592e-08	0.735907	_	_	_	_	_	0.00937384	_
+maths	taught.2	cvt|id=11	7.86043e-08	0.549109	_	_	_	_	_	0.929966	_
+2000	taught.in	cvt|id=11	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+maths	taught.2	cvt|id=1	7.86043e-08	0.549109	_	_	_	_	_	0.929966	_
+2001	taught.in	cvt|id=1	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+maths	taught.2	cvt|id=2	7.86043e-08	0.549109	_	_	_	_	_	0.929966	_
+2002	taught.in	cvt|id=2	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+maths	taught.2	cvt|id=3	7.86043e-08	0.549109	_	_	_	_	_	0.929966	_
+2003	taught.in	cvt|id=3	2.64528e-08	0.452241	_	_	_	_	_	0.00937384	_
+physics	taught.2	cvt|id=4	7.86043e-08	0.549109	_	subject_is_gold	_	_	_	0.900741	_
+2004	taught.in	cvt|id=4	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+physics	taught.2	cvt|id=5	7.86043e-08	0.549109	_	subject_is_gold	_	_	_	0.900741	_
+2005	taught.in	cvt|id=5	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+physics	taught.2	cvt|id=6	7.86043e-08	0.549109	_	subject_is_gold	_	_	_	0.900741	_
+2006	taught.in	cvt|id=6	2.64528e-08	0.452241	_	_	_	_	_	0.0865422	_
+fay	meet.2	cvt|id=7	1.13566e-06	0.636448	_	_	_	_	_	0.389736	_
+1999	meet.in	cvt|id=7	4.66592e-08	0.735907	_	_	_	_	_	0.0306771	_
+fay	meet.1	cvt|id=8	6.88837e-08	0.333273	_	_	_	_	_	0.389736	_
+1999	meet.in	cvt|id=8	4.66592e-08	0.735907	_	_	_	_	_	0.0306771	_
+-----
+-----
+alice	son.of	carl	0.0122258	0.362562	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.138443
+alice	partner.of	bob	0.0147746	0.368059	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.373213
+alice	works.for	alicecorp	0.00593443	0.171848	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.339068
+alice	works.as	ceo	0.000954361	0.293927	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.101143
+alice	live.in	edinburgh	0.000602331	0.603469	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.103976
+alice	lives.with	bob	0.00554448	0.219372	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.373213
+alice	invests.in	alicecorp	0.268415	0.636594	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.339068
+alice	invests.in	denniscorp	0.268415	0.636594	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.256027
+alice	invests.in	othercorp	0.268415	0.636594	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.256027
+henry	partner.of	fay	0.0150771	0.362057	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.389736
+henry	lives.with	fay	0.00565469	0.215129	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.389736
+henry	live.in	edinburgh	0.0006141	0.595964	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.103976
+henry	works.for	someschool	0.00603182	0.168008	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.104489
+henry	works.as	teacher	0.000968355	0.288723	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.104128
+alice	born.in	edinburgh	0.0021551	0.270334	_	_	_	subject_is_centroid|score=0.9	_	1.11755e-06	0.103976
+henry	born.in	copenhagen	0.00218793	0.265397	_	_	_	subject_is_centroid|score=1.0	_	2.74825e-06	0.103944
+carl	mother.of	alice	0.00725863	0.429383	_	_	_	_	object_is_centroid|score=0.9	0.138443	1.11755e-06
+bob	partner.of	alice	0.0099783	0.468827	_	_	_	_	object_is_centroid|score=0.9	0.373213	1.11755e-06
+carl	parent.of	alice	0.0163412	0.549206	_	_	_	_	object_is_centroid|score=0.9	0.138443	1.11755e-06
+alicecorp	founder.of	alice	0.0036849	0.329117	_	_	_	_	object_is_centroid|score=0.9	0.339068	1.11755e-06
+alicecorp	director.of	alice	0.00250086	0.160086	_	_	_	_	object_is_centroid|score=0.9	0.339068	1.11755e-06
+bob	lives.with	alice	0.0039965	0.299362	_	_	_	_	object_is_centroid|score=0.9	0.373213	1.11755e-06
+alicecorp	owner.of	alice	0.0133589	0.235111	_	_	_	_	object_is_centroid|score=0.9	0.339068	1.11755e-06
+fay	partner.of	henry	0.00974496	0.474032	_	_	_	_	object_is_centroid|score=1.0	0.389736	2.74825e-06
+fay	lives.with	henry	0.00392905	0.3038	_	_	_	_	object_is_centroid|score=1.0	0.389736	2.74825e-06
+
+who is owner to denniscorp ?
+-----
+denniscorp	founded.2	cvt|id=0	6.79129e-05	0.194332	_	_	_	subject_is_centroid|score=1.0	_	7.50698e-05	_
+denniscorp	sell.2	cvt|id=1	0.000177015	0.593588	_	_	_	subject_is_centroid|score=1.0	_	7.50698e-05	_
+dennis	founded.1	cvt|id=0	0.00011594	0.602253	_	_	_	_	_	0.948168	_
+1990	founded.in	cvt|id=0	7.60431e-05	0.225362	_	_	_	_	_	4.86232e-05	_
+dennis	sell.1	cvt|id=1	0.000290297	0.280125	_	_	_	_	_	0.948168	_
+gary	sell.3	cvt|id=1	0.000226606	0.467988	_	subject_is_gold	_	_	_	0.57666	_
+1996	sell.in	cvt|id=1	0.000178484	0.209987	_	_	_	_	_	8.09557e-05	_
+-----
+-----
+denniscorp	founder.of	dennis	0.305216	0.388886	_	_	_	subject_is_centroid|score=1.0	_	7.50698e-05	0.948168
+denniscorp	owner.of	gary	0.615885	0.237008	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.50698e-05	0.57666
+denniscorp	founded.in	amsterdam	0.270226	0.331107	_	_	_	subject_is_centroid|score=1.0	_	7.50698e-05	7.08971e-05
+denniscorp	director.of	emma	0.146354	0.107824	_	_	_	subject_is_centroid|score=1.0	_	7.50698e-05	0.0551714
+emma	works.for	denniscorp	0.115283	0.337911	_	_	_	_	object_is_centroid|score=1.0	0.0551714	7.50698e-05
+alice	invests.in	denniscorp	0.44693	0.198815	_	_	_	_	object_is_centroid|score=1.0	0.000214797	7.50698e-05
+emma	invests.in	denniscorp	0.44693	0.198815	_	_	_	_	object_is_centroid|score=1.0	0.0551714	7.50698e-05
+carl	invests.in	denniscorp	0.44693	0.198815	_	_	_	_	object_is_centroid|score=1.0	0.000214797	7.50698e-05
+
+what does dennis work as ?
+-----
+dennis	founded.1	cvt|id=8	0.471933	0.903752	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	_
+dennis	sell.1	cvt|id=9	0.435593	0.973531	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	_
+henry	taught.1	cvt|id=10	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=0	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=1	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=2	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=3	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=4	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	taught.1	cvt|id=5	0.474263	0.921884	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	meet.1	cvt|id=6	0.406488	0.938976	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+henry	meet.2	cvt|id=7	0.478096	0.951578	_	_	_	subject_is_centroid|score=0.1	_	0.0	_
+denniscorp	founded.2	cvt|id=8	0.378434	0.771227	_	_	_	_	_	4.43144e-19	_
+1990	founded.in	cvt|id=8	0.452852	0.855626	_	_	_	_	_	1.27877e-07	_
+denniscorp	sell.2	cvt|id=9	0.439862	0.979019	_	_	_	_	_	4.43144e-19	_
+gary	sell.3	cvt|id=9	0.46566	0.983495	_	_	_	_	_	4.0107e-15	_
+1996	sell.in	cvt|id=9	0.426284	0.971307	_	_	_	_	_	1.9771e-13	_
+maths	taught.2	cvt|id=10	0.447596	0.921753	_	_	_	_	_	2.24e-29	_
+2000	taught.in	cvt|id=10	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+maths	taught.2	cvt|id=0	0.447596	0.921753	_	_	_	_	_	2.24e-29	_
+2001	taught.in	cvt|id=0	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+maths	taught.2	cvt|id=1	0.447596	0.921753	_	_	_	_	_	2.24e-29	_
+2002	taught.in	cvt|id=1	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+maths	taught.2	cvt|id=2	0.447596	0.921753	_	_	_	_	_	2.24e-29	_
+2003	taught.in	cvt|id=2	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+physics	taught.2	cvt|id=3	0.447596	0.921753	_	_	_	_	_	1.9647e-22	_
+2004	taught.in	cvt|id=3	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+physics	taught.2	cvt|id=4	0.447596	0.921753	_	_	_	_	_	1.9647e-22	_
+2005	taught.in	cvt|id=4	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+physics	taught.2	cvt|id=5	0.447596	0.921753	_	_	_	_	_	1.9647e-22	_
+2006	taught.in	cvt|id=5	0.474777	0.922754	_	_	_	_	_	2.46829e-09	_
+fay	meet.2	cvt|id=6	0.478344	0.951927	_	_	_	_	_	2.68764e-22	_
+1999	meet.in	cvt|id=6	0.370841	0.966178	_	_	_	_	_	2.45661e-21	_
+fay	meet.1	cvt|id=7	0.407667	0.939679	_	_	_	_	_	2.68764e-22	_
+1999	meet.in	cvt|id=7	0.370841	0.966267	_	_	_	_	_	2.45661e-21	_
+-----
+-----
+dennis	daughter.of	emma	0.91906	0.976145	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	1.91329e-05
+dennis	child.of	emma	0.898813	0.983181	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	1.91329e-05
+dennis	live.in	amsterdam	0.786181	0.979313	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	0.000829495
+dennis	works.as	ceo	0.641382	0.918499	_	_	object_is_gold	subject_is_centroid|score=0.2	_	1.23237e-25	0.937334
+dennis	works.for	othercorp	0.903462	0.952833	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	0.0642087
+henry	partner.of	fay	0.913843	0.87067	_	_	_	subject_is_centroid|score=0.1	_	0.0	2.68764e-22
+henry	lives.with	fay	0.893485	0.902799	_	_	_	subject_is_centroid|score=0.1	_	0.0	2.68764e-22
+henry	live.in	edinburgh	0.782927	0.980212	_	_	_	subject_is_centroid|score=0.1	_	0.0	0.0213189
+henry	works.for	someschool	0.901775	0.954638	_	_	_	subject_is_centroid|score=0.1	_	0.0	0.0501463
+henry	works.as	teacher	0.637134	0.921612	_	_	_	subject_is_centroid|score=0.1	_	0.0	0.930196
+dennis	born.in	amsterdam	0.829626	0.938508	_	_	_	subject_is_centroid|score=0.2	_	1.23237e-25	0.000829495
+henry	born.in	copenhagen	0.827356	0.940859	_	_	_	subject_is_centroid|score=0.1	_	0.0	0.056849
+emma	father.of	dennis	0.930504	0.96413	_	_	_	_	object_is_centroid|score=0.2	1.91329e-05	1.23237e-25
+emma	parent.of	dennis	0.907048	0.986009	_	_	_	_	object_is_centroid|score=0.2	1.91329e-05	1.23237e-25
+denniscorp	founder.of	dennis	0.890557	0.950146	_	_	_	_	object_is_centroid|score=0.2	4.43144e-19	1.23237e-25
+othercorp	director.of	dennis	0.857112	0.817845	_	_	_	_	object_is_centroid|score=0.2	0.0642087	1.23237e-25
+fay	partner.of	henry	0.91087	0.877943	_	_	_	_	object_is_centroid|score=0.1	2.68764e-22	0.0
+fay	lives.with	henry	0.890258	0.908488	_	_	_	_	object_is_centroid|score=0.1	2.68764e-22	0.0
+
+who is working as developer ?
+-----
+henry	taught.1	cvt|id=8	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=0	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=1	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=2	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=3	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=4	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	taught.1	cvt|id=5	0.451712	0.896921	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	meet.1	cvt|id=6	0.246648	0.896068	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+henry	meet.2	cvt|id=7	0.462742	0.917069	_	_	_	subject_is_centroid|score=0.8	_	0.0	_
+maths	taught.2	cvt|id=8	0.375952	0.904203	_	_	_	_	_	2.19115e-25	_
+2000	taught.in	cvt|id=8	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+maths	taught.2	cvt|id=0	0.375952	0.904203	_	_	_	_	_	2.19115e-25	_
+2001	taught.in	cvt|id=0	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+maths	taught.2	cvt|id=1	0.375952	0.904203	_	_	_	_	_	2.19115e-25	_
+2002	taught.in	cvt|id=1	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+maths	taught.2	cvt|id=2	0.375952	0.904203	_	_	_	_	_	2.19115e-25	_
+2003	taught.in	cvt|id=2	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+physics	taught.2	cvt|id=3	0.375952	0.904203	_	_	_	_	_	2.45236e-19	_
+2004	taught.in	cvt|id=3	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+physics	taught.2	cvt|id=4	0.375952	0.904203	_	_	_	_	_	2.45236e-19	_
+2005	taught.in	cvt|id=4	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+physics	taught.2	cvt|id=5	0.375952	0.904203	_	_	_	_	_	2.45236e-19	_
+2006	taught.in	cvt|id=5	0.38738	0.916771	_	_	_	_	_	1.7771e-08	_
+fay	meet.2	cvt|id=6	0.467343	0.921712	_	subject_is_gold	_	_	_	1.75835e-16	_
+1999	meet.in	cvt|id=6	0.22433	0.937662	_	_	_	_	_	3.54844e-17	_
+fay	meet.1	cvt|id=7	0.2624	0.907917	_	subject_is_gold	_	_	_	1.75835e-16	_
+1999	meet.in	cvt|id=7	0.22433	0.939483	_	_	_	_	_	3.54844e-17	_
+-----
+-----
+henry	partner.of	fay	0.781539	0.587551	_	_	object_is_gold	subject_is_centroid|score=0.8	_	0.0	1.75835e-16
+henry	lives.with	fay	0.666125	0.598531	_	_	object_is_gold	subject_is_centroid|score=0.8	_	0.0	1.75835e-16
+henry	live.in	edinburgh	0.264395	0.838763	_	_	_	subject_is_centroid|score=0.8	_	0.0	0.427198
+henry	works.for	someschool	0.622337	0.764921	_	_	_	subject_is_centroid|score=0.8	_	0.0	0.851314
+henry	works.as	teacher	0.188812	0.62798	_	_	_	subject_is_centroid|score=0.8	_	0.0	0.654696
+henry	born.in	copenhagen	0.507686	0.648227	_	_	_	subject_is_centroid|score=0.8	_	0.0	0.062508
+bob	works.as	developer	0.152452	0.719164	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.920571	0.00124326
+fay	works.as	developer	0.152452	0.719164	_	subject_is_gold	_	_	object_is_centroid|score=1.0	1.75835e-16	0.00124326
+carl	works.as	developer	0.152452	0.719164	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.920571	0.00124326
+fay	partner.of	henry	0.738674	0.683859	_	subject_is_gold	_	_	object_is_centroid|score=0.8	1.75835e-16	0.0
+fay	lives.with	henry	0.611557	0.696347	_	subject_is_gold	_	_	object_is_centroid|score=0.8	1.75835e-16	0.0
+
+who works with fay ?
+-----
+fay	meet.2	cvt|id=0	6.19534e-05	0.372695	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	_
+fay	meet.1	cvt|id=1	6.82033e-06	0.179833	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	_
+henry	meet.1	cvt|id=0	1.06946e-05	0.204229	_	_	_	_	_	0.909902	_
+1999	meet.in	cvt|id=0	6.22945e-06	0.544209	_	_	_	_	_	0.280439	_
+henry	meet.2	cvt|id=1	8.89001e-05	0.408514	_	_	_	_	_	0.909902	_
+1999	meet.in	cvt|id=1	6.22945e-06	0.544209	_	_	_	_	_	0.280439	_
+-----
+-----
+fay	live.in	edinburgh	3.43765e-05	0.468104	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.0185436
+fay	works.for	alicecorp	0.000326159	0.183387	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.0185821
+fay	works.as	developer	6.77625e-05	0.296798	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.0185399
+fay	works.with	bob	0.00420256	0.621241	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.63118e-05	0.903701
+fay	invests.in	othercorp	0.0129383	0.418553	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.0196082
+fay	partner.of	henry	0.00090561	0.398708	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.909902
+fay	lives.with	henry	0.000288766	0.379016	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.909902
+fay	born.in	copenhagen	0.000107426	0.350177	_	_	_	subject_is_centroid|score=1.0	_	3.63118e-05	0.0185394
+bob	works.with	fay	0.00296833	0.687703	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.903701	3.63118e-05
+henry	partner.of	fay	0.000610391	0.463357	_	_	_	_	object_is_centroid|score=1.0	0.909902	3.63118e-05
+henry	lives.with	fay	0.0002197	0.451367	_	_	_	_	object_is_centroid|score=1.0	0.909902	3.63118e-05
+
+who does fay live with ?
+-----
+dennis	founded.1	cvt|id=2	1.84671e-07	0.625629	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	_
+dennis	sell.1	cvt|id=3	4.03458e-07	0.442806	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	_
+fay	meet.2	cvt|id=0	1.54956e-06	0.533903	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	_
+fay	meet.1	cvt|id=1	1.55897e-07	0.306747	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	_
+denniscorp	founded.2	cvt|id=2	1.91625e-07	0.323786	_	_	_	_	_	0.0160443	_
+1990	founded.in	cvt|id=2	1.04289e-07	0.352335	_	_	_	_	_	9.8924e-05	_
+denniscorp	sell.2	cvt|id=3	5.17794e-07	0.611383	_	_	_	_	_	0.0160443	_
+gary	sell.3	cvt|id=3	3.90275e-07	0.617016	_	_	_	_	_	0.000902455	_
+1996	sell.in	cvt|id=3	4.34288e-07	0.420029	_	_	_	_	_	0.00015594	_
+henry	meet.1	cvt|id=0	2.08542e-07	0.325094	_	subject_is_gold	_	_	_	0.926574	_
+1999	meet.in	cvt|id=0	1.3249e-07	0.574273	_	_	_	_	_	0.00994749	_
+henry	meet.2	cvt|id=1	1.93289e-06	0.558557	_	subject_is_gold	_	_	_	0.926574	_
+1999	meet.in	cvt|id=1	1.3249e-07	0.574273	_	_	_	_	_	0.00994749	_
+-----
+-----
+dennis	daughter.of	emma	3.1677e-06	0.304702	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	0.00136066
+dennis	child.of	emma	1.81077e-06	0.241722	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	0.00136066
+fay	live.in	edinburgh	7.59893e-08	0.38579	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.000102984
+fay	works.for	alicecorp	7.53036e-07	0.168806	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.000102985
+fay	works.as	developer	1.63976e-07	0.298854	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.000102984
+fay	works.with	bob	8.82866e-06	0.582755	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.0645516
+dennis	live.in	amsterdam	7.39345e-08	0.391267	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	9.65623e-05
+dennis	works.as	ceo	1.59484e-07	0.302954	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	9.65624e-05
+dennis	works.for	othercorp	7.32559e-07	0.170871	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	0.000182519
+fay	invests.in	othercorp	2.95418e-05	0.381822	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.000182519
+fay	partner.of	henry	1.6526e-06	0.454094	_	_	object_is_gold	subject_is_centroid|score=0.6	_	0.00134434	0.926574
+fay	lives.with	henry	6.22674e-07	0.47811	_	_	object_is_gold	subject_is_centroid|score=0.6	_	0.00134434	0.926574
+dennis	born.in	amsterdam	2.42269e-07	0.372343	_	_	_	subject_is_centroid|score=0.4	_	0.00857513	9.65623e-05
+fay	born.in	copenhagen	2.48921e-07	0.367606	_	_	_	subject_is_centroid|score=0.6	_	0.00134434	0.000102984
+emma	father.of	dennis	1.10328e-06	0.201491	_	_	_	_	object_is_centroid|score=0.4	0.00136066	0.00857513
+emma	parent.of	dennis	4.20475e-06	0.225428	_	_	_	_	object_is_centroid|score=0.4	0.00136066	0.00857513
+bob	works.with	fay	7.24584e-06	0.621024	_	_	_	_	object_is_centroid|score=0.6	0.0645516	0.00134434
+denniscorp	founder.of	dennis	5.22365e-07	0.323558	_	_	_	_	object_is_centroid|score=0.4	0.0160443	0.00857513
+othercorp	director.of	dennis	4.16499e-07	0.170674	_	_	_	_	object_is_centroid|score=0.4	0.000182519	0.00857513
+henry	partner.of	fay	1.39886e-06	0.489958	_	subject_is_gold	_	_	object_is_centroid|score=0.6	0.926574	0.00134434
+henry	lives.with	fay	5.23079e-07	0.522286	_	subject_is_gold	_	_	object_is_centroid|score=0.6	0.926574	0.00134434
+
+who is emma the director of ?
+-----
+emma	meet.2	cvt|id=8	0.148198	0.614713	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	_
+emma	meet.1	cvt|id=9	0.00717732	0.540512	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	_
+henry	taught.1	cvt|id=10	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=0	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=1	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=2	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=3	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=4	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	taught.1	cvt|id=5	0.0419339	0.268956	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	meet.1	cvt|id=6	0.00742052	0.544161	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+henry	meet.2	cvt|id=7	0.15143	0.618529	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	_
+carl	meet.1	cvt|id=8	0.0092017	0.548706	_	_	_	_	_	3.96916e-06	_
+2004	meet.in	cvt|id=8	0.0070304	0.522915	_	_	_	_	_	5.49237e-08	_
+carl	meet.2	cvt|id=9	0.175238	0.644527	_	_	_	_	_	3.96916e-06	_
+2004	meet.in	cvt|id=9	0.0070304	0.542266	_	_	_	_	_	5.49237e-08	_
+maths	taught.2	cvt|id=10	0.0148134	0.199126	_	_	_	_	_	0.00274182	_
+2000	taught.in	cvt|id=10	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+maths	taught.2	cvt|id=0	0.0148134	0.199126	_	_	_	_	_	0.00274182	_
+2001	taught.in	cvt|id=0	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+maths	taught.2	cvt|id=1	0.0148134	0.199126	_	_	_	_	_	0.00274182	_
+2002	taught.in	cvt|id=1	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+maths	taught.2	cvt|id=2	0.0148134	0.199126	_	_	_	_	_	0.00274182	_
+2003	taught.in	cvt|id=2	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+physics	taught.2	cvt|id=3	0.0148134	0.199126	_	_	_	_	_	0.0010543	_
+2004	taught.in	cvt|id=3	0.00781127	0.386522	_	_	_	_	_	5.49237e-08	_
+physics	taught.2	cvt|id=4	0.0148134	0.199126	_	_	_	_	_	0.0010543	_
+2005	taught.in	cvt|id=4	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+physics	taught.2	cvt|id=5	0.0148134	0.199126	_	_	_	_	_	0.0010543	_
+2006	taught.in	cvt|id=5	0.00781127	0.386522	_	_	_	_	_	8.77523e-06	_
+fay	meet.2	cvt|id=6	0.175238	0.644608	_	_	_	_	_	3.21129e-06	_
+1999	meet.in	cvt|id=6	0.0070304	0.542383	_	_	_	_	_	2.31345e-07	_
+fay	meet.1	cvt|id=7	0.0092017	0.551253	_	_	_	_	_	3.21129e-06	_
+1999	meet.in	cvt|id=7	0.0070304	0.525773	_	_	_	_	_	2.31345e-07	_
+-----
+-----
+emma	father.of	dennis	0.835115	0.929933	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	0.0134813
+emma	parent.of	dennis	0.797889	0.95141	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	0.0134813
+emma	partner.of	carl	0.828384	0.899417	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	3.96916e-06
+emma	works.for	denniscorp	0.892078	0.956786	_	_	object_is_gold	subject_is_centroid|score=0.8	_	2.80725e-15	0.997863
+emma	works.as	ceo	0.536191	0.878437	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	0.000133352
+emma	live.in	amsterdam	0.513762	0.946531	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	1.88158e-05
+emma	lives.with	carl	0.706016	0.93406	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	3.96916e-06
+emma	invests.in	othercorp	0.712046	0.737892	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	0.0135412
+emma	invests.in	denniscorp	0.712046	0.737892	_	_	object_is_gold	subject_is_centroid|score=0.8	_	2.80725e-15	0.997863
+henry	partner.of	fay	0.827209	0.901248	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	3.21129e-06
+henry	lives.with	fay	0.703352	0.935584	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	3.21129e-06
+henry	live.in	edinburgh	0.510864	0.94786	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	0.000228879
+henry	works.for	someschool	0.891235	0.957815	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	0.480349
+henry	works.as	teacher	0.53369	0.880797	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	0.000120653
+emma	born.in	amsterdam	0.687011	0.919334	_	_	_	subject_is_centroid|score=0.8	_	2.80725e-15	1.88158e-05
+henry	born.in	copenhagen	0.684792	0.921031	_	_	_	subject_is_centroid|score=0.7	_	1.1141e-11	3.81195e-06
+dennis	daughter.of	emma	0.725486	0.967342	_	_	_	_	object_is_centroid|score=0.8	0.0134813	2.80725e-15
+dennis	child.of	emma	0.704242	0.976828	_	_	_	_	object_is_centroid|score=0.8	0.0134813	2.80725e-15
+carl	partner.of	emma	0.805013	0.920816	_	_	_	_	object_is_centroid|score=0.8	3.96916e-06	2.80725e-15
+denniscorp	director.of	emma	0.577071	0.867983	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.997863	2.80725e-15
+carl	lives.with	emma	0.658949	0.951221	_	_	_	_	object_is_centroid|score=0.8	3.96916e-06	2.80725e-15
+fay	partner.of	henry	0.806729	0.919934	_	_	_	_	object_is_centroid|score=0.7	3.21129e-06	1.1141e-11
+fay	lives.with	henry	0.662175	0.950529	_	_	_	_	object_is_centroid|score=0.7	3.21129e-06	1.1141e-11
+
+who did meet bob in 2003 ?
+-----
+bob	hire.2	cvt|id=0	7.24811e-14	0.70206	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	_
+bob	meet.2	cvt|id=1	1.1966e-12	0.717684	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	_
+bob	meet.1	cvt|id=2	7.90399e-14	0.553348	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	_
+alicecorp	hire.1	cvt|id=0	2.26369e-14	0.663886	_	_	_	_	_	4.80332e-06	_
+2002	hire.in	cvt|id=0	1.77404e-13	0.706734	_	_	_	_	_	6.00476e-07	_
+alice	meet.1	cvt|id=1	1.33171e-13	0.585219	_	subject_is_gold	_	_	_	0.982393	_
+2003	meet.in	cvt|id=1	8.32622e-14	0.642795	_	_	_	_	_	0.000295874	_
+alice	meet.2	cvt|id=2	2.00668e-12	0.742569	_	subject_is_gold	_	_	_	0.982393	_
+2003	meet.in	cvt|id=2	8.32622e-14	0.642795	_	_	_	_	_	0.000295874	_
+-----
+-----
+bob	son.of	carl	3.42183e-07	0.254474	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	9.06541e-06
+bob	partner.of	alice	6.80798e-07	0.443936	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.16496e-05	0.982393
+bob	live.in	edinburgh	3.26357e-08	0.29779	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	2.59957e-07
+bob	works.for	alicecorp	2.81225e-07	0.124456	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	4.80332e-06
+bob	works.as	developer	7.00852e-08	0.260868	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	2.59957e-07
+bob	works.with	fay	4.21594e-06	0.464712	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	8.86144e-05
+bob	lives.with	alice	2.65618e-07	0.456763	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.16496e-05	0.982393
+bob	invests.in	alicecorp	1.1201e-05	0.310889	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	4.80332e-06
+bob	born.in	edinburgh	1.12998e-07	0.302918	_	_	_	subject_is_centroid|score=1.0	_	1.16496e-05	2.59957e-07
+carl	father.of	bob	3.93425e-07	0.198402	_	_	_	_	object_is_centroid|score=1.0	9.06541e-06	1.16496e-05
+alice	partner.of	bob	5.32062e-07	0.486791	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.982393	1.16496e-05
+carl	parent.of	bob	1.36523e-06	0.211161	_	_	_	_	object_is_centroid|score=1.0	9.06541e-06	1.16496e-05
+fay	works.with	bob	3.04198e-06	0.502736	_	_	_	_	object_is_centroid|score=1.0	8.86144e-05	1.16496e-05
+alice	lives.with	bob	2.01913e-07	0.514081	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.982393	1.16496e-05
+
+who is the partner of alice ?
+-----
+alice	founded.1	cvt|id=0	2.70916e-13	0.74924	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	_
+alice	meet.1	cvt|id=1	2.20551e-13	0.584197	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	_
+alice	meet.2	cvt|id=2	3.36225e-12	0.741956	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	_
+alicecorp	founded.2	cvt|id=0	3.00031e-13	0.486959	_	_	_	_	_	6.42408e-05	_
+1997	founded.in	cvt|id=0	2.54093e-13	0.53254	_	_	_	_	_	4.10831e-07	_
+bob	meet.2	cvt|id=1	4.82839e-12	0.757647	_	subject_is_gold	_	_	_	0.97066	_
+2003	meet.in	cvt|id=1	1.99379e-13	0.639712	_	_	_	_	_	0.000416962	_
+bob	meet.1	cvt|id=2	3.17762e-13	0.605782	_	subject_is_gold	_	_	_	0.97066	_
+2003	meet.in	cvt|id=2	1.99379e-13	0.639712	_	_	_	_	_	0.000416962	_
+-----
+-----
+alice	son.of	carl	2.28649e-06	0.292178	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	9.44981e-06
+alice	partner.of	bob	4.32861e-06	0.474882	_	_	object_is_gold	subject_is_centroid|score=0.7	_	0.000418746	0.97066
+alice	works.for	alicecorp	1.7981e-06	0.136845	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	6.42408e-05
+alice	works.as	ceo	4.46913e-07	0.281966	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	3.78066e-07
+alice	live.in	edinburgh	2.15454e-07	0.312503	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	3.78065e-07
+alice	lives.with	bob	1.79205e-06	0.505658	_	_	object_is_gold	subject_is_centroid|score=0.7	_	0.000418746	0.97066
+alice	invests.in	alicecorp	6.5268e-05	0.29649	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	6.42408e-05
+alice	invests.in	denniscorp	6.5268e-05	0.29649	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	3.78166e-07
+alice	invests.in	othercorp	6.5268e-05	0.29649	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	3.78166e-07
+alice	born.in	edinburgh	7.40766e-07	0.330104	_	_	_	subject_is_centroid|score=0.7	_	0.000418746	3.78065e-07
+carl	mother.of	alice	4.52834e-06	0.249838	_	_	_	_	object_is_centroid|score=0.7	9.44981e-06	0.000418746
+bob	partner.of	alice	3.63916e-06	0.50499	_	subject_is_gold	_	_	object_is_centroid|score=0.7	0.97066	0.000418746
+carl	parent.of	alice	9.51902e-06	0.228015	_	_	_	_	object_is_centroid|score=0.7	9.44981e-06	0.000418746
+alicecorp	founder.of	alice	1.46779e-06	0.293754	_	_	_	_	object_is_centroid|score=0.7	6.42408e-05	0.000418746
+alicecorp	director.of	alice	1.13129e-06	0.157861	_	_	_	_	object_is_centroid|score=0.7	6.42408e-05	0.000418746
+bob	lives.with	alice	1.47529e-06	0.539544	_	subject_is_gold	_	_	object_is_centroid|score=0.7	0.97066	0.000418746
+alicecorp	owner.of	alice	1.37125e-05	0.155738	_	_	_	_	object_is_centroid|score=0.7	6.42408e-05	0.000418746
+
+who is bob the partner of ?
+-----
+bob	hire.2	cvt|id=0	8.90049e-10	0.730011	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	_
+bob	meet.2	cvt|id=1	1.21461e-08	0.781555	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	_
+bob	meet.1	cvt|id=2	9.20147e-10	0.613904	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	_
+alicecorp	hire.1	cvt|id=0	2.76932e-10	0.691944	_	_	_	_	_	1.91068e-05	_
+2002	hire.in	cvt|id=0	1.86602e-09	0.722829	_	_	_	_	_	2.07502e-06	_
+alice	meet.1	cvt|id=1	1.54111e-09	0.643677	_	subject_is_gold	_	_	_	0.950913	_
+2003	meet.in	cvt|id=1	1.02476e-09	0.690326	_	_	_	_	_	0.000254526	_
+alice	meet.2	cvt|id=2	1.92336e-08	0.80084	_	subject_is_gold	_	_	_	0.950913	_
+2003	meet.in	cvt|id=2	1.02476e-09	0.690326	_	_	_	_	_	0.000254526	_
+-----
+-----
+bob	son.of	carl	1.52828e-08	0.295461	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	3.9959e-05
+bob	partner.of	alice	3.82654e-08	0.474234	_	_	object_is_gold	subject_is_centroid|score=1.0	_	5.63078e-07	0.950913
+bob	live.in	edinburgh	1.77714e-09	0.362084	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	8.77662e-07
+bob	works.for	alicecorp	1.82943e-08	0.158109	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	1.91068e-05
+bob	works.as	developer	3.64909e-09	0.311652	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	8.77662e-07
+bob	works.with	fay	1.67822e-07	0.550736	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	0.000812964
+bob	lives.with	alice	1.35431e-08	0.540394	_	_	object_is_gold	subject_is_centroid|score=1.0	_	5.63078e-07	0.950913
+bob	invests.in	alicecorp	5.8892e-07	0.36436	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	1.91068e-05
+bob	born.in	edinburgh	5.78751e-09	0.375127	_	_	_	subject_is_centroid|score=1.0	_	5.63078e-07	8.77662e-07
+carl	father.of	bob	2.13345e-08	0.219775	_	_	_	_	object_is_centroid|score=1.0	3.9959e-05	5.63078e-07
+alice	partner.of	bob	2.98655e-08	0.51455	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.950913	5.63078e-07
+carl	parent.of	bob	9.12136e-08	0.246408	_	_	_	_	object_is_centroid|score=1.0	3.9959e-05	5.63078e-07
+fay	works.with	bob	1.21996e-07	0.594466	_	_	_	_	object_is_centroid|score=1.0	0.000812964	5.63078e-07
+alice	lives.with	bob	1.01542e-08	0.590682	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.950913	5.63078e-07
+
+where was fay born ?
+-----
+carl	meet.1	cvt|id=2	0.393298	0.926067	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	_
+carl	meet.2	cvt|id=3	0.433326	0.94001	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	_
+fay	meet.2	cvt|id=0	0.431014	0.935147	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	_
+fay	meet.1	cvt|id=1	0.382455	0.918716	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	_
+emma	meet.2	cvt|id=2	0.433491	0.940507	_	_	_	_	_	3.61864e-17	_
+2004	meet.in	cvt|id=2	0.360336	0.963934	_	_	_	_	_	3.91108e-19	_
+emma	meet.1	cvt|id=3	0.394201	0.926974	_	_	_	_	_	3.61864e-17	_
+2004	meet.in	cvt|id=3	0.360336	0.964011	_	_	_	_	_	3.91108e-19	_
+henry	meet.1	cvt|id=0	0.394201	0.928282	_	_	_	_	_	7.16762e-17	_
+1999	meet.in	cvt|id=0	0.360336	0.964594	_	_	_	_	_	4.71602e-19	_
+henry	meet.2	cvt|id=1	0.433491	0.940197	_	_	_	_	_	7.16762e-17	_
+1999	meet.in	cvt|id=1	0.360336	0.963753	_	_	_	_	_	4.71602e-19	_
+-----
+-----
+carl	mother.of	alice	0.0757171	0.769618	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0450136
+carl	father.of	bob	0.0933212	0.754354	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0068434
+carl	parent.of	alice	0.167145	0.900868	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0450136
+carl	parent.of	bob	0.167145	0.900868	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0068434
+carl	partner.of	emma	0.0947504	0.685372	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	3.61864e-17
+fay	live.in	edinburgh	0.00593942	0.910647	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	0.932624
+fay	works.for	alicecorp	0.0939489	0.683278	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	0.0458882
+fay	works.as	developer	0.00776359	0.673959	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	0.937842
+fay	works.with	bob	0.287363	0.93463	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	0.0068434
+carl	live.in	amsterdam	0.00505302	0.936462	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.872561
+carl	works.for	othercorp	0.0795397	0.763325	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0483977
+carl	works.as	developer	0.00667001	0.746679	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.937842
+carl	lives.with	emma	0.043697	0.605666	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	3.61864e-17
+carl	invests.in	alicecorp	0.713495	0.898126	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0458882
+carl	invests.in	denniscorp	0.713495	0.898126	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.0283402
+fay	invests.in	othercorp	0.752027	0.866057	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	0.0483977
+fay	partner.of	henry	0.113562	0.599035	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	7.16762e-17
+fay	lives.with	henry	0.053593	0.510597	_	_	_	subject_is_centroid|score=1.0	_	1.40015e-24	7.16762e-17
+carl	born.in	edinburgh	0.0117017	0.741622	_	_	_	subject_is_centroid|score=0.1	_	2.34708e-23	0.932624
+fay	born.in	copenhagen	0.013894	0.672215	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.40015e-24	0.934833
+alice	son.of	carl	0.0768011	0.853439	_	_	_	_	object_is_centroid|score=0.1	0.0450136	2.34708e-23
+bob	son.of	carl	0.0768011	0.853439	_	_	_	_	object_is_centroid|score=0.1	0.0068434	2.34708e-23
+emma	partner.of	carl	0.0907178	0.70024	_	_	_	_	object_is_centroid|score=0.1	3.61864e-17	2.34708e-23
+bob	works.with	fay	0.185952	0.965761	_	_	_	_	object_is_centroid|score=1.0	0.0068434	1.40015e-24
+emma	lives.with	carl	0.0419251	0.622184	_	_	_	_	object_is_centroid|score=0.1	3.61864e-17	2.34708e-23
+henry	partner.of	fay	0.0741298	0.749067	_	_	_	_	object_is_centroid|score=1.0	7.16762e-17	1.40015e-24
+henry	lives.with	fay	0.0358792	0.673992	_	_	_	_	object_is_centroid|score=1.0	7.16762e-17	1.40015e-24
+
+what did henry teach in 2003 ?
+-----
+henry	taught.1	cvt|id=8	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=0	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=1	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=2	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=3	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=4	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	taught.1	cvt|id=5	5.40677e-10	0.728022	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	meet.1	cvt|id=6	1.31534e-10	0.484795	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+henry	meet.2	cvt|id=7	2.02066e-09	0.76227	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	_
+maths	taught.2	cvt|id=8	2.34594e-10	0.706834	_	subject_is_gold	_	_	_	0.903328	_
+2000	taught.in	cvt|id=8	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+maths	taught.2	cvt|id=0	2.34594e-10	0.706834	_	subject_is_gold	_	_	_	0.903328	_
+2001	taught.in	cvt|id=0	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+maths	taught.2	cvt|id=1	2.34594e-10	0.706834	_	subject_is_gold	_	_	_	0.903328	_
+2002	taught.in	cvt|id=1	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+maths	taught.2	cvt|id=2	2.34594e-10	0.706834	_	subject_is_gold	_	_	_	0.903328	_
+2003	taught.in	cvt|id=2	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+physics	taught.2	cvt|id=3	2.34594e-10	0.706834	_	_	_	_	_	0.850107	_
+2004	taught.in	cvt|id=3	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+physics	taught.2	cvt|id=4	2.34594e-10	0.706834	_	_	_	_	_	0.850107	_
+2005	taught.in	cvt|id=4	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+physics	taught.2	cvt|id=5	2.34594e-10	0.706834	_	_	_	_	_	0.850107	_
+2006	taught.in	cvt|id=5	7.98684e-11	0.687357	_	_	_	_	_	0.00191997	_
+fay	meet.2	cvt|id=6	3.38861e-09	0.793807	_	_	_	_	_	0.631483	_
+1999	meet.in	cvt|id=6	1.40484e-10	0.78122	_	_	_	_	_	0.0133606	_
+fay	meet.1	cvt|id=7	2.21615e-10	0.536476	_	_	_	_	_	0.631483	_
+1999	meet.in	cvt|id=7	1.40484e-10	0.78122	_	_	_	_	_	0.0133606	_
+-----
+-----
+henry	partner.of	fay	0.000110591	0.289434	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.631483
+henry	lives.with	fay	3.80893e-05	0.180847	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.631483
+henry	live.in	edinburgh	5.0813e-06	0.352356	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.00230842
+henry	works.for	someschool	4.21818e-05	0.0832795	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.00230882
+henry	works.as	teacher	8.94492e-06	0.192205	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.00230841
+henry	born.in	copenhagen	1.69134e-05	0.18603	_	_	_	subject_is_centroid|score=1.0	_	4.131e-06	0.0023084
+fay	partner.of	henry	7.83286e-05	0.372071	_	_	_	_	object_is_centroid|score=1.0	0.631483	4.131e-06
+fay	lives.with	henry	2.77487e-05	0.23739	_	_	_	_	object_is_centroid|score=1.0	0.631483	4.131e-06
+
+who is the partner of emma ?
+-----
+emma	meet.2	cvt|id=2	1.54459e-08	0.662141	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	_
+emma	meet.1	cvt|id=3	1.12519e-09	0.500795	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	_
+fay	meet.2	cvt|id=0	2.05811e-08	0.679597	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	_
+fay	meet.1	cvt|id=1	1.53874e-09	0.521647	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	_
+carl	meet.1	cvt|id=2	1.89164e-09	0.535317	_	subject_is_gold	_	_	_	0.979715	_
+2004	meet.in	cvt|id=2	1.17895e-09	0.587854	_	_	_	_	_	2.2902e-05	_
+carl	meet.2	cvt|id=3	2.48314e-08	0.691373	_	subject_is_gold	_	_	_	0.979715	_
+2004	meet.in	cvt|id=3	1.17895e-09	0.587854	_	_	_	_	_	2.2902e-05	_
+henry	meet.1	cvt|id=0	1.89164e-09	0.535317	_	_	_	_	_	0.955786	_
+1999	meet.in	cvt|id=0	1.17895e-09	0.587854	_	_	_	_	_	1.97476e-05	_
+henry	meet.2	cvt|id=1	2.48314e-08	0.691373	_	_	_	_	_	0.955786	_
+1999	meet.in	cvt|id=1	1.17895e-09	0.587854	_	_	_	_	_	1.97476e-05	_
+-----
+-----
+emma	father.of	dennis	3.21855e-05	0.192815	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	2.54421e-06
+emma	parent.of	dennis	9.34861e-05	0.216055	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	2.54421e-06
+emma	partner.of	carl	3.87955e-05	0.42987	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.000168317	0.979715
+fay	live.in	edinburgh	1.76648e-06	0.310895	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	5.37242e-08
+fay	works.for	alicecorp	1.2808e-05	0.134914	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	5.37294e-08
+fay	works.as	developer	3.31736e-06	0.283355	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	5.37237e-08
+fay	works.with	bob	0.000208141	0.464654	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	7.68859e-06
+emma	works.for	denniscorp	1.38067e-05	0.129312	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	1.29605e-07
+emma	works.as	ceo	3.62657e-06	0.275894	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	6.09944e-08
+emma	live.in	amsterdam	1.92246e-06	0.298374	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	6.09944e-08
+emma	lives.with	carl	1.65625e-05	0.480861	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.000168317	0.979715
+emma	invests.in	othercorp	0.000557113	0.256756	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	6.12818e-08
+emma	invests.in	denniscorp	0.000557113	0.256756	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	1.29605e-07
+fay	invests.in	othercorp	0.000500908	0.264502	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	6.12818e-08
+fay	partner.of	henry	3.52899e-05	0.443515	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	0.955786
+fay	lives.with	henry	1.49008e-05	0.496197	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	0.955786
+emma	born.in	amsterdam	6.71434e-06	0.313506	_	_	_	subject_is_centroid|score=1.0	_	0.000168317	6.09944e-08
+fay	born.in	copenhagen	6.16452e-06	0.32464	_	_	_	subject_is_centroid|score=0.4	_	0.0517437	5.37232e-08
+dennis	daughter.of	emma	5.65591e-05	0.292011	_	_	_	_	object_is_centroid|score=1.0	2.54421e-06	0.000168317
+dennis	child.of	emma	3.94575e-05	0.234549	_	_	_	_	object_is_centroid|score=1.0	2.54421e-06	0.000168317
+carl	partner.of	emma	2.92055e-05	0.482008	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.979715	0.000168317
+bob	works.with	fay	0.000182635	0.484953	_	_	_	_	object_is_centroid|score=0.4	7.68859e-06	0.0517437
+denniscorp	director.of	emma	8.08506e-06	0.14363	_	_	_	_	object_is_centroid|score=1.0	1.29605e-07	0.000168317
+carl	lives.with	emma	1.22243e-05	0.528325	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.979715	0.000168317
+henry	partner.of	fay	3.13925e-05	0.464234	_	_	_	_	object_is_centroid|score=0.4	0.955786	0.0517437
+henry	lives.with	fay	1.32179e-05	0.514547	_	_	_	_	object_is_centroid|score=0.4	0.955786	0.0517437
+
+when did henry teach physics ?
+-----
+henry	taught.1	cvt|id=8	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+henry	taught.1	cvt|id=0	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+henry	taught.1	cvt|id=1	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+henry	taught.1	cvt|id=2	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+henry	taught.1	cvt|id=3	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+physics	taught.2	cvt|id=3	1.13836e-10	0.266701	_	_	_	subject_is_centroid|score=1.0	_	0.000342617	_
+henry	taught.1	cvt|id=4	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+physics	taught.2	cvt|id=4	1.13836e-10	0.266701	_	_	_	subject_is_centroid|score=1.0	_	0.000342617	_
+henry	taught.1	cvt|id=5	4.42829e-10	0.373916	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+physics	taught.2	cvt|id=5	1.13836e-10	0.266701	_	_	_	subject_is_centroid|score=1.0	_	0.000342617	_
+henry	meet.1	cvt|id=6	1.08845e-10	0.191124	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+henry	meet.2	cvt|id=7	1.60185e-09	0.425143	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	_
+maths	taught.2	cvt|id=8	1.92572e-10	0.296386	_	_	_	_	_	0.28385	_
+2000	taught.in	cvt|id=8	6.64769e-11	0.168536	_	_	_	_	_	0.799312	_
+maths	taught.2	cvt|id=0	1.92572e-10	0.296386	_	_	_	_	_	0.28385	_
+2001	taught.in	cvt|id=0	6.64769e-11	0.168536	_	_	_	_	_	0.799312	_
+maths	taught.2	cvt|id=1	1.92572e-10	0.296386	_	_	_	_	_	0.28385	_
+2002	taught.in	cvt|id=1	6.64769e-11	0.168536	_	_	_	_	_	0.799312	_
+maths	taught.2	cvt|id=2	1.92572e-10	0.296386	_	_	_	_	_	0.28385	_
+2003	taught.in	cvt|id=2	6.64769e-11	0.168536	_	_	_	_	_	0.799312	_
+2004	taught.in	cvt|id=3	6.64769e-11	0.168536	_	subject_is_gold	_	_	_	0.799312	_
+2005	taught.in	cvt|id=4	6.64769e-11	0.168536	_	subject_is_gold	_	_	_	0.799312	_
+2006	taught.in	cvt|id=5	6.64769e-11	0.168536	_	subject_is_gold	_	_	_	0.799312	_
+fay	meet.2	cvt|id=6	2.68628e-09	0.47124	_	_	_	_	_	0.000297278	_
+1999	meet.in	cvt|id=6	1.15663e-10	0.687548	_	_	_	_	_	0.19118	_
+fay	meet.1	cvt|id=7	1.81951e-10	0.220482	_	_	_	_	_	0.000297278	_
+1999	meet.in	cvt|id=7	1.15663e-10	0.687548	_	_	_	_	_	0.19118	_
+-----
+-----
+henry	partner.of	fay	0.896502	0.398502	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.000297278
+henry	lives.with	fay	0.911622	0.31847	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.000297278
+henry	live.in	edinburgh	0.549901	0.732816	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.203339
+henry	works.for	someschool	0.830916	0.270906	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.143188
+henry	works.as	teacher	0.702077	0.442294	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.739709
+henry	born.in	copenhagen	0.831743	0.432348	_	_	_	subject_is_centroid|score=1.0	_	5.08444e-10	0.319368
+fay	partner.of	henry	0.85764	0.53885	_	_	_	_	object_is_centroid|score=1.0	0.000297278	5.08444e-10
+fay	lives.with	henry	0.88027	0.447358	_	_	_	_	object_is_centroid|score=1.0	0.000297278	5.08444e-10
+
+who is the partner of carl ?
+-----
+carl	meet.1	cvt|id=3	3.46081e-06	0.323905	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	_
+carl	meet.2	cvt|id=4	3.6429e-05	0.526883	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	_
+physics	taught.2	cvt|id=0	3.98985e-06	0.22008	_	_	_	subject_is_centroid|score=1.0	_	0.000458464	_
+physics	taught.2	cvt|id=1	3.98985e-06	0.22008	_	_	_	subject_is_centroid|score=1.0	_	0.000458464	_
+physics	taught.2	cvt|id=2	3.98985e-06	0.22008	_	_	_	subject_is_centroid|score=1.0	_	0.000458464	_
+emma	meet.2	cvt|id=3	5.31396e-05	0.566848	_	subject_is_gold	_	_	_	0.978753	_
+2004	meet.in	cvt|id=3	3.22174e-06	0.511	_	_	_	_	_	2.63553e-05	_
+emma	meet.1	cvt|id=4	5.5692e-06	0.359281	_	subject_is_gold	_	_	_	0.978753	_
+2004	meet.in	cvt|id=4	3.22174e-06	0.511	_	_	_	_	_	2.63553e-05	_
+henry	taught.1	cvt|id=0	2.34355e-05	0.480209	_	_	_	_	_	0.00567262	_
+2004	taught.in	cvt|id=0	2.21489e-06	0.466019	_	_	_	_	_	2.63553e-05	_
+henry	taught.1	cvt|id=1	2.34355e-05	0.480209	_	_	_	_	_	0.00567262	_
+2005	taught.in	cvt|id=1	2.21489e-06	0.466019	_	_	_	_	_	2.20242e-07	_
+henry	taught.1	cvt|id=2	2.34355e-05	0.480209	_	_	_	_	_	0.00567262	_
+2006	taught.in	cvt|id=2	2.21489e-06	0.466019	_	_	_	_	_	2.20242e-07	_
+-----
+-----
+carl	mother.of	alice	0.0022011	0.294397	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	3.99083e-05
+carl	father.of	bob	0.00193562	0.26128	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	4.01927e-05
+carl	parent.of	alice	0.00458791	0.304811	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	3.99083e-05
+carl	parent.of	bob	0.00458791	0.304811	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	4.01927e-05
+carl	partner.of	emma	0.00235896	0.436087	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.66804e-06	0.978753
+carl	live.in	amsterdam	8.92775e-05	0.424681	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.02354e-07
+carl	works.for	othercorp	0.000797252	0.210702	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.06501e-07
+carl	works.as	developer	0.000180753	0.361779	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.01977e-07
+carl	lives.with	emma	0.000792773	0.515588	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.66804e-06	0.978753
+carl	invests.in	alicecorp	0.0233727	0.312124	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.73397e-07
+carl	invests.in	denniscorp	0.0233727	0.312124	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.73397e-07
+carl	born.in	edinburgh	0.000354448	0.425047	_	_	_	subject_is_centroid|score=1.0	_	7.66804e-06	6.01687e-07
+alice	son.of	carl	0.00093853	0.48652	_	_	_	_	object_is_centroid|score=1.0	3.99083e-05	7.66804e-06
+bob	son.of	carl	0.00093853	0.48652	_	_	_	_	object_is_centroid|score=1.0	4.01927e-05	7.66804e-06
+emma	partner.of	carl	0.00168475	0.478518	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.978753	7.66804e-06
+emma	lives.with	carl	0.00060718	0.572567	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.978753	7.66804e-06
+
+who is dennis the father of ?
+-----
+dennis	founded.1	cvt|id=0	1.32949e-08	0.152861	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	_
+dennis	sell.1	cvt|id=1	2.44044e-08	0.04658	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	_
+denniscorp	founded.2	cvt|id=0	1.99338e-08	0.0567089	_	_	_	_	_	0.000595174	_
+1990	founded.in	cvt|id=0	1.12282e-08	0.0520812	_	_	_	_	_	1.53402e-05	_
+denniscorp	sell.2	cvt|id=1	4.07715e-08	0.179783	_	_	_	_	_	0.000595174	_
+gary	sell.3	cvt|id=1	2.96363e-08	0.113613	_	_	_	_	_	2.83463e-05	_
+1996	sell.in	cvt|id=1	3.41881e-08	0.0372159	_	_	_	_	_	1.66761e-05	_
+-----
+-----
+dennis	daughter.of	emma	0.594758	0.279746	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.000173585	0.991
+dennis	child.of	emma	0.769693	0.274813	_	_	object_is_gold	subject_is_centroid|score=1.0	_	0.000173585	0.991
+dennis	live.in	amsterdam	0.217925	0.164894	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	1.64671e-05
+dennis	works.as	ceo	0.38958	0.225777	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	2.02776e-05
+dennis	works.for	othercorp	0.209032	0.158927	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	0.000208168
+dennis	born.in	amsterdam	0.417768	0.242427	_	_	_	subject_is_centroid|score=1.0	_	0.000173585	1.64671e-05
+emma	father.of	dennis	0.698145	0.430816	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.991	0.000173585
+emma	parent.of	dennis	0.664045	0.516216	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.991	0.000173585
+denniscorp	founder.of	dennis	0.413615	0.287685	_	_	_	_	object_is_centroid|score=1.0	0.000595174	0.000173585
+othercorp	director.of	dennis	0.430393	0.0868587	_	_	_	_	object_is_centroid|score=1.0	0.000208168	0.000173585
+
+who is the director of alicecorp ?
+-----
+alice	founded.1	cvt|id=0	0.00575814	0.547335	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	_
+alicecorp	founded.2	cvt|id=0	0.00355211	0.130914	_	_	_	subject_is_centroid|score=1.0	_	8.68366e-05	_
+alicecorp	hire.1	cvt|id=1	0.00148455	0.201797	_	_	_	subject_is_centroid|score=1.0	_	8.68366e-05	_
+alice	meet.1	cvt|id=2	0.00978549	0.561581	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	_
+alice	meet.2	cvt|id=3	0.158317	0.630786	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	_
+1997	founded.in	cvt|id=0	0.00518496	0.17647	_	_	_	_	_	4.00683e-05	_
+bob	hire.2	cvt|id=1	0.00618609	0.354616	_	_	_	_	_	0.00026358	_
+2002	hire.in	cvt|id=1	0.00888971	0.40677	_	_	_	_	_	3.15303e-05	_
+bob	meet.2	cvt|id=2	0.164334	0.638385	_	_	_	_	_	0.00026358	_
+2003	meet.in	cvt|id=2	0.00639664	0.554366	_	_	_	_	_	2.58911e-06	_
+bob	meet.1	cvt|id=3	0.0105807	0.565026	_	_	_	_	_	0.00026358	_
+2003	meet.in	cvt|id=3	0.00639664	0.550272	_	_	_	_	_	2.58911e-06	_
+-----
+-----
+alice	son.of	carl	0.641364	0.809339	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	0.119436
+alice	partner.of	bob	0.6503	0.66765	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	0.00026358
+alicecorp	founder.of	alice	0.536376	0.699975	_	_	object_is_gold	subject_is_centroid|score=1.0	object_is_centroid|score=0.2	8.68366e-05	7.05553e-08
+alicecorp	director.of	alice	0.341103	0.393961	_	_	object_is_gold	subject_is_centroid|score=1.0	object_is_centroid|score=0.2	8.68366e-05	7.05553e-08
+alice	works.for	alicecorp	0.567494	0.798394	_	subject_is_gold	_	subject_is_centroid|score=0.2	object_is_centroid|score=1.0	7.05553e-08	8.68366e-05
+alice	works.as	ceo	0.233498	0.597913	_	subject_is_gold	_	subject_is_centroid|score=0.2	object_is_centroid|score=0.7	7.05553e-08	0.00119452
+alicecorp	founded.in	edinburgh	0.454303	0.673656	_	_	_	subject_is_centroid|score=1.0	_	8.68366e-05	2.68441e-05
+alice	live.in	edinburgh	0.131413	0.705509	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	2.68441e-05
+alice	lives.with	bob	0.480027	0.753881	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	0.00026358
+alicecorp	owner.of	alice	0.699607	0.580422	_	_	object_is_gold	subject_is_centroid|score=1.0	object_is_centroid|score=0.2	8.68366e-05	7.05553e-08
+alice	invests.in	alicecorp	0.481899	0.340966	_	subject_is_gold	_	subject_is_centroid|score=0.2	object_is_centroid|score=1.0	7.05553e-08	8.68366e-05
+alice	invests.in	denniscorp	0.509785	0.310891	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	0.00260173
+alice	invests.in	othercorp	0.509785	0.310891	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	0.00260173
+alice	born.in	edinburgh	0.388617	0.674175	_	subject_is_gold	_	subject_is_centroid|score=0.2	_	7.05553e-08	2.68441e-05
+carl	mother.of	alice	0.554608	0.590987	_	_	object_is_gold	_	object_is_centroid|score=0.2	0.119436	7.05553e-08
+bob	partner.of	alice	0.636143	0.681536	_	_	object_is_gold	_	object_is_centroid|score=0.2	0.00026358	7.05553e-08
+carl	parent.of	alice	0.670103	0.806691	_	_	object_is_gold	_	object_is_centroid|score=0.2	0.119436	7.05553e-08
+bob	works.for	alicecorp	0.561101	0.806214	_	_	_	_	object_is_centroid|score=1.0	0.00026358	8.68366e-05
+fay	works.for	alicecorp	0.561101	0.806214	_	_	_	_	object_is_centroid|score=1.0	0.709864	8.68366e-05
+bob	lives.with	alice	0.468307	0.766662	_	_	object_is_gold	_	object_is_centroid|score=0.2	0.00026358	7.05553e-08
+dennis	works.as	ceo	0.230534	0.606365	_	_	_	_	object_is_centroid|score=0.7	0.00944578	0.00119452
+emma	works.as	ceo	0.230534	0.606365	_	_	_	_	object_is_centroid|score=0.7	0.00944578	0.00119452
+bob	invests.in	alicecorp	0.476987	0.35078	_	_	_	_	object_is_centroid|score=1.0	0.00026358	8.68366e-05
+gary	invests.in	alicecorp	0.476987	0.35078	_	_	_	_	object_is_centroid|score=1.0	0.000451521	8.68366e-05
+carl	invests.in	alicecorp	0.476987	0.35078	_	_	_	_	object_is_centroid|score=1.0	0.119436	8.68366e-05
+
+where was bob born ?
+-----
+bob	hire.2	cvt|id=0	0.436212	0.889373	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	_
+bob	meet.2	cvt|id=1	0.467391	0.950458	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	_
+bob	meet.1	cvt|id=2	0.407149	0.936526	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	_
+alicecorp	hire.1	cvt|id=0	0.348475	0.902441	_	_	_	_	_	4.4229e-07	_
+2002	hire.in	cvt|id=0	0.474447	0.911188	_	_	_	_	_	1.78091e-07	_
+alice	meet.1	cvt|id=1	0.419134	0.944075	_	_	_	_	_	1.16601e-18	_
+2003	meet.in	cvt|id=1	0.389511	0.971858	_	_	_	_	_	7.92322e-21	_
+alice	meet.2	cvt|id=2	0.469769	0.953992	_	_	_	_	_	1.16601e-18	_
+2003	meet.in	cvt|id=2	0.389511	0.971132	_	_	_	_	_	7.92322e-21	_
+-----
+-----
+bob	son.of	carl	0.0906552	0.880181	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	0.00311607
+bob	partner.of	alice	0.118938	0.746518	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	1.16601e-18
+bob	live.in	edinburgh	0.00568644	0.948651	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.25768e-33	0.938889
+bob	works.for	alicecorp	0.132769	0.827997	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	4.4229e-07
+bob	works.as	developer	0.00765344	0.80202	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	0.944962
+bob	works.with	fay	0.289966	0.965399	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	0.0367619
+bob	lives.with	alice	0.0492348	0.677672	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	1.16601e-18
+bob	invests.in	alicecorp	0.717868	0.912623	_	_	_	subject_is_centroid|score=1.0	_	1.25768e-33	4.4229e-07
+bob	born.in	edinburgh	0.0150409	0.800216	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.25768e-33	0.938889
+carl	father.of	bob	0.0806099	0.884063	_	_	_	_	object_is_centroid|score=1.0	0.00311607	1.25768e-33
+alice	partner.of	bob	0.077903	0.856424	_	_	_	_	object_is_centroid|score=1.0	1.16601e-18	1.25768e-33
+carl	parent.of	bob	0.142508	0.951693	_	_	_	_	object_is_centroid|score=1.0	0.00311607	1.25768e-33
+fay	works.with	bob	0.190807	0.98254	_	_	_	_	object_is_centroid|score=1.0	0.0367619	1.25768e-33
+alice	lives.with	bob	0.0349676	0.812342	_	_	_	_	object_is_centroid|score=1.0	1.16601e-18	1.25768e-33
+
+who was founded in edinburgh ?
+-----
+-----
+-----
+alicecorp	founded.in	edinburgh	0.000189703	0.0843577	_	subject_is_gold	_	_	object_is_centroid|score=0.3	0.0463969	0.263948
+alice	live.in	edinburgh	2.69462e-05	0.373637	_	_	_	_	object_is_centroid|score=0.3	0.351057	0.263948
+bob	live.in	edinburgh	2.69462e-05	0.373637	_	_	_	_	object_is_centroid|score=0.3	0.351057	0.263948
+fay	live.in	edinburgh	2.69462e-05	0.373637	_	_	_	_	object_is_centroid|score=0.3	0.341402	0.263948
+henry	live.in	edinburgh	2.69462e-05	0.373637	_	_	_	_	object_is_centroid|score=0.3	0.341402	0.263948
+alice	born.in	edinburgh	8.65551e-05	0.101233	_	_	_	_	object_is_centroid|score=0.3	0.351057	0.263948
+bob	born.in	edinburgh	8.65551e-05	0.101233	_	_	_	_	object_is_centroid|score=0.3	0.351057	0.263948
+carl	born.in	edinburgh	8.65551e-05	0.101233	_	_	_	_	object_is_centroid|score=0.3	0.0679078	0.263948
+fay	born.in	copenhagen	8.83041e-05	0.0978865	_	_	_	_	object_is_centroid|score=0.1	0.341402	0.0743955
+henry	born.in	copenhagen	8.83041e-05	0.0978865	_	_	_	_	object_is_centroid|score=0.1	0.341402	0.0743955
+
+who is the son of alice ?
+-----
+alice	founded.1	cvt|id=0	1.81821e-13	0.243188	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	_
+alicecorp	founded.2	cvt|id=0	1.39489e-13	0.0861655	_	_	_	subject_is_centroid|score=1.0	_	3.99488e-06	_
+alicecorp	hire.1	cvt|id=1	2.52013e-14	0.0985941	_	_	_	subject_is_centroid|score=1.0	_	3.99488e-06	_
+alice	meet.1	cvt|id=2	1.49226e-13	0.166085	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	_
+alice	meet.2	cvt|id=3	2.13152e-12	0.202795	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	_
+1997	founded.in	cvt|id=0	2.07102e-13	0.076675	_	_	_	_	_	4.47533e-06	_
+bob	hire.2	cvt|id=1	2.30329e-13	0.208032	_	_	_	_	_	0.0231045	_
+2002	hire.in	cvt|id=1	3.22306e-13	0.165429	_	_	_	_	_	4.73889e-06	_
+bob	meet.2	cvt|id=2	3.57453e-12	0.222612	_	_	_	_	_	0.0231045	_
+2003	meet.in	cvt|id=2	1.56608e-13	0.179745	_	_	_	_	_	1.9156e-05	_
+bob	meet.1	cvt|id=3	2.52117e-13	0.182858	_	_	_	_	_	0.0231045	_
+2003	meet.in	cvt|id=3	1.56608e-13	0.179745	_	_	_	_	_	1.9156e-05	_
+-----
+-----
+alice	son.of	carl	0.903446	0.402941	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.18768e-07	0.993545
+alice	partner.of	bob	0.762205	0.21614	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	0.0231045
+alicecorp	founder.of	alice	0.620446	0.27092	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	3.99488e-06	1.18768e-07
+alicecorp	director.of	alice	0.685895	0.0673528	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	3.99488e-06	1.18768e-07
+alice	works.for	alicecorp	0.34498	0.150534	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	1.18768e-07	3.99488e-06
+alice	works.as	ceo	0.610756	0.203541	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	7.73363e-06
+alicecorp	founded.in	edinburgh	0.768559	0.217508	_	_	_	subject_is_centroid|score=1.0	_	3.99488e-06	1.23166e-05
+alice	live.in	edinburgh	0.442572	0.172812	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	1.23166e-05
+alice	lives.with	bob	0.790957	0.237816	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	0.0231045
+alicecorp	owner.of	alice	0.863395	0.210583	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	3.99488e-06	1.18768e-07
+alice	invests.in	alicecorp	0.799648	0.0961579	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=1.0	1.18768e-07	3.99488e-06
+alice	invests.in	denniscorp	0.815603	0.088318	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	6.43438e-05
+alice	invests.in	othercorp	0.815603	0.088318	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	6.43438e-05
+alice	born.in	edinburgh	0.629138	0.216292	_	_	_	subject_is_centroid|score=1.0	_	1.18768e-07	1.23166e-05
+carl	mother.of	alice	0.634953	0.212521	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.993545	1.18768e-07
+bob	partner.of	alice	0.692699	0.256553	_	_	_	_	object_is_centroid|score=1.0	0.0231045	1.18768e-07
+carl	parent.of	alice	0.778178	0.536464	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.993545	1.18768e-07
+bob	works.for	alicecorp	0.315897	0.164132	_	_	_	_	object_is_centroid|score=1.0	0.0231045	3.99488e-06
+fay	works.for	alicecorp	0.315897	0.164132	_	_	_	_	object_is_centroid|score=1.0	3.42915e-05	3.99488e-06
+bob	lives.with	alice	0.739384	0.272301	_	_	_	_	object_is_centroid|score=1.0	0.0231045	1.18768e-07
+bob	invests.in	alicecorp	0.780105	0.101733	_	_	_	_	object_is_centroid|score=1.0	0.0231045	3.99488e-06
+gary	invests.in	alicecorp	0.780105	0.101733	_	_	_	_	object_is_centroid|score=1.0	8.78301e-06	3.99488e-06
+carl	invests.in	alicecorp	0.780105	0.101733	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.993545	3.99488e-06
+
+what is bob investing in ?
+-----
+bob	hire.2	cvt|id=0	0.000105316	0.303278	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	_
+bob	meet.2	cvt|id=1	0.00648169	0.463653	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	_
+bob	meet.1	cvt|id=2	0.000116491	0.223223	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	_
+alicecorp	hire.1	cvt|id=0	3.69777e-05	0.45417	_	subject_is_gold	_	_	_	0.876467	_
+2002	hire.in	cvt|id=0	0.000222561	0.529989	_	_	_	_	_	0.00187621	_
+alice	meet.1	cvt|id=1	0.000181407	0.255206	_	_	_	_	_	0.733418	_
+2003	meet.in	cvt|id=1	0.000140813	0.535118	_	_	_	_	_	0.000948704	_
+alice	meet.2	cvt|id=2	0.0105486	0.516798	_	_	_	_	_	0.733418	_
+2003	meet.in	cvt|id=2	0.000140813	0.539176	_	_	_	_	_	0.000948704	_
+-----
+-----
+bob	son.of	carl	0.0173029	0.56857	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.0555712
+bob	partner.of	alice	0.0473205	0.456776	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.733418
+bob	live.in	edinburgh	0.00141338	0.786167	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.0016113
+bob	works.for	alicecorp	0.0253991	0.397624	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.02849e-06	0.876467
+bob	works.as	developer	0.00237592	0.465843	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.00162743
+bob	works.with	fay	0.0900371	0.739304	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.214066
+bob	lives.with	alice	0.0128684	0.322395	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.733418
+bob	invests.in	alicecorp	0.434748	0.72913	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.02849e-06	0.876467
+bob	born.in	edinburgh	0.00787631	0.407409	_	_	_	subject_is_centroid|score=1.0	_	1.02849e-06	0.0016113
+carl	father.of	bob	0.025769	0.398328	_	_	_	_	object_is_centroid|score=1.0	0.0555712	1.02849e-06
+alice	partner.of	bob	0.032472	0.583042	_	_	_	_	object_is_centroid|score=1.0	0.733418	1.02849e-06
+carl	parent.of	bob	0.050502	0.654294	_	_	_	_	object_is_centroid|score=1.0	0.0555712	1.02849e-06
+fay	works.with	bob	0.063561	0.821313	_	_	_	_	object_is_centroid|score=1.0	0.214066	1.02849e-06
+alice	lives.with	bob	0.00973785	0.438185	_	_	_	_	object_is_centroid|score=1.0	0.733418	1.02849e-06
+
+who did dennis sell denniscorp to ?
+-----
+alicecorp	founded.2	cvt|id=0	4.89183e-07	0.256362	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	_
+alicecorp	hire.1	cvt|id=1	9.53495e-08	0.306312	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	_
+bob	hire.2	cvt|id=1	6.98713e-07	0.470883	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	_
+bob	meet.2	cvt|id=2	7.36218e-06	0.471388	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	_
+bob	meet.1	cvt|id=3	7.72957e-07	0.319755	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	_
+dennis	founded.1	cvt|id=4	8.07382e-07	0.560962	_	_	_	subject_is_centroid|score=0.2	_	0.119168	_
+denniscorp	founded.2	cvt|id=4	4.415e-07	0.252307	_	_	_	subject_is_centroid|score=1.0	_	7.70738e-06	_
+dennis	sell.1	cvt|id=5	1.50113e-06	0.261329	_	_	_	subject_is_centroid|score=0.2	_	0.119168	_
+denniscorp	sell.2	cvt|id=5	1.01309e-06	0.530103	_	_	_	subject_is_centroid|score=1.0	_	7.70738e-06	_
+alice	founded.1	cvt|id=0	8.91498e-07	0.566459	_	_	_	_	_	0.253109	_
+1997	founded.in	cvt|id=0	4.2947e-07	0.213153	_	_	_	_	_	0.00625136	_
+2002	hire.in	cvt|id=1	9.40286e-07	0.404698	_	_	_	_	_	0.00800601	_
+alice	meet.1	cvt|id=2	8.11495e-07	0.323766	_	_	_	_	_	0.253109	_
+2003	meet.in	cvt|id=2	4.26901e-07	0.513129	_	_	_	_	_	0.0853812	_
+alice	meet.2	cvt|id=3	7.66782e-06	0.475252	_	_	_	_	_	0.253109	_
+2003	meet.in	cvt|id=3	4.26901e-07	0.513129	_	_	_	_	_	0.0853812	_
+1990	founded.in	cvt|id=4	4.2947e-07	0.213153	_	_	_	_	_	0.00625136	_
+gary	sell.3	cvt|id=5	1.2429e-06	0.444223	_	subject_is_gold	_	_	_	0.713672	_
+1996	sell.in	cvt|id=5	1.49291e-06	0.191024	_	_	_	_	_	0.00938497	_
+-----
+-----
+bob	son.of	carl	0.423073	0.476273	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.837523
+bob	partner.of	alice	0.25859	0.269186	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.253109
+dennis	daughter.of	emma	0.262476	0.307831	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.733489
+dennis	child.of	emma	0.400975	0.293357	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.733489
+alicecorp	founder.of	alice	0.174952	0.305838	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	0.253109
+alicecorp	director.of	alice	0.123559	0.0823173	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	0.253109
+alicecorp	founded.in	edinburgh	0.204497	0.243224	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	0.00547298
+bob	live.in	edinburgh	0.0217626	0.310535	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.00547298
+bob	works.for	alicecorp	0.050242	0.176267	_	_	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.8	0.000429424	5.72143e-06
+bob	works.as	developer	0.0625802	0.264916	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.00441654
+bob	works.with	fay	0.580149	0.454937	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.452615
+bob	lives.with	alice	0.18936	0.345143	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.253109
+denniscorp	founder.of	dennis	0.175451	0.30662	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=0.2	7.70738e-06	0.119168
+alicecorp	owner.of	alice	0.531467	0.158531	_	_	_	subject_is_centroid|score=0.8	_	5.72143e-06	0.253109
+denniscorp	owner.of	gary	0.538267	0.156445	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.70738e-06	0.713672
+denniscorp	founded.in	amsterdam	0.209165	0.238678	_	_	_	subject_is_centroid|score=1.0	_	7.70738e-06	0.00611013
+dennis	live.in	amsterdam	0.0221276	0.308195	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.00611013
+dennis	works.as	ceo	0.0634613	0.263871	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.00591292
+denniscorp	director.of	emma	0.12715	0.0807529	_	_	_	subject_is_centroid|score=1.0	_	7.70738e-06	0.733489
+dennis	works.for	othercorp	0.0561504	0.161731	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.0125422
+bob	invests.in	alicecorp	0.5235	0.205506	_	_	_	subject_is_centroid|score=0.1	object_is_centroid|score=0.8	0.000429424	5.72143e-06
+bob	born.in	edinburgh	0.0998661	0.314157	_	_	_	subject_is_centroid|score=0.1	_	0.000429424	0.00547298
+dennis	born.in	amsterdam	0.10142	0.311801	_	_	_	subject_is_centroid|score=0.2	_	0.119168	0.00611013
+carl	father.of	bob	0.310992	0.321481	_	_	_	_	object_is_centroid|score=0.1	0.837523	0.000429424
+alice	partner.of	bob	0.251547	0.273279	_	_	_	_	object_is_centroid|score=0.1	0.253109	0.000429424
+emma	father.of	dennis	0.307652	0.324056	_	_	_	_	object_is_centroid|score=0.2	0.733489	0.119168
+emma	parent.of	dennis	0.342992	0.428153	_	_	_	_	object_is_centroid|score=0.2	0.733489	0.119168
+carl	parent.of	bob	0.346736	0.425019	_	_	_	_	object_is_centroid|score=0.1	0.837523	0.000429424
+alice	works.for	alicecorp	0.04954	0.177559	_	_	_	_	object_is_centroid|score=0.8	0.253109	5.72143e-06
+fay	works.for	alicecorp	0.04954	0.177559	_	_	_	_	object_is_centroid|score=0.8	0.452615	5.72143e-06
+fay	works.with	bob	0.571015	0.460876	_	_	_	_	object_is_centroid|score=0.1	0.452615	0.000429424
+alice	lives.with	bob	0.184256	0.350504	_	_	_	_	object_is_centroid|score=0.1	0.253109	0.000429424
+emma	works.for	denniscorp	0.048346	0.181042	_	_	_	_	object_is_centroid|score=1.0	0.733489	7.70738e-06
+othercorp	director.of	dennis	0.107472	0.0899785	_	_	_	_	object_is_centroid|score=0.2	0.0125422	0.119168
+alice	invests.in	alicecorp	0.519339	0.206779	_	_	_	_	object_is_centroid|score=0.8	0.253109	5.72143e-06
+alice	invests.in	denniscorp	0.512723	0.209978	_	_	_	_	object_is_centroid|score=1.0	0.253109	7.70738e-06
+gary	invests.in	alicecorp	0.519339	0.206779	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.713672	5.72143e-06
+emma	invests.in	denniscorp	0.512723	0.209978	_	_	_	_	object_is_centroid|score=1.0	0.733489	7.70738e-06
+carl	invests.in	alicecorp	0.519339	0.206779	_	_	_	_	object_is_centroid|score=0.8	0.837523	5.72143e-06
+carl	invests.in	denniscorp	0.512723	0.209978	_	_	_	_	object_is_centroid|score=1.0	0.837523	7.70738e-06
+
+who is director to alicecorp ?
+-----
+alicecorp	founded.2	cvt|id=0	0.00031894	0.129317	_	_	_	subject_is_centroid|score=1.0	_	7.71364e-05	_
+alicecorp	hire.1	cvt|id=1	8.47132e-05	0.201108	_	_	_	subject_is_centroid|score=1.0	_	7.71364e-05	_
+alice	founded.1	cvt|id=0	0.000511268	0.539426	_	subject_is_gold	_	_	_	0.99803	_
+1997	founded.in	cvt|id=0	0.000498619	0.191309	_	_	_	_	_	1.31046e-05	_
+bob	hire.2	cvt|id=1	0.000535108	0.34683	_	_	_	_	_	0.598	_
+2002	hire.in	cvt|id=1	0.00063535	0.39587	_	_	_	_	_	1.09406e-05	_
+-----
+-----
+alicecorp	founder.of	alice	0.484653	0.648882	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.71364e-05	0.99803
+alicecorp	director.of	alice	0.330065	0.331508	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.71364e-05	0.99803
+alicecorp	founded.in	edinburgh	0.429125	0.627335	_	_	_	subject_is_centroid|score=1.0	_	7.71364e-05	2.33672e-05
+alicecorp	owner.of	alice	0.689897	0.50547	_	_	object_is_gold	subject_is_centroid|score=1.0	_	7.71364e-05	0.99803
+alice	works.for	alicecorp	0.447696	0.766888	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.99803	7.71364e-05
+bob	works.for	alicecorp	0.447696	0.766888	_	_	_	_	object_is_centroid|score=1.0	0.598	7.71364e-05
+fay	works.for	alicecorp	0.447696	0.766888	_	_	_	_	object_is_centroid|score=1.0	0.357138	7.71364e-05
+alice	invests.in	alicecorp	0.454357	0.292719	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.99803	7.71364e-05
+bob	invests.in	alicecorp	0.454357	0.292719	_	_	_	_	object_is_centroid|score=1.0	0.598	7.71364e-05
+gary	invests.in	alicecorp	0.454357	0.292719	_	_	_	_	object_is_centroid|score=1.0	0.000101357	7.71364e-05
+carl	invests.in	alicecorp	0.454357	0.292719	_	_	_	_	object_is_centroid|score=1.0	0.000101357	7.71364e-05
+
+who works as teacher ?
+-----
+alicecorp	founded.2	cvt|id=0	0.272304	0.701466	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	_
+alicecorp	hire.1	cvt|id=1	0.259666	0.900615	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	_
+alice	founded.1	cvt|id=0	0.363548	0.897331	_	_	_	_	_	0.000182012	_
+1997	founded.in	cvt|id=0	0.36814	0.842593	_	_	_	_	_	5.66314e-06	_
+bob	hire.2	cvt|id=1	0.35889	0.873948	_	_	_	_	_	1.14289e-05	_
+2002	hire.in	cvt|id=1	0.434148	0.905084	_	_	_	_	_	8.57049e-07	_
+-----
+-----
+alicecorp	founder.of	alice	0.343505	0.566984	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	0.000182012
+alicecorp	director.of	alice	0.182513	0.169411	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	0.000182012
+alicecorp	founded.in	edinburgh	0.245774	0.414139	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	0.610672
+alicecorp	owner.of	alice	0.526249	0.378906	_	_	_	subject_is_centroid|score=0.4	_	6.54778e-13	0.000182012
+alice	works.for	alicecorp	0.273987	0.581708	_	_	_	_	object_is_centroid|score=0.4	0.000182012	6.54778e-13
+bob	works.for	alicecorp	0.273987	0.581708	_	_	_	_	object_is_centroid|score=0.4	1.14289e-05	6.54778e-13
+fay	works.for	alicecorp	0.273987	0.581708	_	_	_	_	object_is_centroid|score=0.4	0.952546	6.54778e-13
+alice	invests.in	alicecorp	0.756325	0.623003	_	_	_	_	object_is_centroid|score=0.4	0.000182012	6.54778e-13
+bob	invests.in	alicecorp	0.756325	0.623003	_	_	_	_	object_is_centroid|score=0.4	1.14289e-05	6.54778e-13
+gary	invests.in	alicecorp	0.756325	0.623003	_	_	_	_	object_is_centroid|score=0.4	0.799951	6.54778e-13
+carl	invests.in	alicecorp	0.756325	0.623003	_	_	_	_	object_is_centroid|score=0.4	0.799951	6.54778e-13
+henry	works.as	teacher	0.0480887	0.502833	_	subject_is_gold	_	_	object_is_centroid|score=0.5	0.945225	0.140358
+
+who selled denniscorp to gary ?
+-----
+alice	founded.1	cvt|id=0	2.67129e-05	0.52133	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	_
+alice	meet.1	cvt|id=1	2.5502e-05	0.258932	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	_
+alice	meet.2	cvt|id=2	0.000260424	0.385319	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	_
+dennis	founded.1	cvt|id=3	2.54666e-05	0.518468	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	_
+denniscorp	founded.2	cvt|id=3	2.33557e-05	0.199165	_	_	_	subject_is_centroid|score=0.2	_	0.00855133	_
+dennis	sell.1	cvt|id=4	4.95968e-05	0.223576	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	_
+denniscorp	sell.2	cvt|id=4	6.13646e-05	0.519836	_	_	_	subject_is_centroid|score=0.2	_	0.00855133	_
+gary	sell.3	cvt|id=4	3.80447e-05	0.412862	_	_	_	subject_is_centroid|score=0.6	_	0.014124	_
+alicecorp	founded.2	cvt|id=0	2.58314e-05	0.203021	_	_	_	_	_	0.087038	_
+1997	founded.in	cvt|id=0	1.73791e-05	0.181558	_	_	_	_	_	0.00365009	_
+bob	meet.2	cvt|id=1	0.000305962	0.400576	_	_	_	_	_	0.0434895	_
+2003	meet.in	cvt|id=1	1.6248e-05	0.472127	_	_	_	_	_	0.018906	_
+bob	meet.1	cvt|id=2	3.10935e-05	0.273598	_	_	_	_	_	0.0434895	_
+2003	meet.in	cvt|id=2	1.6248e-05	0.472127	_	_	_	_	_	0.018906	_
+1990	founded.in	cvt|id=3	1.73791e-05	0.181558	_	_	_	_	_	0.0035619	_
+1996	sell.in	cvt|id=4	4.69644e-05	0.16319	_	_	_	_	_	0.00534516	_
+-----
+-----
+alice	son.of	carl	0.706518	0.580336	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.875853
+alice	partner.of	bob	0.546932	0.284623	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.0434895
+dennis	daughter.of	emma	0.510855	0.394211	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	0.386931
+dennis	child.of	emma	0.626755	0.382657	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	0.386931
+alice	works.for	alicecorp	0.16392	0.227249	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.087038
+alice	works.as	ceo	0.178336	0.298268	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.00483005
+alice	live.in	edinburgh	0.0841064	0.373145	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.00258187
+alice	lives.with	bob	0.517724	0.32782	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.0434895
+denniscorp	founder.of	dennis	0.351551	0.386938	_	_	object_is_gold	subject_is_centroid|score=0.2	object_is_centroid|score=0.5	0.00855133	0.0020549
+denniscorp	owner.of	gary	0.675618	0.268372	_	_	_	subject_is_centroid|score=0.2	object_is_centroid|score=0.6	0.00855133	0.014124
+denniscorp	founded.in	amsterdam	0.39537	0.31279	_	_	_	subject_is_centroid|score=0.2	_	0.00855133	0.00242826
+gary	live.in	amsterdam	0.0864931	0.364472	_	_	_	subject_is_centroid|score=0.6	_	0.014124	0.00242826
+dennis	live.in	amsterdam	0.0852836	0.368798	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	0.00242826
+dennis	works.as	ceo	0.180169	0.296409	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	0.00483005
+denniscorp	director.of	emma	0.274779	0.097074	_	_	_	subject_is_centroid|score=0.2	_	0.00855133	0.386931
+othercorp	director.of	dennis	0.256443	0.105132	_	_	object_is_gold	subject_is_centroid|score=0.001	object_is_centroid|score=0.5	0.0390478	0.0020549
+dennis	works.for	othercorp	0.166323	0.224586	_	subject_is_gold	_	subject_is_centroid|score=0.5	object_is_centroid|score=0.001	0.0020549	0.0390478
+alice	invests.in	alicecorp	0.643401	0.193857	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.087038
+alice	invests.in	denniscorp	0.637856	0.197405	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=0.2	1.1509e-05	0.00855133
+alice	invests.in	othercorp	0.643373	0.193875	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=0.001	1.1509e-05	0.0390478
+gary	invests.in	alicecorp	0.649987	0.190997	_	_	_	subject_is_centroid|score=0.6	_	0.014124	0.087038
+alice	born.in	edinburgh	0.262146	0.328681	_	_	_	subject_is_centroid|score=0.4	_	1.1509e-05	0.00258187
+dennis	born.in	amsterdam	0.263976	0.326219	_	subject_is_gold	_	subject_is_centroid|score=0.5	_	0.0020549	0.00242826
+gary	born.in	amsterdam	0.265814	0.323766	_	_	_	subject_is_centroid|score=0.6	_	0.014124	0.00242826
+carl	mother.of	alice	0.370652	0.31928	_	_	_	_	object_is_centroid|score=0.4	0.875853	1.1509e-05
+bob	partner.of	alice	0.509609	0.309854	_	_	_	_	object_is_centroid|score=0.4	0.0434895	1.1509e-05
+emma	father.of	dennis	0.610913	0.431422	_	_	object_is_gold	_	object_is_centroid|score=0.5	0.386931	0.0020549
+emma	parent.of	dennis	0.573553	0.59576	_	_	object_is_gold	_	object_is_centroid|score=0.5	0.386931	0.0020549
+carl	parent.of	alice	0.576989	0.592088	_	_	_	_	object_is_centroid|score=0.4	0.875853	1.1509e-05
+alicecorp	founder.of	alice	0.348033	0.389721	_	_	_	_	object_is_centroid|score=0.4	0.087038	1.1509e-05
+alicecorp	director.of	alice	0.258876	0.104022	_	_	_	_	object_is_centroid|score=0.4	0.087038	1.1509e-05
+bob	lives.with	alice	0.48215	0.357336	_	_	_	_	object_is_centroid|score=0.4	0.0434895	1.1509e-05
+alicecorp	owner.of	alice	0.676226	0.267985	_	_	_	_	object_is_centroid|score=0.4	0.087038	1.1509e-05
+emma	works.for	denniscorp	0.150271	0.242973	_	_	_	_	object_is_centroid|score=0.2	0.386931	0.00855133
+carl	works.for	othercorp	0.154758	0.238243	_	_	_	_	object_is_centroid|score=0.001	0.875853	0.0390478
+emma	invests.in	othercorp	0.629981	0.20111	_	_	_	_	object_is_centroid|score=0.001	0.386931	0.0390478
+emma	invests.in	denniscorp	0.624285	0.205536	_	_	_	_	object_is_centroid|score=0.2	0.386931	0.00855133
+carl	invests.in	denniscorp	0.624285	0.205536	_	_	_	_	object_is_centroid|score=0.2	0.875853	0.00855133
+fay	invests.in	othercorp	0.629981	0.20111	_	_	_	_	object_is_centroid|score=0.001	0.00935032	0.0390478
+
+who is partner to alice ?
+-----
+alice	founded.1	cvt|id=0	1.34428e-15	0.816525	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	_
+alice	meet.1	cvt|id=1	1.10329e-15	0.71552	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	_
+alice	meet.2	cvt|id=2	1.68376e-14	0.806622	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	_
+alicecorp	founded.2	cvt|id=0	1.7424e-15	0.53287	_	_	_	_	_	3.09981e-07	_
+1997	founded.in	cvt|id=0	1.58624e-15	0.576316	_	_	_	_	_	3.40666e-10	_
+bob	meet.2	cvt|id=1	2.84472e-14	0.821066	_	subject_is_gold	_	_	_	0.989613	_
+2003	meet.in	cvt|id=1	1.15787e-15	0.672899	_	_	_	_	_	1.90366e-07	_
+bob	meet.1	cvt|id=2	1.86402e-15	0.732152	_	subject_is_gold	_	_	_	0.989613	_
+2003	meet.in	cvt|id=2	1.15787e-15	0.672899	_	_	_	_	_	1.90366e-07	_
+-----
+-----
+alice	son.of	carl	2.30471e-06	0.363041	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	2.69604e-08
+alice	partner.of	bob	4.76911e-06	0.530925	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.74196e-05	0.989613
+alice	works.for	alicecorp	1.85429e-06	0.174231	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.09981e-07
+alice	works.as	ceo	4.96886e-07	0.304461	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.125e-10
+alice	live.in	edinburgh	2.44278e-07	0.312904	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.125e-10
+alice	lives.with	bob	2.00952e-06	0.570722	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.74196e-05	0.989613
+alice	invests.in	alicecorp	5.6635e-05	0.266081	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.09981e-07
+alice	invests.in	denniscorp	5.6635e-05	0.266081	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.12591e-10
+alice	invests.in	othercorp	5.6635e-05	0.266081	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.12591e-10
+alice	born.in	edinburgh	9.14568e-07	0.369654	_	_	_	subject_is_centroid|score=1.0	_	3.74196e-05	3.125e-10
+carl	mother.of	alice	4.80199e-06	0.292333	_	_	_	_	object_is_centroid|score=1.0	2.69604e-08	3.74196e-05
+bob	partner.of	alice	3.7085e-06	0.555271	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.989613	3.74196e-05
+carl	parent.of	alice	9.26951e-06	0.303842	_	_	_	_	object_is_centroid|score=1.0	2.69604e-08	3.74196e-05
+alicecorp	founder.of	alice	1.54626e-06	0.369283	_	_	_	_	object_is_centroid|score=1.0	3.09981e-07	3.74196e-05
+alicecorp	director.of	alice	1.02933e-06	0.201026	_	_	_	_	object_is_centroid|score=1.0	3.09981e-07	3.74196e-05
+bob	lives.with	alice	1.47867e-06	0.606565	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.989613	3.74196e-05
+alicecorp	owner.of	alice	1.44341e-05	0.182402	_	_	_	_	object_is_centroid|score=1.0	3.09981e-07	3.74196e-05
+
+who works for alicecorp ?
+-----
+alicecorp	founded.2	cvt|id=0	0.0095618	0.1449	_	_	_	subject_is_centroid|score=1.0	_	3.57149e-05	_
+alicecorp	hire.1	cvt|id=1	0.00366572	0.234875	_	_	_	subject_is_centroid|score=1.0	_	3.57149e-05	_
+alice	founded.1	cvt|id=0	0.0176967	0.526721	_	subject_is_gold	_	_	_	0.995918	_
+1997	founded.in	cvt|id=0	0.0128411	0.176128	_	_	_	_	_	0.000367508	_
+bob	hire.2	cvt|id=1	0.0221303	0.321361	_	subject_is_gold	_	_	_	0.872066	_
+2002	hire.in	cvt|id=1	0.0195218	0.430539	_	_	_	_	_	0.000315333	_
+-----
+-----
+alicecorp	founder.of	alice	0.125896	0.480582	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.57149e-05	0.995918
+alicecorp	director.of	alice	0.0590428	0.184424	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.57149e-05	0.995918
+alicecorp	founded.in	edinburgh	0.077456	0.427716	_	_	_	subject_is_centroid|score=1.0	_	3.57149e-05	0.000522589
+alicecorp	owner.of	alice	0.301342	0.266356	_	_	object_is_gold	subject_is_centroid|score=1.0	_	3.57149e-05	0.995918
+alice	works.for	alicecorp	0.120765	0.619814	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.995918	3.57149e-05
+bob	works.for	alicecorp	0.120765	0.619814	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.872066	3.57149e-05
+fay	works.for	alicecorp	0.120765	0.619814	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.665411	3.57149e-05
+alice	invests.in	alicecorp	0.404419	0.44668	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.995918	3.57149e-05
+bob	invests.in	alicecorp	0.404419	0.44668	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.872066	3.57149e-05
+gary	invests.in	alicecorp	0.404419	0.44668	_	_	_	_	object_is_centroid|score=1.0	0.0103859	3.57149e-05
+carl	invests.in	alicecorp	0.404419	0.44668	_	_	_	_	object_is_centroid|score=1.0	0.0103859	3.57149e-05
+
+who is carl working for ?
+-----
+alicecorp	founded.2	cvt|id=0	0.00524747	0.086856	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	_
+alicecorp	hire.1	cvt|id=1	0.0027773	0.149422	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	_
+carl	meet.1	cvt|id=2	0.00907959	0.455676	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	_
+carl	meet.2	cvt|id=3	0.169823	0.5622	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	_
+alice	founded.1	cvt|id=0	0.00677883	0.459437	_	_	_	_	_	0.11507	_
+1997	founded.in	cvt|id=0	0.00734835	0.115163	_	_	_	_	_	0.000310336	_
+bob	hire.2	cvt|id=1	0.0057587	0.231156	_	_	_	_	_	0.403951	_
+2002	hire.in	cvt|id=1	0.0122282	0.336084	_	_	_	_	_	0.000201575	_
+emma	meet.2	cvt|id=2	0.204873	0.598412	_	_	_	_	_	4.95994e-05	_
+2004	meet.in	cvt|id=2	0.00898861	0.477355	_	_	_	_	_	3.81876e-06	_
+emma	meet.1	cvt|id=3	0.0123874	0.464202	_	_	_	_	_	4.95994e-05	_
+2004	meet.in	cvt|id=3	0.00898861	0.454766	_	_	_	_	_	3.81876e-06	_
+-----
+-----
+carl	mother.of	alice	0.657661	0.853524	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.11507
+carl	father.of	bob	0.696181	0.913598	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.403951
+carl	parent.of	alice	0.726776	0.932555	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.11507
+carl	parent.of	bob	0.726776	0.932555	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.403951
+carl	partner.of	emma	0.702548	0.882254	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	4.95994e-05
+alicecorp	founder.of	alice	0.562952	0.940153	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	0.11507
+alicecorp	director.of	alice	0.387327	0.84898	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	0.11507
+alicecorp	founded.in	edinburgh	0.479136	0.92805	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	9.45831e-05
+alicecorp	owner.of	alice	0.639092	0.904644	_	_	_	subject_is_centroid|score=0.4	_	0.0820067	0.11507
+carl	live.in	amsterdam	0.146861	0.941178	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.000622009
+carl	works.for	othercorp	0.87165	0.960386	_	_	object_is_gold	subject_is_centroid|score=0.95	_	3.20195e-16	0.895225
+carl	works.as	developer	0.249178	0.871948	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.000546057
+carl	lives.with	emma	0.492931	0.93303	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	4.95994e-05
+carl	invests.in	alicecorp	0.609049	0.745274	_	_	_	subject_is_centroid|score=0.95	object_is_centroid|score=0.4	3.20195e-16	0.0820067
+carl	invests.in	denniscorp	0.622258	0.733601	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	0.0842785
+carl	born.in	edinburgh	0.392459	0.918846	_	_	_	subject_is_centroid|score=0.95	_	3.20195e-16	9.45831e-05
+alice	son.of	carl	0.513887	0.956854	_	_	_	_	object_is_centroid|score=0.95	0.11507	3.20195e-16
+bob	son.of	carl	0.513887	0.956854	_	_	_	_	object_is_centroid|score=0.95	0.403951	3.20195e-16
+emma	partner.of	carl	0.656189	0.910883	_	_	_	_	object_is_centroid|score=0.95	4.95994e-05	3.20195e-16
+alice	works.for	alicecorp	0.852968	0.969503	_	_	_	_	object_is_centroid|score=0.4	0.11507	0.0820067
+bob	works.for	alicecorp	0.852968	0.969503	_	_	_	_	object_is_centroid|score=0.4	0.403951	0.0820067
+fay	works.for	alicecorp	0.852968	0.969503	_	_	_	_	object_is_centroid|score=0.4	0.870382	0.0820067
+emma	lives.with	carl	0.420375	0.951129	_	_	_	_	object_is_centroid|score=0.95	4.95994e-05	3.20195e-16
+alice	invests.in	alicecorp	0.581037	0.785486	_	_	_	_	object_is_centroid|score=0.4	0.11507	0.0820067
+bob	invests.in	alicecorp	0.581037	0.785486	_	_	_	_	object_is_centroid|score=0.4	0.403951	0.0820067
+gary	invests.in	alicecorp	0.581037	0.785486	_	_	_	_	object_is_centroid|score=0.4	0.00432931	0.0820067
+
+where does alice live ?
+-----
+alice	founded.1	cvt|id=0	0.470023	0.88648	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	_
+alice	meet.1	cvt|id=1	0.355121	0.907698	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	_
+alice	meet.2	cvt|id=2	0.453345	0.93177	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	_
+alicecorp	founded.2	cvt|id=0	0.385644	0.73193	_	_	_	_	_	1.10829e-06	_
+1997	founded.in	cvt|id=0	0.443992	0.854203	_	_	_	_	_	8.24957e-07	_
+bob	meet.2	cvt|id=1	0.456722	0.935616	_	_	_	_	_	2.76717e-17	_
+2003	meet.in	cvt|id=1	0.353765	0.955363	_	_	_	_	_	2.17264e-19	_
+bob	meet.1	cvt|id=2	0.374275	0.919113	_	_	_	_	_	2.76717e-17	_
+2003	meet.in	cvt|id=2	0.353765	0.956789	_	_	_	_	_	2.17264e-19	_
+-----
+-----
+alice	son.of	carl	0.116875	0.896378	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	0.00232692
+alice	partner.of	bob	0.145799	0.725057	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	2.76717e-17
+alice	works.for	alicecorp	0.209776	0.847157	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	1.10829e-06
+alice	works.as	ceo	0.0106703	0.785433	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	0.937517
+alice	live.in	edinburgh	0.00627	0.941669	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.21574e-31	0.929612
+alice	lives.with	bob	0.0577611	0.706215	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	2.76717e-17
+alice	invests.in	alicecorp	0.647003	0.871104	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	1.10829e-06
+alice	invests.in	denniscorp	0.647003	0.871104	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	0.0560153
+alice	invests.in	othercorp	0.647003	0.871104	_	_	_	subject_is_centroid|score=1.0	_	1.21574e-31	0.0560153
+alice	born.in	edinburgh	0.0182311	0.826281	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.21574e-31	0.929612
+carl	mother.of	alice	0.0873127	0.867533	_	_	_	_	object_is_centroid|score=1.0	0.00232692	1.21574e-31
+bob	partner.of	alice	0.0998057	0.833047	_	_	_	_	object_is_centroid|score=1.0	2.76717e-17	1.21574e-31
+carl	parent.of	alice	0.178567	0.945859	_	_	_	_	object_is_centroid|score=1.0	0.00232692	1.21574e-31
+alicecorp	founder.of	alice	0.0508385	0.894696	_	_	_	_	object_is_centroid|score=1.0	1.10829e-06	1.21574e-31
+alicecorp	director.of	alice	0.0364029	0.729435	_	_	_	_	object_is_centroid|score=1.0	1.10829e-06	1.21574e-31
+bob	lives.with	alice	0.0426408	0.816861	_	_	_	_	object_is_centroid|score=1.0	2.76717e-17	1.21574e-31
+alicecorp	owner.of	alice	0.108665	0.788955	_	_	_	_	object_is_centroid|score=1.0	1.10829e-06	1.21574e-31
+
+who lives with fay ?
+-----
+fay	meet.2	cvt|id=0	1.92015e-09	0.584687	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	_
+fay	meet.1	cvt|id=1	1.31339e-10	0.374091	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	_
+henry	meet.1	cvt|id=0	2.21288e-10	0.408369	_	subject_is_gold	_	_	_	0.975951	_
+1999	meet.in	cvt|id=0	1.41393e-10	0.563344	_	_	_	_	_	0.00586073	_
+henry	meet.2	cvt|id=1	3.20096e-09	0.6189	_	subject_is_gold	_	_	_	0.975951	_
+1999	meet.in	cvt|id=1	1.41393e-10	0.563344	_	_	_	_	_	0.00586073	_
+-----
+-----
+fay	live.in	edinburgh	4.01197e-07	0.358341	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	2.22891e-05
+fay	works.for	alicecorp	3.58442e-06	0.155852	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	2.22898e-05
+fay	works.as	developer	8.14297e-07	0.295852	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	2.22891e-05
+fay	works.with	bob	4.68015e-05	0.535989	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	0.0197809
+fay	invests.in	othercorp	0.000140105	0.345538	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	2.23048e-05
+fay	partner.of	henry	7.98039e-06	0.471081	_	_	object_is_gold	subject_is_centroid|score=1.0	_	8.49156e-05	0.975951
+fay	lives.with	henry	3.34565e-06	0.494646	_	_	object_is_gold	subject_is_centroid|score=1.0	_	8.49156e-05	0.975951
+fay	born.in	copenhagen	1.2932e-06	0.346856	_	_	_	subject_is_centroid|score=1.0	_	8.49156e-05	2.2289e-05
+bob	works.with	fay	3.3784e-05	0.579629	_	_	_	_	object_is_centroid|score=1.0	0.0197809	8.49156e-05
+henry	partner.of	fay	6.26516e-06	0.521418	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.975951	8.49156e-05
+henry	lives.with	fay	2.49704e-06	0.561381	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.975951	8.49156e-05
+
+who is henry working for ?
+-----
+henry	taught.1	cvt|id=8	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=0	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=1	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=2	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=3	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=4	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	taught.1	cvt|id=5	0.0324829	0.265126	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+henry	meet.1	cvt|id=6	0.00486668	0.411589	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+fay	meet.2	cvt|id=6	0.143239	0.585494	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	_
+fay	meet.1	cvt|id=7	0.0062002	0.418525	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	_
+henry	meet.2	cvt|id=7	0.125987	0.553234	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	_
+maths	taught.2	cvt|id=8	0.0108715	0.166347	_	_	_	_	_	0.0179749	_
+2000	taught.in	cvt|id=8	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+maths	taught.2	cvt|id=0	0.0108715	0.166347	_	_	_	_	_	0.0179749	_
+2001	taught.in	cvt|id=0	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+maths	taught.2	cvt|id=1	0.0108715	0.166347	_	_	_	_	_	0.0179749	_
+2002	taught.in	cvt|id=1	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+maths	taught.2	cvt|id=2	0.0108715	0.166347	_	_	_	_	_	0.0179749	_
+2003	taught.in	cvt|id=2	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+physics	taught.2	cvt|id=3	0.0108715	0.166347	_	_	_	_	_	0.00705541	_
+2004	taught.in	cvt|id=3	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+physics	taught.2	cvt|id=4	0.0108715	0.166347	_	_	_	_	_	0.00705541	_
+2005	taught.in	cvt|id=4	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+physics	taught.2	cvt|id=5	0.0108715	0.166347	_	_	_	_	_	0.00705541	_
+2006	taught.in	cvt|id=5	0.00460591	0.357294	_	_	_	_	_	0.000107324	_
+1999	meet.in	cvt|id=6	0.00478824	0.491463	_	_	_	_	_	2.41762e-05	_
+1999	meet.in	cvt|id=7	0.00478824	0.484456	_	_	_	_	_	2.41762e-05	_
+-----
+-----
+fay	live.in	edinburgh	0.0475212	0.821641	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	0.000531977
+fay	works.for	alicecorp	0.644421	0.877213	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	0.296964
+fay	works.as	developer	0.119202	0.680494	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	0.00037079
+fay	works.with	bob	0.659091	0.890704	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	0.012931
+fay	invests.in	othercorp	0.490259	0.464964	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	0.0286211
+fay	partner.of	henry	0.481686	0.762083	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=1.0	5.671e-08	6.50124e-10
+henry	partner.of	fay	0.520343	0.72588	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=0.4	6.50124e-10	5.671e-08
+fay	lives.with	henry	0.263957	0.83014	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=1.0	5.671e-08	6.50124e-10
+henry	lives.with	fay	0.295212	0.798674	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=0.4	6.50124e-10	5.671e-08
+henry	live.in	edinburgh	0.0515163	0.798767	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	0.000531977
+henry	works.for	someschool	0.664946	0.861219	_	_	object_is_gold	subject_is_centroid|score=1.0	_	6.50124e-10	0.532649
+henry	works.as	teacher	0.125441	0.659537	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	0.000468508
+fay	born.in	copenhagen	0.216138	0.780121	_	_	_	subject_is_centroid|score=0.4	_	5.671e-08	8.73759e-05
+henry	born.in	copenhagen	0.229954	0.756642	_	_	_	subject_is_centroid|score=1.0	_	6.50124e-10	8.73759e-05
+bob	works.with	fay	0.630277	0.904554	_	_	_	_	object_is_centroid|score=0.4	0.012931	5.671e-08
+
+who is alice working for ?
+-----
+alice	founded.1	cvt|id=0	0.00080432	0.449139	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	_
+alice	meet.1	cvt|id=1	0.00096518	0.286052	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	_
+alice	meet.2	cvt|id=2	0.0388171	0.464411	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	_
+alicecorp	founded.2	cvt|id=0	0.000892331	0.104327	_	subject_is_gold	_	_	_	0.998546	_
+1997	founded.in	cvt|id=0	0.00111767	0.129075	_	_	_	_	_	3.82633e-05	_
+bob	meet.2	cvt|id=1	0.0529707	0.517089	_	_	_	_	_	0.00165374	_
+2003	meet.in	cvt|id=1	0.00112515	0.391734	_	_	_	_	_	1.57727e-05	_
+bob	meet.1	cvt|id=2	0.00143738	0.308874	_	_	_	_	_	0.00165374	_
+2003	meet.in	cvt|id=2	0.00112515	0.378727	_	_	_	_	_	1.57727e-05	_
+-----
+-----
+alice	son.of	carl	0.582903	0.927893	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	0.00780025
+alice	partner.of	bob	0.708789	0.858394	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	0.00165374
+alice	works.for	alicecorp	0.871083	0.953051	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.19374e-13	0.998546
+alice	works.as	ceo	0.274196	0.842333	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	6.87295e-05
+alice	live.in	edinburgh	0.152808	0.931325	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	2.19264e-05
+alice	lives.with	bob	0.528103	0.913814	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	0.00165374
+alice	invests.in	alicecorp	0.629305	0.706492	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.19374e-13	0.998546
+alice	invests.in	denniscorp	0.629305	0.706492	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	0.023019
+alice	invests.in	othercorp	0.629305	0.706492	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	0.023019
+alice	born.in	edinburgh	0.421564	0.903642	_	_	_	subject_is_centroid|score=1.0	_	1.19374e-13	2.19264e-05
+carl	mother.of	alice	0.621919	0.876431	_	_	_	_	object_is_centroid|score=1.0	0.00780025	1.19374e-13
+bob	partner.of	alice	0.661606	0.895528	_	_	_	_	object_is_centroid|score=1.0	0.00165374	1.19374e-13
+carl	parent.of	alice	0.68244	0.946106	_	_	_	_	object_is_centroid|score=1.0	0.00780025	1.19374e-13
+alicecorp	founder.of	alice	0.541098	0.940646	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.998546	1.19374e-13
+alicecorp	director.of	alice	0.362937	0.855601	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.998546	1.19374e-13
+bob	lives.with	alice	0.450689	0.938421	_	_	_	_	object_is_centroid|score=1.0	0.00165374	1.19374e-13
+alicecorp	owner.of	alice	0.614242	0.910978	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.998546	1.19374e-13
+
+who is the partner of bob ?
+-----
+alice	founded.1	cvt|id=0	1.13439e-09	0.766115	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	_
+bob	hire.2	cvt|id=1	9.11841e-10	0.704815	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	_
+alice	meet.1	cvt|id=2	1.00172e-09	0.590622	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	_
+bob	meet.2	cvt|id=2	1.31666e-08	0.755758	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	_
+bob	meet.1	cvt|id=3	9.51367e-10	0.587585	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	_
+alice	meet.2	cvt|id=3	1.37955e-08	0.757768	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	_
+alicecorp	founded.2	cvt|id=0	1.53293e-09	0.485267	_	_	_	_	_	0.00147335	_
+1997	founded.in	cvt|id=0	1.0007e-09	0.540491	_	_	_	_	_	9.77802e-07	_
+alicecorp	hire.1	cvt|id=1	2.83643e-10	0.652103	_	_	_	_	_	0.00147335	_
+2002	hire.in	cvt|id=1	1.93445e-09	0.706873	_	_	_	_	_	2.1585e-06	_
+2003	meet.in	cvt|id=2	1.04893e-09	0.639962	_	_	_	_	_	0.000394513	_
+2003	meet.in	cvt|id=3	1.04893e-09	0.639962	_	_	_	_	_	0.000394513	_
+-----
+-----
+alice	son.of	carl	2.36478e-07	0.311549	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	0.00140601
+bob	son.of	carl	2.40628e-07	0.310221	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	0.00140601
+alice	partner.of	bob	5.33986e-07	0.517245	_	subject_is_gold	_	subject_is_centroid|score=0.9	object_is_centroid|score=1.0	2.65708e-05	2.32204e-06
+bob	partner.of	alice	5.47386e-07	0.513624	_	_	object_is_gold	subject_is_centroid|score=1.0	object_is_centroid|score=0.9	2.32204e-06	2.65708e-05
+alice	works.for	alicecorp	2.68796e-07	0.15975	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	0.00147335
+alice	works.as	ceo	5.5692e-08	0.317988	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	8.41242e-07
+alice	live.in	edinburgh	2.75519e-08	0.35404	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	8.41242e-07
+bob	live.in	edinburgh	2.79347e-08	0.3523	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	8.41242e-07
+bob	works.for	alicecorp	2.72487e-07	0.158767	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	0.00147335
+bob	works.as	developer	5.64439e-08	0.316791	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	8.41242e-07
+bob	works.with	fay	2.92112e-06	0.539006	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	0.000674797
+alice	lives.with	bob	1.93299e-07	0.582604	_	subject_is_gold	_	subject_is_centroid|score=0.9	object_is_centroid|score=1.0	2.65708e-05	2.32204e-06
+bob	lives.with	alice	1.98893e-07	0.577557	_	_	object_is_gold	subject_is_centroid|score=1.0	object_is_centroid|score=0.9	2.32204e-06	2.65708e-05
+alice	invests.in	alicecorp	8.54665e-06	0.341157	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	0.00147335
+alice	invests.in	denniscorp	8.54665e-06	0.341157	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	8.41274e-07
+alice	invests.in	othercorp	8.54665e-06	0.341157	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	8.41274e-07
+bob	invests.in	alicecorp	8.67587e-06	0.339604	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	0.00147335
+alice	born.in	edinburgh	9.13375e-08	0.377141	_	subject_is_gold	_	subject_is_centroid|score=0.9	_	2.65708e-05	8.41242e-07
+bob	born.in	edinburgh	9.26655e-08	0.37555	_	_	_	subject_is_centroid|score=1.0	_	2.32204e-06	8.41242e-07
+carl	mother.of	alice	6.09964e-07	0.278356	_	_	object_is_gold	_	object_is_centroid|score=0.9	0.00140601	2.65708e-05
+carl	father.of	bob	3.36247e-07	0.23308	_	_	_	_	object_is_centroid|score=1.0	0.00140601	2.32204e-06
+carl	parent.of	alice	1.30654e-06	0.256975	_	_	object_is_gold	_	object_is_centroid|score=0.9	0.00140601	2.65708e-05
+carl	parent.of	bob	1.29628e-06	0.258917	_	_	_	_	object_is_centroid|score=1.0	0.00140601	2.32204e-06
+alicecorp	founder.of	alice	1.68881e-07	0.338964	_	_	object_is_gold	_	object_is_centroid|score=0.9	0.00147335	2.65708e-05
+alicecorp	director.of	alice	1.26376e-07	0.194212	_	_	object_is_gold	_	object_is_centroid|score=0.9	0.00147335	2.65708e-05
+fay	works.with	bob	2.11606e-06	0.575518	_	_	_	_	object_is_centroid|score=1.0	0.000674797	2.32204e-06
+alicecorp	owner.of	alice	1.51277e-06	0.169224	_	_	object_is_gold	_	object_is_centroid|score=0.9	0.00147335	2.65708e-05
+
+who is dennis director to ?
+-----
+alicecorp	founded.2	cvt|id=0	0.00715154	0.115648	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	_
+alicecorp	hire.1	cvt|id=9	0.00349322	0.192115	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	_
+dennis	founded.1	cvt|id=10	0.00945785	0.510763	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	_
+dennis	sell.1	cvt|id=11	0.0448045	0.398613	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	_
+henry	taught.1	cvt|id=12	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=1	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=2	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=3	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=4	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=5	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	taught.1	cvt|id=6	0.0856056	0.318753	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	meet.1	cvt|id=7	0.0164986	0.573093	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+henry	meet.2	cvt|id=8	0.237266	0.641462	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	_
+alice	founded.1	cvt|id=0	0.0120262	0.534712	_	_	_	_	_	0.990257	_
+1997	founded.in	cvt|id=0	0.0113215	0.165851	_	_	_	_	_	0.000423007	_
+bob	hire.2	cvt|id=9	0.010557	0.319661	_	_	_	_	_	0.95355	_
+2002	hire.in	cvt|id=9	0.0186909	0.403704	_	_	_	_	_	3.03592e-05	_
+denniscorp	founded.2	cvt|id=10	0.0100541	0.130272	_	_	_	_	_	0.234519	_
+1990	founded.in	cvt|id=10	0.0113215	0.165633	_	_	_	_	_	0.000402637	_
+denniscorp	sell.2	cvt|id=11	0.0355665	0.657265	_	_	_	_	_	0.234519	_
+gary	sell.3	cvt|id=11	0.0303093	0.530132	_	_	_	_	_	0.00234445	_
+1996	sell.in	cvt|id=11	0.0206925	0.28294	_	_	_	_	_	0.000440898	_
+maths	taught.2	cvt|id=12	0.0305522	0.220128	_	_	_	_	_	0.0237345	_
+2000	taught.in	cvt|id=12	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+maths	taught.2	cvt|id=1	0.0305522	0.220128	_	_	_	_	_	0.0237345	_
+2001	taught.in	cvt|id=1	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+maths	taught.2	cvt|id=2	0.0305522	0.220128	_	_	_	_	_	0.0237345	_
+2002	taught.in	cvt|id=2	0.0174698	0.450249	_	_	_	_	_	3.03592e-05	_
+maths	taught.2	cvt|id=3	0.0305522	0.220128	_	_	_	_	_	0.0237345	_
+2003	taught.in	cvt|id=3	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+physics	taught.2	cvt|id=4	0.0305522	0.220128	_	_	_	_	_	0.0106724	_
+2004	taught.in	cvt|id=4	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+physics	taught.2	cvt|id=5	0.0305522	0.220128	_	_	_	_	_	0.0106724	_
+2005	taught.in	cvt|id=5	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+physics	taught.2	cvt|id=6	0.0305522	0.220128	_	_	_	_	_	0.0106724	_
+2006	taught.in	cvt|id=6	0.0174698	0.450249	_	_	_	_	_	6.09306e-05	_
+fay	meet.2	cvt|id=7	0.267578	0.668042	_	_	_	_	_	4.03905e-05	_
+1999	meet.in	cvt|id=7	0.0139056	0.591456	_	_	_	_	_	4.74751e-07	_
+fay	meet.1	cvt|id=8	0.0216145	0.586762	_	_	_	_	_	4.03905e-05	_
+1999	meet.in	cvt|id=8	0.0139056	0.577131	_	_	_	_	_	4.74751e-07	_
+-----
+-----
+dennis	daughter.of	emma	0.584786	0.858403	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	0.0185642
+dennis	child.of	emma	0.545774	0.888081	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	0.0185642
+alicecorp	founder.of	alice	0.535582	0.803917	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	0.990257
+alicecorp	director.of	alice	0.345161	0.5633	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	0.990257
+alicecorp	founded.in	edinburgh	0.458156	0.786653	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	0.00113206
+alicecorp	owner.of	alice	0.668871	0.710922	_	_	_	subject_is_centroid|score=1.0	_	6.21592e-05	0.990257
+dennis	live.in	amsterdam	0.136216	0.822676	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	0.000209445
+dennis	works.as	ceo	0.251312	0.685104	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	0.000826403
+dennis	works.for	othercorp	0.753017	0.874292	_	_	object_is_gold	subject_is_centroid|score=0.8	_	4.91274e-08	0.988365
+henry	partner.of	fay	0.666278	0.750152	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	4.03905e-05
+henry	lives.with	fay	0.460831	0.82359	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	4.03905e-05
+henry	live.in	edinburgh	0.136216	0.822676	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	0.00113206
+henry	works.for	someschool	0.753017	0.874292	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	0.765675
+henry	works.as	teacher	0.251312	0.685104	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	0.000826403
+dennis	born.in	amsterdam	0.399207	0.777048	_	_	_	subject_is_centroid|score=0.8	_	4.91274e-08	0.000209445
+henry	born.in	copenhagen	0.399207	0.777048	_	_	_	subject_is_centroid|score=0.8	_	1.128e-12	0.000125228
+emma	father.of	dennis	0.607717	0.847718	_	_	_	_	object_is_centroid|score=0.8	0.0185642	4.91274e-08
+emma	parent.of	dennis	0.658111	0.877545	_	_	_	_	object_is_centroid|score=0.8	0.0185642	4.91274e-08
+alice	works.for	alicecorp	0.695533	0.907278	_	_	_	_	object_is_centroid|score=1.0	0.990257	6.21592e-05
+bob	works.for	alicecorp	0.695533	0.907278	_	_	_	_	object_is_centroid|score=1.0	0.95355	6.21592e-05
+fay	works.for	alicecorp	0.695533	0.907278	_	_	_	_	object_is_centroid|score=1.0	4.03905e-05	6.21592e-05
+denniscorp	founder.of	dennis	0.478559	0.849576	_	_	_	_	object_is_centroid|score=0.8	0.234519	4.91274e-08
+othercorp	director.of	dennis	0.303741	0.643752	_	subject_is_gold	_	_	object_is_centroid|score=0.8	0.988365	4.91274e-08
+alice	invests.in	alicecorp	0.491964	0.524909	_	_	_	_	object_is_centroid|score=1.0	0.990257	6.21592e-05
+bob	invests.in	alicecorp	0.491964	0.524909	_	_	_	_	object_is_centroid|score=1.0	0.95355	6.21592e-05
+gary	invests.in	alicecorp	0.491964	0.524909	_	_	_	_	object_is_centroid|score=1.0	0.00234445	6.21592e-05
+carl	invests.in	alicecorp	0.491964	0.524909	_	_	_	_	object_is_centroid|score=1.0	0.00731186	6.21592e-05
+fay	partner.of	henry	0.62262	0.792658	_	_	_	_	object_is_centroid|score=0.8	4.03905e-05	1.128e-12
+fay	lives.with	henry	0.405595	0.859627	_	_	_	_	object_is_centroid|score=0.8	4.03905e-05	1.128e-12
+
+who is the father of emma ?
+-----
+emma	meet.2	cvt|id=0	8.28955e-11	0.13504	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	_
+emma	meet.1	cvt|id=1	6.44201e-12	0.12403	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	_
+carl	meet.1	cvt|id=0	1.08838e-11	0.13542	_	_	_	_	_	0.010231	_
+2004	meet.in	cvt|id=0	6.35857e-12	0.10322	_	_	_	_	_	1.25836e-06	_
+carl	meet.2	cvt|id=1	1.38203e-10	0.148819	_	_	_	_	_	0.010231	_
+2004	meet.in	cvt|id=1	6.35857e-12	0.10322	_	_	_	_	_	1.25836e-06	_
+-----
+-----
+emma	father.of	dennis	0.834288	0.296465	_	_	object_is_gold	subject_is_centroid|score=1.0	_	2.82329e-07	0.98996
+emma	parent.of	dennis	0.80134	0.389316	_	_	object_is_gold	subject_is_centroid|score=1.0	_	2.82329e-07	0.98996
+emma	partner.of	carl	0.736644	0.161886	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	0.010231
+emma	works.for	denniscorp	0.312821	0.101485	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	0.000165585
+emma	works.as	ceo	0.562151	0.149546	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	9.32069e-07
+emma	live.in	amsterdam	0.423871	0.120957	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	1.16247e-06
+emma	lives.with	carl	0.780502	0.187055	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	0.010231
+emma	invests.in	othercorp	0.805627	0.057808	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	7.23774e-06
+emma	invests.in	denniscorp	0.805627	0.057808	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	0.000165585
+emma	born.in	amsterdam	0.598425	0.161565	_	_	_	subject_is_centroid|score=1.0	_	2.82329e-07	1.16247e-06
+dennis	daughter.of	emma	0.673547	0.233511	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.98996	2.82329e-07
+dennis	child.of	emma	0.818722	0.241193	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.98996	2.82329e-07
+carl	partner.of	emma	0.663515	0.191383	_	_	_	_	object_is_centroid|score=1.0	0.010231	2.82329e-07
+denniscorp	director.of	emma	0.609323	0.0551508	_	_	_	_	object_is_centroid|score=1.0	0.000165585	2.82329e-07
+carl	lives.with	emma	0.73831	0.217026	_	_	_	_	object_is_centroid|score=1.0	0.010231	2.82329e-07
+
+who is carl the son of ?
+-----
+carl	meet.1	cvt|id=0	2.77837e-06	0.185859	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	_
+emma	meet.2	cvt|id=0	3.3627e-05	0.243408	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	_
+emma	meet.1	cvt|id=1	3.77728e-06	0.200114	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	_
+carl	meet.2	cvt|id=1	2.67219e-05	0.229372	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	_
+2004	meet.in	cvt|id=0	2.39424e-06	0.24926	_	_	_	_	_	0.000241231	_
+2004	meet.in	cvt|id=1	2.39424e-06	0.24926	_	_	_	_	_	0.000241231	_
+-----
+-----
+carl	mother.of	alice	0.614663	0.234702	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.08138e-07	0.978144
+carl	father.of	bob	0.801394	0.459674	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.08138e-07	0.996361
+emma	father.of	dennis	0.787884	0.472479	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.974371
+emma	parent.of	dennis	0.721071	0.60222	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.974371
+carl	parent.of	alice	0.732805	0.586102	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.08138e-07	0.978144
+carl	parent.of	bob	0.732805	0.586102	_	_	object_is_gold	subject_is_centroid|score=1.0	_	1.08138e-07	0.996361
+carl	partner.of	emma	0.694139	0.303246	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=0.4	1.08138e-07	1.81337e-05
+emma	partner.of	carl	0.654206	0.336439	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=1.0	1.81337e-05	1.08138e-07
+emma	works.for	denniscorp	0.285713	0.247539	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.00219944
+emma	works.as	ceo	0.417375	0.280212	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	5.66438e-05
+emma	live.in	amsterdam	0.278551	0.264228	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.000147036
+carl	live.in	amsterdam	0.297014	0.253206	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	0.000147036
+carl	works.for	othercorp	0.30192	0.228082	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	0.00288023
+carl	works.as	developer	0.433811	0.273658	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	7.92229e-05
+carl	lives.with	emma	0.688641	0.349412	_	_	_	subject_is_centroid|score=1.0	object_is_centroid|score=0.4	1.08138e-07	1.81337e-05
+emma	lives.with	carl	0.651103	0.388709	_	_	_	subject_is_centroid|score=0.4	object_is_centroid|score=1.0	1.81337e-05	1.08138e-07
+emma	invests.in	othercorp	0.684365	0.119196	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.00288023
+emma	invests.in	denniscorp	0.684365	0.119196	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.00219944
+carl	invests.in	alicecorp	0.701457	0.115314	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	0.000343606
+carl	invests.in	denniscorp	0.701457	0.115314	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	0.00219944
+carl	born.in	edinburgh	0.46885	0.299943	_	_	_	subject_is_centroid|score=1.0	_	1.08138e-07	1.55088e-05
+emma	born.in	amsterdam	0.455069	0.311714	_	_	_	subject_is_centroid|score=0.4	_	1.81337e-05	0.000147036
+alice	son.of	carl	0.811588	0.568758	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.978144	1.08138e-07
+bob	son.of	carl	0.811588	0.568758	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.996361	1.08138e-07
+dennis	daughter.of	emma	0.634676	0.440801	_	_	_	_	object_is_centroid|score=0.4	0.974371	1.81337e-05
+dennis	child.of	emma	0.746299	0.400992	_	_	_	_	object_is_centroid|score=0.4	0.974371	1.81337e-05
+denniscorp	director.of	emma	0.534144	0.101091	_	_	_	_	object_is_centroid|score=0.4	0.00219944	1.81337e-05
+
+who is carl partner to ?
+-----
+carl	meet.1	cvt|id=0	8.46199e-11	0.59608	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	_
+carl	meet.2	cvt|id=1	1.25323e-09	0.744292	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	_
+emma	meet.2	cvt|id=0	2.03e-09	0.764687	_	subject_is_gold	_	_	_	0.98816	_
+2004	meet.in	cvt|id=0	9.18212e-11	0.593485	_	_	_	_	_	1.75124e-05	_
+emma	meet.1	cvt|id=1	1.41726e-10	0.627285	_	subject_is_gold	_	_	_	0.98816	_
+2004	meet.in	cvt|id=1	9.18212e-11	0.593485	_	_	_	_	_	1.75124e-05	_
+-----
+-----
+carl	mother.of	alice	1.32584e-06	0.294993	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	2.17872e-06
+carl	father.of	bob	7.5452e-07	0.259158	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	2.17872e-06
+carl	parent.of	alice	2.64173e-06	0.291342	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	2.17872e-06
+carl	parent.of	bob	2.64173e-06	0.291342	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	2.17872e-06
+carl	partner.of	emma	1.02764e-06	0.560677	_	_	object_is_gold	subject_is_centroid|score=1.0	_	2.92055e-06	0.98816
+carl	live.in	amsterdam	4.68673e-08	0.387326	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.44993e-08
+carl	works.for	othercorp	4.40497e-07	0.204592	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.44995e-08
+carl	works.as	developer	9.51539e-08	0.358537	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.44993e-08
+carl	lives.with	emma	3.64218e-07	0.622634	_	_	object_is_gold	subject_is_centroid|score=1.0	_	2.92055e-06	0.98816
+carl	invests.in	alicecorp	1.352e-05	0.357507	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.45044e-08
+carl	invests.in	denniscorp	1.352e-05	0.357507	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.45044e-08
+carl	born.in	edinburgh	1.53532e-07	0.437252	_	_	_	subject_is_centroid|score=1.0	_	2.92055e-06	7.44993e-08
+alice	son.of	carl	2.97517e-07	0.401263	_	_	_	_	object_is_centroid|score=1.0	2.17872e-06	2.92055e-06
+bob	son.of	carl	2.97517e-07	0.401263	_	_	_	_	object_is_centroid|score=1.0	2.17872e-06	2.92055e-06
+emma	partner.of	carl	8.01574e-07	0.584974	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.98816	2.92055e-06
+emma	lives.with	carl	2.71447e-07	0.658168	_	subject_is_gold	_	_	object_is_centroid|score=1.0	0.98816	2.92055e-06
+
+what does gary invest in ?
+-----
+gary	sell.3	cvt|id=0	0.00193962	0.644405	_	_	_	subject_is_centroid|score=0.8	_	0.000150243	_
+carl	meet.1	cvt|id=1	0.000878173	0.415225	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	_
+carl	meet.2	cvt|id=2	0.0611916	0.644634	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	_
+dennis	sell.1	cvt|id=0	0.0033154	0.509815	_	_	_	_	_	0.0371027	_
+denniscorp	sell.2	cvt|id=0	0.00190556	0.658902	_	_	_	_	_	0.986664	_
+1996	sell.in	cvt|id=0	0.0020445	0.468889	_	_	_	_	_	0.00467515	_
+emma	meet.2	cvt|id=1	0.0689868	0.662974	_	_	_	_	_	0.125892	_
+2004	meet.in	cvt|id=1	0.000781042	0.67345	_	_	_	_	_	6.90078e-05	_
+emma	meet.1	cvt|id=2	0.000996507	0.418793	_	_	_	_	_	0.125892	_
+2004	meet.in	cvt|id=2	0.000781042	0.667943	_	_	_	_	_	6.90078e-05	_
+-----
+-----
+carl	mother.of	alice	0.0452618	0.526725	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.0365858
+carl	father.of	bob	0.0422753	0.341691	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.0442107
+carl	parent.of	alice	0.076988	0.59658	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.0365858
+carl	parent.of	bob	0.076988	0.59658	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.0442107
+carl	partner.of	emma	0.0541352	0.501187	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.125892
+gary	live.in	amsterdam	0.00194985	0.792762	_	_	_	subject_is_centroid|score=0.8	_	0.000150243	0.00316069
+carl	live.in	amsterdam	0.00178197	0.815346	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.00316069
+carl	works.for	othercorp	0.0287013	0.451449	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.00377283
+carl	works.as	developer	0.00267156	0.502835	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.00302314
+carl	lives.with	emma	0.0155202	0.359761	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.125892
+gary	invests.in	alicecorp	0.483774	0.733372	_	_	object_is_gold	subject_is_centroid|score=0.8	_	0.000150243	0.974168
+carl	invests.in	alicecorp	0.465084	0.75544	_	_	object_is_gold	subject_is_centroid|score=0.3	_	1.62314e-06	0.974168
+carl	invests.in	denniscorp	0.465084	0.75544	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.986664
+carl	born.in	edinburgh	0.00944458	0.449156	_	_	_	subject_is_centroid|score=0.3	_	1.62314e-06	0.00295783
+gary	born.in	amsterdam	0.0101727	0.418616	_	_	_	subject_is_centroid|score=0.8	_	0.000150243	0.00316069
+alice	son.of	carl	0.0180816	0.653922	_	_	_	_	object_is_centroid|score=0.3	0.0365858	1.62314e-06
+bob	son.of	carl	0.0180816	0.653922	_	_	_	_	object_is_centroid|score=0.3	0.0442107	1.62314e-06
+emma	partner.of	carl	0.0482665	0.541883	_	_	_	_	object_is_centroid|score=0.3	0.125892	1.62314e-06
+denniscorp	owner.of	gary	0.0416234	0.421943	_	_	_	_	object_is_centroid|score=0.8	0.986664	0.000150243
+emma	lives.with	carl	0.0142716	0.394264	_	_	_	_	object_is_centroid|score=0.3	0.125892	1.62314e-06
+

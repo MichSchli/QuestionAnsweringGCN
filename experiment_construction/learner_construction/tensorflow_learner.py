@@ -141,6 +141,8 @@ class TensorflowModel:
         model_prediction = self.model.get_prediction_graph()
         edge_gates = self.model.get_edge_gates()
         batch_iterator = self.iterate_in_batches(example_iterator, validate_batches=False)
+
+        outfile = open("analysis/gates.txt", "w+")
         for j,batch in enumerate(batch_iterator):
             print("batch "+str(j)+":\n - - - - - - - ")
 
@@ -153,8 +155,8 @@ class TensorflowModel:
             for i, prediction in enumerate(predictions):
                 l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
 
-                #formatted_gate_information, edge_counts = self.format_gate_information(batch["neighborhood"][i], batch["gold_entities"][i], prediction[0], gates, edge_counts)
-                #self.print_formatted_gate_information(formatted_gate_information, batch["sentence"][i])
+                formatted_gate_information, edge_counts = self.format_gate_information(batch["neighborhood"][i], batch["gold_entities"][i], prediction[0], gates, edge_counts)
+                self.print_formatted_gate_information(formatted_gate_information, batch["sentence"][i], outfile)
 
                 for index,prob in l[:5]:
                     if prob > 0.5:
@@ -162,20 +164,20 @@ class TensorflowModel:
 
                 yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
 
-    def print_formatted_gate_information(self, formatted_gate_information, sentence):
-        print(" ".join([w[1] for w in sentence]))
-        print("-----")
+    def print_formatted_gate_information(self, formatted_gate_information, sentence, outfile):
+        print(" ".join([w[1] for w in sentence]), file=outfile)
+        print("-----", file=outfile)
 
         for edge in formatted_gate_information[0]:
-            print("\t".join(edge))
-        print("-----")
+            print("\t".join(edge), file=outfile)
+        print("-----", file=outfile)
         for edge in formatted_gate_information[1]:
-            print("\t".join(edge))
-        print("-----")
+            print("\t".join(edge), file=outfile)
+        print("-----", file=outfile)
         for edge in formatted_gate_information[2]:
-            print("\t".join(edge))
+            print("\t".join(edge), file=outfile)
 
-        print("\n")
+        print("", file=outfile)
 
 
     def format_gate_information(self, hypergraph, gold, predictions, all_gates_in_batch, edge_counts):
