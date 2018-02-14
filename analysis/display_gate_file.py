@@ -83,7 +83,7 @@ class Graph:
                 vertices[edge[0]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "strongest_connection": 0,
+                                     "strongest_connection": [0 for _ in edge[3].split("/")],
                                      "prediction_probability": float(edge[10])}
 
                 if edge[8] != "_":
@@ -94,14 +94,14 @@ class Graph:
                 if edge[6] != "_":
                     vertices[edge[0]]["is_gold"] = True
 
-            score_forward = float(edge[3])
-            score_backward = float(edge[4])
-            max_score = max(score_forward, score_backward)
-            vertices[edge[0]]["strongest_connection"] = max(vertices[edge[0]]["strongest_connection"], max_score)
+            score_forward = [float(s) for s in edge[3].split("/")]
+            score_backward = [float(s) for s in edge[4].split("/")]
+            max_scores = [max(sf, sb) for sf, sb in zip(score_forward, score_backward)]
+            vertices[edge[0]]["strongest_connection"] = [max(sf, sb) for sf, sb in zip(vertices[edge[0]]["strongest_connection"], max_scores)]
 
             if edge[2] not in events:
-                events[edge[2]] = {"strongest_connection": 0}
-            events[edge[2]]["strongest_connection"] = max(events[edge[2]]["strongest_connection"], max_score)
+                events[edge[2]] = {"strongest_connection": [0 for _ in edge[3].split("/")]}
+            events[edge[2]]["strongest_connection"] = [max(sf, sb) for sf, sb in zip(events[edge[2]]["strongest_connection"], max_scores)]
 
 
         for edge in example["event_to_entity_edges"]:
@@ -109,7 +109,7 @@ class Graph:
                 vertices[edge[2]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "strongest_connection": 0,
+                                     "strongest_connection": [0 for _ in edge[3].split("/")],
                                      "prediction_probability": float(edge[11])}
 
                 if edge[9] != "_":
@@ -120,22 +120,23 @@ class Graph:
                 if edge[7] != "_":
                     vertices[edge[2]]["is_gold"] = True
 
-            score_forward = float(edge[3])
-            score_backward = float(edge[4])
-            max_score = max(score_forward, score_backward)
-            vertices[edge[2]]["strongest_connection"] = max(vertices[edge[2]]["strongest_connection"], max_score)
+            score_forward = [float(s) for s in edge[3].split("/")]
+            score_backward = [float(s) for s in edge[4].split("/")]
+            max_scores = [max(sf, sb) for sf, sb in zip(score_forward, score_backward)]
+            vertices[edge[2]]["strongest_connection"] = [max(sf, sb) for sf, sb in
+                                                         zip(vertices[edge[2]]["strongest_connection"], max_scores)]
 
             if edge[0] not in events:
-                events[edge[0]] = {"strongest_connection": 0}
-            events[edge[0]]["strongest_connection"] = max(events[edge[0]]["strongest_connection"], max_score)
-
+                events[edge[0]] = {"strongest_connection": [0 for _ in edge[3].split("/")]}
+            events[edge[0]]["strongest_connection"] = [max(sf, sb) for sf, sb in
+                                                       zip(events[edge[0]]["strongest_connection"], max_scores)]
 
         for edge in example["entity_to_entity_edges"]:
             if edge[0] not in vertices:
                 vertices[edge[0]] = {"is_gold" : False,
                                      "is_centroid": False,
                                      "score": None,
-                                     "strongest_connection": 0,
+                                     "strongest_connection": [0 for _ in edge[3].split("/")],
                                      "prediction_probability": float(edge[10])}
 
                 if edge[8] != "_":
@@ -147,7 +148,7 @@ class Graph:
                 vertices[edge[2]] = {"is_gold": None,
                                      "is_centroid": None,
                                      "score": None,
-                                     "strongest_connection": 0,
+                                     "strongest_connection": [0 for _ in edge[3].split("/")],
                                      "prediction_probability": float(edge[11])}
 
                 if edge[9] != "_":
@@ -158,12 +159,13 @@ class Graph:
                 if edge[7] != "_":
                    vertices[edge[2]]["is_gold"] = True
 
-
-            score_forward = float(edge[3])
-            score_backward = float(edge[4])
-            max_score = max(score_forward, score_backward)
-            vertices[edge[0]]["strongest_connection"] = max(vertices[edge[0]]["strongest_connection"], max_score)
-            vertices[edge[2]]["strongest_connection"] = max(vertices[edge[2]]["strongest_connection"], max_score)
+            score_forward = [float(s) for s in edge[3].split("/")]
+            score_backward = [float(s) for s in edge[4].split("/")]
+            max_scores = [max(sf, sb) for sf, sb in zip(score_forward, score_backward)]
+            vertices[edge[0]]["strongest_connection"] = [max(sf, sb) for sf, sb in
+                                                         zip(vertices[edge[0]]["strongest_connection"], max_scores)]
+            vertices[edge[2]]["strongest_connection"] = [max(sf, sb) for sf, sb in
+                                                         zip(vertices[edge[2]]["strongest_connection"], max_scores)]
 
         self.vertices = vertices
         self.events = events
@@ -188,26 +190,30 @@ class AnalysisTool:
     preserve_predictions = True
     preserve_gold = True
     cutoff_percentage = 0.0
+    layer = 0
 
-    def __init__(self):
+    def __init__(self, layers):
         self.example_pointer = 0
 
         self.root = Tk()
         frame = Frame(self.root)
         self.canvas = Canvas(frame, width=self.canvas_width, height=self.canvas_height, bg='white')
-        self.canvas.grid(row=0, columnspan=4)
+        self.canvas.grid(row=0, columnspan=5)
 
         save = Button(frame, text="save", fg="black", command=self.save_button)
-        save.grid(row=1, column=2)
+        save.grid(row=1, column=3)
 
         back = Button(frame, text="<", fg="black", command=self.backward_button)
         back.grid(row=1, column=0)
 
         forward = Button(frame, text=">", fg="black", command=self.forward_button)
-        forward.grid(row=1, column=3)
+        forward.grid(row=1, column=4)
 
         w = Scale(frame, orient=HORIZONTAL, from_=0, to=100, command=self.use_slider)
         w.grid(row=1, column=1)
+
+        w_l = Scale(frame, orient=HORIZONTAL, from_=1, to=layers, command=self.use_layer_slider)
+        w_l.grid(row=1, column=2)
 
         frame.pack()
 
@@ -237,6 +243,14 @@ class AnalysisTool:
 
     def use_slider(self, event):
         self.cutoff_percentage = float(event) / 100
+
+        if self.apply_cutoff_to_vertices:
+            self.draw_example(maintain_locations=True)
+        else:
+            self.draw_edges()
+
+    def use_layer_slider(self, event):
+        self.layer = int(event) - 1
 
         if self.apply_cutoff_to_vertices:
             self.draw_example(maintain_locations=True)
@@ -301,7 +315,7 @@ class AnalysisTool:
 
         for vertex in graph.get_other_vertices():
             if self.apply_cutoff_to_vertices \
-                    and vertex[1] < self.cutoff_percentage\
+                    and vertex[1][self.layer] < self.cutoff_percentage\
                     and not (vertex[3] and self.preserve_gold)\
                     and not (vertex[2] > 0.5 and self.preserve_predictions):
                 continue
@@ -336,7 +350,7 @@ class AnalysisTool:
         cvt_extra_border = 40
 
         for vertex in graph.get_events():
-            if self.apply_cutoff_to_vertices and vertex[1] < self.cutoff_percentage:
+            if self.apply_cutoff_to_vertices and vertex[1][self.layer] < self.cutoff_percentage:
                 continue
             vertex = vertex[0]
 
@@ -364,14 +378,14 @@ class AnalysisTool:
         self.edge_objects = []
         for edge in graph.get_all_edges():
 
-            forward_gate = float(edge[3])
-            backward_gate = float(edge[4])
+            forward_gate = [float(e) for e in edge[3].split("/")]
+            backward_gate = [float(e) for e in edge[4].split("/")]
 
-            if forward_gate < self.cutoff_percentage and backward_gate < self.cutoff_percentage:
+            if forward_gate[self.layer] < self.cutoff_percentage and backward_gate[self.layer] < self.cutoff_percentage:
                 continue
-            elif forward_gate > self.cutoff_percentage and backward_gate > self.cutoff_percentage:
+            elif forward_gate[self.layer] > self.cutoff_percentage and backward_gate[self.layer] > self.cutoff_percentage:
                 arrows = tk.BOTH
-            elif forward_gate > self.cutoff_percentage:
+            elif forward_gate[self.layer] > self.cutoff_percentage:
                 arrows = tk.LAST
             else:
                 arrows = tk.FIRST
@@ -392,6 +406,6 @@ class AnalysisTool:
             self.edge_objects.append(text)
 
 
-analysis_tool = AnalysisTool()
+analysis_tool = AnalysisTool(2)
 analysis_tool.read_examples(examples)
 analysis_tool.run()

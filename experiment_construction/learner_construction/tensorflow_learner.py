@@ -186,39 +186,43 @@ class TensorflowModel:
         all_formated_edges = []
 
         formatted_gate_information = self.get_formatted_en_to_ev(all_gates_in_batch, centroid_scores, edge_counts,
-                                                                 gold, hypergraph, layer,
+                                                                 gold, hypergraph,
                                                                  predictions)
         all_formated_edges.append(formatted_gate_information)
 
 
         formatted_gate_information = self.get_formatted_ev_to_en(all_gates_in_batch, centroid_scores, edge_counts,
-                                                                 gold, hypergraph, layer,
+                                                                 gold, hypergraph,
                                                                  predictions)
         all_formated_edges.append(formatted_gate_information)
 
 
         formatted_gate_information = self.get_formatted_en_to_en(all_gates_in_batch, centroid_scores, edge_counts,
-                                                                 gold, hypergraph, layer,
+                                                                 gold, hypergraph,
                                                                  predictions)
         all_formated_edges.append(formatted_gate_information)
 
         return all_formated_edges, edge_counts
 
     def get_formatted_en_to_ev(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
-                               layer, predictions):
+                               predictions):
+
         en_to_ev_edges = hypergraph.entity_to_event_edges
         n_en_to_ev_edges = hypergraph.entity_to_event_edges.shape[0]
 
-        en_to_ev_gates = all_gates_in_batch[layer][0][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges]
-        en_to_ev_invert_gates = all_gates_in_batch[layer][4][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges]
+        gates = np.array([layer[0][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges] for layer in all_gates_in_batch])
+        gates = np.transpose(np.reshape(gates, (len(all_gates_in_batch), n_en_to_ev_edges)))
+        invert_gates = np.array([layer[4][edge_counts[0]:edge_counts[0] + n_en_to_ev_edges] for layer in all_gates_in_batch])
+        invert_gates = np.transpose(np.reshape(invert_gates, (len(all_gates_in_batch), n_en_to_ev_edges)))
+
         formatted_gate_information = [["_"] * 12 for _ in range(n_en_to_ev_edges)]
         pointer = 0
-        for edge, gate, invert_gate in zip(en_to_ev_edges, en_to_ev_gates, en_to_ev_invert_gates):
+        for edge, gate, invert_gate in zip(en_to_ev_edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
             formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
             formatted_gate_information[pointer][2] = "cvt|id=" + str(hypergraph.event_vertices[edge[2]])
-            formatted_gate_information[pointer][3] = str(gate[0])
-            formatted_gate_information[pointer][4] = str(invert_gate[0])
+            formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
+            formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])
 
             if edge[0] in gold:
                 formatted_gate_information[pointer][6] = "subject_is_gold"
@@ -233,20 +237,23 @@ class TensorflowModel:
         return formatted_gate_information
 
     def get_formatted_ev_to_en(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
-                               layer, predictions):
+                               predictions):
         edges = hypergraph.event_to_entity_edges
         n_edges = hypergraph.event_to_entity_edges.shape[0]
 
-        gates = all_gates_in_batch[layer][1][edge_counts[1]:edge_counts[1] + n_edges]
-        invert_gates = all_gates_in_batch[layer][3][edge_counts[1]:edge_counts[1] + n_edges]
+        gates = np.array([layer[1][edge_counts[1]:edge_counts[1] + n_edges] for layer in all_gates_in_batch])
+        gates = np.transpose(np.reshape(gates, (len(all_gates_in_batch), n_edges)))
+        invert_gates = np.array([layer[3][edge_counts[1]:edge_counts[1] + n_edges] for layer in all_gates_in_batch])
+        invert_gates = np.transpose(np.reshape(invert_gates, (len(all_gates_in_batch), n_edges)))
+
         formatted_gate_information = [["_"] * 12 for _ in range(n_edges)]
         pointer = 0
         for edge, gate, invert_gate in zip(edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = "cvt|id=" + str(hypergraph.event_vertices[edge[0]])
             formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
             formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
-            formatted_gate_information[pointer][3] = str(gate[0])
-            formatted_gate_information[pointer][4] = str(invert_gate[0])
+            formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
+            formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])
 
             if edge[2] in gold:
                 formatted_gate_information[pointer][7] = "object_is_gold"
@@ -261,20 +268,23 @@ class TensorflowModel:
         return formatted_gate_information
 
     def get_formatted_en_to_en(self, all_gates_in_batch, centroid_scores, edge_counts, gold, hypergraph,
-                               layer, predictions):
+                               predictions):
         edges = hypergraph.entity_to_entity_edges
         n_edges = hypergraph.entity_to_entity_edges.shape[0]
 
-        gates = all_gates_in_batch[layer][2][edge_counts[2]:edge_counts[2] + n_edges]
-        invert_gates = all_gates_in_batch[layer][5][edge_counts[2]:edge_counts[2] + n_edges]
+        gates = np.array([layer[2][edge_counts[2]:edge_counts[2] + n_edges] for layer in all_gates_in_batch])
+        gates = np.transpose(np.reshape(gates, (len(all_gates_in_batch), n_edges)))
+        invert_gates = np.array([layer[5][edge_counts[2]:edge_counts[2] + n_edges] for layer in all_gates_in_batch])
+        invert_gates = np.transpose(np.reshape(invert_gates, (len(all_gates_in_batch), n_edges)))
+
         formatted_gate_information = [["_"] * 12 for _ in range(n_edges)]
         pointer = 0
         for edge, gate, invert_gate in zip(edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
             formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
             formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
-            formatted_gate_information[pointer][3] = str(gate[0])
-            formatted_gate_information[pointer][4] = str(invert_gate[0])
+            formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
+            formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])
 
             if edge[0] in gold:
                 formatted_gate_information[pointer][6] = "subject_is_gold"
