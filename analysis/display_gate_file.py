@@ -18,6 +18,8 @@ for line in open(args.file):
     line = line.strip()
 
     if not line:
+        if len(examples) == 5:
+            break
         examples.append({"sentence": None,
                          "entity_to_event_edges": [],
                          "event_to_entity_edges": [],
@@ -120,6 +122,7 @@ class Graph:
                 if edge[7] != "_":
                     vertices[edge[2]]["is_gold"] = True
 
+            print(edge)
             score_forward = [float(s) for s in edge[3].split("/")]
             score_backward = [float(s) for s in edge[4].split("/")]
             max_scores = [max(sf, sb) for sf, sb in zip(score_forward, score_backward)]

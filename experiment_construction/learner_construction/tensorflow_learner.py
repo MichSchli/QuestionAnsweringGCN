@@ -169,19 +169,18 @@ class TensorflowModel:
         print("-----", file=outfile)
 
         for edge in formatted_gate_information[0]:
-            print("\t".join(edge), file=outfile)
+            print("\t".join([item.replace("\t", " ") for item in edge]), file=outfile)
         print("-----", file=outfile)
         for edge in formatted_gate_information[1]:
-            print("\t".join(edge), file=outfile)
+            print("\t".join([item.replace("\t", " ") for item in edge]), file=outfile)
         print("-----", file=outfile)
         for edge in formatted_gate_information[2]:
-            print("\t".join(edge), file=outfile)
+            print("\t".join([item.replace("\t", " ") for item in edge]), file=outfile)
 
         print("", file=outfile)
 
 
     def format_gate_information(self, hypergraph, gold, predictions, all_gates_in_batch, edge_counts):
-        layer = 0
         centroid_scores = hypergraph.centroid_scores
         all_formated_edges = []
 
