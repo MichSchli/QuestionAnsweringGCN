@@ -30,7 +30,7 @@ class CandidateGeneratorFactory:
             prefix = ""
 
         database = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
-        database = IndexedInterface(database, index.entity_indexer, index.relation_indexer)
+        database = IndexedInterface(database, index.entity_indexer, index.relation_indexer, index.relation_part_indexer)
         candidate_generator = NeighborhoodCandidateGenerator(database, neighborhood_search_scope=1,
                                                              extra_literals=True)
 

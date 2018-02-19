@@ -18,7 +18,7 @@ for line in open(args.file):
     line = line.strip()
 
     if not line:
-        if len(examples) == 5:
+        if len(examples) == 4:
             break
         examples.append({"sentence": None,
                          "entity_to_event_edges": [],

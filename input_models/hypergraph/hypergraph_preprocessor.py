@@ -57,6 +57,14 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         en_to_ev_batch_map = [None] * len(hypergraph_batch)
         ev_to_en_batch_map = [None] * len(hypergraph_batch)
 
+        max_elements_in_en_to_ev_relation_bag = max([hypergraph.entity_to_event_relation_bags.shape[1] for hypergraph in hypergraph_batch])
+        max_elements_in_ev_to_en_relation_bag = max([hypergraph.event_to_entity_relation_bags.shape[1] for hypergraph in hypergraph_batch])
+        max_elements_in_en_to_en_relation_bag = max([hypergraph.entity_to_entity_relation_bags.shape[1] for hypergraph in hypergraph_batch])
+
+        event_to_entity_bags = np.empty((0,max_elements_in_ev_to_en_relation_bag), dtype=np.int32)
+        entity_to_event_bags = np.empty((0,max_elements_in_en_to_ev_relation_bag), dtype=np.int32)
+        entity_to_entity_bags = np.empty((0,max_elements_in_en_to_en_relation_bag), dtype=np.int32)
+
         for i,hypergraph in enumerate(hypergraph_batch):
             #print("Element started")
             phg = self.preprocess_single_hypergraph(hypergraph, event_start_index, entity_start_index)
@@ -69,14 +77,24 @@ class HypergraphPreprocessor(AbstractPreprocessor):
             if phg[2].shape[0] > 0:
                 event_to_entity_edges = np.concatenate((event_to_entity_edges, phg[2]))
                 event_to_entity_types = np.concatenate((event_to_entity_types, phg[3]))
+                padding_needed = max_elements_in_ev_to_en_relation_bag - hypergraph.event_to_entity_relation_bags.shape[1]
+                padded_event_to_entity_bags = np.pad(hypergraph.event_to_entity_relation_bags, ((0,0), (0,padding_needed)), mode='constant')
+                event_to_entity_bags = np.concatenate((event_to_entity_bags, padded_event_to_entity_bags))
+
 
             if phg[4].shape[0] > 0:
                 entity_to_event_edges = np.concatenate((entity_to_event_edges, phg[4]))
                 entity_to_event_types = np.concatenate((entity_to_event_types, phg[5]))
+                padding_needed = max_elements_in_en_to_ev_relation_bag - hypergraph.entity_to_event_relation_bags.shape[1]
+                padded_entity_to_event_bags = np.pad(hypergraph.entity_to_event_relation_bags, ((0,0), (0,padding_needed)), mode='constant')
+                entity_to_event_bags = np.concatenate((entity_to_event_bags, padded_entity_to_event_bags))
 
             if phg[6].shape[0] > 0:
                 entity_to_entity_edges = np.concatenate((entity_to_entity_edges, phg[6]))
                 entity_to_entity_types = np.concatenate((entity_to_entity_types, phg[7]))
+                padding_needed = max_elements_in_en_to_en_relation_bag - hypergraph.entity_to_entity_relation_bags.shape[1]
+                padded_entity_to_entity_bags = np.pad(hypergraph.entity_to_entity_relation_bags, ((0,0), (0,padding_needed)), mode='constant')
+                entity_to_entity_bags = np.concatenate((entity_to_entity_bags, padded_entity_to_entity_bags))
 
             entity_map = np.concatenate((entity_map, phg[8]))
             entity_scores = np.concatenate((entity_scores, hypergraph.vertex_scores))
@@ -113,6 +131,10 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         input_model.entity_scores = entity_scores
         input_model.event_scores = event_scores
         input_model.centroid_scores = centroid_scores
+
+        input_model.entity_to_event_bags = entity_to_event_bags
+        input_model.event_to_entity_bags = event_to_entity_bags
+        input_model.entity_to_entity_bags = entity_to_entity_bags
 
         input_model.vertex_to_batch_map = np.concatenate(vertex_batch_map)
         input_model.en_to_ev_to_batch_map = np.concatenate(en_to_ev_batch_map)

@@ -31,7 +31,7 @@ class SubsampleVerticesService:
 
         new_graph.entity_vertices = graph.entity_vertices[kept_vertices]
 
-        entity_to_entity, entity_to_event, event_to_entity, events_to_keep = graph.get_paths_to_neighboring_centroid_formal_todo_rename(kept_vertices)
+        entity_to_entity, entity_to_event, event_to_entity, events_to_keep, en_to_en_b, en_to_ev_b, ev_to_en_b = graph.get_paths_to_neighboring_centroid_formal_todo_rename(kept_vertices)
         new_graph.event_vertices = np.arange(events_to_keep.shape[0])
 
         entity_map = {idx:k for k,idx in enumerate(kept_vertices)}
@@ -52,6 +52,10 @@ class SubsampleVerticesService:
         new_graph.entity_to_entity_edges = entity_to_entity
         new_graph.event_to_entity_edges = event_to_entity
         new_graph.entity_to_event_edges = entity_to_event
+
+        new_graph.entity_to_entity_relation_bags = en_to_en_b
+        new_graph.event_to_entity_relation_bags = ev_to_en_b
+        new_graph.entity_to_event_relation_bags = en_to_ev_b
 
         names = {}
 

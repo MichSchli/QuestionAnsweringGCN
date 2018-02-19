@@ -61,7 +61,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
                         "embedding_dimension": self.model_settings["entity_embedding_dimension"],
                         "n_relation_types": self.facts.number_of_relation_types}
 
-        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_gcn(self.hypergraph, self.variables, gcn_settings)
+        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_gcn_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
         for layer in self.hypergraph_gcn_propagation_units:
             self.add_component(layer)
 

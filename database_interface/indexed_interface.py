@@ -7,10 +7,11 @@ class IndexedInterface:
     inner_interface = None
     indexer = None
 
-    def __init__(self, inner_interface, entity_indexer, relation_indexer):
+    def __init__(self, inner_interface, entity_indexer, relation_indexer, relation_part_indexer):
         self.inner_interface = inner_interface
         self.entity_indexer = entity_indexer
         self.relation_indexer = relation_indexer
+        self.relation_part_indexer = relation_part_indexer
 
     def get_neighborhood_hypergraph(self, vertices, hops=1, extra_literals=False):
         hypergraph = self.inner_interface.get_neighborhood_hypergraph(vertices, hops=hops, extra_literals=extra_literals)
@@ -30,27 +31,73 @@ class IndexedInterface:
 
         hypergraph.relation_map = {}
 
+        event_to_entity_relation_bags = []
+        max_relation_parts = 0
+
         for i, edge in enumerate(hypergraph.event_to_entity_edges):
             hypergraph.event_to_entity_edges[i][0] = event_indexes[edge[0]]
             indexed_relation = self.relation_indexer.index_single_element(edge[1])
+
+            relation_bag = self.relation_part_indexer.index_single_element(edge[1])
+            event_to_entity_relation_bags.append(relation_bag)
+            max_relation_parts = max(max_relation_parts, len(relation_bag))
+
             hypergraph.relation_map[indexed_relation] = edge[1]
             hypergraph.event_to_entity_edges[i][1] = indexed_relation
             hypergraph.event_to_entity_edges[i][2] = entity_indexes[edge[2]]
 
+
+        padded_relation_part_matrix = np.zeros((len(event_to_entity_relation_bags), max_relation_parts), dtype=np.int32)
+        for i in range(len(event_to_entity_relation_bags)):
+            bag = event_to_entity_relation_bags[i]
+            padded_relation_part_matrix[i][:len(bag)] = bag
+
+        hypergraph.event_to_entity_relation_bags = padded_relation_part_matrix
+
+
+        entity_to_event_relation_bags = []
+        max_relation_parts = 0
+
         for i, edge in enumerate(hypergraph.entity_to_event_edges):
             hypergraph.entity_to_event_edges[i][0] = entity_indexes[edge[0]]
+
+            relation_bag = self.relation_part_indexer.index_single_element(edge[1])
+            entity_to_event_relation_bags.append(relation_bag)
+            max_relation_parts = max(max_relation_parts, len(relation_bag))
+
             indexed_relation = self.relation_indexer.index_single_element(edge[1])
             hypergraph.relation_map[indexed_relation] = edge[1]
             hypergraph.entity_to_event_edges[i][1] = indexed_relation
             hypergraph.entity_to_event_edges[i][2] = event_indexes[edge[2]]
 
+        padded_relation_part_matrix = np.zeros((len(entity_to_event_relation_bags), max_relation_parts), dtype=np.int32)
+        for i in range(len(entity_to_event_relation_bags)):
+            bag = entity_to_event_relation_bags[i]
+            padded_relation_part_matrix[i][:len(bag)] = bag
+
+        hypergraph.entity_to_event_relation_bags = padded_relation_part_matrix
+
+        entity_to_entity_relation_bags = []
+        max_relation_parts = 0
+
         for i, edge in enumerate(hypergraph.entity_to_entity_edges):
             hypergraph.entity_to_entity_edges[i][0] = entity_indexes[edge[0]]
             indexed_relation = self.relation_indexer.index_single_element(edge[1])
+
+            relation_bag = self.relation_part_indexer.index_single_element(edge[1])
+            entity_to_entity_relation_bags.append(relation_bag)
+            max_relation_parts = max(max_relation_parts, len(relation_bag))
+
             hypergraph.relation_map[indexed_relation] = edge[1]
             hypergraph.entity_to_entity_edges[i][1] = indexed_relation
             hypergraph.entity_to_entity_edges[i][2] = entity_indexes[edge[2]]
 
+        padded_relation_part_matrix = np.zeros((len(entity_to_entity_relation_bags), max_relation_parts), dtype=np.int32)
+        for i in range(len(entity_to_entity_relation_bags)):
+            bag = entity_to_entity_relation_bags[i]
+            padded_relation_part_matrix[i][:len(bag)] = bag
+
+        hypergraph.entity_to_entity_relation_bags = padded_relation_part_matrix
         hypergraph.event_vertices = hypergraph.event_vertices.astype(np.int32)
         hypergraph.entity_vertices = hypergraph.entity_vertices.astype(np.int32)
         hypergraph.event_to_entity_edges = hypergraph.event_to_entity_edges.astype(np.int32)
