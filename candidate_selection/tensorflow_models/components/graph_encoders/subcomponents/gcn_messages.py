@@ -24,3 +24,4 @@ class GcnMessages:
 
     def prepare_variables(self):
         [t.prepare_variables() for t in self.transforms]
+        [f.prepare_variables() for f in self.features]

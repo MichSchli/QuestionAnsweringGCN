@@ -59,7 +59,8 @@ class AbstractTensorflowModel:
                                 "n_attention_heads",
                                 "nn_hidden_state_dimension",
                                 "gate_input_dim",
-                                "gate_input_layers"]:
+                                "gate_input_layers",
+                                "relation_part_embedding_dimension"]:
             self.model_settings[setting_string] = int(value)
         elif setting_string in ["static_entity_embeddings", "use_transformation", "static_word_embeddings", "concatenate_scores"]:
             self.model_settings[setting_string] = True if value == "True" else False

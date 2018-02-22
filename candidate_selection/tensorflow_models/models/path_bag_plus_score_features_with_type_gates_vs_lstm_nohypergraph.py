@@ -14,7 +14,7 @@ from candidate_selection.tensorflow_models.components.sequence_encoders.multihea
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
 
 
-class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
+class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflowModel):
 
 
     def get_preprocessor_stack_types(self):
@@ -53,9 +53,12 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
         gcn_factory = GcnFactory()
         gcn_settings = {"n_layers": self.model_settings["n_layers"],
                         "embedding_dimension": self.model_settings["entity_embedding_dimension"],
-                        "n_relation_types": self.facts.number_of_relation_types}
+                        "n_relation_types": self.facts.number_of_relation_types,
+                        "sentence_embedding_dimension": self.model_settings["lstm_hidden_state_dimension"]/2,
+                        "relation_part_embedding_dimension": self.model_settings["relation_part_embedding_dimension"],
+                        "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"]}
 
-        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_gcn(self.hypergraph, self.variables, gcn_settings)
+        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_gcn_nohypergraph_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
         for layer in self.hypergraph_gcn_propagation_units:
             self.add_component(layer)
 
@@ -85,7 +88,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
         return self.edge_gates
 
     def compute_entity_scores(self, mode="train"):
-        self.hypergraph.initialize_with_centroid_scores(self.model_settings["entity_embedding_dimension"])
+        self.hypergraph.initialize_with_centroid_scores(1)
 
         word_embeddings = self.word_embedding.get_representations(mode=mode)
         word_embedding_shape = tf.shape(word_embeddings)

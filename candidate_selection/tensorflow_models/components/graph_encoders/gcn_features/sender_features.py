@@ -6,6 +6,7 @@ class SenderFeatures:
     def __init__(self, hypergraph, gcn_instructions):
         self.hypergraph = hypergraph
         self.gcn_instructions = gcn_instructions
+        self.width = gcn_instructions["input_dimension"]
 
     def get(self):
         sender_indices, receiver_indices = self.hypergraph.get_edges(senders=self.gcn_instructions["sender_tags"],
@@ -14,3 +15,9 @@ class SenderFeatures:
 
         sender_embeddings = self.hypergraph.get_embeddings(self.gcn_instructions["sender_tags"])
         return tf.nn.embedding_lookup(sender_embeddings, sender_indices)
+
+    def prepare_variables(self):
+        pass
+
+    def get_width(self):
+        return self.width

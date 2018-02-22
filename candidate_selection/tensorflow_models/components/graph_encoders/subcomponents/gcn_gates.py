@@ -27,6 +27,7 @@ class GcnGates:
 
     def prepare_variables(self):
         [t.prepare_variables() for t in self.transforms]
+        [f.prepare_variables() for f in self.features]
 
     def get_regularization_term(self):
         return 0.0001 * self.gate_sum

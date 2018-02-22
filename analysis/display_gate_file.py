@@ -409,6 +409,6 @@ class AnalysisTool:
             self.edge_objects.append(text)
 
 
-analysis_tool = AnalysisTool(2)
+analysis_tool = AnalysisTool(4)
 analysis_tool.read_examples(examples)
 analysis_tool.run()

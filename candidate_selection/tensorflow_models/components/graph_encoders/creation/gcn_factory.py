@@ -1,9 +1,15 @@
+from candidate_selection.tensorflow_models.components.graph_encoders.creation.gcn_feature_factory import \
+    GcnFeatureFactory
+from candidate_selection.tensorflow_models.components.graph_encoders.creation.gcn_message_passer_factory import \
+    GcnMessagePasserFactory
+from candidate_selection.tensorflow_models.components.graph_encoders.creation.gcn_transform_factory import \
+    GcnTransformFactory
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.external_batch_features import \
     ExternalBatchFeatures
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.receiver_features import \
     ReceiverFeatures
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.sender_features import SenderFeatures
-from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message_passer import GcnConcatMessagePasser
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message_passer import GcnMessagePasser
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.affine_transform import \
     AffineGcnTransform
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transforms.edge_type_bow_transform import \
@@ -13,6 +19,8 @@ from candidate_selection.tensorflow_models.components.graph_encoders.gcn_transfo
     TypeBiasTransform
 from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
     HypergraphGcnPropagationUnit
+from candidate_selection.tensorflow_models.components.graph_encoders.normal_gcn_propagation_unit import \
+    NormalGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_gates import GcnGates
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_messages import GcnMessages
 
@@ -23,7 +31,10 @@ class GcnFactory:
     """
 
     def __init__(self):
-        pass
+        self.feature_factory = GcnFeatureFactory()
+        self.transform_factory = GcnTransformFactory()
+
+        self.message_passer_factory = GcnMessagePasserFactory(self.feature_factory, self.transform_factory)
 
     """
     GCNS:
@@ -46,9 +57,19 @@ class GcnFactory:
         hypergraph_gcn_propagation_units = self.make_gcn(gcn_settings, hypergraph, message_passer_function, variables)
         return hypergraph_gcn_propagation_units
 
+    def get_gated_gcn_nohypergraph(self, hypergraph, variables, gcn_settings):
+        message_passer_function = self.get_gated_nohypergraph_message_passer
+        hypergraph_gcn_propagation_units = self.make_gcn_nohypergraph_propagation(gcn_settings, hypergraph, message_passer_function, variables)
+        return hypergraph_gcn_propagation_units
+
     def get_gated_gcn_with_relation_bag_features(self, hypergraph, variables, gcn_settings):
         message_passer_function = self.get_gated_message_passer_with_relation_bag_features
         hypergraph_gcn_propagation_units = self.make_gcn(gcn_settings, hypergraph, message_passer_function, variables)
+        return hypergraph_gcn_propagation_units
+
+    def get_gated_gcn_nohypergraph_with_relation_bag_features(self, hypergraph, variables, gcn_settings):
+        message_passer_function = self.get_gated_nohypergraph_message_passer_with_relation_bag_features
+        hypergraph_gcn_propagation_units = self.make_gcn_nohypergraph_propagation(gcn_settings, hypergraph, message_passer_function, variables)
         return hypergraph_gcn_propagation_units
 
     """
@@ -64,6 +85,30 @@ class GcnFactory:
                                                                                    variables,
                                                                                    gcn_settings[
                                                                                        "embedding_dimension"],
+                                                                                   hypergraph,
+                                                                                   weights="identity",
+                                                                                   biases="relation_specific",
+                                                                                   self_weight="identity",
+                                                                                   self_bias="zero",
+                                                                                   add_inverse_relations=True,
+                                                                                   gate_mode="type_key_comparison")
+
+            hgpu = hypergraph_gcn_propagation_units[layer]
+            self.add_message_passers(gcn_settings, hgpu, hypergraph, message_passer_function, layer)
+        return hypergraph_gcn_propagation_units
+
+    def make_gcn_nohypergraph_propagation(self, gcn_settings, hypergraph, message_passer_function, variables):
+        hypergraph_gcn_propagation_units = [None] * gcn_settings["n_layers"]
+        for layer in range(gcn_settings["n_layers"]):
+            in_dimension = gcn_settings["embedding_dimension"]
+            out_dimension = in_dimension
+            if layer == 0:
+                in_dimension = 1
+
+            hypergraph_gcn_propagation_units[layer] = NormalGcnPropagationUnit("layer_" + str(layer),
+                                                                                   gcn_settings[
+                                                                                       "n_relation_types"],
+                                                                                   variables, in_dimension, out_dimension,
                                                                                    hypergraph,
                                                                                    weights="identity",
                                                                                    biases="relation_specific",
@@ -118,14 +163,14 @@ class GcnFactory:
     Message passers:
     """
 
-    def get_gated_type_only_message_passer(self, gcn_settings, hypergraph, message_instructions):
+    def get_gated_type_only_message_passer(self, gcn_settings, hypergraph, message_instructions, current_layer):
         dimension = gcn_settings["embedding_dimension"]
         number_of_relation_types = gcn_settings["n_relation_types"]
-        message_passer = GcnConcatMessagePasser(hypergraph,
-                                                senders=message_instructions["sender_tags"],
-                                                receivers=message_instructions["receiver_tags"],
-                                                gate_mode="type_key_comparison",
-                                                inverse_edges=message_instructions["invert"])
+        message_passer = GcnMessagePasser(hypergraph,
+                                          senders=message_instructions["sender_tags"],
+                                          receivers=message_instructions["receiver_tags"],
+                                          gate_mode="type_key_comparison",
+                                          inverse_edges=message_instructions["invert"])
 
         message_passer.sentence_features = ExternalBatchFeatures(hypergraph, message_instructions)
         message_features = []
@@ -149,11 +194,11 @@ class GcnFactory:
     def get_gated_message_passer_with_relation_bag_features(self, gcn_settings, hypergraph, message_instructions, current_layer):
         dimension = gcn_settings["embedding_dimension"]
         number_of_relation_types = gcn_settings["n_relation_types"]
-        message_passer = GcnConcatMessagePasser(hypergraph,
-                                                senders=message_instructions["sender_tags"],
-                                                receivers=message_instructions["receiver_tags"],
-                                                gate_mode="type_key_comparison",
-                                                inverse_edges=message_instructions["invert"])
+        message_passer = GcnMessagePasser(hypergraph,
+                                          senders=message_instructions["sender_tags"],
+                                          receivers=message_instructions["receiver_tags"],
+                                          gate_mode="type_key_comparison",
+                                          inverse_edges=message_instructions["invert"])
 
         if message_instructions["sender_tags"] == "entities" and current_layer == 0:
             input_dim = 1
@@ -165,23 +210,25 @@ class GcnFactory:
         else:
             input_dim += dimension
 
+        input_dim += dimension
+
         message_passer.sentence_features = ExternalBatchFeatures(hypergraph, message_instructions)
         message_features = [SenderFeatures(hypergraph, message_instructions),
+                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions),
                             ReceiverFeatures(hypergraph, message_instructions)]
         message_transforms = [AffineGcnTransform(input_dim, dimension),
                               TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
                                                 message_instructions),
-                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
-                                             message_instructions),
                               ReluTransform(dimension)]
 
         gate_features = [SenderFeatures(hypergraph, message_instructions),
                          ReceiverFeatures(hypergraph, message_instructions),
+                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions),
                          message_passer.sentence_features]
         gate_transforms = [AffineGcnTransform(dimension + input_dim, dimension),
                            TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
-                                             message_instructions),
-                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
                                              message_instructions),
                            ReluTransform(dimension),
                            AffineGcnTransform(dimension, 1)]
@@ -192,15 +239,59 @@ class GcnFactory:
                                         gate_transforms)
 
         return message_passer
+
+    def get_gated_nohypergraph_message_passer(self, gcn_settings, hypergraph, message_instructions, current_layer):
+        dimension = gcn_settings["embedding_dimension"]
+        number_of_relation_types = gcn_settings["n_relation_types"]
+        message_passer = GcnMessagePasser(hypergraph,
+                                          senders=message_instructions["sender_tags"],
+                                          receivers=message_instructions["receiver_tags"],
+                                          gate_mode="type_key_comparison",
+                                          inverse_edges=message_instructions["invert"])
+
+        if current_layer == 0:
+            input_dim = 1
+        else:
+            input_dim = dimension
+
+        if current_layer == 0:
+            input_dim += 1
+        else:
+            input_dim += dimension
+
+        message_passer.sentence_features = ExternalBatchFeatures(hypergraph, message_instructions)
+        message_features = [SenderFeatures(hypergraph, message_instructions),
+                            ReceiverFeatures(hypergraph, message_instructions)]
+        message_transforms = [AffineGcnTransform(input_dim, dimension),
+                              TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
+                                                message_instructions),
+                              ReluTransform(dimension)]
+
+        gate_features = [SenderFeatures(hypergraph, message_instructions),
+                         ReceiverFeatures(hypergraph, message_instructions),
+                         message_passer.sentence_features]
+        gate_transforms = [AffineGcnTransform(dimension + input_dim, dimension),
+                           TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions),
+                           ReluTransform(dimension),
+                           AffineGcnTransform(dimension, 1)]
+
+        message_passer.messages = GcnMessages(message_features,
+                                              message_transforms)
+        message_passer.gates = GcnGates(gate_features,
+                                        gate_transforms)
+
+        return message_passer
+
 
     def get_gated_message_passer(self, gcn_settings, hypergraph, message_instructions, current_layer):
         dimension = gcn_settings["embedding_dimension"]
         number_of_relation_types = gcn_settings["n_relation_types"]
-        message_passer = GcnConcatMessagePasser(hypergraph,
-                                                senders=message_instructions["sender_tags"],
-                                                receivers=message_instructions["receiver_tags"],
-                                                gate_mode="type_key_comparison",
-                                                inverse_edges=message_instructions["invert"])
+        message_passer = GcnMessagePasser(hypergraph,
+                                          senders=message_instructions["sender_tags"],
+                                          receivers=message_instructions["receiver_tags"],
+                                          gate_mode="type_key_comparison",
+                                          inverse_edges=message_instructions["invert"])
 
         if message_instructions["sender_tags"] == "entities" and current_layer == 0:
             input_dim = 1
@@ -235,5 +326,73 @@ class GcnFactory:
                                         gate_transforms)
 
         return message_passer
+
+    def get_gated_nohypergraph_message_passer_with_relation_bag_features(self, gcn_settings, hypergraph, message_instructions, current_layer):
+        input_dim = 1 if current_layer == 0 else gcn_settings["embedding_dimension"]
+        message_passer_settings = {"sender_tags": message_instructions["sender_tags"],
+                                   "receiver_tags": message_instructions["receiver_tags"],
+                                   "invert": message_instructions["invert"],
+                                   "input_dimension": input_dim,
+                                   "output_dimension": gcn_settings["embedding_dimension"],
+                                   "use_relation_type_features": True,
+                                   "relation_type_embedding_dimension": gcn_settings["relation_type_embedding_dimension"],
+                                   "use_relation_part_features": True,
+                                   "relation_part_embedding_dimension": gcn_settings["relation_part_embedding_dimension"],
+                                   "sentence_feature_dimension": gcn_settings["sentence_embedding_dimension"]}
+        message_passer = self.message_passer_factory.get_message_passer(hypergraph, message_passer_settings)
+
+        return message_passer
+
+        print(gcn_settings)
+        exit()
+        dimension = gcn_settings["embedding_dimension"]
+        number_of_relation_types = gcn_settings["n_relation_types"]
+        message_passer = GcnMessagePasser(hypergraph,
+                                          senders=message_instructions["sender_tags"],
+                                          receivers=message_instructions["receiver_tags"],
+                                          gate_mode="type_key_comparison",
+                                          inverse_edges=message_instructions["invert"])
+
+        if current_layer == 0:
+            input_dim = 1
+        else:
+            input_dim = dimension
+
+        if current_layer == 0:
+            input_dim += 1
+        else:
+            input_dim += dimension
+
+        input_dim += dimension
+
+        message_passer.sentence_features = ExternalBatchFeatures(hypergraph, message_instructions)
+        message_features = [SenderFeatures(hypergraph, message_instructions),
+                            ReceiverFeatures(hypergraph, message_instructions),
+                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions)]
+        message_transforms = [AffineGcnTransform(input_dim, dimension),
+                              TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
+                                                message_instructions),
+                              ReluTransform(dimension)]
+
+        gate_features = [SenderFeatures(hypergraph, message_instructions),
+                         ReceiverFeatures(hypergraph, message_instructions),
+                         message_passer.sentence_features,
+                           TypeBowTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions)]
+        gate_transforms = [AffineGcnTransform(dimension + input_dim, dimension),
+                           TypeBiasTransform(dimension, number_of_relation_types, hypergraph,
+                                             message_instructions),
+                           ReluTransform(dimension),
+                           AffineGcnTransform(dimension, 1)]
+
+        message_passer.messages = GcnMessages(message_features,
+                                              message_transforms)
+        message_passer.gates = GcnGates(gate_features,
+                                        gate_transforms)
+
+        return message_passer
+
+
 
 

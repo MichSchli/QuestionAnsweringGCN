@@ -14,7 +14,7 @@ from candidate_selection.tensorflow_models.components.graph_encoders.subcomponen
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_messages import GcnMessages
 
 
-class GcnConcatMessagePasser(AbstractComponent):
+class GcnMessagePasser(AbstractComponent):
 
 
     senders = None
@@ -40,6 +40,8 @@ class GcnConcatMessagePasser(AbstractComponent):
         return self.gates.get_gates()
 
     def get_regularization_term(self):
+        #return 0.0001 * self.regularization
+
         if self.use_gates:
             return self.gates.get_regularization_term()
 
@@ -54,6 +56,8 @@ class GcnConcatMessagePasser(AbstractComponent):
 
         if self.use_gates:
             messages = messages * gates
+
+        self.regularization = tf.reduce_sum(tf.reduce_mean(tf.abs(messages), -1))
 
         sent_messages = tf.sparse_tensor_dense_matmul(incidence_matrix, messages)
         return sent_messages

@@ -11,6 +11,8 @@ from candidate_selection.tensorflow_models.components.extras.mean_gold_embedding
     MeanGoldEmbeddingRetriever
 from candidate_selection.tensorflow_models.models.path_bag_plus_score_features_with_type_gates_vs_lstm import \
     PathBagPlusScoreFeaturesWithTypeGatesVsLstm
+from candidate_selection.tensorflow_models.models.path_bag_plus_score_features_with_type_gates_vs_lstm_nohypergraph import \
+    PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph
 from candidate_selection.tensorflow_models.models.path_bag_with_type_gates_vs_lstm import PathBagWithTypeGatesVsLstm
 from candidate_selection.test_models.oracle_candidate import OracleCandidate
 
@@ -64,5 +66,8 @@ class CandidateSelectorFactory:
 
         if stack_name == "lstm+score_gcn_gates":
             return PathBagPlusScoreFeaturesWithTypeGatesVsLstm
+
+        if stack_name == "lstm+score_gcn_gates_nohypergraph":
+            return PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph
 
         return None

@@ -4,20 +4,14 @@ from candidate_selection.tensorflow_hypergraph_representation import TensorflowH
 from candidate_selection.tensorflow_models.abstract_tensorflow_model import AbstractTensorflowModel
 from candidate_selection.tensorflow_models.components.decoders.softmax_decoder import SoftmaxDecoder
 from candidate_selection.tensorflow_models.components.embeddings.sequence_embedding import SequenceEmbedding
-from candidate_selection.tensorflow_models.components.embeddings.static_vector_embedding import StaticVectorEmbedding
-from candidate_selection.tensorflow_models.components.embeddings.vector_embedding import VectorEmbedding
 from candidate_selection.tensorflow_models.components.extras.embedding_retriever import EmbeddingRetriever
 from candidate_selection.tensorflow_models.components.extras.target_comparator import TargetComparator
-from candidate_selection.tensorflow_models.components.graph_encoders.gcn_factory import GcnFactory
-from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_gcn_propagation_unit import \
-    HypergraphGcnPropagationUnit
+from candidate_selection.tensorflow_models.components.graph_encoders.creation.gcn_factory import GcnFactory
 from candidate_selection.tensorflow_models.components.meta_components.candidate_scoring.neural_network_or_factorization_scorer import \
     NeuralNetworkOrFactorizationScorer
-from candidate_selection.tensorflow_models.components.sequence_encoders.attention import Attention
 from candidate_selection.tensorflow_models.components.sequence_encoders.bilstm import BiLstm
 from candidate_selection.tensorflow_models.components.sequence_encoders.multihead_attention import MultiheadAttention
 from candidate_selection.tensorflow_models.components.vector_encoders.multilayer_perceptron import MultilayerPerceptron
-from experiment_construction.fact_construction.freebase_facts import FreebaseFacts
 
 
 class PathBagWithTypeGatesVsLstm(AbstractTensorflowModel):
@@ -28,6 +22,13 @@ class PathBagWithTypeGatesVsLstm(AbstractTensorflowModel):
         if self.model_settings["static_entity_embeddings"]:
             preprocessor_stack_types += ["static_entity_embeddings"]
         return preprocessor_stack_types
+
+    edge_gates = None
+
+    def get_edge_gates(self):
+        if self.edge_gates is None:
+            self.edge_gates = [hpgu.get_edge_gates() for hpgu in self.hypergraph_gcn_propagation_units]
+        return self.edge_gates
 
     def initialize_graph(self):
         self.hypergraph = TensorflowHypergraphRepresentation(self.variables, edge_dropout_rate=self.model_settings["edge_dropout"])

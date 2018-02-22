@@ -17,5 +17,17 @@ class TypeBowTransform:
         type_biases = tf.reduce_sum(tf.nn.embedding_lookup(self.b, types), -2)
         return vector + type_biases
 
+    def get(self):
+        types = self.hypergraph.get_edge_bows(senders=self.gcn_instructions["sender_tags"],
+                                               receivers=self.gcn_instructions["receiver_tags"],
+                                               inverse_edges=self.gcn_instructions["invert"])
+
+        type_biases = tf.reduce_sum(tf.nn.embedding_lookup(self.b, types), -2)
+
+        return type_biases
+
     def prepare_variables(self):
         self.b = tf.Variable(np.random.normal(0, 1, (self.n_relation_types, self.dimension)).astype(np.float32))
+
+    def get_width(self):
+        return self.dimension
