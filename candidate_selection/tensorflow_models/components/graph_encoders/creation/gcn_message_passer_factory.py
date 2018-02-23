@@ -28,8 +28,6 @@ class GcnMessagePasserFactory:
         message_transforms = self.get_transforms(hypergraph, int(sum([feature.get_width() for feature in message_features])), message_passer_settings)
         gate_transforms = self.get_transforms(hypergraph, int(sum([feature.get_width() for feature in gate_features])), message_passer_settings, final_gate_transform=True)
 
-        print(message_features)
-
         message_passer.messages = GcnMessages(message_features,
                                               message_transforms)
         message_passer.gates = GcnGates(gate_features,
