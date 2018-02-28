@@ -25,6 +25,8 @@ class TensorflowModel:
             self.epochs = int(value)
         elif setting_string == "batch_size":
             self.batch_size = int(value)
+        elif setting_string == "test_batch_size":
+            self.test_batch_size = int(value)
         elif setting_string == "gradient_clipping":
             self.gradient_clipping = float(value)
         elif setting_string == "project_name":
@@ -140,7 +142,7 @@ class TensorflowModel:
 
         model_prediction = self.model.get_prediction_graph()
         edge_gates = self.model.get_edge_gates()
-        batch_iterator = self.iterate_in_batches(example_iterator, validate_batches=False)
+        batch_iterator = self.iterate_in_batches(example_iterator, validate_batches=False, batch_size=self.test_batch_size)
 
         outfile = open("analysis/gates.txt", "w+")
         for j,batch in enumerate(batch_iterator):
