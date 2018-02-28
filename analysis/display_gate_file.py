@@ -19,7 +19,7 @@ for line in open(args.file):
 
     if not line:
         if len(examples) == 4:
-            break
+            pass #break
         examples.append({"sentence": None,
                          "entity_to_event_edges": [],
                          "event_to_entity_edges": [],

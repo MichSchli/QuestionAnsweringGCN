@@ -3,6 +3,9 @@ from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message
 import numpy as np
 import tensorflow as tf
 
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_self_loop import CellSelfLoop
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.gated_self_loop import GatedSelfLoop
+
 
 class NormalGcnPropagationUnit(AbstractComponent):
 
@@ -19,6 +22,9 @@ class NormalGcnPropagationUnit(AbstractComponent):
 
         self.self_weight_type = self_weight
         self.self_bias_type = self_bias
+
+        self.entity_self_loop = CellSelfLoop(prefix + "_entity_self_loop", in_dimension, out_dimension)
+        self.event_self_loop = CellSelfLoop(prefix + "_event_self_loop", in_dimension, out_dimension)
 
     def get_optimizable_parameters(self):
         params = [self.W_self_entities, self.W_self_events]
@@ -81,27 +87,8 @@ class NormalGcnPropagationUnit(AbstractComponent):
             self.gcn_encoder_en_to_ev_invert.prepare_variables()
             self.gcn_encoder_en_to_en_invert.prepare_variables()
 
-        initializer_event_weight = np.random.normal(0, 0.01, size=(self.in_dimension, self.out_dimension)).astype(
-            np.float32)
-        self.W_events = tf.Variable(initializer_event_weight, name=self.variable_prefix + "event_transform_weights")
-        self.b_events = tf.Variable(np.zeros(self.out_dimension).astype(np.float32), name=self.variable_prefix + "event_transform_bias")
-
-        initializer_event_weight_2 = np.random.normal(0, 0.01, size=(self.in_dimension, self.out_dimension)).astype(
-            np.float32)
-        self.W_events_2 = tf.Variable(initializer_event_weight_2, name=self.variable_prefix + "event_transform_weights_2")
-        self.b_events_2 = tf.Variable(np.zeros(self.out_dimension).astype(np.float32), name=self.variable_prefix + "event_transform_bias_2")
-
-        initializer_v = np.random.normal(0, 0.01, size=(self.in_dimension, self.out_dimension)).astype(
-                np.float32)
-        self.W_self_entities = tf.Variable(initializer_v, name=self.variable_prefix + "self_entitity_weights")
-
-        initializer_e = np.random.normal(0, 0.01, size=(self.in_dimension, self.out_dimension)).astype(
-                np.float32)
-
-        self.W_self_events = tf.Variable(initializer_e, name=self.variable_prefix + "self_event_weights")
-
-        self.b_self_entities = tf.Variable(np.zeros(self.out_dimension).astype(np.float32), name=self.variable_prefix + "self_entitity_bias")
-        self.b_self_events = tf.Variable(np.zeros(self.out_dimension).astype(np.float32), name=self.variable_prefix + "self_event_bias")
+        self.entity_self_loop.prepare_tensorflow_variables()
+        self.event_self_loop.prepare_tensorflow_variables()
 
     def get_edge_gates(self):
         edge_gates = [None]*6
@@ -118,16 +105,6 @@ class NormalGcnPropagationUnit(AbstractComponent):
     def propagate(self):
         # Propagate information to events:
         # For now apply no self transform to events
-        event_self_loop_messages = tf.matmul(self.hypergraph.event_vertex_embeddings, self.W_self_events)
-
-        event_self_loop_messages += self.b_self_events
-        event_self_loop_messages = tf.nn.relu(event_self_loop_messages)
-
-        self_loop_messages = tf.matmul(self.hypergraph.entity_vertex_embeddings,
-                                                                  self.W_self_entities)
-
-        self_loop_messages += self.b_self_entities
-        self_loop_messages = tf.nn.relu(self_loop_messages)
 
         event_vertex_embeddings = self.gcn_encoder_en_to_ev.get_update(self.hypergraph)
         if self.add_inverse_relations:
@@ -141,5 +118,14 @@ class NormalGcnPropagationUnit(AbstractComponent):
         if self.add_inverse_relations:
             entity_vertex_embeddings += self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
 
-        self.hypergraph.entity_vertex_embeddings = entity_vertex_embeddings + self_loop_messages
+        previous_event_cell_state = self.hypergraph.event_cell_state
+        previous_entity_cell_state = self.hypergraph.entity_cell_state
+
+        event_self_loop_messages, event_cell_update = self.event_self_loop.get_update(self.hypergraph.event_vertex_embeddings, event_vertex_embeddings, previous_event_cell_state)
+        entity_self_loop_messages, entity_cell_update = self.entity_self_loop.get_update(self.hypergraph.entity_vertex_embeddings, entity_vertex_embeddings, previous_entity_cell_state)
+
+        self.hypergraph.event_cell_state = event_cell_update
+        self.hypergraph.entity_cell_state = entity_cell_update
+
+        self.hypergraph.entity_vertex_embeddings = entity_vertex_embeddings + entity_self_loop_messages
         self.hypergraph.event_vertex_embeddings = event_vertex_embeddings + event_self_loop_messages

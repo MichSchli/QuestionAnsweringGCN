@@ -13,6 +13,9 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
 
     variables = None
 
+    event_cell_state = None
+    entity_cell_state = None
+
     def __init__(self, variables, variable_prefix="", edge_dropout_rate=0.0):
         self.variables = variables
 
