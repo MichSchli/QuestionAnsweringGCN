@@ -4,6 +4,7 @@ from candidate_selection.tensorflow_models.components.graph_encoders.creation.gc
     GcnMessagePasserFactory
 from candidate_selection.tensorflow_models.components.graph_encoders.creation.gcn_transform_factory import \
     GcnTransformFactory
+from candidate_selection.tensorflow_models.components.graph_encoders.gcn import GCN
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.external_batch_features import \
     ExternalBatchFeatures
 from candidate_selection.tensorflow_models.components.graph_encoders.gcn_features.receiver_features import \
@@ -21,6 +22,8 @@ from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_
     HypergraphGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.graph_encoders.normal_gcn_propagation_unit import \
     NormalGcnPropagationUnit
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_self_loop import CellSelfLoop
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.gated_self_loop import GatedSelfLoop
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_gates import GcnGates
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_messages import GcnMessages
 
@@ -77,6 +80,33 @@ class GcnFactory:
     """
 
     def make_gcn(self, gcn_settings, hypergraph, message_passer_function, variables):
+        gcn = GCN()
+
+        weight_tying = False
+
+        if weight_tying:
+            pass
+        else:
+            for layer in range(gcn_settings["n_layers"]):
+                propagation = HypergraphGcnPropagationUnit("layer_" + str(layer),
+                                                                                       gcn_settings[
+                                                                                           "n_relation_types"],
+                                                                                       variables,
+                                                                                       gcn_settings[
+                                                                                           "embedding_dimension"],
+                                                                                       hypergraph,
+                                                                                       weights="identity",
+                                                                                       biases="relation_specific",
+                                                                                       self_weight="identity",
+                                                                                       self_bias="zero",
+                                                                                       add_inverse_relations=True,
+                                                                                       gate_mode="type_key_comparison")
+                self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
+                self_connection = None
+                gcn.add_layer(propagation, self_connection)
+
+        return gcn
+
         hypergraph_gcn_propagation_units = [None] * gcn_settings["n_layers"]
         for layer in range(gcn_settings["n_layers"]):
             hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
@@ -97,29 +127,47 @@ class GcnFactory:
             self.add_message_passers(gcn_settings, hgpu, hypergraph, message_passer_function, layer)
         return hypergraph_gcn_propagation_units
 
+    def get_propagation_unit(self, gcn_setting, hypergraph, layer=None):
+        prefix = "prop" if layer is None else "prop_"+str(layer)
+        if gcn_setting["hypergraph_gcn"]:
+            in_dimension, out_dimension = self.compute_dimensions(gcn_setting, layer)
+            return NormalGcnPropagationUnit(prefix, in_dimension, out_dimension, hypergraph)
+        else:
+            HypergraphGcnPropagationUnit(prefix)
+
+    def get_self_connection_unit(self, gcn_setting, hypergraph, layer=None):
+        prefix = "self" if layer is None else "self_"+str(layer)
+        in_dimension, out_dimension = self.compute_dimensions(gcn_setting, layer)
+        if gcn_setting["self_connection_type"] == "gated":
+            return GatedSelfLoop(prefix, in_dimension, out_dimension)
+        elif gcn_setting["self_connection_type"] == "cell":
+            return CellSelfLoop(prefix, in_dimension, out_dimension)
+        else:
+            pass
+
+    def compute_dimensions(self, gcn_setting, layer):
+        out_dimension = gcn_setting["out_dimension"]
+        if layer is None or layer == 0:
+            in_dimension = gcn_setting["in_dimension"]
+        else:
+            in_dimension = gcn_setting["out_dimension"]
+
+        return in_dimension, out_dimension
+
     def make_gcn_nohypergraph_propagation(self, gcn_settings, hypergraph, message_passer_function, variables):
-        hypergraph_gcn_propagation_units = [None] * gcn_settings["n_layers"]
-        for layer in range(gcn_settings["n_layers"]):
-            in_dimension = gcn_settings["embedding_dimension"]
-            out_dimension = in_dimension
-            if layer == 0:
-                in_dimension = 1
+        print(gcn_settings)
+        gcn = GCN(gcn_settings)
+        if gcn_settings["weight_tying"] > 1:
+            pass
+        else:
+            for layer in range(gcn_settings["n_layers"]):
+                propagation = self.get_propagation_unit(gcn_settings, hypergraph, layer=layer)
+                self_connection = self.get_self_connection_unit(gcn_settings, hypergraph, layer=layer)
+                self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
 
-            hypergraph_gcn_propagation_units[layer] = NormalGcnPropagationUnit("layer_" + str(layer),
-                                                                                   gcn_settings[
-                                                                                       "n_relation_types"],
-                                                                                   variables, in_dimension, out_dimension,
-                                                                                   hypergraph,
-                                                                                   weights="identity",
-                                                                                   biases="relation_specific",
-                                                                                   self_weight="identity",
-                                                                                   self_bias="zero",
-                                                                                   add_inverse_relations=True,
-                                                                                   gate_mode="type_key_comparison")
+                gcn.add_layer(propagation, self_connection)
 
-            hgpu = hypergraph_gcn_propagation_units[layer]
-            self.add_message_passers(gcn_settings, hgpu, hypergraph, message_passer_function, layer)
-        return hypergraph_gcn_propagation_units
+        return gcn
 
     def add_message_passers(self, gcn_settings, hgpu, hypergraph, message_passer_function, current_layer):
         message_instructions = {"sender_tags": "events",
@@ -243,7 +291,7 @@ class GcnFactory:
                                    "receiver_tags": message_instructions["receiver_tags"],
                                    "invert": message_instructions["invert"],
                                    "input_dimension": input_dim,
-                                   "output_dimension": gcn_settings["embedding_dimension"],
+                                   "output_dimension": gcn_settings["out_dimension"],
                                    "use_relation_type_features": True,
                                    "relation_type_embedding_dimension": gcn_settings["relation_type_embedding_dimension"],
                                    "use_relation_part_features": True,
@@ -255,7 +303,7 @@ class GcnFactory:
 
 
     def get_nohypergraph_dim(self, current_layer, gcn_settings):
-        input_dim = 1 if current_layer == 0 else gcn_settings["embedding_dimension"]
+        input_dim = gcn_settings["in_dimension"] if current_layer == 0 else gcn_settings["out_dimension"]
         return input_dim
 
     def get_hypergraph_dim(self, current_layer, gcn_settings, message_instructions):

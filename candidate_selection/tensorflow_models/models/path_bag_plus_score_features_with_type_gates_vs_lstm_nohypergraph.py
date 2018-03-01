@@ -52,15 +52,18 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
 
         gcn_factory = GcnFactory()
         gcn_settings = {"n_layers": self.model_settings["n_layers"],
-                        "embedding_dimension": self.model_settings["entity_embedding_dimension"],
+                        "in_dimension": 1,
+                        "out_dimension": self.model_settings["entity_embedding_dimension"],
                         "n_relation_types": self.facts.number_of_relation_types,
-                        "sentence_embedding_dimension": self.model_settings["lstm_hidden_state_dimension"]/2,
+                        "sentence_embedding_dimension": int(self.model_settings["lstm_hidden_state_dimension"]/2),
                         "relation_part_embedding_dimension": self.model_settings["relation_part_embedding_dimension"],
-                        "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"]}
+                        "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"],
+                        "weight_tying": 1,
+                        "hypergraph_gcn": True,
+                        "self_connection_type": "cell"}
 
-        self.hypergraph_gcn_propagation_units = gcn_factory.get_gated_gcn_nohypergraph_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
-        for layer in self.hypergraph_gcn_propagation_units:
-            self.add_component(layer)
+        self.gcn = gcn_factory.get_gated_gcn_nohypergraph_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
+        self.add_component(self.gcn)
 
         self.sentence_to_graph_mapper = EmbeddingRetriever(self.variables, duplicate_policy="sum", variable_prefix="mapper")
         self.add_component(self.sentence_to_graph_mapper)
@@ -101,9 +104,9 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
             word_embeddings = lstm.transform_sequences(word_embeddings)
         sentence_vector = self.attention.attend(word_embeddings, mode=mode)
 
-        for hgpu in self.hypergraph_gcn_propagation_units:
-            hgpu.set_gate_key(sentence_vector)
-            hgpu.propagate()
+        self.gcn.set_gate_key(sentence_vector)
+        self.gcn.propagate()
+
         entity_scores = self.hypergraph.entity_vertex_embeddings
 
         if self.model_settings["concatenate_scores"]:

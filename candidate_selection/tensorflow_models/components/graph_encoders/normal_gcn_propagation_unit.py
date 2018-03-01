@@ -12,34 +12,15 @@ class NormalGcnPropagationUnit(AbstractComponent):
     self_weight_type = None
     self_bias_type = None
 
-    def __init__(self, prefix, number_of_relation_types, variables, in_dimension, out_dimension, hypergraph,
-                 weights="block", biases="constant", self_weight="full", self_bias="constant", add_inverse_relations=True, gate_mode="none", gate_input_dim=1):
+    def __init__(self, prefix, in_dimension, out_dimension, hypergraph, add_inverse_relations=True):
         self.add_inverse_relations = add_inverse_relations
         self.hypergraph = hypergraph
         self.in_dimension = in_dimension
         self.out_dimension = out_dimension
         self.variable_prefix = prefix
 
-        self.self_weight_type = self_weight
-        self.self_bias_type = self_bias
-
         self.entity_self_loop = CellSelfLoop(prefix + "_entity_self_loop", in_dimension, out_dimension)
         self.event_self_loop = CellSelfLoop(prefix + "_event_self_loop", in_dimension, out_dimension)
-
-    def get_optimizable_parameters(self):
-        params = [self.W_self_entities, self.W_self_events]
-
-        params += self.gcn_encoder_ev_to_en.get_optimizable_parameters()
-        params += self.gcn_encoder_en_to_ev.get_optimizable_parameters()
-        params += self.gcn_encoder_en_to_en.get_optimizable_parameters()
-        params += self.gcn_encoder_ev_to_en_invert.get_optimizable_parameters()
-        params += self.gcn_encoder_en_to_ev_invert.get_optimizable_parameters()
-        params += self.gcn_encoder_en_to_en_invert.get_optimizable_parameters()
-
-        return params
-
-    def handle_variable_assignment(self, batch_dict, mode):
-        pass
 
     def get_regularization_term(self):
         reg = self.gcn_encoder_ev_to_en.get_regularization_term()

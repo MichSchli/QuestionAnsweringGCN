@@ -26,7 +26,7 @@ class CellSelfLoop:
 
         return output, new_cell_state
 
-    def prepare_tensorflow_variables(self):
+    def prepare_tensorflow_variables(self, mode="train"):
         initializer_v = np.random.normal(0, 0.01, size=(self.in_dimension + self.out_dimension, self.out_dimension)).astype(
                 np.float32)
         self.W_cell_update = tf.Variable(initializer_v, name=self.variable_prefix + "W_cell_update")
