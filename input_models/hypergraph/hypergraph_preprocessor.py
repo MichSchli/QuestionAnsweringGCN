@@ -113,7 +113,7 @@ class HypergraphPreprocessor(AbstractPreprocessor):
         #print(entity_vertex_slices)
         #print(np.max(entity_map))
 
-        n_entities = np.max(entity_vertex_matrix)
+        n_entities = np.max(entity_vertex_matrix) if entity_vertex_matrix.shape[1] > 0 else 0
         n_events = np.sum(vertex_list_slices[:,0])
 
         input_model = HypergraphInputModel()

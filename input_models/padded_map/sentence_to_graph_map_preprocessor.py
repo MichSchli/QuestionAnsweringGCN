@@ -28,7 +28,7 @@ class SentenceToGraphMapPreprocessor(AbstractPreprocessor):
                     scores.append(float(centroid[3]))
             graph_total_vertices += batch_dictionary["neighborhood"][i].entity_vertices.shape[0]
 
-        edges = np.array(edges)
+        edges = np.array(edges) if len(edges) > 0 else np.empty((0,2), dtype=np.int32)
         input_model = PaddedMapInputModel()
         input_model.flat_backward_map = edges[:,0]
         input_model.flat_forward_map = edges[:,1]
