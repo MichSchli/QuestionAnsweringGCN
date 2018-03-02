@@ -11,6 +11,8 @@ class GCN(AbstractComponent):
         self.propagation_units = []
         self.entity_update_units = []
 
+        self.layer_reuse = settings["layer_reuse"]
+
     def add_layer(self, propagation_unit, update_unit):
         self.propagation_units.append(propagation_unit)
         self.update_units.append(update_unit)
@@ -38,6 +40,11 @@ class GCN(AbstractComponent):
 
     def propagate(self):
         for propagation, update in zip(self.propagation_units, self.update_units):
-            entity_context, event_context = propagation.propagate()
-            update.update(entity_context, event_context)
+            if propagation.in_dimension != propagation.out_dimension:
+                reuse = 1
+            else:
+                reuse = self.layer_reuse
 
+            for i in range(reuse):
+                entity_context, event_context = propagation.propagate()
+                update.update(entity_context, event_context)

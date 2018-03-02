@@ -81,15 +81,12 @@ class GcnFactory:
     """
 
     def make_gcn(self, gcn_settings, hypergraph, message_passer_function, variables):
+        print("did not implement")
+        exit()
         gcn = GCN()
 
-        weight_tying = False
-
-        if weight_tying:
-            pass
-        else:
-            for layer in range(gcn_settings["n_layers"]):
-                propagation = HypergraphGcnPropagationUnit("layer_" + str(layer),
+        for layer in range(gcn_settings["n_layers"]):
+            propagation = HypergraphGcnPropagationUnit("layer_" + str(layer),
                                                                                        gcn_settings[
                                                                                            "n_relation_types"],
                                                                                        variables,
@@ -102,31 +99,11 @@ class GcnFactory:
                                                                                        self_bias="zero",
                                                                                        add_inverse_relations=True,
                                                                                        gate_mode="type_key_comparison")
-                self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
-                self_connection = None
-                gcn.add_layer(propagation, self_connection)
+            self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
+            self_connection = None
+            gcn.add_layer(propagation, self_connection)
 
         return gcn
-
-        hypergraph_gcn_propagation_units = [None] * gcn_settings["n_layers"]
-        for layer in range(gcn_settings["n_layers"]):
-            hypergraph_gcn_propagation_units[layer] = HypergraphGcnPropagationUnit("layer_" + str(layer),
-                                                                                   gcn_settings[
-                                                                                       "n_relation_types"],
-                                                                                   variables,
-                                                                                   gcn_settings[
-                                                                                       "embedding_dimension"],
-                                                                                   hypergraph,
-                                                                                   weights="identity",
-                                                                                   biases="relation_specific",
-                                                                                   self_weight="identity",
-                                                                                   self_bias="zero",
-                                                                                   add_inverse_relations=True,
-                                                                                   gate_mode="type_key_comparison")
-
-            hgpu = hypergraph_gcn_propagation_units[layer]
-            self.add_message_passers(gcn_settings, hgpu, hypergraph, message_passer_function, layer)
-        return hypergraph_gcn_propagation_units
 
     def get_propagation_unit(self, gcn_setting, hypergraph, layer=None):
         prefix = "prop" if layer is None else "prop_"+str(layer)
@@ -158,15 +135,13 @@ class GcnFactory:
     def make_gcn_nohypergraph_propagation(self, gcn_settings, hypergraph, message_passer_function, variables):
         print(gcn_settings)
         gcn = GCN(gcn_settings)
-        if gcn_settings["weight_tying"] > 1:
-            pass
-        else:
-            for layer in range(gcn_settings["n_layers"]):
-                propagation = self.get_propagation_unit(gcn_settings, hypergraph, layer=layer)
-                self_connection = self.get_self_connection_unit(gcn_settings, hypergraph, layer=layer)
-                self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
 
-                gcn.add_layer(propagation, self_connection)
+        for layer in range(gcn_settings["n_layers"]):
+            propagation = self.get_propagation_unit(gcn_settings, hypergraph, layer=layer)
+            self_connection = self.get_self_connection_unit(gcn_settings, hypergraph, layer=layer)
+            self.add_message_passers(gcn_settings, propagation, hypergraph, message_passer_function, layer)
+
+            gcn.add_layer(propagation, self_connection)
 
         return gcn
 

@@ -16,17 +16,25 @@ class CellUpdate:
     def update(self, entity_context, event_context):
         entity_update, entity_cell_update = self.entity_cell.get_update(self.graph.entity_vertex_embeddings,
                                                                         entity_context,
-                                                                        self.hypergraph.entity_cell_state)
+                                                                        self.graph.entity_cell_state)
 
 
         event_update, event_cell_update = self.event_cell.get_update(self.graph.event_vertex_embeddings,
                                                                      event_context,
-                                                                     self.hypergraph.event_cell_state)
+                                                                     self.graph.event_cell_state)
 
-        self.hypergraph.event_cell_state = event_cell_update
-        self.hypergraph.entity_cell_state = entity_cell_update
+        self.graph.event_cell_state = event_cell_update
+        self.graph.entity_cell_state = entity_cell_update
 
-        return entity_update, event_update
+        self.graph.entity_vertex_embeddings = entity_update
+        self.graph.event_vertex_embeddings = event_update
+
+    def prepare_tensorflow_variables(self, mode="train"):
+        self.entity_cell.prepare_tensorflow_variables(mode=mode)
+        self.event_cell.prepare_tensorflow_variables(mode=mode)
+
+    def get_regularization_term(self):
+        return self.entity_cell.get_regularization_term() + self.event_cell.get_regularization_term()
 
 class IndividualCell:
 
@@ -73,3 +81,6 @@ class IndividualCell:
                 np.float32)
         self.W_read_gate = tf.Variable(initializer_v, name=self.variable_prefix + "W_read_gate")
         self.b_read_gate = tf.Variable(np.zeros(self.out_dimension).astype(np.float32), name=self.variable_prefix + "b_read_gate")
+
+    def get_regularization_term(self):
+        return 0.0
