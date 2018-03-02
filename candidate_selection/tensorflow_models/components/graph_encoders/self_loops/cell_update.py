@@ -3,6 +3,33 @@ import tensorflow as tf
 
 class CellUpdate:
 
+    def __init__(self, prefix, in_dimension, out_dimension, graph):
+        self.in_dimension = in_dimension
+        self.out_dimension = out_dimension
+
+        self.variable_prefix = prefix
+        self.graph = graph
+
+        self.entity_cell = IndividualCell(prefix+"entity", in_dimension, out_dimension)
+        self.event_cell = IndividualCell(prefix+"event", in_dimension, out_dimension)
+
+    def update(self, entity_context, event_context):
+        entity_update, entity_cell_update = self.entity_cell.get_update(self.graph.entity_vertex_embeddings,
+                                                                        entity_context,
+                                                                        self.hypergraph.entity_cell_state)
+
+
+        event_update, event_cell_update = self.event_cell.get_update(self.graph.event_vertex_embeddings,
+                                                                     event_context,
+                                                                     self.hypergraph.event_cell_state)
+
+        self.hypergraph.event_cell_state = event_cell_update
+        self.hypergraph.entity_cell_state = entity_cell_update
+
+        return entity_update, event_update
+
+class IndividualCell:
+
     def __init__(self, prefix, in_dimension, out_dimension):
         self.in_dimension = in_dimension
         self.out_dimension = out_dimension

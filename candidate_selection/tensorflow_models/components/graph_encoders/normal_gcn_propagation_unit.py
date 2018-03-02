@@ -19,10 +19,6 @@ class NormalGcnPropagationUnit(AbstractComponent):
         self.out_dimension = out_dimension
         self.variable_prefix = prefix
 
-        self.entity_self_loop = CellUpdate(prefix + "_entity_self_loop", in_dimension, out_dimension)
-        self.event_self_loop = CellUpdate(prefix + "_event_self_loop", in_dimension, out_dimension)
-
-
     def get_regularization_term(self):
         reg = self.gcn_encoder_ev_to_en.get_regularization_term()
         reg += self.gcn_encoder_en_to_ev.get_regularization_term()
@@ -68,9 +64,6 @@ class NormalGcnPropagationUnit(AbstractComponent):
             self.gcn_encoder_ev_to_en_invert.prepare_variables()
             self.gcn_encoder_en_to_ev_invert.prepare_variables()
             self.gcn_encoder_en_to_en_invert.prepare_variables()
-
-        self.entity_self_loop.prepare_tensorflow_variables()
-        self.event_self_loop.prepare_tensorflow_variables()
 
     def get_edge_gates(self):
         edge_gates = [None]*6

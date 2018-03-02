@@ -10,12 +10,6 @@ class HighwayUpdate:
         self.variable_prefix = prefix
         self.graph = graph
 
-    def get_update(self, vectors):
-        update = tf.nn.relu(tf.matmul(vectors, self.W) + self.b)
-        gate = tf.nn.sigmoid(tf.matmul(vectors, self.W_gate) + self.b_gate)
-
-        return update * gate
-
     def update(self, entity_context, event_context):
         entity_self_loop_messages = tf.nn.relu(tf.matmul(self.graph.entity_vertex_embeddings, self.W_en) + self.b_en)
         event_self_loop_messages = tf.nn.relu(tf.matmul(self.graph.event_vertex_embeddings, self.W_ev) + self.b_ev)
