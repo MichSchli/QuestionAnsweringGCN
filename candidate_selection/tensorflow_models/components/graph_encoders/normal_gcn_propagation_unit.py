@@ -3,8 +3,8 @@ from candidate_selection.tensorflow_models.components.graph_encoders.gcn_message
 import numpy as np
 import tensorflow as tf
 
-from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_self_loop import CellSelfLoop
-from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.gated_self_loop import GatedSelfLoop
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_update import CellUpdate
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.highway_update import HighwayUpdate
 
 
 class NormalGcnPropagationUnit(AbstractComponent):
@@ -19,8 +19,9 @@ class NormalGcnPropagationUnit(AbstractComponent):
         self.out_dimension = out_dimension
         self.variable_prefix = prefix
 
-        self.entity_self_loop = CellSelfLoop(prefix + "_entity_self_loop", in_dimension, out_dimension)
-        self.event_self_loop = CellSelfLoop(prefix + "_event_self_loop", in_dimension, out_dimension)
+        self.entity_self_loop = CellUpdate(prefix + "_entity_self_loop", in_dimension, out_dimension)
+        self.event_self_loop = CellUpdate(prefix + "_event_self_loop", in_dimension, out_dimension)
+
 
     def get_regularization_term(self):
         reg = self.gcn_encoder_ev_to_en.get_regularization_term()
@@ -98,6 +99,8 @@ class NormalGcnPropagationUnit(AbstractComponent):
         entity_vertex_embeddings += self.gcn_encoder_en_to_en.get_update(self.hypergraph)
         if self.add_inverse_relations:
             entity_vertex_embeddings += self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
+
+        return entity_vertex_embeddings, event_vertex_embeddings
 
         previous_event_cell_state = self.hypergraph.event_cell_state
         previous_entity_cell_state = self.hypergraph.entity_cell_state

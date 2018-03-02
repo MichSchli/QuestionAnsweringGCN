@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-class CellSelfLoop:
+class CellUpdate:
 
     def __init__(self, prefix, in_dimension, out_dimension):
         self.in_dimension = in_dimension

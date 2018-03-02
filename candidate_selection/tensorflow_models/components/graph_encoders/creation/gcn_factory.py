@@ -22,8 +22,9 @@ from candidate_selection.tensorflow_models.components.graph_encoders.hypergraph_
     HypergraphGcnPropagationUnit
 from candidate_selection.tensorflow_models.components.graph_encoders.normal_gcn_propagation_unit import \
     NormalGcnPropagationUnit
-from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_self_loop import CellSelfLoop
-from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.gated_self_loop import GatedSelfLoop
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.cell_update import CellUpdate
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.highway_update import HighwayUpdate
+from candidate_selection.tensorflow_models.components.graph_encoders.self_loops.residual_update import ResidualUpdate
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_gates import GcnGates
 from candidate_selection.tensorflow_models.components.graph_encoders.subcomponents.gcn_messages import GcnMessages
 
@@ -138,12 +139,12 @@ class GcnFactory:
     def get_self_connection_unit(self, gcn_setting, hypergraph, layer=None):
         prefix = "self" if layer is None else "self_"+str(layer)
         in_dimension, out_dimension = self.compute_dimensions(gcn_setting, layer)
-        if gcn_setting["self_connection_type"] == "gated":
-            return GatedSelfLoop(prefix, in_dimension, out_dimension)
+        if gcn_setting["self_connection_type"] == "highway":
+            return HighwayUpdate(prefix, in_dimension, out_dimension, hypergraph)
         elif gcn_setting["self_connection_type"] == "cell":
-            return CellSelfLoop(prefix, in_dimension, out_dimension)
-        else:
-            pass
+            return CellUpdate(prefix, in_dimension, out_dimension, hypergraph)
+        elif gcn_setting["self_connection_type"] == "residual":
+            return ResidualUpdate(prefix, in_dimension, out_dimension, hypergraph)
 
     def compute_dimensions(self, gcn_setting, layer):
         out_dimension = gcn_setting["out_dimension"]

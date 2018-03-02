@@ -60,7 +60,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
                         "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"],
                         "weight_tying": 1,
                         "hypergraph_gcn": True,
-                        "self_connection_type": "cell"}
+                        "self_connection_type": "highway"}
 
         self.gcn = gcn_factory.get_gated_gcn_nohypergraph_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
         self.add_component(self.gcn)
@@ -87,7 +87,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
 
     def get_edge_gates(self):
         if self.edge_gates is None:
-            self.edge_gates = [hpgu.get_edge_gates() for hpgu in self.hypergraph_gcn_propagation_units]
+            self.edge_gates = self.gcn.get_edge_gates()
         return self.edge_gates
 
     def compute_entity_scores(self, mode="train"):

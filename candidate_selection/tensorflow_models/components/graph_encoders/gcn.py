@@ -26,6 +26,9 @@ class GCN(AbstractComponent):
         for p in self.propagation_units:
             p.set_gate_key(key)
 
+    def get_edge_gates(self):
+        return [p.get_edge_gates() for p in self.propagation_units]
+
     def prepare_tensorflow_variables(self, mode="train"):
         for p in self.propagation_units:
             p.prepare_tensorflow_variables(mode=mode)
