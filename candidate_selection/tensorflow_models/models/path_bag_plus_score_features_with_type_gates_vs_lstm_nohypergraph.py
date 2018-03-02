@@ -58,7 +58,7 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
                         "sentence_embedding_dimension": int(self.model_settings["lstm_hidden_state_dimension"]/2),
                         "relation_part_embedding_dimension": self.model_settings["relation_part_embedding_dimension"],
                         "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"],
-                        "layer_reuse": 1,
+                        "layer_reuse": self.model_settings["layer_reuse"],
                         "hypergraph_gcn": True,
                         "self_connection_type": "cell"}
 
