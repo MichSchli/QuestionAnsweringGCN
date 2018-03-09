@@ -1,4 +1,4 @@
-word_id	word	lemma	pos	ner
+word_id	word	lemma	pos	dep
 ...
 
 entity_start_id	entity_end_id	entity_mid	entity_score
