@@ -1,0 +1,2438 @@
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+2	2	alice	0.3	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	for	for	IN	prep	2
+4	alicecorp	alicecorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	alicecorp	0.3	0
+5	5	bobcorp	0.01	0
+
+alice	alice
+bob	bob
+fay	fay
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	meet	meet	VB	ROOT	0
+3	Emma	emma	NNP	dobj	2
+4	in	in	IN	prep	2
+5	2004	2004	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	emma	1.0	0
+5	5	emma	0.1	1
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	owner	owner	NN	nsubj	1
+4	of	of	IN	prep	3
+5	denniscorp	denniscorp	NN	pobj	4
+6	?	?	.	punct	1
+
+5	5	denniscorp	1.0	0
+5	5	dennis	0.3	0
+5	5	alicecorp	0.01	0
+
+gary	gary
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	0.99	0
+2	2	alicecorp	0.2	0
+
+ceo	ceo
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	for	for	IN	prep	2
+4	someschool	someschool	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	someschool	1.0	0
+
+henry	henry
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	maths	math	NNS	dobj	1
+3	in	in	IN	prep	1
+4	2002	2002	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	maths	1.0	0
+5	5	someschool	0.0001	1
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	parent	parent	NN	attr	1
+4	of	of	IN	prep	3
+5	Emma	emma	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	emma	0.6	0
+5	5	dennis	0.2	0
+
+dennis	dennis
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Gary	gary	NNP	compound	3
+3	owner	owner	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	gary	1.0	0
+2	2	emma	0.001	0
+
+denniscorp	denniscorp
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	physics	physics	NN	dobj	1
+3	in	in	IN	prep	1
+4	2005	2005	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	physics	0.7	0
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	child	child	NN	nsubj	1
+3	to	to	IN	prep	1
+4	Dennis	dennis	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	dennis	0.8	0
+2	2	dennis	0.1	1
+2	5	dennis	0.1	2
+
+emma	emma
+
+0	What	what	WP	pobj	3
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	invest	invest	VB	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	carl	0.1	0
+
+denniscorp	denniscorp
+alicecorp	alicecorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	parent	parent	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+
+carl	carl
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Bob	bob	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	bob	0.3	0
+5	5	bobcorp	0.4	0
+
+alice	alice
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	mother	mother	NN	nsubj	1
+3	to	to	IN	prep	1
+4	Carl	carl	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	carl	0.3	0
+4	4	dennis	0.1	0
+4	4	alice	0.0001	0
+
+alice	alice
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	father	father	NN	attr	1
+4	of	of	IN	prep	3
+5	Carl	carl	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	carl	1.0	0
+
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	parent	parent	NN	attr	1
+4	of	of	IN	prep	3
+5	Carl	carl	NNP	pobj	4
+6	?	?	.	punct	1
+
+4	4	carl	0.8	0
+4	4	dennis	0.4	0
+
+alice	alice
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	physics	physics	NN	dobj	1
+3	?	?	.	punct	1
+
+3	3	physics	1.0	0
+
+henry	henry
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	Copenhagen	copenhagen	NNP	pobj	3
+5	?	?	.	punct	2
+
+4	4	copenhagen	1.0	0
+4	4	amsterdam	0.13	0
+
+henry	henry
+fay	fay
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	emma	1.0	0
+3	3	amsterdam	0.001	1
+
+amsterdam	amsterdam
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	founder	founder	NN	attr	1
+4	of	of	IN	prep	3
+5	denniscorp	denniscorp	NN	pobj	4
+6	?	?	.	punct	1
+
+5	5	denniscorp	1.0	0
+3	3	amsterdam	0.001	1
+
+dennis	dennis
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	sell	sell	VB	ROOT	0
+4	denniscorp	denniscorp	NN	dobj	3
+5	to	to	IN	dative	3
+6	Gary	gary	NNP	pobj	5
+7	?	?	.	punct	3
+
+2	2	dennis	1.0	0
+4	4	denniscorp	0.9	1
+6	6	gary	1.0	2
+6	6	emma	0.2	2
+3	3	amsterdam	0.001	3
+
+1996	1996
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	parent	parent	NN	attr	1
+3	to	to	IN	prep	2
+4	Emma	emma	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	emma	1.0	0
+
+dennis	dennis
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	denniscorp	denniscorp	NN	dobj	1
+3	?	?	.	punct	1
+
+3	3	denniscorp	1.0	0
+1	1	gary	0.9	1
+
+dennis	dennis
+
+0	What	what	WP	pobj	3
+1	does	do	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	invest	invest	VB	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+
+denniscorp	denniscorp
+othercorp	othercorp
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Bob	bob	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+4	4	bob	0.9	1
+4	4	gary	0.4	1
+
+2003	2003
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+othercorp	othercorp
+
+0	Who	who	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2003	2003	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	alice	0.5	0
+5	5	gary	0.2	1
+2	2	gary	0.2	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Carl	carl	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	carl	0.5	0
+5	5	emma	0.4	0
+
+emma	emma
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2000	2000	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	1.0	0
+2	2	carl	1.0	0
+2	2	alice	1.0	0
+
+maths	maths
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	maths	math	NNS	dobj	1
+3	?	?	.	punct	1
+
+3	3	maths	1.0	0
+
+henry	henry
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+2	2	carl	0.01	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Alice	alice	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	alice	1.0	0
+
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	child	child	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Dennis	dennis	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	dennis	1.0	0
+2	2	fay	0.2	1
+2	2	dennis	0.4	1
+
+emma	emma
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+developer	developer
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	compound	3
+3	partner	partner	NN	nsubj	1
+4	to	to	IN	prep	3
+5	?	?	.	punct	1
+
+2	2	emma	0.8	0
+2	2	fay	0.2	0
+
+carl	carl
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+2	2	bob	0.2	0
+2	2	fay	0.1	0
+4	4	fay	0.7	1
+
+carl	carl
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	investing	invest	VBG	ROOT	0
+3	in	in	IN	prep	2
+4	denniscorp	denniscorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	denniscorp	1.0	0
+
+alice	alice
+emma	emma
+carl	carl
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	Amsterdam	amsterdam	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	amsterdam	1.0	0
+2	4	copenhagen	0.9	1
+
+gary	gary
+dennis	dennis
+carl	carl
+emma	emma
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+2	2	fay	0.45678	0
+
+ceo	ceo
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Gary	gary	NNP	nsubj	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	gary	1.0	0
+
+amsterdam	amsterdam
+
+0	When	when	WRB	advmod	1
+1	was	be	VBD	auxpass	3
+2	physics	physics	NN	nsubj	3
+3	taught	teach	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	physics	1.0	0
+2	2	alice	1.0	0
+
+2006	2006
+2005	2005
+2004	2004
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	partner	partner	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Fay	fay	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	fay	0.9	0
+2	2	alice	0.3	1
+
+henry	henry
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	investing	invest	VBG	ROOT	0
+3	in	in	IN	prep	2
+4	alicecorp	alicecorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	alicecorp	1.0	0
+2	2	alicecorp	0.4	1
+3	3	alicecorp	0.3	2
+
+gary	gary
+alice	alice
+bob	bob
+carl	carl
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	dobj	1
+3	in	in	IN	prep	1
+4	1997	1997	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	alicecorp	1.0	0
+
+alice	alice
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	director	director	NN	attr	1
+4	of	of	IN	prep	3
+5	denniscorp	denniscorp	NN	pobj	4
+6	?	?	.	punct	1
+
+5	5	denniscorp	1.0	0
+2	2	alicecorp	0.000001	1
+
+emma	emma
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Fay	fay	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	fay	1.0	0
+2	2	alicecorp	1.0	1
+
+henry	henry
+
+0	Who	who	WP	nsubj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	1999	1999	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	1.0	0
+2	2	alicecorp	1.0	0
+
+fay	fay
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	partner	partner	NN	attr	1
+3	to	to	IN	prep	1
+4	Bob	bob	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	bob	1.0	0
+
+alice	alice
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Bob	bob	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	bob	1.0	0
+2	2	bob	0.2	1
+5	5	alice	0.4	0
+
+fay	fay
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Emma	emma	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	emma	1.0	0
+
+carl	carl
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Emma	emma	NNP	nsubj	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	emma	1.0	0
+2	3	bob	0.1	1
+
+amsterdam	amsterdam
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	meet	meet	VB	ROOT	0
+3	Alice	alice	NNP	dobj	2
+4	In	in	IN	prep	2
+5	2003	2003	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	alice	1.0	0
+
+bob	bob
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	0.4	0
+2	2	alice	0.35	0
+
+developer	developer
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	nsubj	1
+3	the	the	DT	det	4
+4	mother	mother	NN	attr	1
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	alice	1.0	0
+2	2	alicecorp	1.0	0
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Bob	bob	NNP	compound	3
+3	partner	partner	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	bob	1.0	0
+
+alice	alice
+
+0	Who	who	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2004	2004	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	emma	1.0	0
+
+carl	carl
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	dennis	1.0	0
+2	2	emma	0.8	0
+2	2	bob	0.3	0
+
+ceo	ceo
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	meet	meet	VB	ROOT	0
+3	Henry	henry	NNP	dobj	2
+4	in	in	IN	prep	2
+5	1999	1999	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	henry	0.6	0
+3	3	emma	0.5	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	owner	owner	NN	nsubj	1
+4	of	of	IN	prep	3
+5	alicecorp	alicecorp	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	alicecorp	1.0	0
+4	5	alicecorp	0.7	1
+
+alice	alice
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	Edinburgh	edinburgh	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	edinburgh	1.0	0
+
+henry	henry
+alice	alice
+bob	bob
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	nsubj	1
+3	the	the	DT	det	4
+4	parent	parent	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	alice	1.0	0
+4	4	edinburgh	0.01	1
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	mother	mother	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Carl	carl	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	carl	1.0	0
+4	4	edinburgh	0.01	1
+
+alice	alice
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	as	as	IN	prep	2
+4	teacher	teacher	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	teacher	1.0	0
+
+henry	henry
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	meet	meet	VB	ROOT	0
+3	Carl	carl	NNP	dobj	2
+4	in	in	IN	prep	2
+5	2004	2004	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	carl	1.0	0
+5	5	teacher	0.7	1
+
+emma	emma
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	maths	math	NNS	dobj	1
+3	in	in	IN	prep	1
+4	2001	2001	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	maths	1.0	0
+
+henry	henry
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+edinburgh	edinburgh
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	founded	found	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	Amsterdam	amsterdam	NNP	pobj	3
+5	?	?	.	punct	2
+
+4	4	amsterdam	1.0	0
+
+denniscorp	denniscorp
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Carl	carl	NNP	nsubjpass	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	carl	0.3	0
+3	3	carl	0.2	1
+
+edinburgh	edinburgh
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	partner	partner	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+
+bob	bob
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	investing	invest	VBG	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+2	2	carl	0.7	0
+
+denniscorp	denniscorp
+othercorp	othercorp
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Gary	gary	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	gary	1.0	0
+2	2	carl	0.7	0
+
+amsterdam	amsterdam
+
+0	Who	who	WP	pobj	4
+1	Does	do	VBZ	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	henry	0.9	0
+2	2	carl	0.7	0
+
+someschool	someschool
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	denniscorp	denniscorp	NN	nsubj	3
+3	founded	found	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	denniscorp	1.0	0
+
+amsterdam	amsterdam
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	maths	math	NNS	dobj	3
+5	?	?	.	punct	3
+
+2	2	henry	0.9	0
+4	4	maths	0.2	1
+2	2	carl	0.8	0
+4	4	alicecorp	0.1	1
+
+2002	2002
+2000	2000
+2001	2001
+2003	2003
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	son	son	NN	attr	1
+4	of	of	IN	prep	3
+5	Bob	bob	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	bob	1.0	0
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	father	father	NN	attr	1
+3	to	to	IN	prep	2
+4	Carl	carl	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	carl	1.0	0
+4	4	maths	0.1	0
+
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+
+denniscorp	denniscorp
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	partner	partner	NN	attr	1
+3	to	to	IN	prep	2
+4	Fay	fay	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	fay	1.0	0
+4	4	copenhagen	0.9	0
+
+henry	henry
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	dennis	1.0	0
+
+othercorp	othercorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Bob	bob	NNP	nsubj	1
+3	the	the	DT	det	4
+4	father	father	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	bob	0.8	0
+2	2	dennis	0.2	0
+
+carl	carl
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Henry	henry	NNP	nsubjpass	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	henry	1.0	0
+
+copenhagen	copenhagen
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	son	son	NN	attr	1
+3	to	to	IN	prep	1
+4	Alice	alice	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	alice	1.0	0
+2	2	dennis	0.3	1
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	nsubj	1
+3	the	the	DT	det	4
+4	founder	founder	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	alice	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	denniscorp	denniscorp	NN	dobj	1
+3	in	in	IN	prep	1
+4	1990	1990	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	denniscorp	1.0	0
+3	3	alicecorp	0.02	0
+
+dennis	dennis
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	hire	hire	VB	ROOT	0
+3	Bob	bob	NNP	dobj	2
+4	in	in	IN	prep	2
+5	2002	2002	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	bob	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	nsubj	1
+3	daughter	daughter	NN	attr	1
+4	to	to	IN	prep	3
+5	?	?	.	punct	1
+
+2	2	emma	0.9	0
+3	3	emma	0.2	1
+
+dennis	dennis
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Henry	henry	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	henry	1.0	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Carl	carl	NNP	nsubj	1
+3	son	son	NN	appos	2
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	carl	1.0	0
+
+alice	alice
+bob	bob
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Henry	henry	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+2	2	carl	0.1	0
+2	2	emma	0.2	0
+2	2	alicecorp	0.3	0
+4	4	henry	1.0	1
+
+1999	1999
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Alice	alice	NNP	nsubjpass	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+edinburgh	edinburgh
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	0.9	0
+2	2	dennis	0.1	0
+
+alicecorp	alicecorp
+
+0	Where	where	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Dennis	dennis	NNP	nsubj	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	dennis	0.4	0
+2	2	alice	0.3	0
+
+amsterdam	amsterdam
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	found	find	VBD	ROOT	0
+4	alicecorp	alicecorp	JJ	dobj	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+4	4	alicecorp	0.2	1
+2	2	dennis	0.9	0
+
+1997	1997
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	maths	math	NNS	nsubj	3
+3	taught	teach	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	maths	1.0	0
+
+2002	2002
+2000	2000
+2001	2001
+2003	2003
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Carl	carl	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	carl	1.0	0
+
+emma	emma
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+2	2	dennis	0.9	0
+
+emma	emma
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	Edinburgh	edinburgh	NNP	pobj	3
+5	?	?	.	punct	2
+
+4	4	edinburgh	0.3	0
+4	4	amsterdam	0.2	0
+4	4	bob	0.9	0
+
+alice	alice
+bob	bob
+carl	carl
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+alice	alice
+
+0	When	when	WRB	advmod	1
+1	was	be	VBD	auxpass	3
+2	denniscorp	denniscorp	NN	nsubj	3
+3	founded	found	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	denniscorp	1.0	0
+
+1990	1990
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	as	as	IN	prep	1
+3	developer	developer	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	developer	1.0	0
+2	2	denniscorp	0.2	1
+
+bob	bob
+fay	fay
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	director	director	NN	attr	1
+4	of	of	IN	prep	3
+5	othercorp	othercorp	NN	pobj	4
+6	?	?	.	punct	1
+
+5	5	othercorp	1.0	0
+2	2	denniscorp	0.2	1
+
+dennis	dennis
+
+0	Who	who	WP	nsubj	1
+1	invests	invest	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	othercorp	othercorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	othercorp	1.0	0
+2	2	denniscorp	0.2	1
+
+alice	alice
+emma	emma
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	dennis	1.0	0
+
+othercorp	othercorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Fay	fay	NNP	attr	1
+3	the	the	DT	det	4
+4	partner	partner	NN	dobj	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	fay	1.0	0
+2	2	dennis	0.9	0
+2	2	carl	0.001	0
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	compound	3
+3	father	father	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+
+emma	emma
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Bob	bob	NNP	nsubj	1
+3	the	the	DT	det	4
+4	parent	parent	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	bob	1.0	0
+2	2	dennis	0.2	0
+
+carl	carl
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	investing	invest	VBG	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+
+othercorp	othercorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Carl	carl	NNP	nsubj	1
+3	the	the	DT	det	4
+4	partner	partner	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	carl	0.6	0
+2	2	bob	0.4	0
+2	2	dennis	0.4	0
+
+emma	emma
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	investing	invest	VBG	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	alice	0.5	0
+2	2	denniscorp	0.5	0
+
+denniscorp	denniscorp
+alicecorp	alicecorp
+othercorp	othercorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	nsubj	1
+3	the	the	DT	det	4
+4	child	child	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	emma	1.0	0
+2	2	denniscorp	0.5	0
+
+dennis	dennis
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	henry	1.0	0
+
+teacher	teacher
+
+0	When	when	WRB	advmod	1
+1	was	be	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	nsubj	1
+3	founded	found	VBN	acl	2
+4	?	?	.	punct	1
+
+2	2	alicecorp	1.0	0
+2	2	denniscorp	0.5	0
+
+1997	1997
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+
+denniscorp	denniscorp
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+2	2	denniscorp	0.5	0
+
+fay	fay
+
+0	When	when	WRB	advmod	1
+1	was	be	VBD	ROOT	0
+2	denniscorp	denniscorp	NN	nsubj	1
+3	selled	sell	VBN	acl	2
+4	to	to	IN	prep	3
+5	Gary	gary	NNP	pobj	4
+6	?	?	.	punct	1
+
+2	2	denniscorp	1.0	0
+2	2	alicecorp	0.5	0
+6	6	gary	1.0	1
+
+1996	1996
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	for	for	IN	prep	1
+3	denniscorp	denniscorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	denniscorp	1.0	0
+
+emma	emma
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	for	for	IN	prep	2
+4	denniscorp	denniscorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	denniscorp	1.0	0
+
+emma	emma
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	compound	3
+3	director	director	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	emma	0.2	0
+2	2	bob	0.1	0
+
+denniscorp	denniscorp
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+amsterdam	amsterdam
+
+0	Who	who	WP	nsubj	3
+1	did	do	VBD	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2003	2003	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+alice	alice
+
+0	What	what	WP	pobj	4
+1	is	be	VBZ	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	emma	1.0	0
+
+ceo	ceo
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	dennis	0.4	0
+2	2	emma	0.1	0
+2	2	carl	0.1	0
+2	2	alice	0.3	0
+
+amsterdam	amsterdam
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Emma	emma	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+4	4	emma	1.0	1
+4	4	dennis	0.2	1
+
+2004	2004
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	alicecorp	alicecorp	JJ	ROOT	0
+3	hire	hire	NN	dobj	2
+4	in	in	IN	prep	2
+5	2002	2002	CD	pobj	4
+6	?	?	.	punct	2
+
+2	2	alicecorp	1.0	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	son	son	NN	attr	1
+3	to	to	IN	prep	1
+4	Bob	bob	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	bob	1.0	0
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	nsubj	1
+3	the	the	DT	det	4
+4	partner	partner	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	emma	1.0	0
+2	2	alice	0.4	0
+
+carl	carl
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	compound	3
+3	parent	parent	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+2	2	emma	0.4	0
+
+emma	emma
+
+0	Who	who	WP	nsubj	1
+1	is	be	VBZ	ROOT	0
+2	founder	founder	NN	acomp	1
+3	to	to	IN	aux	4
+4	alicecorp	alicecorp	NNP	xcomp	1
+5	?	?	.	punct	1
+
+4	4	alicecorp	1.0	0
+
+alice	alice
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Henry	henry	NNP	nsubj	1
+3	the	the	DT	det	4
+4	partner	partner	NN	attr	1
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	henry	1.0	0
+2	2	henry	0.8	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Bob	bob	NNP	compound	3
+3	parent	parent	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	bob	1.0	0
+2	2	henry	0.2	0
+
+carl	carl
+
+0	Who	who	WP	nsubj	2
+1	did	do	VBD	aux	2
+2	meet	meet	VB	ROOT	0
+3	Fay	fay	NNP	dobj	2
+4	in	in	IN	prep	2
+5	1999	1999	CD	pobj	4
+6	?	?	.	punct	2
+
+3	3	fay	1.0	0
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	owner	owner	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+2	2	henry	0.4	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	as	as	IN	prep	1
+3	CEO	ceo	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	ceo	1.0	0
+4	4	developer	0.1	0
+
+dennis	dennis
+alice	alice
+emma	emma
+
+0	Where	where	WRB	advmod	3
+1	Does	do	VBZ	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	henry	1.0	0
+3	3	developer	0.1	1
+
+edinburgh	edinburgh
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	nsubj	1
+3	the	the	DT	det	4
+4	parent	parent	NN	attr	1
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+4	4	developer	0.1	1
+
+emma	emma
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Gary	gary	NNP	nsubj	1
+3	the	the	DT	det	4
+4	owner	owner	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	gary	1.0	0
+4	4	developer	0.1	1
+
+denniscorp	denniscorp
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+4	4	ceo	0.9	1
+
+developer	developer
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	for	for	IN	prep	1
+3	someschool	someschool	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	someschool	1.0	0
+
+henry	henry
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Emma	emma	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	emma	1.0	0
+
+carl	carl
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Emma	emma	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Carl	carl	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	emma	0.23	0
+4	4	carl	0.99	1
+2	2	bob	0.2	0
+4	4	alice	0.9	1
+
+2004	2004
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	nsubj	1
+3	the	the	DT	det	4
+4	founder	founder	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+
+denniscorp	denniscorp
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	partner	partner	NN	attr	1
+3	to	to	IN	prep	2
+4	Henry	henry	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	henry	0.5	0
+4	4	carl	0.5	0
+
+fay	fay
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	fay	1.0	0
+
+developer	developer
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	director	director	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+2	2	fay	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Alice	alice	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	alice	1.0	0
+
+bob	bob
+
+0	What	what	WP	pobj	3
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	invest	invest	VB	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+2	2	fay	0.00000001	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	is	be	VBZ	ROOT	0
+2	director	director	NN	attr	1
+3	to	to	TO	aux	4
+4	othercorp	othercorp	VB	relcl	2
+5	?	?	.	punct	1
+
+4	4	othercorp	1.0	0
+2	2	fay	0.4	1
+
+dennis	dennis
+
+0	Who	who	WP	nsubj	1
+1	invests	invest	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	alicecorp	alicecorp	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	alicecorp	1.0	0
+
+gary	gary
+alice	alice
+bob	bob
+carl	carl
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	Amsterdam	amsterdam	NNP	pobj	3
+5	?	?	.	punct	2
+
+4	4	amsterdam	1.0	0
+2	2	fay	0.1	1
+
+dennis	dennis
+gary	gary
+emma	emma
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2004	2004	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	1.0	0
+5	5	henry	1.0	1
+
+physics	physics
+
+0	Who	who	WP	nsubj	3
+1	did	do	VBD	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	1999	1999	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	fay	1.0	0
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	compound	3
+3	founder	founder	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+2	2	henry	1.0	0
+
+denniscorp	denniscorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Emma	emma	NNP	nsubj	3
+3	child	child	NN	ccomp	1
+4	to	to	IN	prep	3
+5	?	?	.	punct	1
+
+2	2	emma	1.0	0
+2	2	henry	1.0	0
+
+dennis	dennis
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	mother	mother	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+
+carl	carl
+
+0	What	what	WP	pobj	3
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	invest	invest	VB	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+denniscorp	denniscorp
+alicecorp	alicecorp
+othercorp	othercorp
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	maths	math	NNS	dobj	1
+3	in	in	IN	prep	1
+4	2000	2000	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	maths	1.0	0
+4	4	dennis	1.0	1
+
+henry	henry
+
+0	Who	who	WP	pobj	4
+1	Does	do	VBZ	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	henry	1.0	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	daughter	daughter	NN	attr	1
+4	of	of	IN	prep	3
+5	Dennis	dennis	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	dennis	1.0	0
+
+emma	emma
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2002	2002	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	0.4	0
+4	4	denniscorp	1.0	1
+
+maths	maths
+
+0	Who	who	WP	nsubj	1
+1	is	be	VBZ	ROOT	0
+2	director	director	NN	attr	1
+3	to	to	IN	aux	4
+4	denniscorp	denniscorp	NN	relcl	2
+5	?	?	.	punct	1
+
+4	4	denniscorp	0.001	0
+
+emma	emma
+
+0	Where	where	WRB	advmod	1
+1	was	be	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	nsubj	1
+3	founded	found	VBN	acl	2
+4	?	?	.	punct	1
+
+2	2	alicecorp	0.7	0
+
+edinburgh	edinburgh
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	as	as	IN	prep	2
+4	CEO	ceo	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	ceo	0.3	0
+4	4	denniscorp	0.2	1
+
+dennis	dennis
+alice	alice
+emma	emma
+
+0	Who	who	WP	nsubj	1
+1	Is	be	VBZ	ROOT	0
+2	partner	partner	NN	attr	1
+3	to	to	IN	prep	1
+4	Carl	carl	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	carl	1.0	0
+
+emma	emma
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Bob	bob	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	bob	0.2	0
+4	4	carl	0.1	0
+
+alice	alice
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	nsubj	1
+3	the	the	DT	det	4
+4	partner	partner	NN	attr	1
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	alice	1.0	0
+2	2	carl	0.7	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Bob	bob	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	bob	1.0	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	parent	parent	NN	attr	1
+3	to	to	IN	prep	2
+4	Carl	carl	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	carl	1.0	0
+2	2	dennis	0.8	1
+
+alice	alice
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Dennis	dennis	NNP	nsubj	1
+3	the	the	DT	det	4
+4	director	director	NN	attr	1
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	dennis	1.0	0
+
+othercorp	othercorp
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2001	2001	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	0.9	0
+2	2	dennis	0.9	0
+
+maths	maths
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	partner	partner	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Henry	henry	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	henry	1.0	0
+
+fay	fay
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Dennis	dennis	NNP	nsubj	3
+3	found	find	VBD	ROOT	0
+4	denniscorp	denniscorp	NN	dobj	3
+5	?	?	.	punct	3
+
+2	2	dennis	0.7	0
+4	4	denniscorp	0.8	1
+4	4	dennis	0.8	1
+
+1990	1990
+
+0	Who	who	WP	nsubj	2
+1	Is	be	VBZ	aux	2
+2	Liveing	live	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Henry	henry	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	henry	0.35	0
+5	5	fay	0.1	0
+5	5	carl	0.3	0
+
+fay	fay
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	with	with	IN	prep	2
+4	Fay	fay	NNP	pobj	3
+5	?	?	.	punct	2
+
+5	5	fay	1.0	0
+
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	father	father	NN	attr	1
+3	to	to	IN	prep	1
+4	Emma	emma	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	emma	1.0	0
+4	4	fay	0.8	0
+
+dennis	dennis
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	investing	invest	VBG	ROOT	0
+3	in	in	IN	prep	2
+4	othercorp	othercorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	othercorp	1.0	0
+5	5	alicecorp	0.0001	0
+
+alice	alice
+emma	emma
+fay	fay
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	alicecorp	alicecorp	JJ	nsubj	3
+3	hire	hire	VB	ROOT	0
+4	Bob	bob	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	alicecorp	1.0	0
+4	4	bob	1.0	1
+
+2002	2002
+
+0	Who	who	WP	nsubj	2
+1	is	be	VBZ	aux	2
+2	working	work	VBG	ROOT	0
+3	for	for	IN	prep	2
+4	othercorp	othercorp	NN	pobj	3
+5	?	?	.	punct	2
+
+5	5	othercorp	1.0	0
+5	5	alicecorp	0.0001	0
+5	5	carl	0.0001	0
+
+dennis	dennis
+carl	carl
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	maths	math	NNS	dobj	1
+3	in	in	IN	prep	1
+4	2003	2003	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	maths	1.0	0
+
+henry	henry
+
+0	What	what	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Carl	carl	NNP	nsubj	3
+3	investing	invest	VBG	ccomp	1
+4	in	in	IN	prt	3
+5	?	?	.	punct	1
+
+2	2	carl	1.0	0
+
+denniscorp	denniscorp
+alicecorp	alicecorp
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Alice	alice	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+4	4	alice	0.4	1
+3	3	maths	1.0	2
+
+2003	2003
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	compound	3
+3	founder	founder	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	alice	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	founder	founder	NN	attr	1
+4	of	of	IN	prep	3
+5	alicecorp	alicecorp	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	alicecorp	1.0	0
+3	3	maths	1.0	1
+
+alice	alice
+
+0	Who	who	WP	nsubj	1
+1	is	be	VBZ	ROOT	0
+2	owner	owner	NN	nsubj	1
+3	to	to	IN	aux	4
+4	alicecorp	alicecorp	NNP	xcomp	1
+5	?	?	.	punct	1
+
+4	4	alicecorp	1.0	0
+
+alice	alice
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+3	3	maths	1.0	1
+
+alicecorp	alicecorp
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	henry	1.0	0
+
+teacher	teacher
+
+0	Who	who	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2004	2004	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	carl	0.5	0
+2	2	henry	0.4	0
+
+emma	emma
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Fay	fay	NNP	compound	3
+3	partner	partner	NN	nsubj	1
+4	to	to	IN	prep	3
+5	?	?	.	punct	1
+
+2	2	fay	1.0	0
+
+henry	henry
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Henry	henry	NNP	compound	3
+3	partner	partner	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	henry	1.0	0
+
+fay	fay
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Bob	bob	NNP	compound	3
+3	father	father	NN	nsubj	1
+4	to	to	IN	prep	1
+5	?	?	.	punct	1
+
+2	2	bob	0.7	0
+2	2	henry	0.4	0
+
+carl	carl
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	teach	teach	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2005	2005	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	henry	1.0	0
+
+physics	physics
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	Alice	alice	NNP	nsubj	1
+3	the	the	DT	det	4
+4	director	director	NN	appos	2
+5	of	of	IN	prep	4
+6	?	?	.	punct	1
+
+2	2	alice	1.0	0
+4	4	alice	0.5	1
+4	4	ceo	0.2	1
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	is	be	VBZ	ROOT	0
+2	founder	founder	NN	acomp	1
+3	to	to	IN	aux	4
+4	denniscorp	denniscorp	NN	xcomp	1
+5	?	?	.	punct	1
+
+4	4	denniscorp	1.0	0
+
+dennis	dennis
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Fay	fay	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	fay	1.0	0
+2	2	bob	0.1	0
+
+edinburgh	edinburgh
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	working	work	VBG	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	for	for	IN	prep	1
+3	othercorp	othercorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	othercorp	1.0	0
+2	2	bob	0.2	1
+
+dennis	dennis
+carl	carl
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Henry	henry	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Fay	fay	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	henry	1.0	0
+4	4	fay	1.0	1
+
+1999	1999
+
+0	Who	who	WP	nsubj	1
+1	taught	teach	VBD	ROOT	0
+2	physics	physics	NN	dobj	1
+3	in	in	IN	prep	1
+4	2004	2004	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	physics	1.0	0
+1	3	physics	0.9	1
+1	4	henry	0.6	2
+
+henry	henry
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+ceo	ceo
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	daughter	daughter	NN	nsubj	1
+3	to	to	IN	prep	2
+4	Dennis	dennis	NNP	pobj	3
+5	?	?	.	punct	1
+
+4	4	dennis	0.6	0
+4	4	alicecorp	0.7	0
+
+emma	emma

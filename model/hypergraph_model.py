@@ -10,6 +10,7 @@ class HypergraphModel:
 
     event_vertices = None
     entity_vertices = None
+    word_vertices = None
 
     expandable_event_vertices = None
     expandable_entity_vertices = None
@@ -31,6 +32,10 @@ class HypergraphModel:
     name_map = None
 
     event_centroid_map = None
+
+    def set_word_vertices(self, indexes, word_vertices):
+        self.word_vertices = indexes
+        self.word_reference_map = {i:w for i,w in enumerate(word_vertices)}
 
     def set_scores_to_zero(self):
         self.vertex_scores = np.zeros_like(self.entity_vertices, dtype=np.float32)

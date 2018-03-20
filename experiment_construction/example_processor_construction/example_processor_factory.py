@@ -2,6 +2,8 @@ from experiment_construction.example_processor_construction.gold_by_f1_filter_ex
     GoldByF1FilterExampleProcessor
 from experiment_construction.example_processor_construction.gold_to_index_example_processor import \
     GoldToIndexExampleProcessor
+from experiment_construction.example_processor_construction.graph_extenders.add_word_vertex_graph_extender import \
+    AddWordVertexGraphExtender
 from experiment_construction.example_processor_construction.graph_split_example_processor import \
     GraphSplitExampleProcessor
 from experiment_construction.example_processor_construction.name_to_index_example_processor import \
@@ -14,8 +16,10 @@ from experiment_construction.example_processor_construction.subsample_vertices_e
 
 class ExampleProcessorFactory:
 
-    def __init__(self):
-        pass
+    index_factory = None
+
+    def __init__(self, index_factory):
+        self.index_factory = index_factory
 
     def construct_example_processor(self, settings):
         processor = self.add_gold_label_projectors(None, settings)
@@ -24,6 +28,8 @@ class ExampleProcessorFactory:
 
         if "propagate_scores" in settings["training"] and settings["training"]["propagate_scores"] == "True":
             processor = PropagateScoresExampleProcessor(processor)
+
+        processor = self.add_graph_extenders(processor, settings)
 
         return processor
 
@@ -58,3 +64,10 @@ class ExampleProcessorFactory:
             exit()
 
         return processor
+
+    '''
+    Add graph extenders:
+    '''
+    def add_graph_extenders(self, processor, settings):
+        index = self.index_factory.construct_indexes(settings)
+        return AddWordVertexGraphExtender(processor, index.word_indexer)

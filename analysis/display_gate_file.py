@@ -11,7 +11,8 @@ args = parser.parse_args()
 examples = [{"sentence": None,
              "entity_to_event_edges": [],
              "event_to_entity_edges": [],
-             "entity_to_entity_edges": []}]
+             "entity_to_entity_edges": [],
+             "word_to_event_edges": []}]
 data_type = 0
 
 for line in open(args.file):
@@ -23,7 +24,8 @@ for line in open(args.file):
         examples.append({"sentence": None,
                          "entity_to_event_edges": [],
                          "event_to_entity_edges": [],
-                         "entity_to_entity_edges": []})
+                         "entity_to_entity_edges": [],
+                         "word_to_event_edges": []})
         data_type = 0
     elif line == "-----":
         data_type += 1
@@ -36,6 +38,8 @@ for line in open(args.file):
             examples[-1]["event_to_entity_edges"].append(line.split("\t"))
         elif data_type == 3:
             examples[-1]["entity_to_entity_edges"].append(line.split("\t"))
+        elif data_type == 4:
+            examples[-1]["word_to_event_edges"].append(line.split("\t"))
 
 class Graph:
 
@@ -50,6 +54,7 @@ class Graph:
         self.entity_to_event_edges = example["entity_to_event_edges"]
         self.event_to_entity_edges = example["event_to_entity_edges"]
         self.entity_to_entity_edges = example["entity_to_entity_edges"]
+        self.word_to_event_edges = example["word_to_event_edges"]
 
     def get_centroids(self):
         centroids = []
@@ -70,15 +75,20 @@ class Graph:
     def get_events(self):
         return [(label, vertex["strongest_connection"]) for label,vertex in self.events.items()]
 
+    def get_words(self):
+        return [(label, vertex["strongest_connection"]) for label,vertex in self.words.items()]
+
     def get_all_edges(self):
         all_edges = []
         all_edges.extend(self.entity_to_event_edges)
         all_edges.extend(self.event_to_entity_edges)
         all_edges.extend(self.entity_to_entity_edges)
+        all_edges.extend(self.word_to_event_edges)
         return all_edges
 
     def find_vertices(self, example):
         vertices = {}
+        words = {}
         events = {}
         for edge in example["entity_to_event_edges"]:
             if edge[0] not in vertices:
@@ -170,10 +180,22 @@ class Graph:
             vertices[edge[2]]["strongest_connection"] = [max(sf, sb) for sf, sb in
                                                          zip(vertices[edge[2]]["strongest_connection"], max_scores)]
 
+        for edge in example["word_to_event_edges"]:
+            if edge[0] not in words:
+                words[edge[0]] = {"strongest_connection": [0 for _ in edge[3].split("/")]}
+
+            score_forward = [float(s) for s in edge[3].split("/")]
+            score_backward = [float(s) for s in edge[4].split("/")]
+            max_scores = [max(sf, sb) for sf, sb in zip(score_forward, score_backward)]
+            words[edge[0]]["strongest_connection"] = [max(sf, sb) for sf, sb in zip(words[edge[0]]["strongest_connection"], max_scores)]
+
+            if edge[2] not in events:
+                events[edge[2]] = {"strongest_connection": [0 for _ in edge[3].split("/")]}
+            events[edge[2]]["strongest_connection"] = [max(sf, sb) for sf, sb in zip(events[edge[2]]["strongest_connection"], max_scores)]
+
         self.vertices = vertices
         self.events = events
-
-
+        self.words = words
 
 
 class AnalysisTool:
@@ -369,6 +391,26 @@ class AnalysisTool:
                                 vertical - cvt_radius,
                                 horizontal + cvt_radius,
                                 vertical + cvt_radius)
+
+        for vertex in graph.get_words():
+            if self.apply_cutoff_to_vertices and vertex[1][self.layer] < self.cutoff_percentage:
+                continue
+            vertex = vertex[0]
+
+            if vertex in self.current_location_map:
+                vertical = self.current_location_map[vertex][1]
+                horizontal = self.current_location_map[vertex][0]
+            else:
+                vertical = random.randint(forest_top + cvt_extra_border, forest_bottom - cvt_extra_border)
+                horizontal = random.randint(forest_left + cvt_extra_border, forest_right - cvt_extra_border)
+                self.current_location_map[vertex] = [horizontal, vertical]
+
+            self.canvas.create_rectangle(horizontal - cvt_radius,
+                                vertical - cvt_radius,
+                                horizontal + cvt_radius,
+                                vertical + cvt_radius)
+            self.canvas.create_text(horizontal, vertical + text_height, text=vertex, anchor="s",
+                           fill="blue", font=("Helvetica", 12))
 
         self.draw_edges()
 
