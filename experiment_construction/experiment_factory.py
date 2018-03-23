@@ -34,7 +34,8 @@ class ExperimentFactory:
                                               self.preprocessor_factory,
                                               self.candidate_generator_factory,
                                               self.candidate_selector_factory,
-                                              self.example_processor_factory)
+                                              self.example_processor_factory,
+                                              self.index_factory)
         self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory, self.learner_factory)
 
     def search(self):

@@ -39,8 +39,8 @@ class AddWordVertexGraphExtender(AbstractExampleProcessor):
 
         for i,mention in enumerate(sentence_entity_map):
             for word_index in range(int(mention[0]), int(mention[1])+1):
-                word_to_event_edges.append([word_index, list(graph.relation_map.keys())[0], i+n_events])
-            event_to_entity_edges.append([i+n_events, list(graph.relation_map.keys())[0], graph.to_index(mention[2])[0]])
+                word_to_event_edges.append([word_index, 0, i+n_events])
+            event_to_entity_edges.append([i+n_events, 1, graph.to_index(mention[2])[0]])
 
         graph.event_vertices = np.concatenate((graph.event_vertices, mention_events))
         graph.event_to_entity_edges = np.concatenate((graph.event_to_entity_edges, event_to_entity_edges))

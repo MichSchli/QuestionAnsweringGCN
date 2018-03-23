@@ -48,6 +48,9 @@ class TensorflowModel:
     def set_example_processor(self, example_processor):
         self.example_processor = example_processor
 
+    def set_relation_indexer(self, relation_indexer):
+        self.relation_indexer = relation_indexer
+
     def initialize(self):
         tf.reset_default_graph()
         self.model.initialize()
@@ -230,7 +233,7 @@ class TensorflowModel:
         pointer = 0
         for edge, gate, invert_gate in zip(en_to_ev_edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
-            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][1] = self.relation_indexer.invert(edge[1])
             formatted_gate_information[pointer][2] = "cvt|id=" + str(hypergraph.event_vertices[edge[2]])
             formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
             formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])
@@ -261,7 +264,7 @@ class TensorflowModel:
         pointer = 0
         for edge, gate, invert_gate in zip(edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = "cvt|id=" + str(hypergraph.event_vertices[edge[0]])
-            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][1] = self.relation_indexer.invert(edge[1])
             formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
             formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
             formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])
@@ -287,7 +290,7 @@ class TensorflowModel:
         pointer = 0
         for edge in edges:
             formatted_gate_information[pointer][0] = "Word="+hypergraph.word_reference_map[edge[0]]
-            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][1] = "word_to_event"
             formatted_gate_information[pointer][2] = "cvt|id=" + str(hypergraph.event_vertices[edge[2]])
             formatted_gate_information[pointer][3] = "1.0/1.0/1.0/1.0"
             formatted_gate_information[pointer][4] = "1.0/1.0/1.0/1.0"
@@ -313,7 +316,7 @@ class TensorflowModel:
         pointer = 0
         for edge, gate, invert_gate in zip(edges, gates, invert_gates):
             formatted_gate_information[pointer][0] = hypergraph.from_index_with_names(edge[0])
-            formatted_gate_information[pointer][1] = hypergraph.relation_map[edge[1]]
+            formatted_gate_information[pointer][1] = self.relation_indexer.invert(edge[1])
             formatted_gate_information[pointer][2] = hypergraph.from_index_with_names(edge[2])
             formatted_gate_information[pointer][3] = "/".join([str(g) for g in gate])
             formatted_gate_information[pointer][4] = "/".join([str(g) for g in invert_gate])

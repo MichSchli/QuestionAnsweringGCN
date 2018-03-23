@@ -1,0 +1,35 @@
+from example_reader.graph_reader.database_interface.data_interface.CsvInterface import CsvInterface
+from example_reader.graph_reader.database_interface.data_interface.FreebaseInterface import FreebaseInterface
+from example_reader.graph_reader.database_interface.expansion_strategies.all_through_expansion_strategy import \
+    AllThroughExpansionStrategy
+from example_reader.graph_reader.database_interface.expansion_strategies.only_freebase_element_strategy import \
+    OnlyFreebaseExpansionStrategy
+from example_reader.graph_reader.database_interface.hypergraph_interface import HypergraphInterface
+from example_reader.graph_reader.graph_converter import GraphConverter
+from example_reader.graph_reader.graph_indexer import GraphIndexer
+
+
+class GraphReaderFactory:
+
+    def __init__(self, index_factory):
+        self.index_factory = index_factory
+
+    def get(self, experiment_configuration):
+        if "prefix" in experiment_configuration["endpoint"]:
+            prefix = experiment_configuration["endpoint"]["prefix"]
+        else:
+            prefix = ""
+
+        if experiment_configuration["endpoint"]["type"] == "sparql":
+            database_interface = FreebaseInterface()
+            expansion_strategy = OnlyFreebaseExpansionStrategy()
+        elif experiment_configuration["endpoint"]["type"] == "csv":
+            database_interface = CsvInterface(experiment_configuration["endpoint"]["file"])
+            expansion_strategy = AllThroughExpansionStrategy()
+            prefix = ""
+
+        database_interface = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
+        graph_converter = GraphConverter(database_interface)
+        graph_indexer = GraphIndexer(graph_converter, self.index_factory.get("vertices"), self.index_factory.get("relations"))
+
+        return graph_indexer

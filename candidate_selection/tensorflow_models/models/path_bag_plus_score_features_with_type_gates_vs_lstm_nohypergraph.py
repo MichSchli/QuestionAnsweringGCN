@@ -60,7 +60,8 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstmNohypergraph(AbstractTensorflow
                         "relation_type_embedding_dimension": self.model_settings["relation_embedding_dimension"],
                         "layer_reuse": self.model_settings["layer_reuse"],
                         "hypergraph_gcn": True,
-                        "self_connection_type": "cell"}
+                        "self_connection_type": "cell",
+                        "mention_links": "dummy_events"}
 
         self.gcn = gcn_factory.get_gated_gcn_nohypergraph_with_relation_bag_features(self.hypergraph, self.variables, gcn_settings)
         self.add_component(self.gcn)

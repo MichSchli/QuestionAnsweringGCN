@@ -183,6 +183,27 @@ class GcnFactory:
                                                                    hypergraph,
                                                                    message_instructions, current_layer)
 
+
+        if gcn_settings["mention_links"] == "dummy_events":
+            message_instructions = {"sender_tags": "words",
+                                    "receiver_tags": "events",
+                                    "invert": False}
+
+            hgpu.add_word_to_event_encoder(message_passer_function(gcn_settings,
+                                                                     hypergraph,
+                                                                     message_instructions,
+                                                                     current_layer))
+
+            message_instructions = {"sender_tags": "words",
+                                    "receiver_tags": "events",
+                                    "invert": True}
+
+            hgpu.add_word_to_event_encoder(message_passer_function(gcn_settings,
+                                                                     hypergraph,
+                                                                     message_instructions,
+                                                                     current_layer),
+                                           inverse=True)
+
     """
     Message passers:
     """
@@ -270,7 +291,7 @@ class GcnFactory:
                                    "output_dimension": gcn_settings["out_dimension"],
                                    "use_relation_type_features": True,
                                    "relation_type_embedding_dimension": gcn_settings["relation_type_embedding_dimension"],
-                                   "use_relation_part_features": True,
+                                   "use_relation_part_features": message_instructions["sender_tags"] != "words",
                                    "relation_part_embedding_dimension": gcn_settings["relation_part_embedding_dimension"],
                                    "sentence_feature_dimension": gcn_settings["sentence_embedding_dimension"]}
         message_passer = self.message_passer_factory.get_message_passer(hypergraph, message_passer_settings)

@@ -1,0 +1,625 @@
+0	who	_	_	_
+1	is	_	_	_
+2	emma	_	_	_
+3	the	_	_	_
+4	daughter	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+2	2	emma	0.9	0
+2	2	fay	0.1	0
+2	2	carl	0.1	0
+2	2	dennis	0.1	0
+
+dennis	dennis
+
+0	what	_	_	_
+1	does	_	_	_
+2	fay	_	_	_
+3	invest	_	_	_
+4	in	_	_	_
+5	?	_	_	_
+
+2	2	fay	1.0	0
+2	2	emma	0.9	0
+2	2	dennis	0.2	0
+
+othercorp	othercorp
+
+0	what	_	_	_
+1	is	_	_	_
+2	gary	_	_	_
+3	investing	_	_	_
+4	in	_	_	_
+5	?	_	_	_
+
+2	2	gary	1.0	0
+2	2	alice	0.8	0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	is	_	_	_
+2	alice	_	_	_
+3	the	_	_	_
+4	owner	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+
+alicecorp	alicecorp
+
+0	what	_	_	_
+1	did	_	_	_
+2	dennis	_	_	_
+3	found	_	_	_
+4	in	_	_	_
+5	1990	_	_	_
+6	?	_	_	_
+
+2	2	dennis	0.5	0
+2	2	denniscorp	0.6	0
+
+denniscorp	denniscorp
+
+0	who	_	_	_
+1	taught	_	_	_
+2	physics	_	_	_
+3	in	_	_	_
+4	2006	_	_	_
+5	?	_	_	_
+
+3	3	physics	1.0	0
+2	2	dennis	1.0	1
+
+henry	henry
+
+0	what	_	_	_
+1	is	_	_	_
+2	fay	_	_	_
+3	working	_	_	_
+4	as	_	_	_
+5	?	_	_	_
+
+2	2	fay	0.01	0
+
+developer	developer
+
+0	what	_	_	_
+1	did	_	_	_
+2	alice	_	_	_
+3	found	_	_	_
+4	in	_	_	_
+5	1997	_	_	_
+6	?	_	_	_
+
+2	2	alice	0.95	0
+2	2	fay	0.9	0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	founded	_	_	_
+2	alicecorp	_	_	_
+3	?	_	_	_
+
+3	3	alicecorp	1.0	0
+3	3	othercorp	0.2	0
+
+alice	alice
+
+0	who	_	_	_
+1	invests	_	_	_
+2	in	_	_	_
+3	denniscorp	_	_	_
+4	?	_	_	_
+
+4	4	denniscorp	0.9	0
+3	4	alicecorp	0.1	1
+
+alice	alice
+emma	emma
+carl	carl
+
+0	who	_	_	_
+1	did	_	_	_
+2	dennis	_	_	_
+3	sell	_	_	_
+4	denniscorp	_	_	_
+5	to	_	_	_
+6	in	_	_	_
+7	1996	_	_	_
+8	?	_	_	_
+
+2	2	dennis	1.0	0
+4	4	denniscorp	1.0	1
+4	4	physics	0.2	1
+
+gary	gary
+
+0	who	_	_	_
+1	is	_	_	_
+2	partner	_	_	_
+3	to	_	_	_
+4	emma	_	_	_
+5	?	_	_	_
+
+4	4	emma	0.3	0
+4	4	denniscorp	0.3	0
+
+carl	carl
+
+0	what	_	_	_
+1	does	_	_	_
+2	carl	_	_	_
+3	work	_	_	_
+4	as	_	_	_
+5	?	_	_	_
+
+2	2	carl	0.6	0
+4	4	denniscorp	0.7	1
+
+developer	developer
+
+0	what	_	_	_
+1	did	_	_	_
+2	henry	_	_	_
+3	teach	_	_	_
+4	in	_	_	_
+5	2006	_	_	_
+6	?	_	_	_
+
+2	2	henry	1.0	0
+2	2	alice	0.9	0
+
+physics	physics
+
+0	who	_	_	_
+1	is	_	_	_
+2	owner	_	_	_
+3	to	_	_	_
+4	denniscorp	_	_	_
+5	?	_	_	_
+
+4	4	denniscorp	1.0	0
+
+gary	gary
+
+0	what	_	_	_
+1	does	_	_	_
+2	dennis	_	_	_
+3	work	_	_	_
+4	as	_	_	_
+5	?	_	_	_
+
+2	2	dennis	0.2	0
+2	2	henry	0.1	0
+
+ceo	ceo
+
+0	who	_	_	_
+1	is	_	_	_
+2	working	_	_	_
+3	as	_	_	_
+4	developer	_	_	_
+5	?	_	_	_
+
+5	5	developer	1.0	0
+2	2	henry	0.8	1
+
+bob	bob
+fay	fay
+carl	carl
+
+0	who	_	_	_
+1	works	_	_	_
+2	with	_	_	_
+3	fay	_	_	_
+4	?	_	_	_
+
+4	4	fay	1.0	0
+
+bob	bob
+
+0	who	_	_	_
+1	does	_	_	_
+2	fay	_	_	_
+3	live	_	_	_
+4	with	_	_	_
+5	?	_	_	_
+
+2	2	fay	0.6	0
+2	2	dennis	0.4	0
+
+henry	henry
+
+0	who	_	_	_
+1	is	_	_	_
+2	emma	_	_	_
+3	the	_	_	_
+4	director	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+2	2	emma	0.8	0
+2	2	henry	0.7	0
+
+denniscorp	denniscorp
+
+0	who	_	_	_
+1	did	_	_	_
+2	meet	_	_	_
+3	bob	_	_	_
+4	in	_	_	_
+5	2003	_	_	_
+6	?	_	_	_
+
+3	3	bob	1.0	0
+
+alice	alice
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	partner	_	_	_
+4	of	_	_	_
+5	alice	_	_	_
+6	?	_	_	_
+
+5	5	alice	0.7	0
+4	5	alice	0.7	1
+3	4	alice	0.6	2
+
+bob	bob
+
+0	who	_	_	_
+1	is	_	_	_
+2	bob	_	_	_
+3	the	_	_	_
+4	partner	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+2	2	bob	1.0	0
+
+alice	alice
+
+0	where	_	_	_
+1	was	_	_	_
+2	fay	_	_	_
+3	born	_	_	_
+4	?	_	_	_
+
+2	2	fay	1.0	0
+2	2	carl	0.1	0
+
+copenhagen	copenhagen
+
+0	what	_	_	_
+1	did	_	_	_
+2	henry	_	_	_
+3	teach	_	_	_
+4	in	_	_	_
+5	2003	_	_	_
+6	?	_	_	_
+
+2	2	henry	1.0	0
+
+maths	maths
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	partner	_	_	_
+4	of	_	_	_
+5	emma	_	_	_
+6	?	_	_	_
+
+5	5	emma	1.0	0
+2	5	fay	0.4	1
+
+carl	carl
+
+0	when	_	_	_
+1	did	_	_	_
+2	henry	_	_	_
+3	teach	_	_	_
+4	physics	_	_	_
+5	?	_	_	_
+
+2	2	henry	1.0	0
+4	4	physics	1.0	1
+
+2006	2006
+2005	2005
+2004	2004
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	partner	_	_	_
+4	of	_	_	_
+5	carl	_	_	_
+6	?	_	_	_
+
+5	5	carl	1.0	0
+4	4	physics	1.0	1
+
+emma	emma
+
+0	who	_	_	_
+1	is	_	_	_
+2	dennis	_	_	_
+3	the	_	_	_
+4	father	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+2	2	dennis	1.0	0
+
+emma	emma
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	director	_	_	_
+4	of	_	_	_
+5	alicecorp	_	_	_
+6	?	_	_	_
+
+5	5	alicecorp	1.0	0
+3	3	ceo	0.7	1
+3	3	alice	0.2	1
+
+alice	alice
+
+0	where	_	_	_
+1	was	_	_	_
+2	bob	_	_	_
+3	born	_	_	_
+4	?	_	_	_
+
+2	2	bob	1.0	0
+
+edinburgh	edinburgh
+
+0	who	_	_	_
+1	was	_	_	_
+2	founded	_	_	_
+3	in	_	_	_
+4	edinburgh	_	_	_
+5	?	_	_	_
+
+4	4	edinburgh	0.3	0
+4	4	copenhagen	0.1	0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	son	_	_	_
+4	of	_	_	_
+5	alice	_	_	_
+6	?	_	_	_
+
+5	5	alice	1.0	0
+5	5	alicecorp	1.0	0
+
+carl	carl
+
+0	what	_	_	_
+1	is	_	_	_
+2	bob	_	_	_
+3	investing	_	_	_
+4	in	_	_	_
+5	?	_	_	_
+
+2	2	bob	1.0	0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	did	_	_	_
+2	dennis	_	_	_
+3	sell	_	_	_
+4	denniscorp	_	_	_
+5	to	_	_	_
+6	?	_	_	_
+
+2	2	dennis	0.2	0
+2	2	bob	0.1	0
+4	4	denniscorp	1.0	1
+4	4	alicecorp	0.8	1
+
+gary	gary
+
+0	who	_	_	_
+1	is	_	_	_
+2	director	_	_	_
+3	to	_	_	_
+4	alicecorp	_	_	_
+5	?	_	_	_
+
+4	4	alicecorp	1.0	0
+
+alice	alice
+
+0	who	_	_	_
+1	works	_	_	_
+2	as	_	_	_
+3	teacher	_	_	_
+4	?	_	_	_
+
+4	4	teacher	0.5	0
+4	4	alicecorp	0.4	0
+
+henry	henry
+
+0	who	_	_	_
+1	selled	_	_	_
+2	denniscorp	_	_	_
+3	to	_	_	_
+4	gary	_	_	_
+5	?	_	_	_
+
+3	3	denniscorp	0.2	0
+3	3	othercorp	0.001	0
+5	5	gary	0.6	1
+5	5	dennis	0.5	1
+5	5	alice	0.4	1
+
+dennis	dennis
+
+0	who	_	_	_
+1	is	_	_	_
+2	partner	_	_	_
+3	to	_	_	_
+4	alice	_	_	_
+5	?	_	_	_
+
+4	4	alice	1.0	0
+
+bob	bob
+
+0	who	_	_	_
+1	works	_	_	_
+2	for	_	_	_
+3	alicecorp	_	_	_
+4	?	_	_	_
+
+4	4	alicecorp	1.0	0
+
+alice	alice
+bob	bob
+fay	fay
+
+0	who	_	_	_
+1	is	_	_	_
+2	carl	_	_	_
+3	working	_	_	_
+4	for	_	_	_
+5	?	_	_	_
+
+2	2	carl	0.95	0
+3	3	alicecorp	0.4	1
+
+othercorp	othercorp
+
+0	where	_	_	_
+1	does	_	_	_
+2	alice	_	_	_
+3	live	_	_	_
+4	?	_	_	_
+
+2	2	alice	1.0	0
+
+edinburgh	edinburgh
+
+0	who	_	_	_
+1	lives	_	_	_
+2	with	_	_	_
+3	fay	_	_	_
+4	?	_	_	_
+
+4	4	fay	1.0	0
+
+henry	henry
+
+0	who	_	_	_
+1	is	_	_	_
+2	henry	_	_	_
+3	working	_	_	_
+4	for	_	_	_
+5	?	_	_	_
+
+2	2	henry	1.0	0
+2	4	fay	0.4	1
+
+someschool	someschool
+
+0	who	_	_	_
+1	is	_	_	_
+2	alice	_	_	_
+3	working	_	_	_
+4	for	_	_	_
+5	?	_	_	_
+
+2	2	alice	1.0	0
+
+alicecorp	alicecorp
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	partner	_	_	_
+4	of	_	_	_
+5	bob	_	_	_
+6	?	_	_	_
+
+5	5	bob	1.0	0
+5	5	alice	0.9	0
+
+alice	alice
+
+0	who	_	_	_
+1	is	_	_	_
+2	dennis	_	_	_
+3	director	_	_	_
+4	to	_	_	_
+5	?	_	_	_
+
+2	2	dennis	0.8	0
+2	2	henry	0.8	0
+2	2	alicecorp	1.0	0
+
+othercorp	othercorp
+
+0	who	_	_	_
+1	is	_	_	_
+2	the	_	_	_
+3	father	_	_	_
+4	of	_	_	_
+5	emma	_	_	_
+6	?	_	_	_
+
+5	5	emma	1.0	0
+
+dennis	dennis
+
+0	who	_	_	_
+1	is	_	_	_
+2	carl	_	_	_
+3	the	_	_	_
+4	son	_	_	_
+5	of	_	_	_
+6	?	_	_	_
+
+2	2	carl	1.0	0
+2	2	emma	0.4	0
+
+alice	alice
+bob	bob
+
+0	who	_	_	_
+1	is	_	_	_
+2	carl	_	_	_
+3	partner	_	_	_
+4	to	_	_	_
+5	?	_	_	_
+
+2	2	carl	1.0	0
+
+emma	emma
+
+0	what	_	_	_
+1	does	_	_	_
+2	gary	_	_	_
+3	invest	_	_	_
+4	in	_	_	_
+5	?	_	_	_
+
+2	2	gary	0.8	0
+2	2	carl	0.3	0
+
+alicecorp	alicecorp

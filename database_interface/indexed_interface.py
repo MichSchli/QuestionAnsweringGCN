@@ -29,7 +29,7 @@ class IndexedInterface:
         #hypergraph.entity_to_entity_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_entity_edges[:,1])
         #hypergraph.entity_to_event_edges[:,1] = self.relation_indexer.index(hypergraph.entity_to_event_edges[:,1])
 
-        hypergraph.relation_map = {}
+        hypergraph.relation_map = {0: "<unknown>", 1: "<dummy>"}
 
         event_to_entity_relation_bags = []
         max_relation_parts = 0
