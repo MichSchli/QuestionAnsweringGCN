@@ -30,6 +30,6 @@ class GraphReaderFactory:
 
         database_interface = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
         graph_converter = GraphConverter(database_interface)
-        graph_indexer = GraphIndexer(graph_converter, self.index_factory.get("vertices"), self.index_factory.get("relations"))
+        graph_indexer = GraphIndexer(graph_converter, self.index_factory.get("vertices", experiment_configuration), self.index_factory.get("relations", experiment_configuration))
 
         return graph_indexer

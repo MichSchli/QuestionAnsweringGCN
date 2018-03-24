@@ -8,8 +8,8 @@ class ExampleReader:
         self.question_reader = question_reader
         self.graph_reader = graph_reader
 
-    def iterate(self, dataset):
-        for question in self.question_reader.iterate(dataset):
+    def iterate(self, dataset, shuffle=False):
+        for question in self.question_reader.iterate(dataset, shuffle=shuffle):
             example = Example()
             example.words = question[0]
             example.mentions = question[1]
