@@ -6,6 +6,7 @@ from experiment_construction.index_construction.abstract_indexer import Abstract
 class LazyIndexer(AbstractIndexer):
 
     global_map = None
+    inverted_map = []
     counter = None
     vocabulary_shape = None
     vectors = None
@@ -15,8 +16,9 @@ class LazyIndexer(AbstractIndexer):
     def __init__(self, vocabulary_shape):
         self.global_map = {}
         self.counter = 0
-        self.vocabulary_shape = np.array([vocabulary_shape[0] + 1, vocabulary_shape[1]])
+        self.vocabulary_shape = np.array([vocabulary_shape[0] + 2, vocabulary_shape[1]])
         self.index_single_element("<unknown>")
+        self.index_single_element("<dummy>")
         self.is_frozen = False
 
     def index_single_element(self, element):
@@ -26,8 +28,12 @@ class LazyIndexer(AbstractIndexer):
             return 0
         else:
             self.global_map[element] = self.counter
+            self.inverted_map.append(element)
             self.counter += 1
             return self.global_map[element]
+
+    def invert(self, index):
+        return self.inverted_map[index]
 
     def get_dimension(self):
         return self.vocabulary_shape[1]
@@ -51,6 +57,7 @@ class LazyIndexer(AbstractIndexer):
                 local_map[i] = 0
             else:
                 self.global_map[element] = self.counter
+                self.inverted_map.append(element)
                 local_map[i] = self.counter
                 self.counter += 1
 

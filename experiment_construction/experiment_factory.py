@@ -28,13 +28,14 @@ class ExperimentFactory:
         self.candidate_generator_factory = CandidateGeneratorFactory(self.index_factory)
         self.fact_factory = FactFactory()
         self.candidate_selector_factory = CandidateSelectorFactory(self.index_factory, self.fact_factory)
-        self.example_processor_factory = ExampleProcessorFactory()
+        self.example_processor_factory = ExampleProcessorFactory(self.index_factory)
         self.evaluator_factory = EvaluatorFactory(Static.logger)
         self.learner_factory = LearnerFactory(self.evaluator_factory,
                                               self.preprocessor_factory,
                                               self.candidate_generator_factory,
                                               self.candidate_selector_factory,
-                                              self.example_processor_factory)
+                                              self.example_processor_factory,
+                                              self.index_factory)
         self.experiment_runner_factory = ExperimentRunnerFactory(self.evaluator_factory, self.learner_factory)
 
     def search(self):

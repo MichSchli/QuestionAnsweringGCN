@@ -41,9 +41,10 @@ class GcnMessagePasserFactory:
 
         #TODO: More-or-less random numbers for n types
         if message_passer_settings["use_relation_type_features"] == True:
+            n_types = 2800 if message_passer_settings["sender_tags"] != "words" else 0
             feature_settings.append({"type": "relation_type_embeddings",
                                      "dimension": message_passer_settings["relation_type_embedding_dimension"],
-                                     "n_types": 4000})
+                                     "n_types": n_types})
 
         if message_passer_settings["use_relation_part_features"] == True:
             feature_settings.append({"type": "relation_part_embeddings",
