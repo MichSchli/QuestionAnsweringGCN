@@ -16,7 +16,6 @@ class VertexSubsampler:
             return example
 
         negative_sample_rate = min(self.negative_sample_rate, example.graph.count_vertices())
-        centroids = example.get_centroid_indexes()
         golds = example.get_gold_indexes()
         potential_negatives = np.random.choice(example.graph.vertices.shape[0], negative_sample_rate, replace=False)
         kept_vertices_first_round = np.unique(np.concatenate((golds, potential_negatives))).astype(np.int32)
@@ -38,5 +37,8 @@ class VertexSubsampler:
         for i in range(example.graph.edges.shape[0]):
             example.graph.edges[i][0] = vertex_map[example.graph.edges[i][0]]
             example.graph.edges[i][2] = vertex_map[example.graph.edges[i][2]]
+
+        example.index_mentions()
+        example.index_gold_answers()
 
         return example

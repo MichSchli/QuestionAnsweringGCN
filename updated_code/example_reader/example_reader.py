@@ -37,7 +37,7 @@ class ExampleReader:
             example.graph = self.graph_reader.get_neighborhood_graph(example.get_mentioned_entities())
             example.index_mentions()
             example.gold_answers = self.gold_answer_reader.build(data[2][i])
-            example.index_gold_answers(self.project_names)
+            example.index_gold_answers()
 
             yield example
 

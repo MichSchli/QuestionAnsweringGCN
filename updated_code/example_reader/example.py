@@ -28,9 +28,9 @@ class Example:
         for mention in self.mentions:
             mention.entity_index = self.graph.map_from_label(mention.entity_label)
 
-    def index_gold_answers(self, project_names=False):
+    def index_gold_answers(self):
         for gold_answer in self.gold_answers:
-            if not project_names:
+            if not gold_answer.project_names:
                 gold_answer.entity_indexes = np.array([self.graph.map_from_label(gold_answer.entity_name_or_label)])
 
     def get_centroid_indexes(self):
