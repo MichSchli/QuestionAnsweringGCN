@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class GraphIndexer:
 
     vertex_indexer = None
@@ -20,5 +23,11 @@ class GraphIndexer:
             graph.edges[j][0] = local_vertex_indexes[graph.edges[j][0]]
             graph.edges[j][1] = self.relation_indexer.index(graph.edges[j][1])
             graph.edges[j][2] = local_vertex_indexes[graph.edges[j][2]]
+
+        graph.vertices = np.array(graph.vertices, dtype=np.int32)
+        graph.edges = np.array(graph.edges, dtype=np.int32)
+        graph.vertex_label_to_index_map = local_vertex_indexes
+
+        graph.nearby_centroid_map = [[local_vertex_indexes[v] for v in vertex] for vertex in graph.nearby_centroid_map]
 
         return graph

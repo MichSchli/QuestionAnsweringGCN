@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 
 import numpy
 import numpy as np
@@ -128,13 +128,29 @@ class HypergraphModel:
 
         return l
 
+    def get_nearby_centroids_to_event(self, target_event):
+        centroid_list = []
+
+        for edge in self.entity_to_event_edges:
+            if edge[2] == target_event and edge[0] in self.centroids and edge[0] not in centroid_list:
+                centroid_list.append(edge[0])
+
+        for edge in self.event_to_entity_edges:
+            if edge[0] == target_event and edge[2] in self.centroids and edge[2] not in centroid_list:
+                centroid_list.append(edge[2])
+
+        return np.unique(centroid_list)
+
     def get_nearby_centroids(self, target_entity):
-        outgoing_v = np.logical_and(self.entity_to_entity_edges[:, 0] == target_entity,
+        if self.entity_to_entity_edges[:, 0].shape[0] > 0:
+            outgoing_v = np.logical_and(self.entity_to_entity_edges[:, 0] == target_entity,
                                     np.isin(self.entity_to_entity_edges[:, 2], self.centroids))
-        ingoing_v = np.logical_and(self.entity_to_entity_edges[:, 2] == target_entity,
+            ingoing_v = np.logical_and(self.entity_to_entity_edges[:, 2] == target_entity,
                                    np.isin(self.entity_to_entity_edges[:, 0], self.centroids))
 
-        centroids = np.concatenate((self.entity_to_entity_edges[:,2][outgoing_v], self.entity_to_entity_edges[:,0][ingoing_v]))
+            centroids = np.concatenate((self.entity_to_entity_edges[:,2][outgoing_v], self.entity_to_entity_edges[:,0][ingoing_v]))
+        else:
+            centroids = np.empty(0, dtype=np.int32)
         centroid_event_map = {}
 
         for edge in self.entity_to_event_edges:

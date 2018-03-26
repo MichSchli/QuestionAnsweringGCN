@@ -5,6 +5,7 @@ from example_reader.graph_reader.database_interface.expansion_strategies.all_thr
 from example_reader.graph_reader.database_interface.expansion_strategies.only_freebase_element_strategy import \
     OnlyFreebaseExpansionStrategy
 from example_reader.graph_reader.database_interface.hypergraph_interface import HypergraphInterface
+from example_reader.graph_reader.graph_cache import GraphCache
 from example_reader.graph_reader.graph_converter import GraphConverter
 from example_reader.graph_reader.graph_indexer import GraphIndexer
 
@@ -32,4 +33,9 @@ class GraphReaderFactory:
         graph_converter = GraphConverter(database_interface)
         graph_indexer = GraphIndexer(graph_converter, self.index_factory.get("vertices", experiment_configuration), self.index_factory.get("relations", experiment_configuration))
 
-        return graph_indexer
+        disk_cache = experiment_configuration["endpoint"]["disk_cache"] if "disk_cache" in experiment_configuration["endpoint"] else None
+        if disk_cache:
+            graph_cache = GraphCache(graph_indexer, disk_cache)
+
+
+        return graph_cache
