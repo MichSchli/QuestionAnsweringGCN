@@ -7,7 +7,7 @@ class ExampleBatcherFactory:
         pass
 
     def get(self, experiment_configuration, mode):
-        batch_size = int(experiment_configuration["training"]["batch_size"]) if mode == "train" else 1
+        batch_size = int(experiment_configuration["training"]["batch_size"]) if mode == "train" else 2
         batcher = ExampleBatcher()
         batcher.batch_size = batch_size
         return batcher

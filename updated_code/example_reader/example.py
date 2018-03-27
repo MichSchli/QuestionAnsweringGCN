@@ -54,3 +54,12 @@ class Example:
 
     def get_predicted_labels(self, threshold):
         return self.prediction.get_predictions(threshold)
+
+    def count_entities(self):
+        return self.graph.entity_vertex_indexes.shape[0]
+
+    def get_entity_vertex_indexes(self):
+        return self.graph.entity_vertex_indexes
+
+    def count_vertices(self):
+        return self.graph.count_vertices()

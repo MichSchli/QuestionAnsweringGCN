@@ -11,17 +11,22 @@ class ModelTester:
         self.example_batcher = example_batcher
         self.evaluator = evaluator
 
-    def test(self, model):
+    def test(self, model, dataset):
         self.evaluator.begin_evaluation()
 
-        for example in self.example_generator.iterate('test', shuffle=False):
-            example = self.example_extender.extend(example, 'test')
-            self.example_batcher.put_example(example)
+        for example in self.example_generator.iterate(dataset, shuffle=False):
+            example = self.example_extender.extend(example)
             potential_batch = self.example_batcher.put_example(example)
 
             if potential_batch:
                 model.predict(potential_batch)
                 for example in potential_batch.get_examples():
                     self.evaluator.add_prediction(example)
+
+        last_batch = self.example_batcher.get_batch()
+        if last_batch.has_examples():
+            model.predict(last_batch)
+            for example in last_batch.get_examples():
+                self.evaluator.add_prediction(example)
 
         return self.evaluator.final_scores()

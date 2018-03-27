@@ -10,10 +10,8 @@ class VertexSubsampler:
         self.inner = inner
         self.negative_sample_rate = negative_sample_rate
 
-    def extend(self, example, mode):
-        example = self.inner.extend(example, mode)
-        if mode != "train":
-            return example
+    def extend(self, example):
+        example = self.inner.extend(example)
 
         negative_sample_rate = min(self.negative_sample_rate, example.graph.count_vertices())
         golds = example.get_gold_indexes()

@@ -16,6 +16,7 @@ class Evaluator:
     def add_prediction(self, example):
         true_labels = example.get_gold_labels()
         predicted_labels = example.get_predicted_labels(0.5)
+        print(true_labels)
         print(predicted_labels)
 
         true_positives = np.isin(predicted_labels, true_labels)

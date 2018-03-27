@@ -3,12 +3,13 @@ import numpy as np
 
 class RemoveGoldFromAllExceptBestMention:
 
-    def __init__(self):
-        pass
+    inner = None
 
-    def extend(self, example, mode):
-        if mode != "train":
-            return example
+    def __init__(self, inner):
+        self.inner = inner
+
+    def extend(self, example):
+        example = self.inner.extend(example)
 
         mention_gold_lists = np.zeros((len(example.mentions), len(example.gold_answers)), dtype=np.bool)
 

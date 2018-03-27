@@ -23,8 +23,8 @@ class ExperimentFactory:
         self.example_extender_factory = ExampleExtenderFactory()
         self.example_batcher_factory = ExampleBatcherFactory()
         self.model_factory = ModelFactory()
-        self.model_trainer_factory = ModelTrainerFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory)
         self.model_tester_factory = ModelTesterFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory)
+        self.model_trainer_factory = ModelTrainerFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory, self.model_tester_factory)
 
     def get(self, experiment_configuration):
         model_trainer = self.model_trainer_factory.get(experiment_configuration)
