@@ -17,12 +17,13 @@ class VertexSubsampler:
 
         negative_sample_rate = min(self.negative_sample_rate, example.graph.count_vertices())
         golds = example.get_gold_indexes()
+        centroids = example.get_centroid_indexes()
         potential_negatives = np.random.choice(example.graph.vertices.shape[0], negative_sample_rate, replace=False)
         kept_vertices_first_round = np.unique(np.concatenate((golds, potential_negatives))).astype(np.int32)
 
         kept_edges_first_round = np.logical_or(np.isin(example.graph.edges[:, 0], kept_vertices_first_round),
                                             np.isin(example.graph.edges[:, 2], kept_vertices_first_round))
-        kept_vertices_second_round = np.unique(np.concatenate((example.graph.edges[kept_edges_first_round][:,0], example.graph.edges[kept_edges_first_round][:,2])))
+        kept_vertices_second_round = np.unique(np.concatenate((example.graph.edges[kept_edges_first_round][:,0], example.graph.edges[kept_edges_first_round][:,2], centroids)))
 
         kept_edges_second_round = np.logical_and(np.isin(example.graph.edges[:, 0], kept_vertices_second_round),
                                             np.isin(example.graph.edges[:, 2], kept_vertices_second_round))
@@ -40,5 +41,7 @@ class VertexSubsampler:
 
         example.index_mentions()
         example.index_gold_answers()
+
+        example.graph.entity_vertex_indexes = np.array([vertex_map[v] for v in example.graph.entity_vertex_indexes if v in vertex_map])
 
         return example

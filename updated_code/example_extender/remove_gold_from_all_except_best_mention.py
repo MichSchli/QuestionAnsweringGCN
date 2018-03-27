@@ -23,11 +23,11 @@ class RemoveGoldFromAllExceptBestMention:
         mention_gold_counts = np.sum(mention_gold_lists, axis=1)
         max_count = np.max(mention_gold_counts)
 
-        new_mention_list = []
+        new_gold_list = []
 
-        for i in range(len(mention_gold_counts)):
-            if mention_gold_counts[i] == max_count:
-                new_mention_list.append(example.mentions[i])
+        for i,gold_answer in enumerate(example.gold_answers):
+            for j in range(mention_gold_counts.shape[0]):
+                if mention_gold_counts[j] == max_count and mention_gold_lists[j][i] == True and gold_answer not in new_gold_list:
+                    new_gold_list.append(gold_answer)
 
-        example.mentions = new_mention_list
         return example

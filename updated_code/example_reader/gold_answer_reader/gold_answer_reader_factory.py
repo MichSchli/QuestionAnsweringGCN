@@ -7,4 +7,4 @@ class GoldAnswerReaderFactory:
         pass
 
     def get(self, experiment_configuration):
-        return GoldAnswerReader(experiment_configuration["endpoint"]["project_names"] == "True")
+        return GoldAnswerReader()

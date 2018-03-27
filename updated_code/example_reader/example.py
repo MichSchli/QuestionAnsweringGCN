@@ -8,6 +8,7 @@ class Example:
     gold_answers = None
     graph = None
     mentions = None
+    prediction = None
 
     def __init__(self):
         self.mentions = []
@@ -30,7 +31,7 @@ class Example:
 
     def index_gold_answers(self):
         for gold_answer in self.gold_answers:
-            if not gold_answer.project_names:
+            if not self.project_names:
                 gold_answer.entity_indexes = np.array([self.graph.map_from_label(gold_answer.entity_name_or_label)])
 
     def get_centroid_indexes(self):
@@ -44,3 +45,12 @@ class Example:
         for gold_answer in self.gold_answers:
             gold_indexes.extend(gold_answer.entity_indexes)
         return np.unique(gold_indexes)
+
+    def get_gold_labels(self):
+        gold_labels = []
+        for gold_answer in self.gold_answers:
+            gold_labels.append(gold_answer.entity_name_or_label)
+        return np.unique(gold_labels)
+
+    def get_predicted_labels(self, threshold):
+        return self.prediction.get_predictions(threshold)

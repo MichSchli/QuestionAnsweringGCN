@@ -1,12 +1,14 @@
 class Experiment:
 
-    example_reader = None
+    model_updater = None
+    model = None
 
-    def __init__(self, example_reader, example_extender):
-        self.example_reader = example_reader
-        self.example_extender = example_extender
+    def __init__(self, model_trainer, model_tester, model):
+        self.model_trainer = model_trainer
+        self.model_tester = model_tester
+        self.model = model
 
     def run(self):
-        for example in self.example_reader.iterate('train', shuffle=True):
-            example = self.example_extender.extend(example, 'train')
-            print(example)
+        self.model_trainer.train(self.model)
+        summary = self.model_tester.test(self.model).summary()
+        print(summary)

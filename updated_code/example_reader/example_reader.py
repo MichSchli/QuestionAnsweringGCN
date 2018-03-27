@@ -28,6 +28,7 @@ class ExampleReader:
 
         for i in indexes:
             example = Example()
+            example.project_names = self.project_names
             example.question = self.question_reader.build(data[0][i])
             example.mentions = self.mention_reader.build(data[1][i])
 

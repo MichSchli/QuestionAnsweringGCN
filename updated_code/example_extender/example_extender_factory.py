@@ -7,7 +7,7 @@ class ExampleExtenderFactory:
     def __init__(self):
         pass
 
-    def get(self, experiment_configuration):
+    def get(self, experiment_configuration, mode):
         extender = RemoveGoldFromAllExceptBestMention()
         if "subsampling" in experiment_configuration["training"] and experiment_configuration["training"]["subsampling"] != "None":
             extender = VertexSubsampler(extender, int(experiment_configuration["training"]["subsampling"]))

@@ -26,7 +26,7 @@ class GraphIndexer:
 
         graph.vertices = np.array(graph.vertices, dtype=np.int32)
         graph.edges = np.array(graph.edges, dtype=np.int32)
-        graph.vertex_label_to_index_map = local_vertex_indexes
+        graph.set_label_to_index_map(local_vertex_indexes)
 
         graph.nearby_centroid_map = [[local_vertex_indexes[v] for v in vertex] for vertex in graph.nearby_centroid_map]
 

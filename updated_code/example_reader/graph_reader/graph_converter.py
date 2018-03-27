@@ -13,6 +13,7 @@ class GraphConverter:
 
         graph = Graph()
         graph.vertices = np.concatenate((hypergraph.entity_vertices, hypergraph.event_vertices))
+        graph.entity_vertex_indexes = np.arange(hypergraph.entity_vertices.shape[0], dtype=np.int32)
         graph.nearby_centroid_map = []
 
         for vertex in hypergraph.entity_vertices:
