@@ -37,8 +37,8 @@ class ModelTrainer:
             example = self.example_extender.extend(example)
             potential_batch = self.example_batcher.put_example(example)
             if potential_batch:
-                self.model_updater.update(model, potential_batch)
+                model.update(potential_batch)
 
         last_batch = self.example_batcher.get_batch()
         if last_batch.has_examples():
-            self.model_updater.update(model, last_batch)
+            model.update(last_batch)

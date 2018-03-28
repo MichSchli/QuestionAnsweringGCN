@@ -18,11 +18,11 @@ class SigmoidLoss:
     def handle_variable_assignment(self, batch, mode):
         self.variable_assignments = {}
         self.variable_assignments["gold_vector"] = batch.get_gold_vector()
-        self.variable_assignments["loss_normalization"] = batch.get_normalization_by_vertex_count()
+        self.variable_assignments["loss_normalization"] = batch.get_normalization_by_vertex_count(weight_positives=True)
 
     def compute(self, entity_scores):
         golds = self.get_variable("gold_vector")
         losses = tf.nn.sigmoid_cross_entropy_with_logits(logits=entity_scores, labels=golds)
-        normalized_losses = losses / self.get_variable("loss_normalization")
+        normalized_losses = losses * self.get_variable("loss_normalization")
 
         return tf.reduce_sum(normalized_losses)

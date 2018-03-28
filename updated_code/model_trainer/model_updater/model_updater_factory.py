@@ -8,4 +8,6 @@ class ModelUpdaterFactory:
         pass
 
     def get(self, experiment_configuration):
-        return TensorflowModelUpdater()
+        learning_rate = float(experiment_configuration["training"]["learning_rate"])
+        gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
+        return TensorflowModelUpdater(learning_rate, gradient_clipping)

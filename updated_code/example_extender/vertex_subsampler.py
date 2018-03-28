@@ -30,8 +30,9 @@ class VertexSubsampler:
         new_label_to_vertex_map = {label:vertex_map[index] for label, index in example.graph.vertex_label_to_index_map.items() if index in vertex_map}
 
         example.graph.vertex_label_to_index_map = new_label_to_vertex_map
-        example.graph.vertices = kept_edges_first_round
+        example.graph.vertices = example.graph.vertices[kept_vertices_second_round]
         example.graph.edges = example.graph.edges[kept_edges_second_round]
+        example.graph.padded_edge_bow_matrix = example.graph.padded_edge_bow_matrix[kept_edges_second_round]
 
         for i in range(example.graph.edges.shape[0]):
             example.graph.edges[i][0] = vertex_map[example.graph.edges[i][0]]

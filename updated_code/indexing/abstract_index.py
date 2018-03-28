@@ -1,4 +1,5 @@
 from diskcache import Cache
+import numpy as np
 
 class AbstractIndex:
 
@@ -6,12 +7,21 @@ class AbstractIndex:
     backward_map = None
     is_frozen = None
     element_counter = None
+    vectors = None
 
-    def __init__(self, index_cache_name):
-        index_cache_path = "indexing/cache/"+index_cache_name
-        self.forward_map = Cache(index_cache_path + "/forward")
-        self.backward_map = Cache(index_cache_path + "/backward")
-        self.element_counter = len(self.forward_map)
+    def __init__(self, index_cache_name, dimension):
+        if index_cache_name is not None:
+            index_cache_path = "indexing/cache/"+index_cache_name
+            self.forward_map = Cache(index_cache_path + "/forward")
+            self.backward_map = Cache(index_cache_path + "/backward")
+            self.element_counter = len(self.forward_map)
+        else:
+            self.forward_map = {}
+            self.backward_map = {}
+            self.element_counter = 0
+
+        self.dimension = dimension
+
         self.is_frozen = False
 
         self.index("<unknown>")
@@ -26,6 +36,12 @@ class AbstractIndex:
             self.element_counter += 1
 
         return self.forward_map[element]
+
+    def get_all_vectors(self):
+        if self.vectors is None:
+            self.vectors = np.random.uniform(-1, 1, size=(self.vector_count, self.dimension)).astype(np.float32)
+            self.vectors[0] = 0
+        return self.vectors
 
     def freeze(self):
         self.is_frozen = True

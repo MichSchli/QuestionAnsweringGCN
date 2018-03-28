@@ -3,4 +3,4 @@ from indexing.abstract_index import AbstractIndex
 
 class WordIndex(AbstractIndex):
 
-    pass
+    vector_count = 4000

@@ -7,6 +7,7 @@ class Graph:
     entity_vertex_indexes = None
 
     nearby_centroid_map = None
+    padded_edge_bow_matrix = None
 
     def __str__(self):
         return str(self.edges)

@@ -63,3 +63,12 @@ class Example:
 
     def count_vertices(self):
         return self.graph.count_vertices()
+
+    def count_words(self):
+        return self.question.count_words()
+
+    def get_padded_edge_part_type_matrix(self):
+        return self.graph.padded_edge_bow_matrix
+
+    def count_edges(self):
+        return self.graph.edges.shape[0]

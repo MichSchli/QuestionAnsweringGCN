@@ -31,7 +31,10 @@ class GraphReaderFactory:
 
         database_interface = HypergraphInterface(database_interface, expansion_strategy, prefix=prefix)
         graph_converter = GraphConverter(database_interface)
-        graph_indexer = GraphIndexer(graph_converter, self.index_factory.get("vertices", experiment_configuration), self.index_factory.get("relations", experiment_configuration))
+        graph_indexer = GraphIndexer(graph_converter,
+                                     self.index_factory.get("vertices", experiment_configuration),
+                                     self.index_factory.get("relations", experiment_configuration),
+                                     self.index_factory.get("relation_parts", experiment_configuration))
 
         disk_cache = experiment_configuration["endpoint"]["disk_cache"] if "disk_cache" in experiment_configuration["endpoint"] else None
         if disk_cache:
