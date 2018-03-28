@@ -10,11 +10,11 @@ class Gcn:
         self.updater = updater
         self.graph = graph
 
-    def propagate(self, mode):
+    def propagate(self, mode, previous_carry_over):
         message_sums = self.compute_message_sums(mode)
-        self.graph.update_vertex_embeddings(message_sums)
+        carry_over = self.updater.update(message_sums, previous_carry_over)
 
-        #self.updater.update(message_sums)
+        return carry_over
 
     def compute_message_sums(self, mode):
         sender_indices, receiver_indices = self.graph.get_edges()

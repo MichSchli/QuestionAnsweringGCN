@@ -11,7 +11,10 @@ class DummyTensorflowModel(AbstractTensorflowModel):
 
         self.graph.initialize_zero_embeddings(dimension=1)
         self.sentence_batch_features.set_batch_features(sentence_embedding)
-        self.gcn.propagate(mode)
+
+        gcn_cell_state = None
+        for gcn in self.gcn_layers:
+            gcn_cell_state = gcn.propagate(mode, gcn_cell_state)
 
         entity_embeddings = self.graph.get_target_vertex_embeddings()
 

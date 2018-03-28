@@ -5,6 +5,7 @@ from models.tensorflow_components.gcn.gcn_features.sentence_batch_features impor
 from models.tensorflow_components.gcn.gcn_features.vertex_features import VertexFeatures
 from models.tensorflow_components.gcn.gcn_gates.gcn_gates import GcnGates
 from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessages
+from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
 
@@ -16,6 +17,7 @@ class GcnFactory:
         self.index_factory = index_factory
 
     def get_dummy_gcn(self, graph, experiment_configuration):
+        layers = int(experiment_configuration["gcn"]["layers"])
         relation_index = self.index_factory.get("relations", experiment_configuration)
         relation_index_width = relation_index.dimension
 
@@ -35,8 +37,15 @@ class GcnFactory:
                          RelationPartFeatures(graph, relation_part_index_width, relation_part_index),
                          sentence_batch_features]
 
-        messages = GcnMessages(message_features, MultilayerPerceptronComponent([222,100], "mlp"))
-        gates = GcnGates(gate_features, MultilayerPerceptronComponent([222, 200, 1], "mlp"))
-        gcn = Gcn(messages, gates, None, graph)
+        gcn_layers = [None]*layers
+        for layer in range(layers):
+            vertex_input_dim = 1 if layer == 0 else 100
 
-        return gcn, sentence_batch_features
+            messages = GcnMessages(message_features, MultilayerPerceptronComponent([220 + 2 * vertex_input_dim,100], "mlp"))
+            gates = GcnGates(gate_features, MultilayerPerceptronComponent([220 + 2* vertex_input_dim, 200, 1], "mlp"))
+
+            updater = CellStateGcnUpdater("cell_state_1", vertex_input_dim, 100, graph)
+
+            gcn_layers[layer] = Gcn(messages, gates, updater, graph)
+
+        return gcn_layers, sentence_batch_features
