@@ -94,7 +94,7 @@ class AbstractTensorflowModel:
         if mode not in self.graphs:
             self.graphs[mode] = self.compute_entity_scores(mode=mode)
 
-        return self.decoder.decode_to_loss(self.graphs[mode], sum_examples=sum_examples) + self.get_regularization()
+        return self.decoder.decode_to_loss(self.graphs[mode], sum_examples=sum_examples) #+ self.get_regularization()
 
     def get_prediction_graph(self, mode="predict"):
         if mode not in self.graphs:

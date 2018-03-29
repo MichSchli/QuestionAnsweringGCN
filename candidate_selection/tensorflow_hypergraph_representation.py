@@ -30,9 +30,10 @@ class TensorflowHypergraphRepresentation(AbstractComponent):
         self.event_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_events"), dimension))
 
     def initialize_with_centroid_scores(self, dimension):
-        self.entity_vertex_embeddings = tf.expand_dims(self.variables.get_variable(self.variable_prefix + "centroid_scores"), -1)
+        #self.entity_vertex_embeddings = tf.expand_dims(self.variables.get_variable(self.variable_prefix + "centroid_scores"), -1)
 
         #TODO: Receiver features needs this, but it is zero. We need to fix embeddings for these
+        self.entity_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_entities"), dimension))
         self.event_vertex_embeddings = tf.zeros((self.variables.get_variable(self.variable_prefix + "n_events"), dimension))
 
     def update_entity_embeddings(self, embeddings, dimension):

@@ -7,10 +7,12 @@ class DummyTensorflowModel(AbstractTensorflowModel):
 
     def compute_entity_scores(self, mode):
         word_embeddings = self.sentence.get_embedding()
-        sentence_embedding = tf.reduce_mean(word_embeddings, axis=1)
+        word_embeddings = self.lstm.transform_sequences(word_embeddings)
+        gate_sentence_embedding = self.gate_attention.attend(word_embeddings, mode)
+        final_sentence_embedding = self.final_attention.attend(word_embeddings, mode)
 
         self.graph.initialize_zero_embeddings(dimension=1)
-        self.sentence_batch_features.set_batch_features(sentence_embedding)
+        self.sentence_batch_features.set_batch_features(gate_sentence_embedding)
 
         gcn_cell_state = None
         for gcn in self.gcn_layers:
@@ -18,7 +20,7 @@ class DummyTensorflowModel(AbstractTensorflowModel):
 
         entity_embeddings = self.graph.get_target_vertex_embeddings()
 
-        entity_embeddings = self.sentence_to_entity_mapper.map(sentence_embedding, entity_embeddings)
+        entity_embeddings = self.sentence_to_entity_mapper.map(final_sentence_embedding, entity_embeddings)
         entity_embeddings = self.mlp.transform(entity_embeddings, mode)
 
         return tf.squeeze(entity_embeddings)

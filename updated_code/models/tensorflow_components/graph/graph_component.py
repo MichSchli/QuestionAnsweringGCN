@@ -46,7 +46,7 @@ class GraphComponent:
     def handle_variable_assignment(self, batch, mode):
         self.variable_assignments = {}
         self.variable_assignments["n_vertices"] = batch.count_all_vertices()
-        self.variable_assignments["entity_vertex_indexes"] = batch.get_combined_vertex_indexes()
+        self.variable_assignments["entity_vertex_indexes"] = batch.get_combined_entity_vertex_map_indexes()
         self.variable_assignments["sender_indices"] = batch.get_combined_sender_indices()
         self.variable_assignments["receiver_indices"] = batch.get_combined_receiver_indices()
         self.variable_assignments["edge_type_indices"] = batch.get_combined_edge_type_indices()

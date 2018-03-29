@@ -24,6 +24,8 @@ class GraphCache:
             neighborhood_graph = self.inner.get_neighborhood_graph(mention_entities)
             self.cache[key] = neighborhood_graph
 
-            return neighborhood_graph
+            graph = neighborhood_graph
         else:
-            return self.cache[key]
+            graph = self.cache[key]
+
+        return graph.copy()

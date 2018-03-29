@@ -160,12 +160,12 @@ class TensorflowModel:
             for i, prediction in enumerate(predictions):
                 l = list(sorted(enumerate(prediction[0]), key=lambda x: x[1], reverse=True))
 
-                formatted_gate_information, edge_counts = self.format_gate_information(batch["neighborhood"][i], batch["gold_entities"][i], prediction[0], gates, edge_counts)
-                self.print_formatted_gate_information(formatted_gate_information, batch["sentence"][i], outfile)
+                #formatted_gate_information, edge_counts = self.format_gate_information(batch["neighborhood"][i], batch["gold_entities"][i], prediction[0], gates, edge_counts)
+                #self.print_formatted_gate_information(formatted_gate_information, batch["sentence"][i], outfile)
 
-                for index,prob in l[:5]:
-                    if prob > 0.5:
-                        print(batch["neighborhood"][i].get_paths_to_neighboring_centroid(index))
+                #for index,prob in l[:5]:
+                #    if prob > 0.5:
+                #        print(batch["neighborhood"][i].get_paths_to_neighboring_centroid(index))
 
                 yield [(batch["neighborhood"][i].from_index_with_names(index),prob) for index,prob in l]
 

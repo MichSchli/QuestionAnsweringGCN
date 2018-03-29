@@ -23,30 +23,33 @@ class Batch:
     def count_all_vertices(self):
         return sum(example.count_vertices() for example in self.examples)
 
-    def get_combined_vertex_indexes(self):
+    def get_combined_entity_vertex_map_indexes(self):
         index_lists = [np.copy(example.get_entity_vertex_indexes()) for example in self.examples]
 
+        accumulator = 0
         for i,example in enumerate(self.examples):
-            if i > 0:
-                index_lists[i-1] += example.count_vertices()
+            index_lists[i] += accumulator
+            accumulator += example.count_vertices()
 
         return np.concatenate(index_lists)
 
     def get_combined_sender_indices(self):
         index_lists = [np.copy(example.graph.edges[:,0]) for example in self.examples]
 
+        accumulator = 0
         for i,example in enumerate(self.examples):
-            if i > 0:
-                index_lists[i-1] += example.count_vertices()
+            index_lists[i] += accumulator
+            accumulator += example.count_vertices()
 
         return np.concatenate(index_lists)
 
     def get_combined_receiver_indices(self):
         index_lists = [np.copy(example.graph.edges[:,2]) for example in self.examples]
 
+        accumulator = 0
         for i,example in enumerate(self.examples):
-            if i > 0:
-                index_lists[i-1] += example.count_vertices()
+            index_lists[i] += accumulator
+            accumulator += example.count_vertices()
 
         return np.concatenate(index_lists)
 
@@ -123,3 +126,6 @@ class Batch:
             index_lists.append(example_bags)
 
         return np.concatenate(index_lists)
+
+    def get_sentence_lengths(self):
+        return np.array([example.question.count_words() for example in self.examples], dtype=np.int32)

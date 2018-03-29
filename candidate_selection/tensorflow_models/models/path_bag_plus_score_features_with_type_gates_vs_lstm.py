@@ -88,11 +88,11 @@ class PathBagPlusScoreFeaturesWithTypeGatesVsLstm(AbstractTensorflowModel):
         self.hypergraph.initialize_with_centroid_scores(self.model_settings["entity_embedding_dimension"])
 
         word_embeddings = self.word_embedding.get_representations(mode=mode)
-        word_embedding_shape = tf.shape(word_embeddings)
-        word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
-        centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(tf.ones([tf.shape(self.hypergraph.entity_vertex_embeddings)[0], 1]))
-        word_embeddings = tf.concat([word_embeddings, self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)], axis=1)
-        word_embeddings = tf.reshape(word_embeddings, [word_embedding_shape[0],-1,self.model_settings["word_embedding_dimension"]+1])
+        #word_embedding_shape = tf.shape(word_embeddings)
+        #word_embeddings = tf.reshape(word_embeddings, [-1, self.model_settings["word_embedding_dimension"]])
+        #centroid_embeddings = self.sentence_to_graph_mapper.get_forward_embeddings(tf.ones([tf.shape(self.hypergraph.entity_vertex_embeddings)[0], 1]))
+        #word_embeddings = tf.concat([word_embeddings, self.sentence_to_graph_mapper.map_backwards(centroid_embeddings)], axis=1)
+        #word_embeddings = tf.reshape(word_embeddings, [word_embedding_shape[0],-1,self.model_settings["word_embedding_dimension"]+1])
 
         for lstm in self.lstms:
             word_embeddings = lstm.transform_sequences(word_embeddings)

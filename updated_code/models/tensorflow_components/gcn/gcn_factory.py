@@ -39,12 +39,12 @@ class GcnFactory:
 
         gcn_layers = [None]*layers
         for layer in range(layers):
-            vertex_input_dim = 1 if layer == 0 else 100
+            vertex_input_dim = 1 if layer == 0 else 5
 
-            messages = GcnMessages(message_features, MultilayerPerceptronComponent([220 + 2 * vertex_input_dim,100], "mlp"))
-            gates = GcnGates(gate_features, MultilayerPerceptronComponent([220 + 2* vertex_input_dim, 200, 1], "mlp"))
+            messages = GcnMessages(message_features, MultilayerPerceptronComponent([310 + 2 * vertex_input_dim, 200, 5], "mlp"))
+            gates = GcnGates(gate_features, MultilayerPerceptronComponent([310 + 2* vertex_input_dim, 200, 1], "mlp"))
 
-            updater = CellStateGcnUpdater("cell_state_1", vertex_input_dim, 100, graph)
+            updater = CellStateGcnUpdater("cell_state_1", vertex_input_dim, 5, graph)
 
             gcn_layers[layer] = Gcn(messages, gates, updater, graph)
 

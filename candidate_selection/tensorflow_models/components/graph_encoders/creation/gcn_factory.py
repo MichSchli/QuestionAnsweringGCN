@@ -184,25 +184,6 @@ class GcnFactory:
                                                                    message_instructions, current_layer)
 
 
-        if gcn_settings["mention_links"] == "dummy_events":
-            message_instructions = {"sender_tags": "words",
-                                    "receiver_tags": "events",
-                                    "invert": False}
-
-            hgpu.add_word_to_event_encoder(message_passer_function(gcn_settings,
-                                                                     hypergraph,
-                                                                     message_instructions,
-                                                                     current_layer))
-
-            message_instructions = {"sender_tags": "words",
-                                    "receiver_tags": "events",
-                                    "invert": True}
-
-            hgpu.add_word_to_event_encoder(message_passer_function(gcn_settings,
-                                                                     hypergraph,
-                                                                     message_instructions,
-                                                                     current_layer),
-                                           inverse=True)
 
     """
     Message passers:

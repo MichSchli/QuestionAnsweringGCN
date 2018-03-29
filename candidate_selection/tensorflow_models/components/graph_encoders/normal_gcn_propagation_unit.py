@@ -64,13 +64,6 @@ class NormalGcnPropagationUnit(AbstractComponent):
 
     word_to_ev = False
 
-    def add_word_to_event_encoder(self, encoder, invert=False):
-        if not invert:
-            self.gcn_encoder_word_to_ev = encoder
-        else:
-            self.gcn_encoder_word_to_ev_invert = encoder
-
-        self.word_to_ev = True
 
     def prepare_tensorflow_variables(self, mode="train"):
         self.gcn_encoder_ev_to_en.prepare_variables()
@@ -81,10 +74,6 @@ class NormalGcnPropagationUnit(AbstractComponent):
             self.gcn_encoder_ev_to_en_invert.prepare_variables()
             self.gcn_encoder_en_to_ev_invert.prepare_variables()
             self.gcn_encoder_en_to_en_invert.prepare_variables()
-
-        if self.word_to_ev:
-            self.gcn_encoder_word_to_ev.prepare_variables()
-            self.gcn_encoder_word_to_ev_invert.prepare_variables()
 
     def get_edge_gates(self):
         edge_gates = [None]*6
@@ -119,4 +108,4 @@ class NormalGcnPropagationUnit(AbstractComponent):
         if self.add_inverse_relations:
             entity_vertex_embeddings += self.gcn_encoder_en_to_en_invert.get_update(self.hypergraph)
 
-        return entity_vertex_embeddings, event_vertex_embeddings, word_vertex_embeddings
+        return entity_vertex_embeddings, event_vertex_embeddings

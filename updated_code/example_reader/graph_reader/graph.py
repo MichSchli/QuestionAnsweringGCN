@@ -1,3 +1,7 @@
+import numpy as np
+import copy
+
+
 class Graph:
 
     vertices = None
@@ -8,6 +12,21 @@ class Graph:
 
     nearby_centroid_map = None
     padded_edge_bow_matrix = None
+
+    def copy(self):
+        graph = Graph()
+
+        graph.vertices = np.copy(self.vertices)
+        graph.edges = np.copy(self.edges)
+        graph.entity_vertex_indexes = np.copy(self.entity_vertex_indexes)
+
+        graph.vertex_label_to_index_map = copy.deepcopy(self.vertex_label_to_index_map)
+        graph.vertex_index_to_label_map = copy.deepcopy(self.vertex_index_to_label_map)
+
+        graph.nearby_centroid_map = copy.deepcopy(self.nearby_centroid_map)
+        graph.padded_edge_bow_matrix = np.copy(self.padded_edge_bow_matrix)
+
+        return graph
 
     def __str__(self):
         return str(self.edges)

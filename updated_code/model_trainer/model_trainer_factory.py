@@ -28,6 +28,7 @@ class ModelTrainerFactory:
         model_trainer = ModelTrainer(example_reader, example_extender, example_batcher, model_updater, validation_evaluator)
         model_trainer.max_iterations = int(experiment_configuration["training"]["max_iterations"])
         model_trainer.validate_every_n = int(experiment_configuration["training"]["validate_every_n"])
+        model_trainer.report_loss_every_n = int(experiment_configuration["training"]["report_loss_every_n"])
         model_trainer.early_stopping = experiment_configuration["training"]["early_stopping"] == "True"
 
         return model_trainer

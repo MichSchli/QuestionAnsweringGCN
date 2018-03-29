@@ -4,6 +4,8 @@ from models.tensorflow_components.aux_components.sentence_to_entity_mapper impor
 from models.tensorflow_components.gcn.gcn_factory import GcnFactory
 from models.tensorflow_components.graph.graph_component import GraphComponent
 from models.tensorflow_components.loss_functions.sigmoid_loss import SigmoidLoss
+from models.tensorflow_components.sentence.lstm import BiLstm
+from models.tensorflow_components.sentence.multihead_attention import MultiheadAttention
 from models.tensorflow_components.sentence.sentence_batch_component import SentenceBatchComponent
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
@@ -27,7 +29,7 @@ class ModelFactory:
         model.sentence = SentenceBatchComponent(word_index, pos_index)
         model.add_component(model.sentence)
 
-        model.mlp = MultilayerPerceptronComponent([210,5,1], "mlp")
+        model.mlp = MultilayerPerceptronComponent([205,400,1], "mlp")
         model.add_component(model.mlp)
 
         model.sentence_to_entity_mapper = SentenceToEntityMapper()
@@ -46,5 +48,13 @@ class ModelFactory:
         for gcn in model.gcn_layers:
             model.add_component(gcn)
         model.add_component(model.sentence_batch_features)
+
+        model.lstm = BiLstm(110, 400, "bi_lstm")
+        model.add_component(model.lstm)
+
+        model.gate_attention = MultiheadAttention(400, attention_heads=2, variable_prefix="attention")
+        model.final_attention = MultiheadAttention(400, attention_heads=2, variable_prefix="attention")
+        model.add_component(model.gate_attention)
+        model.add_component(model.final_attention)
 
         return model

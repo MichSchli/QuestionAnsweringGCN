@@ -69,5 +69,7 @@ class ExampleProcessorFactory:
     Add graph extenders:
     '''
     def add_graph_extenders(self, processor, settings):
+        return processor
+
         index = self.index_factory.construct_indexes(settings)
         return AddWordVertexGraphExtender(processor, index.word_indexer)

@@ -43,7 +43,7 @@ class AbstractTensorflowModel:
         self.handle_variable_assignment(batch, "train")
         loss, _ = self.sess.run([model_loss, model_update], feed_dict=self.get_assignment_dict())
 
-        print(loss)
+        return loss
 
     def predict(self, batch):
         model_prediction = self.get_prediction_graph()
@@ -52,8 +52,8 @@ class AbstractTensorflowModel:
 
         example_begin_index = 0
         for example in batch.examples:
-            scores = predictions[example_begin_index:example_begin_index + example.count_vertices()]
-            example_begin_index += example.count_vertices()
+            scores = predictions[example_begin_index:example_begin_index + example.count_entities()]
+            example_begin_index += example.count_entities()
 
             prediction = Prediction()
             vertex_indexes = example.graph.get_entity_vertices()
@@ -76,12 +76,17 @@ class AbstractTensorflowModel:
             self.graphs[mode] = self.compute_entity_scores(mode)
 
         if self.loss_function is None:
-            self.loss_function = self.loss.compute(self.graphs[mode])
+            self.loss_function = self.loss.compute_loss(self.graphs[mode])
 
         return self.loss_function
+
+    predict_function = None
 
     def get_prediction_graph(self, mode="predict"):
         if mode not in self.graphs:
             self.graphs[mode] = self.compute_entity_scores(mode)
 
-        return tf.nn.sigmoid(self.graphs[mode])
+        if self.predict_function is None:
+            self.predict_function = self.loss.compute_prediction(self.graphs[mode])
+
+        return self.predict_function
