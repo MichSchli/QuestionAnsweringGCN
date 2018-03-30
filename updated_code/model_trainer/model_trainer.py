@@ -35,7 +35,7 @@ class ModelTrainer:
 
     def do_train_iteration(self, model):
         count_batches = 0
-        for example in self.example_generator.iterate('train', shuffle=False):
+        for example in self.example_generator.iterate('train', shuffle=True):
             example = self.example_extender.extend(example)
             potential_batch = self.example_batcher.put_example(example)
             if potential_batch:

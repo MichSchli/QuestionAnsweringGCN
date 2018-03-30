@@ -7,4 +7,4 @@ class MentionReaderFactory:
         pass
 
     def get(self, experiment_configuration):
-        return MentionReader()
+        return MentionReader(experiment_configuration["endpoint"]["prefix"])
