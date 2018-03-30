@@ -46,9 +46,9 @@ class Graph:
 
         for index,name in index_to_name_map.items():
             if name not in self.vertex_name_to_index_map:
-                self.vertex_name_to_index_map = [index]
+                self.vertex_name_to_index_map[name] = [index]
             else:
-                self.vertex_name_to_index_map.append(index)
+                self.vertex_name_to_index_map[name].append(index)
 
     def map_name_indexes(self, label_to_index_map):
         new_vertex_name_to_index_map = {}
