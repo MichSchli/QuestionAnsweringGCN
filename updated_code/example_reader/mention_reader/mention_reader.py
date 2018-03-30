@@ -7,7 +7,7 @@ class MentionReader:
     entity_prefix_in_db = None
 
     def __init__(self, entity_prefix_in_db):
-        self.entity_prefix_in_db
+        self.entity_prefix_in_db = entity_prefix_in_db
 
     def build(self, array_mentions):
         mentions = []
