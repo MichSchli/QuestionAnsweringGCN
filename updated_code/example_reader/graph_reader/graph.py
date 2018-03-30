@@ -28,6 +28,9 @@ class Graph:
         graph.vertex_label_to_index_map = copy.deepcopy(self.vertex_label_to_index_map)
         graph.vertex_index_to_label_map = copy.deepcopy(self.vertex_index_to_label_map)
 
+        graph.vertex_name_to_index_map = copy.deepcopy(self.vertex_name_to_index_map)
+        graph.vertex_index_to_name_map = copy.deepcopy(self.vertex_index_to_name_map)
+
         graph.nearby_centroid_map = copy.deepcopy(self.nearby_centroid_map)
         graph.padded_edge_bow_matrix = np.copy(self.padded_edge_bow_matrix)
 
