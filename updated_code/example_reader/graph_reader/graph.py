@@ -40,11 +40,23 @@ class Graph:
         self.vertex_label_to_index_map = label_to_index_map
         self.vertex_index_to_label_map = {v: k for k, v in label_to_index_map.items()}
 
-    def set_name_to_index_map(self, index_to_name_map):
+    def set_index_to_name_map(self, index_to_name_map):
         self.vertex_index_to_name_map = index_to_name_map
+        self.vertex_name_to_index_map = {}
+
         for index,name in index_to_name_map.items():
-            print(str(index) + name)
-        exit()
+            if name not in self.vertex_name_to_index_map:
+                self.vertex_name_to_index_map = [index]
+            else:
+                self.vertex_name_to_index_map.append(index)
+
+    def map_name_indexes(self, label_to_index_map):
+        new_vertex_name_to_index_map = {}
+        for k,v in self.vertex_name_to_index_map.items():
+            new_vertex_name_to_index_map[k] = label_to_index_map[v]
+
+        self.set_index_to_name_map(new_vertex_name_to_index_map)
+
 
     def map_from_label(self, label):
         if label in self.vertex_label_to_index_map:

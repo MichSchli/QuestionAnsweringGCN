@@ -3,6 +3,7 @@ import numpy as np
 import math
 import time
 
+from example_reader.graph_reader.database_interface.data_interface.edge_query_result import EdgeQueryResult
 from example_reader.graph_reader.database_interface.search_filters.prefix_filter import PrefixFilter
 
 

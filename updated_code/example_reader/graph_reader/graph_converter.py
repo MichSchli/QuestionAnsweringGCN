@@ -26,6 +26,6 @@ class GraphConverter:
                                      hypergraph.entity_to_event_edges))
 
         vertex_name_map = hypergraph.name_map.feature_map
-        graph.set_name_to_index_map(vertex_name_map)
+        graph.set_index_to_name_map(vertex_name_map)
 
         return graph

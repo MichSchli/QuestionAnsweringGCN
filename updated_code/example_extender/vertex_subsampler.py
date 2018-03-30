@@ -29,6 +29,8 @@ class VertexSubsampler:
         vertex_map = {kept_vertex: i for i,kept_vertex in enumerate(kept_vertices_second_round)}
         new_label_to_vertex_map = {label:vertex_map[index] for label, index in example.graph.vertex_label_to_index_map.items() if index in vertex_map}
 
+        example.graph.map_name_indexes(new_label_to_vertex_map)
+
         example.graph.vertex_label_to_index_map = new_label_to_vertex_map
         example.graph.vertices = example.graph.vertices[kept_vertices_second_round]
         example.graph.edges = example.graph.edges[kept_edges_second_round]
