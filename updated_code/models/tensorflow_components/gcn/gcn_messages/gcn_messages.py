@@ -19,3 +19,7 @@ class GcnMessages:
 
     def prepare_variables(self):
         [f.prepare_variables() for f in self.features]
+
+
+    def get_regularization(self):
+        return self.transform.get_regularization()

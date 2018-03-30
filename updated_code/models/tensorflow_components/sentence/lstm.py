@@ -30,3 +30,6 @@ class BiLstm:
             self.stored = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
 
         return self.stored
+
+    def get_regularization(self):
+        return 0

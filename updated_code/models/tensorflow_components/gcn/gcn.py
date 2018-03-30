@@ -44,3 +44,6 @@ class Gcn:
 
     def handle_variable_assignment(self, batch, mode):
         pass
+
+    def get_regularization(self):
+        return self.messages.get_regularization() + self.gates.get_regularization() + self.updater.get_regularization()

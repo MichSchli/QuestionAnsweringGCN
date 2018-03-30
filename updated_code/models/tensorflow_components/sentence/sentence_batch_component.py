@@ -46,6 +46,9 @@ class SentenceBatchComponent:
     def get_variable(self, name):
         return self.variables[name]
 
+    def get_regularization(self):
+        return 0
+
     def handle_variable_assignment(self, batch, mode):
         self.variable_assignments = {}
 

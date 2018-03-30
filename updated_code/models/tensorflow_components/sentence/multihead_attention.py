@@ -58,3 +58,6 @@ class MultiheadAttention:
 
     def handle_variable_assignment(self, batch, mode):
         pass
+
+    def get_regularization(self):
+        return 0

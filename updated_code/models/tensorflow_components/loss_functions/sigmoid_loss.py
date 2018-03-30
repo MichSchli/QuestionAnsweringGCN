@@ -26,7 +26,6 @@ class SigmoidLoss:
         preds = tf.Print(preds, [golds], summarize=400, message="golds")
         preds = tf.Print(preds, [preds], summarize=400, message="predictions")
 
-
         return preds
 
     def compute_loss(self, entity_scores):
@@ -40,3 +39,6 @@ class SigmoidLoss:
         normalized_losses = tf.Print(normalized_losses, [tf.reduce_sum(normalized_losses)], summarize=400, message="total_loss")
 
         return tf.reduce_sum(normalized_losses)
+
+    def get_regularization(self):
+        return 0

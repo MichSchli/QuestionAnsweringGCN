@@ -65,3 +65,6 @@ class CellStateGcnUpdater:
         self.W_read_gate = tf.Variable(initializer_v, name=self.variable_prefix + "W_read_gate")
         self.b_read_gate = tf.Variable(np.zeros(self.out_dimension).astype(np.float32),
                                        name=self.variable_prefix + "b_read_gate")
+
+    def get_regularization(self):
+        return 0

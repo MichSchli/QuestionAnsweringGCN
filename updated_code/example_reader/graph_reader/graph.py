@@ -6,8 +6,13 @@ class Graph:
 
     vertices = None
     edges = None
+
     vertex_label_to_index_map = None
     vertex_index_to_label_map = None
+
+    vertex_name_to_index_map = None
+    vertex_index_to_name_map = None
+
     entity_vertex_indexes = None
 
     nearby_centroid_map = None
@@ -35,6 +40,12 @@ class Graph:
         self.vertex_label_to_index_map = label_to_index_map
         self.vertex_index_to_label_map = {v: k for k, v in label_to_index_map.items()}
 
+    def set_name_to_index_map(self, index_to_name_map):
+        self.vertex_index_to_name_map = index_to_name_map
+        for index,name in index_to_name_map.items():
+            print(str(index) + name)
+        exit()
+
     def map_from_label(self, label):
         if label in self.vertex_label_to_index_map:
             return self.vertex_label_to_index_map[label]
@@ -46,6 +57,18 @@ class Graph:
             return self.vertex_index_to_label_map[index]
         else:
             return "<unknown>"
+
+    def map_from_name_or_label(self, name_or_label):
+        if name_or_label in self.vertex_name_to_index_map:
+            return self.vertex_name_to_index_map[name_or_label]
+        else:
+            return [self.map_from_label(name_or_label)]
+
+    def map_to_name_or_label(self, index):
+        if index in self.vertex_index_to_name_map:
+            return self.vertex_index_to_name_map[index]
+        else:
+            return self.map_to_label(index)
 
     def get_nearby_centroids(self, index):
         return self.nearby_centroid_map[index]

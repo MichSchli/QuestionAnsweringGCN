@@ -26,10 +26,13 @@ class ModelFactory:
         model.graph = GraphComponent()
         model.add_component(model.graph)
 
-        model.sentence = SentenceBatchComponent(word_index, pos_index)
+        model.sentence = SentenceBatchComponent(word_index, pos_index, word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
         model.add_component(model.sentence)
 
-        model.mlp = MultilayerPerceptronComponent([205,400,1], "mlp")
+        model.mlp = MultilayerPerceptronComponent([205,400,1],
+                                                  "mlp",
+                                                  dropout_rate=float(experiment_configuration["regularization"]["final_dropout"]),
+                                                  l2_scale=float(experiment_configuration["regularization"]["final_l2"]))
         model.add_component(model.mlp)
 
         model.sentence_to_entity_mapper = SentenceToEntityMapper()

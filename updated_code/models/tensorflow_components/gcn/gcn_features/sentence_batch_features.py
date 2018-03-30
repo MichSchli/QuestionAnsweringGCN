@@ -27,3 +27,6 @@ class SentenceBatchFeatures:
 
     def prepare_variables(self):
         pass
+
+    def get_regularization(self):
+        return 0

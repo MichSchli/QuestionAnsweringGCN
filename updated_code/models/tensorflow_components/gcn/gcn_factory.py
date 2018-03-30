@@ -41,8 +41,18 @@ class GcnFactory:
         for layer in range(layers):
             vertex_input_dim = 1 if layer == 0 else 5
 
-            messages = GcnMessages(message_features, MultilayerPerceptronComponent([310 + 2 * vertex_input_dim, 200, 5], "mlp"))
-            gates = GcnGates(gate_features, MultilayerPerceptronComponent([310 + 2* vertex_input_dim, 200, 1], "mlp"))
+            message_perceptron = MultilayerPerceptronComponent([310 + 2 * vertex_input_dim, 200, 5], "message_mlp",
+                                                               dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
+                                                               l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
+            gate_perceptron = MultilayerPerceptronComponent([310 + 2* vertex_input_dim, 200, 1], "gate_mlp",
+                                                               dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
+                                                               l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
+
+            messages = GcnMessages(message_features,
+                                   message_perceptron)
+            gates = GcnGates(gate_features,
+                             gate_perceptron,
+                             l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
 
             updater = CellStateGcnUpdater("cell_state_1", vertex_input_dim, 5, graph)
 

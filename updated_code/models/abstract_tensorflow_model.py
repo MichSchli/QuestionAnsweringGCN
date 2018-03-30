@@ -77,6 +77,7 @@ class AbstractTensorflowModel:
 
         if self.loss_function is None:
             self.loss_function = self.loss.compute_loss(self.graphs[mode])
+            self.loss_function += sum(component.get_regularization() for component in self.components)
 
         return self.loss_function
 

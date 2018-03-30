@@ -33,6 +33,8 @@ class Example:
         for gold_answer in self.gold_answers:
             if not self.project_names:
                 gold_answer.entity_indexes = np.array([self.graph.map_from_label(gold_answer.entity_name_or_label)])
+            else:
+                gold_answer.entity_indexes = np.array(self.graph.map_from_name_or_label(gold_answer.entity_name_or_label))
 
     def get_centroid_indexes(self):
         centroid_indexes = []

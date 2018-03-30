@@ -28,3 +28,6 @@ class SentenceToEntityMapper:
     def handle_variable_assignment(self, batch, mode):
         self.variable_assignments = {}
         self.variable_assignments["target_indices"] = np.concatenate([np.repeat(i, example.count_entities()) for i, example in enumerate(batch.examples)])
+
+    def get_regularization(self):
+        return 0

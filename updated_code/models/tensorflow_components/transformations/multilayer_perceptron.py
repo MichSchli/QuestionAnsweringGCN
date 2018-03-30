@@ -45,7 +45,7 @@ class MultilayerPerceptronComponent:
 
         return vectors
 
-    def get_regularization_term(self):
+    def get_regularization(self):
         return self.l2_scale * tf.reduce_sum([tf.reduce_sum(tf.square(w)) for w in self.weights])
 
     def handle_variable_assignment(self, batch, mode):

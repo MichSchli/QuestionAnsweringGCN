@@ -51,3 +51,6 @@ class GraphComponent:
         self.variable_assignments["receiver_indices"] = batch.get_combined_receiver_indices()
         self.variable_assignments["edge_type_indices"] = batch.get_combined_edge_type_indices()
         self.variable_assignments["edge_bow_matrix"] = batch.get_padded_edge_part_type_matrix()
+
+    def get_regularization(self):
+        return 0
