@@ -56,7 +56,8 @@ class Graph:
     def map_name_indexes(self, label_to_index_map):
         new_vertex_index_to_name_map = {}
         for k,v in self.vertex_index_to_name_map.items():
-            new_vertex_index_to_name_map[label_to_index_map[k]] = v
+            if k in label_to_index_map:
+                new_vertex_index_to_name_map[label_to_index_map[k]] = v
 
         self.set_index_to_name_map(new_vertex_index_to_name_map)
 
