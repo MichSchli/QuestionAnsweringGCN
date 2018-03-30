@@ -51,11 +51,11 @@ class Graph:
                 self.vertex_name_to_index_map[name].append(index)
 
     def map_name_indexes(self, label_to_index_map):
-        new_vertex_name_to_index_map = {}
-        for k,v in self.vertex_name_to_index_map.items():
-            new_vertex_name_to_index_map[k] = label_to_index_map[v]
+        new_vertex_index_to_name_map = {}
+        for k,v in self.vertex_index_to_name_map.items():
+            new_vertex_index_to_name_map[label_to_index_map[k]] = v
 
-        self.set_index_to_name_map(new_vertex_name_to_index_map)
+        self.set_index_to_name_map(new_vertex_index_to_name_map)
 
 
     def map_from_label(self, label):
