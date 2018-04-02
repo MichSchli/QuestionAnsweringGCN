@@ -5,7 +5,6 @@ from experiments.experiment import Experiment
 from indexing.index_factory import IndexFactory
 from model_tester.model_tester_factory import ModelTesterFactory
 from model_trainer.model_trainer_factory import ModelTrainerFactory
-from model_trainer.model_updater.model_updater_factory import ModelUpdaterFactory
 from models.model_factory import ModelFactory
 
 
