@@ -8,7 +8,7 @@ from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessag
 from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
-from updated_code.models.tensorflow_components.gcn.gcn_features.vertex_type_features import VertexTypeFeatures
+from models.tensorflow_components.gcn.gcn_features.vertex_type_features import VertexTypeFeatures
 
 
 class GcnFactory:
