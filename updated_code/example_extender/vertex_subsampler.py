@@ -33,6 +33,7 @@ class VertexSubsampler:
 
         example.graph.vertex_label_to_index_map = new_label_to_vertex_map
         example.graph.vertices = example.graph.vertices[kept_vertices_second_round]
+        example.graph.vertex_types = example.graph.vertex_types[kept_vertices_second_round]
         example.graph.edges = example.graph.edges[kept_edges_second_round]
         example.graph.padded_edge_bow_matrix = example.graph.padded_edge_bow_matrix[kept_edges_second_round]
 

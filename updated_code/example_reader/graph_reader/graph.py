@@ -18,6 +18,8 @@ class Graph:
     nearby_centroid_map = None
     padded_edge_bow_matrix = None
 
+    vertex_types = None
+
     def copy(self):
         graph = Graph()
 
@@ -33,6 +35,8 @@ class Graph:
 
         graph.nearby_centroid_map = copy.deepcopy(self.nearby_centroid_map)
         graph.padded_edge_bow_matrix = np.copy(self.padded_edge_bow_matrix)
+
+        graph.vertex_types = np.copy(self.vertex_types)
 
         return graph
 
@@ -94,3 +98,21 @@ class Graph:
 
     def get_entity_vertices(self):
         return self.entity_vertex_indexes
+
+    def add_edges(self, edges, new_edge_bow_features=None):
+        self.edges = np.concatenate((self.edges, edges))
+
+        if new_edge_bow_features is None:
+            new_edge_bow_features = np.zeros((edges.shape[0],
+                                              self.padded_edge_bow_matrix.shape[1]),
+                                             dtype=np.int32)
+
+        self.padded_edge_bow_matrix = np.concatenate((self.padded_edge_bow_matrix,
+                                                      new_edge_bow_features))
+
+    def add_vertices(self, vertices, vertex_types):
+        self.vertices = np.concatenate((self.vertices, vertices))
+        self.vertex_types = np.concatenate((self.vertex_types, vertex_types))
+
+    def get_vertex_types(self):
+        return self.vertex_types

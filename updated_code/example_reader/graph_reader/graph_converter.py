@@ -28,4 +28,15 @@ class GraphConverter:
         vertex_name_map = hypergraph.name_map.feature_map
         graph.set_index_to_name_map(vertex_name_map)
 
+        entity_vertex_types = np.array([[1,0,0,0,0] for _ in range(hypergraph.entity_vertices.shape[0])], dtype=np.float32)
+        event_vertex_types = np.array([[0,1,0,0,0] for _ in range(hypergraph.event_vertices.shape[0])], dtype=np.float32)
+
+        if entity_vertex_types.shape[0] == 0:
+            entity_vertex_types = np.empty((0,5), dtype=np.float32)
+
+        if event_vertex_types.shape[0] == 0:
+            event_vertex_types = np.empty((0,5), dtype=np.float32)
+
+        graph.vertex_types = np.concatenate((entity_vertex_types, event_vertex_types))
+
         return graph

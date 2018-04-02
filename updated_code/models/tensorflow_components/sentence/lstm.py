@@ -24,10 +24,11 @@ class BiLstm:
 
     def transform_sequences(self, sequences):
         if self.stored is None:
-            cell_forward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
-            cell_backward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
-            lengths = self.variables["sentence_lengths"]
-            self.stored = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
+            with tf.variable_scope(self.variable_prefix):
+                cell_forward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
+                cell_backward = tf.contrib.rnn.LSTMCell(self.in_dimension, num_proj=self.out_dimension/2)
+                lengths = self.variables["sentence_lengths"]
+                self.stored = tf.concat(tf.nn.bidirectional_dynamic_rnn(cell_forward, cell_backward, sequences, dtype=tf.float32, sequence_length=lengths)[0], -1)
 
         return self.stored
 

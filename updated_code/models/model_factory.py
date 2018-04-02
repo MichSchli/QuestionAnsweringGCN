@@ -25,15 +25,12 @@ class ModelFactory:
         model = DummyTensorflowModel()
         model.graph = GraphComponent()
         model.add_component(model.graph)
+        model.add_component(model.graph.mention_dummy_assignment_view)
 
         model.sentence = SentenceBatchComponent(word_index, pos_index, word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
         model.add_component(model.sentence)
 
-        model.mlp = MultilayerPerceptronComponent([205,400,1],
-                                                  "mlp",
-                                                  dropout_rate=float(experiment_configuration["regularization"]["final_dropout"]),
-                                                  l2_scale=float(experiment_configuration["regularization"]["final_l2"]))
-        model.add_component(model.mlp)
+        self.add_final_transform(experiment_configuration, model)
 
         model.sentence_to_entity_mapper = SentenceToEntityMapper()
         model.add_component(model.sentence_to_entity_mapper)
@@ -52,12 +49,43 @@ class ModelFactory:
             model.add_component(gcn)
         model.add_component(model.sentence_batch_features)
 
-        model.lstm = BiLstm(110, 400, "bi_lstm")
-        model.add_component(model.lstm)
+        self.add_lstms(experiment_configuration, model)
 
-        model.gate_attention = MultiheadAttention(400, attention_heads=2, variable_prefix="attention")
-        model.final_attention = MultiheadAttention(400, attention_heads=2, variable_prefix="attention")
+        return model
+
+    def add_lstms(self, experiment_configuration, model):
+        word_dim = int(experiment_configuration["indexes"]["word_index_type"].split(":")[1])
+        pos_dim = int(experiment_configuration["indexes"]["pos_index_type"].split(":")[1])
+        lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        lstm_layers = int(experiment_configuration["lstm"]["layers"])
+        attention_heads = int(experiment_configuration["lstm"]["attention_heads"])
+
+        model.lstms = []
+        for layer in range(lstm_layers):
+            input_dim = word_dim + pos_dim if layer == 0 else lstm_dim * 2
+            lstm = BiLstm(input_dim, lstm_dim*2, "bi_lstm_"+str(layer))
+            model.lstms.append(lstm)
+            model.add_component(lstm)
+
+        input_dim = word_dim + pos_dim if lstm_layers == 0 else lstm_dim * 2
+
+        model.gate_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention1")
+        model.final_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention2")
+
         model.add_component(model.gate_attention)
         model.add_component(model.final_attention)
 
-        return model
+    def add_final_transform(self, experiment_configuration, model):
+        lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+        hidden_dims = [int(d) for d in experiment_configuration["other"]["final_hidden_dimensions"].split("|")]
+        dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
+        l2_rate = float(experiment_configuration["regularization"]["final_l2"])
+
+        hidden_dims = [lstm_dim + gcn_dim] + hidden_dims + [1]
+
+        model.mlp = MultilayerPerceptronComponent(hidden_dims,
+                                                  "mlp",
+                                                  dropout_rate=dropout_rate,
+                                                  l2_scale=l2_rate)
+        model.add_component(model.mlp)

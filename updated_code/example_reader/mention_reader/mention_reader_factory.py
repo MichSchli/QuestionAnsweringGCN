@@ -7,4 +7,9 @@ class MentionReaderFactory:
         pass
 
     def get(self, experiment_configuration):
-        return MentionReader(experiment_configuration["endpoint"]["prefix"])
+        if "prefix" in experiment_configuration["endpoint"]:
+            prefix = experiment_configuration["endpoint"]["prefix"]
+        else:
+            prefix = ""
+
+        return MentionReader(prefix)

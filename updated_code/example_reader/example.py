@@ -74,3 +74,6 @@ class Example:
 
     def count_edges(self):
         return self.graph.edges.shape[0]
+
+    def has_mentions(self):
+        return len(self.mentions) > 0

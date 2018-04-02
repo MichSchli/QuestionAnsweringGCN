@@ -13,5 +13,7 @@ class QuestionReader:
         question = Question()
         question.words = [array_question[j][1] for j in range(len(array_question))]
         question.pos = [array_question[j][3] for j in range(len(array_question))]
+        question.dep_types = [array_question[j][4] for j in range(len(array_question))]
+        question.dep_heads = [int(array_question[j][5]) for j in range(len(array_question))]
 
         return question

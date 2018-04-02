@@ -3,6 +3,11 @@ from example_extender.empty_extender import EmptyExtender
 from example_extender.remove_gold_from_all_except_best_mention import RemoveGoldFromAllExceptBestMention
 from example_extender.vertex_subsampler import VertexSubsampler
 
+from updated_code.example_extender.add_dependency_edges import AddDependencyEdgeExtender
+from updated_code.example_extender.add_mention_dummy_extender import AddMentionDummyExtender
+from updated_code.example_extender.add_word_sequence_edges import AddWordSequenceEdgeExtender
+from updated_code.example_extender.add_word_vertices_extender import AddWordDummyExtender
+
 
 class ExampleExtenderFactory:
 
@@ -23,6 +28,12 @@ class ExampleExtenderFactory:
             extender = EmptyExtender()
 
         relation_index = self.index_factory.get("relations", experiment_configuration)
+        entity_index = self.index_factory.get("vertices", experiment_configuration)
+
+        extender = AddMentionDummyExtender(extender, relation_index, entity_index)
+        extender = AddWordDummyExtender(extender, relation_index, entity_index)
+        extender = AddWordSequenceEdgeExtender(extender, relation_index)
+        extender = AddDependencyEdgeExtender(extender, relation_index, entity_index)
         extender = AddInverseEdgeExtender(extender, relation_index)
 
         return extender

@@ -23,6 +23,21 @@ class Batch:
     def count_all_vertices(self):
         return sum(example.count_vertices() for example in self.examples)
 
+    def get_combined_mention_scores(self):
+        index_lists = [np.copy([m.score for m in example.mentions]) for example in self.examples]
+
+        return np.concatenate(index_lists).astype(np.float32)
+
+    def get_combined_mention_dummy_indices(self):
+        index_lists = [np.copy([m.dummy_index for m in example.mentions]) for example in self.examples]
+
+        accumulator = 0
+        for i,example in enumerate(self.examples):
+            index_lists[i] += accumulator
+            accumulator += example.count_vertices()
+
+        return np.concatenate(index_lists)
+
     def get_combined_entity_vertex_map_indexes(self):
         index_lists = [np.copy(example.get_entity_vertex_indexes()) for example in self.examples]
 
@@ -129,3 +144,8 @@ class Batch:
 
     def get_sentence_lengths(self):
         return np.array([example.question.count_words() for example in self.examples], dtype=np.int32)
+
+    def get_combined_vertex_types(self):
+        lists = [example.graph.get_vertex_types() for example in self.examples]
+
+        return np.concatenate(lists)

@@ -7,11 +7,14 @@ class DummyTensorflowModel(AbstractTensorflowModel):
 
     def compute_entity_scores(self, mode):
         word_embeddings = self.sentence.get_embedding()
-        word_embeddings = self.lstm.transform_sequences(word_embeddings)
+        for lstm in self.lstms:
+            word_embeddings = lstm.transform_sequences(word_embeddings)
+
         gate_sentence_embedding = self.gate_attention.attend(word_embeddings, mode)
         final_sentence_embedding = self.final_attention.attend(word_embeddings, mode)
 
-        self.graph.initialize_zero_embeddings(dimension=1)
+        #self.graph.initialize_zero_embeddings(dimension=1)
+        self.graph.initialize_dummy_counts()
         self.sentence_batch_features.set_batch_features(gate_sentence_embedding)
 
         gcn_cell_state = None

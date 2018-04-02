@@ -8,6 +8,8 @@ from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessag
 from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
+from updated_code.models.tensorflow_components.gcn.gcn_features.vertex_type_features import VertexTypeFeatures
+
 
 class GcnFactory:
 
@@ -24,29 +26,53 @@ class GcnFactory:
         relation_part_index = self.index_factory.get("relation_parts", experiment_configuration)
         relation_part_index_width = relation_part_index.dimension
 
-        sentence_batch_features = SentenceBatchFeatures(graph, 100)
+        sentence_embedding_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        sentence_batch_features = SentenceBatchFeatures(graph, sentence_embedding_dim)
 
-        message_features = [VertexFeatures(graph, "senders", 1),
-                            VertexFeatures(graph, "receivers", 1),
-                            RelationFeatures(graph, relation_index_width, relation_index),
-                            RelationPartFeatures(graph, relation_part_index_width, relation_part_index),
+        sender_features = VertexFeatures(graph, "senders", 1)
+        receiver_features = VertexFeatures(graph, "receivers", 1)
+        sender_type_features = VertexTypeFeatures(graph, "sender")
+        receiver_type_features = VertexTypeFeatures(graph, "receiver")
+        relation_features = RelationFeatures(graph, relation_index_width, relation_index)
+        relation_part_features = RelationPartFeatures(graph, relation_part_index_width, relation_part_index)
+
+
+        message_features = [sender_features,
+                            receiver_features,
+                            sender_type_features,
+                            receiver_type_features,
+                            relation_features,
+                            relation_part_features,
                             sentence_batch_features]
-        gate_features = [VertexFeatures(graph, "senders", 1),
-                         VertexFeatures(graph, "receivers", 1),
-                         RelationFeatures(graph, relation_index_width, relation_index),
-                         RelationPartFeatures(graph, relation_part_index_width, relation_part_index),
+        gate_features = [sender_features,
+                         receiver_features,
+                         sender_type_features,
+                         receiver_type_features,
+                         relation_features,
+                         relation_part_features,
                          sentence_batch_features]
+
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+        message_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
+        gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
 
         gcn_layers = [None]*layers
         for layer in range(layers):
-            vertex_input_dim = 1 if layer == 0 else 5
+            vertex_input_dim = 1 if layer == 0 else gcn_dim
+            message_feature_dimension = sum(m.get_width() for m in message_features)
+            gate_feature_dimension = sum(g.get_width() for g in gate_features)
 
-            message_perceptron = MultilayerPerceptronComponent([310 + 2 * vertex_input_dim, 200, 5], "message_mlp",
+            message_dims = [message_feature_dimension] + message_hidden_dims + [gcn_dim]
+            gate_dims = [gate_feature_dimension] + gate_hidden_dims + [1]
+
+            message_perceptron = MultilayerPerceptronComponent(message_dims,
+                                                               "message_mlp",
                                                                dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
                                                                l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
-            gate_perceptron = MultilayerPerceptronComponent([310 + 2* vertex_input_dim, 200, 1], "gate_mlp",
-                                                               dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
-                                                               l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
+            gate_perceptron = MultilayerPerceptronComponent(gate_dims,
+                                                            "gate_mlp",
+                                                            dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
+                                                            l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
 
             messages = GcnMessages(message_features,
                                    message_perceptron)
@@ -54,8 +80,10 @@ class GcnFactory:
                              gate_perceptron,
                              l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
 
-            updater = CellStateGcnUpdater("cell_state_1", vertex_input_dim, 5, graph)
+            updater = CellStateGcnUpdater("cell_state_"+str(layer), vertex_input_dim, gcn_dim, graph)
 
             gcn_layers[layer] = Gcn(messages, gates, updater, graph)
+            sender_features.width = gcn_dim
+            receiver_features.width = gcn_dim
 
         return gcn_layers, sentence_batch_features
