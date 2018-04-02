@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from updated_code.models.tensorflow_components.graph.assignment_view import AssignmentView
+from models.tensorflow_components.graph.assignment_view import AssignmentView
 
 
 class GraphComponent:
