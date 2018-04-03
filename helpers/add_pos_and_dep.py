@@ -16,19 +16,6 @@ with open(args.input_file) as data_file:
 
         if line and reading_sentence:
             parts = line.split("\t")
-            sentence.append(parts[1])
-        elif not line and reading_sentence:
-            print(" ".join(sentence))
-            sentence = []
-            reading_sentence = False
-            reading_entities = True
-        elif not line and reading_entities:
-            reading_entities = False
-        elif not line and not reading_sentence and not reading_entities:
-            reading_sentence = True
-
-    if len(sentence) > 0:
-        print(" ".join(sentence))
             sentence.append(parts + ["_"])
         elif not line and reading_sentence:
             doc = parser(" ".join([w[1] for w in sentence]))
@@ -71,7 +58,6 @@ with open(args.input_file) as data_file:
         elif reading_entities:
             parts = line.split("\t")
             for k,v in splits.items():
-                print(parts)
                 if k <= int(parts[0]):
                     parts[0] = str(int(parts[0]) + len(v) - 1)
                 if k <= int(parts[1]):

@@ -460,11 +460,8 @@ _	Allah
 5	located	locate	VBN	ROOT	0
 6	?	?	.	punct	5
 
-['2', '2', 'm.02w3cl', '5.43893547407837', '0']
 3	3	m.02w3cl	5.43893547407837	0
-['2', '2', 'm.0gqb22', '1.42978318090573', '0']
 3	3	m.0gqb22	1.42978318090573	0
-['2', '2', 'm.0b0fbm', '1.22809196405377', '0']
 3	3	m.0b0fbm	1.22809196405377	0
 
 _	Sunnydale
@@ -764,13 +761,9 @@ _	Seattle
 7	dad	dad	NN	pobj	4
 8	?	?	.	punct	1
 
-['5', '5', 'm.01jrbb', '103.186188062709', '0']
 6	6	m.01jrbb	103.186188062709	0
-['5', '5', 'm.014s4v', '1.60945208641006', '0']
 6	6	m.014s4v	1.60945208641006	0
-['2', '3', 'm.0gg645n', '1.43951462117022', '1']
 2	3	m.0gg645n	1.43951462117022	1
-['5', '5', 'm.0g0_l4', '1.07872095886398', '0']
 6	6	m.0g0_l4	1.07872095886398	0
 
 _	Albert Brooks
@@ -943,7 +936,6 @@ _	Spanish Language
 7	inventions	invention	NNS	pobj	3
 8	?	?	.	punct	1
 
-['4', '5', 'm.019fz', '39928.0154714307', '0']
 4	6	m.019fz	39928.0154714307	0
 
 _	Franklin stove
@@ -1262,13 +1254,9 @@ _	Parties do not maintain themselves. They are maintained by effort. The governm
 9	called	call	VBD	ROOT	0
 10	?	?	.	punct	9
 
-['7', '8', 'm.01f08r', '16912.7575601477', '0']
 8	9	m.01f08r	16912.7575601477	0
-['3', '6', 'm.03cn0v', '82.3255763646554', '1']
 4	7	m.03cn0v	82.3255763646554	1
-['7', '8', 'm.0147lg', '7.26016237304552', '0']
 8	9	m.0147lg	7.26016237304552	0
-['7', '8', 'm.03m6c6', '2.9372096638117', '0']
 8	9	m.03m6c6	2.9372096638117	0
 
 _	Burj Khalifa
@@ -1472,9 +1460,7 @@ _	Chilean peso
 4	currency	currency	NN	nsubj	1
 5	?	?	.	punct	1
 
-['2', '3', 'm.02k54', '19.4646938685417', '0']
 3	4	m.02k54	19.4646938685417	0
-['2', '3', 'm.0kg9', '5.57835094799044', '0']
 3	4	m.0kg9	5.57835094799044	0
 
 _	Egyptian pound
@@ -2218,9 +2204,7 @@ _	Philadelphia Eagles
 6	sisters	sister	NNS	conj	4
 7	?	?	.	punct	1
 
-['2', '2', 'm.0296l', '7362.61992687744', '0']
 3	3	m.0296l	7362.61992687744	0
-['3', '5', 'm.0d66j2', '3.79348283574091', '1']
 4	6	m.0d66j2	3.79348283574091	1
 
 _	Zeus
@@ -2331,7 +2315,6 @@ _	Normandy
 4	nationality	nationality	NN	nsubj	1
 5	?	?	.	punct	1
 
-['2', '2', 'm.01wj18h', '31973.4082030006', '0']
 3	3	m.01wj18h	31973.4082030006	0
 
 _	Colombia
@@ -4333,7 +4316,6 @@ _	Vanessa Laine
 5	wife	wife	NN	nsubj	1
 6	?	?	.	punct	1
 
-['2', '3', 'm.07hcc', '15821.1157963215', '0']
 2	4	m.07hcc	15821.1157963215	0
 
 _	Ankhesenamun
@@ -4527,7 +4509,6 @@ _	Michael Nitz
 7	year	year	NN	attr	2
 8	?	?	.	punct	2
 
-['3', '4', 'm.027jv8', '55042.4273178809', '0']
 3	5	m.027jv8	55042.4273178809	0
 
 _	1998 NFL Draft
@@ -4643,7 +4624,6 @@ _	Catherine Taber
 3	White	white	NNP	nsubj	1
 4	?	?	.	punct	1
 
-['1', '2', 'm.025mb_', '8665.19222707342', '0']
 2	3	m.025mb_	8665.19222707342	0
 
 _	Singer
@@ -4750,7 +4730,6 @@ _	Thai baht
 5	husband	husband	NN	attr	1
 6	?	?	.	punct	1
 
-['2', '3', 'm.0f4vbz', '25056.704315918', '0']
 2	4	m.0f4vbz	25056.704315918	0
 
 _	Brad Pitt
@@ -5257,11 +5236,8 @@ _	United States of America
 8	Wars	wars	NNP	pobj	6
 9	?	?	.	punct	1
 
-['2', '3', 'm.0h5g_', '22702.7776442876', '0']
 2	4	m.0h5g_	22702.7776442876	0
-['6', '7', 'm.0ddt_', '49.5531092651475', '1']
 7	8	m.0ddt_	49.5531092651475	1
-['6', '7', 'm.06mmr', '2.95847587618103', '1']
 7	8	m.06mmr	2.95847587618103	1
 
 _	Qui-Gon Jinn
@@ -5649,11 +5625,8 @@ _	Pacific Ocean
 7	wrote	write	VBD	ROOT	0
 8	?	?	.	punct	7
 
-['4', '6', 'm.0bpd5z', '20049.6815927071', '0']
 5	7	m.0bpd5z	20049.6815927071	0
-['1', '3', 'm.09h7dd', '1.39156521953045', '1']
 2	4	m.09h7dd	1.39156521953045	1
-['1', '3', 'm.0dwly', '1.14307145410686', '1']
 2	4	m.0dwly	1.14307145410686	1
 
 _	Gregor and the Prophecy of Bane
@@ -6055,9 +6028,7 @@ _	1985-86 NBA season
 6	partners	partner	NNS	nsubj	1
 7	?	?	.	punct	1
 
-['2', '2', 'm.03shp', '23792.9480640584', '0']
 3	3	m.03shp	23792.9480640584	0
-['2', '2', 'm.01n_2f', '1.20920359697317', '0']
 3	3	m.01n_2f	1.20920359697317	0
 
 _	Madagascar
@@ -6105,7 +6076,6 @@ _	Vivian Cheruiyot
 5	parents	parent	NNS	nsubj	1
 6	?	?	.	punct	1
 
-['2', '3', 'm.0db0x', '1971.81012772141', '0']
 2	4	m.0db0x	1971.81012772141	0
 
 _	Deborah Hitchborn
@@ -6214,13 +6184,9 @@ _	Wilmington
 7	music	music	NN	pobj	6
 8	?	?	.	punct	1
 
-['2', '3', 'm.02xkkq', '24764.7122091023', '0']
 2	4	m.02xkkq	24764.7122091023	0
-['0', '0', 'm.0286l0d', '4.95264890740967', '1']
 0	0	m.0286l0d	4.95264890740967	1
-['2', '3', 'm.01npldc', '1.07050245436276', '0']
 2	4	m.01npldc	1.07050245436276	0
-['5', '6', 'm.03qcdn5', '1.05699370359575', '2']
 6	7	m.03qcdn5	1.05699370359575	2
 
 _	Swing music
@@ -6633,7 +6599,6 @@ _	Egypt
 6	name	name	NN	nsubj	1
 7	?	?	.	punct	1
 
-['2', '3', 'm.0cymln', '37858.5971829782', '0']
 2	4	m.0cymln	37858.5971829782	0
 
 _	Christopher Emmanuel Paul II
@@ -6741,7 +6706,6 @@ _	Live Once, Die Twice
 5	albums	album	NNS	nsubj	1
 6	?	?	.	punct	1
 
-['2', '3', 'm.0dl567', '19993.1983410414', '0']
 2	4	m.0dl567	19993.1983410414	0
 
 _	Stripped Raw & Real
@@ -7226,15 +7190,10 @@ _	Swiss franc
 8	died	die	VBD	advcl	1
 9	?	?	.	punct	1
 
-['2', '2', 'm.0gzh', '151137.05328135', '0']
 3	3	m.0gzh	151137.05328135	0
-['2', '2', 'm.0gmgwnv', '8.22129574149237', '0']
 3	3	m.0gmgwnv	8.22129574149237	0
-['4', '5', 'm.0157m', '2.53970150549683', '1']
 5	6	m.0157m	2.53970150549683	1
-['2', '2', 'm.0gy8s', '2.40481440794655', '0']
 3	3	m.0gy8s	2.40481440794655	0
-['2', '2', 'm.0vv3w28', '2.40481440794655', '0']
 3	3	m.0vv3w28	2.40481440794655	0
 
 _	Andrew Johnson
@@ -7388,9 +7347,7 @@ _	National Security Advisor
 4	River	river	NNP	nsubj	1
 5	?	?	.	punct	1
 
-['2', '3', 'm.0cvyp', '37314.5985960213', '0']
 3	4	m.0cvyp	37314.5985960213	0
-['2', '3', 'm.06zpyw0', '1.10764191739415', '0']
 3	4	m.06zpyw0	1.10764191739415	0
 
 _	New York City
@@ -7418,9 +7375,7 @@ _	Commisioner of Food and Drugs
 7	you	-PRON-	PRP	pobj	6
 8	?	?	.	punct	1
 
-['2', '3', 'm.02vpng6', '47909.1646771842', '0']
 2	4	m.02vpng6	47909.1646771842	0
-['4', '6', 'm.0j625w_', '11.1025308762924', '1']
 5	7	m.0j625w_	11.1025308762924	1
 
 _	Jeff Stevens
@@ -8048,13 +8003,9 @@ _	Jamaican dollar
 4	mom	mom	NN	nsubj	1
 5	?	?	.	punct	1
 
-['2', '2', 'm.01ghr4', '4865.58672961049', '0']
 3	3	m.01ghr4	4865.58672961049	0
-['2', '2', 'm.0g_7x', '13.1062586914847', '0']
 3	3	m.0g_7x	13.1062586914847	0
-['3', '3', 'm.043ffp', '1.58774090450348', '1']
 4	4	m.043ffp	1.58774090450348	1
-['2', '2', 'm.01ghsc', '1.13111711325375', '0']
 3	3	m.01ghsc	1.13111711325375	0
 
 _	Hagar
@@ -8706,15 +8657,10 @@ _	Jon Tester
 7	Guy	guy	NNP	dobj	1
 8	?	?	.	punct	1
 
-['5', '6', 'm.019nnl', '36323.2754837005', '0']
 6	7	m.019nnl	36323.2754837005	0
-['2', '3', 'm.02m29p', '13339.7249187344', '1']
 2	4	m.02m29p	13339.7249187344	1
-['5', '6', 'm.06xlxlx', '345.937802390267', '0']
 6	7	m.06xlxlx	345.937802390267	0
-['5', '6', 'm.0ckt2c', '25.462604796375', '0']
 6	7	m.0ckt2c	25.462604796375	0
-['5', '6', 'm.0k22zlc', '15.9365558858982', '0']
 6	7	m.0k22zlc	15.9365558858982	0
 
 _	Seth MacFarlane
@@ -9071,7 +9017,6 @@ _	Complete Works Of Abraham Lincoln V10
 6	accomplishments	accomplishment	NNS	nsubj	1
 7	?	?	.	punct	1
 
-['2', '3', 'm.083q7', '34961.616051728', '0']
 2	4	m.083q7	34961.616051728	0
 
 _	United States Secretary of Agriculture
@@ -9281,9 +9226,7 @@ _	Delaware
 6	called	call	VBN	ccomp	1
 7	?	?	.	punct	6
 
-['2', '3', 'm.0cw10', '11159.136206134', '0']
 2	4	m.0cw10	11159.136206134	0
-['4', '5', 'm.0cm83', '7.81551524659738', '1']
 5	6	m.0cm83	7.81551524659738	1
 
 _	Prince Edward, Duke of Kent and Strathearn
@@ -9630,7 +9573,6 @@ _	The Secret Garden
 7	name	name	NN	pobj	4
 8	?	?	.	punct	1
 
-['5', '5', 'm.06mkj', '36032.9897204358', '0']
 6	6	m.06mkj	36032.9897204358	0
 
 _	Juan Carlos I of Spain
@@ -9678,7 +9620,6 @@ _	America's Got Talent
 6	husband	husband	NN	nsubj	1
 7	?	?	.	punct	1
 
-['2', '3', 'm.0261x8t', '38490.8413365986', '0']
 2	4	m.0261x8t	38490.8413365986	0
 
 _	Damon Thomas
@@ -9709,9 +9650,7 @@ _	Yearly
 6	party	party	NN	nsubj	1
 7	?	?	.	punct	1
 
-['2', '3', 'm.07hyk', '43494.0157410217', '0']
 2	4	m.07hyk	43494.0157410217	0
-['2', '3', 'm.033tpy', '3.88163879749697', '0']
 2	4	m.033tpy	3.88163879749697	0
 
 _	Republican Party
@@ -10769,7 +10708,6 @@ _	2011 Christchurch earthquake
 6	capital	capital	NN	nsubj	1
 7	?	?	.	punct	1
 
-['3', '4', 'm.027rn', '22896.7566275566', '0']
 3	5	m.027rn	22896.7566275566	0
 
 _	Santo Domingo
@@ -11179,11 +11117,8 @@ _	Washington Redskins
 7	Khartoum	khartoum	NNP	pobj	6
 8	?	?	.	punct	1
 
-['6', '6', 'm.04d_m', '14339.9021555359', '0']
 7	7	m.04d_m	14339.9021555359	0
-['6', '6', 'm.08kykd', '8.44022852388581', '0']
 7	7	m.08kykd	8.44022852388581	0
-['4', '4', 'm.02crk5', '1.20570412449481', '1']
 5	5	m.02crk5	1.20570412449481	1
 
 _	Sudan
@@ -11742,7 +11677,6 @@ _	Demo & Acoustic Shadows Collide With People
 9	with	with	IN	prep	6
 10	?	?	.	punct	6
 
-['2', '3', 'm.0268x2s', '66150.6885383492', '0']
 2	4	m.0268x2s	66150.6885383492	0
 
 _	Preston Burke
