@@ -52,5 +52,4 @@ class GraphIndexer:
 
         graph.nearby_centroid_map = [[local_vertex_indexes[v] for v in vertex] for vertex in graph.nearby_centroid_map]
 
-
         return graph

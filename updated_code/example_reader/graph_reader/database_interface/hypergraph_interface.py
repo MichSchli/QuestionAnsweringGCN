@@ -1,4 +1,5 @@
 from example_reader.graph_reader.database_interface.hypergraph_model import HypergraphModel
+import numpy as np
 
 
 class HypergraphInterface:
@@ -20,6 +21,8 @@ class HypergraphInterface:
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
         hypergraph.set_centroids(vertices)
+
+        hypergraph.nearby_centroid_map = {c: np.array([c]) for c in vertices}
 
         for i in range(hops):
             self.expand_hypergraph_to_one_neighborhood(hypergraph, use_event_edges=True, literals_only=False)

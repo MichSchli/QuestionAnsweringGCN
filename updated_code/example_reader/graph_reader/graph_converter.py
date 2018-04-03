@@ -14,12 +14,13 @@ class GraphConverter:
         graph = Graph()
         graph.vertices = np.concatenate((hypergraph.entity_vertices, hypergraph.event_vertices))
         graph.entity_vertex_indexes = np.arange(hypergraph.entity_vertices.shape[0], dtype=np.int32)
-        graph.nearby_centroid_map = []
 
-        for vertex in hypergraph.entity_vertices:
-            graph.nearby_centroid_map.append(hypergraph.get_nearby_centroids(vertex))
-        for vertex in hypergraph.event_vertices:
-            graph.nearby_centroid_map.append(hypergraph.get_nearby_centroids(vertex))
+        #graph.nearby_centroid_map = []
+
+        #for vertex in hypergraph.entity_vertices:
+        #    graph.nearby_centroid_map.append(hypergraph.get_nearby_centroids(vertex))
+        #for vertex in hypergraph.event_vertices:
+        #    graph.nearby_centroid_map.append(hypergraph.get_nearby_centroids(vertex))
 
         graph.edges = np.concatenate((hypergraph.entity_to_entity_edges,
                                       hypergraph.event_to_entity_edges,
@@ -38,5 +39,6 @@ class GraphConverter:
             event_vertex_types = np.empty((0,5), dtype=np.float32)
 
         graph.vertex_types = np.concatenate((entity_vertex_types, event_vertex_types))
+        graph.nearby_centroid_map = [hypergraph.nearby_centroid_map[entity] for entity in graph.vertices]
 
         return graph

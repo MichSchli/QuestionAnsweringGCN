@@ -5,6 +5,7 @@ import numpy as np
 
 from example_reader.graph_reader.database_interface.vertex_feature_model import VertexFeatureModel
 
+import copy
 
 class HypergraphModel:
 
@@ -517,6 +518,12 @@ class HypergraphModel:
 
         #unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
+        for edge in edges[unseen_or_frontier_targets]:
+            if edge[2] not in self.nearby_centroid_map:
+                self.nearby_centroid_map[edge[2]] = np.array(self.nearby_centroid_map[edge[0]])
+            else:
+                self.nearby_centroid_map[edge[2]] = np.union1d(self.nearby_centroid_map[edge[0]], self.nearby_centroid_map[edge[2]])
+
         self.append_edges(edges[unseen_or_frontier_targets], sources=sources, targets=targets)
 
     """
@@ -528,6 +535,12 @@ class HypergraphModel:
 
         target = edges[:, 0]
         unseen_targets = np.isin(target, self.get_vertices(targets), invert=True)
+
+        for edge in edges[unseen_targets]:
+            if edge[0] not in self.nearby_centroid_map:
+                self.nearby_centroid_map[edge[0]] = np.array(self.nearby_centroid_map[edge[2]])
+            else:
+                self.nearby_centroid_map[edge[0]] = np.union1d(self.nearby_centroid_map[edge[2]], self.nearby_centroid_map[edge[0]])
 
         self.append_edges(edges[unseen_targets], sources=targets, targets=sources)
 
