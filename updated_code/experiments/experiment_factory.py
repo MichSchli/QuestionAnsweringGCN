@@ -16,14 +16,19 @@ class ExperimentFactory:
     model_factory = None
     model_updater_factory = None
 
-    def __init__(self):
+    def __init__(self, logger):
+        self.logger = logger
         self.index_factory = IndexFactory()
         self.example_reader_factory = ExampleReaderFactory(self.index_factory)
         self.example_extender_factory = ExampleExtenderFactory(self.index_factory)
         self.example_batcher_factory = ExampleBatcherFactory()
         self.model_factory = ModelFactory(self.index_factory)
         self.model_tester_factory = ModelTesterFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory)
-        self.model_trainer_factory = ModelTrainerFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory, self.model_tester_factory)
+        self.model_trainer_factory = ModelTrainerFactory(self.example_reader_factory,
+                                                         self.example_extender_factory,
+                                                         self.example_batcher_factory,
+                                                         self.model_tester_factory,
+                                                         self.logger)
 
     def get(self, experiment_configuration):
         model_trainer = self.model_trainer_factory.get(experiment_configuration)
@@ -31,6 +36,6 @@ class ExperimentFactory:
 
         model = self.model_factory.get(experiment_configuration)
 
-        experiment = Experiment(model_trainer, model_tester, model)
+        experiment = Experiment(model_trainer, model_tester, model, self.logger)
 
         return experiment

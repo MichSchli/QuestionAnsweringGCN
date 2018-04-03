@@ -33,7 +33,6 @@ class GloveIndex(AbstractIndex):
         self.vectors[0] = 0
 
         for line in open(file_string, encoding="utf8"):
-            print(counter)
             counter += 1
             parts = line.strip().split(" ")
             self.index(parts[0])

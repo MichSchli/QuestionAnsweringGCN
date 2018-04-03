@@ -19,7 +19,7 @@ class GraphIndexer:
         local_vertex_indexes = {}
         for i,vertex in enumerate(graph.vertices):
             local_vertex_indexes[vertex] = i
-            graph.vertices[i] = self.vertex_indexer.index(vertex)
+            #graph.vertices[i] = self.vertex_indexer.index(vertex)
 
         relation_bags = [None] * graph.edges.shape[0]
         largest_bag_size = 0
@@ -44,7 +44,7 @@ class GraphIndexer:
             graph.edges[j][1] = self.relation_indexer.index(graph.edges[j][1])
             graph.edges[j][2] = local_vertex_indexes[graph.edges[j][2]]
 
-        graph.vertices = np.array(graph.vertices, dtype=np.int32)
+        #graph.vertices = np.array(graph.vertices, dtype=np.int32)
         graph.edges = np.array(graph.edges, dtype=np.int32)
         graph.set_label_to_index_map(local_vertex_indexes)
 
