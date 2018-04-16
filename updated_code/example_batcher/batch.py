@@ -38,6 +38,16 @@ class Batch:
 
         return np.concatenate(index_lists)
 
+    def get_combined_word_vertex_indices(self):
+        index_lists = [np.copy(example.question.dummy_indexes) for example in self.examples]
+
+        accumulator = 0
+        for i,example in enumerate(self.examples):
+            index_lists[i] += accumulator
+            accumulator += example.count_vertices()
+
+        return np.concatenate(index_lists)
+
     def get_combined_entity_vertex_map_indexes(self):
         index_lists = [np.copy(example.get_entity_vertex_indexes()) for example in self.examples]
 
@@ -97,6 +107,19 @@ class Batch:
 
         return np.concatenate(vertex_lists)
 
+    def get_word_indexes_in_flattened_sentence_matrix(self):
+        max_word_count = max(example.count_words() for example in self.examples)
+
+        index_lists = [np.arange(len(example.question.dummy_indexes)) for example in self.examples]
+
+        accumulator = 0
+        for i, example in enumerate(self.examples):
+            index_lists[i] += accumulator
+            accumulator += max_word_count
+
+        full = np.concatenate(index_lists)
+        return full
+
     def get_padded_word_indices(self):
         max_word_count = max(example.count_words() for example in self.examples)
         sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.int32)
@@ -149,3 +172,6 @@ class Batch:
         lists = [example.graph.get_vertex_types() for example in self.examples]
 
         return np.concatenate(lists)
+
+    def get_combined_sentence_vertex_indices(self):
+        return np.array([example.graph.get_sentence_vertex_index() for example in self.examples], dtype=np.int32)

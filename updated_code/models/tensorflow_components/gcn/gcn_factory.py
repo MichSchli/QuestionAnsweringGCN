@@ -29,8 +29,10 @@ class GcnFactory:
         sentence_embedding_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
         sentence_batch_features = SentenceBatchFeatures(graph, sentence_embedding_dim)
 
-        sender_features = VertexFeatures(graph, "senders", 1)
-        receiver_features = VertexFeatures(graph, "receivers", 1)
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+
+        sender_features = VertexFeatures(graph, "senders", gcn_dim)
+        receiver_features = VertexFeatures(graph, "receivers", gcn_dim)
         sender_type_features = VertexTypeFeatures(graph, "sender")
         receiver_type_features = VertexTypeFeatures(graph, "receiver")
         relation_features = RelationFeatures(graph, relation_index_width, relation_index)
@@ -52,13 +54,12 @@ class GcnFactory:
                          relation_part_features,
                          sentence_batch_features]
 
-        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
         message_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
         gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
 
         gcn_layers = [None]*layers
         for layer in range(layers):
-            vertex_input_dim = 1 if layer == 0 else gcn_dim
+            vertex_input_dim = gcn_dim if layer == 0 else gcn_dim
             message_feature_dimension = sum(m.get_width() for m in message_features)
             gate_feature_dimension = sum(g.get_width() for g in gate_features)
 

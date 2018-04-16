@@ -26,6 +26,10 @@ class ModelFactory:
         model.graph = GraphComponent()
         model.add_component(model.graph)
         model.add_component(model.graph.mention_dummy_assignment_view)
+        model.add_component(model.graph.word_assignment_view)
+
+        model.dummy_mlp = MultilayerPerceptronComponent([1, int(experiment_configuration["gcn"]["embedding_dimension"])], "dummy_mlp")
+        model.add_component(model.dummy_mlp)
 
         model.sentence = SentenceBatchComponent(word_index, pos_index, word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
         model.add_component(model.sentence)
@@ -60,6 +64,7 @@ class ModelFactory:
         lstm_layers = int(experiment_configuration["lstm"]["layers"])
         attention_heads = int(experiment_configuration["lstm"]["attention_heads"])
 
+
         model.lstms = []
         for layer in range(lstm_layers):
             input_dim = word_dim + pos_dim if layer == 0 else lstm_dim * 2
@@ -82,7 +87,7 @@ class ModelFactory:
         dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
         l2_rate = float(experiment_configuration["regularization"]["final_l2"])
 
-        hidden_dims = [lstm_dim + gcn_dim] + hidden_dims + [1]
+        hidden_dims = [2 * gcn_dim] + hidden_dims + [1]
 
         model.mlp = MultilayerPerceptronComponent(hidden_dims,
                                                   "mlp",

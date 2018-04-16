@@ -6,6 +6,9 @@ class VertexSubsampler:
     inner = None
     negative_sample_rate = None
 
+    max_edges = 10000
+    max_edges_per_vertex = 2000
+
     def __init__(self, inner, negative_sample_rate):
         self.inner = inner
         self.negative_sample_rate = negative_sample_rate
@@ -13,18 +16,42 @@ class VertexSubsampler:
     def extend(self, example):
         example = self.inner.extend(example)
 
-        negative_sample_rate = min(self.negative_sample_rate, example.graph.count_vertices())
+        negative_sample_rate = min(self.negative_sample_rate, example.graph.count_entity_vertices())
         golds = example.get_gold_indexes()
         centroids = example.get_centroid_indexes()
-        potential_negatives = np.random.choice(example.graph.vertices.shape[0], negative_sample_rate, replace=False)
+        potential_negatives = np.random.choice(example.get_entity_vertex_indexes(), negative_sample_rate, replace=False)
+        potential_negatives = np.setdiff1d(potential_negatives, centroids)
         kept_vertices_first_round = np.unique(np.concatenate((golds, potential_negatives))).astype(np.int32)
 
         kept_edges_first_round = np.logical_or(np.isin(example.graph.edges[:, 0], kept_vertices_first_round),
                                             np.isin(example.graph.edges[:, 2], kept_vertices_first_round))
+
+
+        kept_edges_count = np.sum(kept_edges_first_round)
+        if kept_edges_count > self.max_edges:
+            edges_by_vertex = [np.logical_and(np.logical_or(np.isin(example.graph.edges[:, 0], [x]),
+                                                            np.isin(example.graph.edges[:, 2], [x])),
+                                              kept_edges_first_round)
+                               for x in kept_vertices_first_round]
+
+            kept_edges_first_round = np.zeros((example.graph.edges.shape[0]), dtype=np.bool)
+
+            for kept_edges in edges_by_vertex:
+                kept_count = np.sum(kept_edges)
+                if kept_count > self.max_edges_per_vertex:
+                    filtered = np.random.choice(np.where(kept_edges)[0], self.max_edges_per_vertex, replace=False)
+                    kept_edges = np.zeros((example.graph.edges.shape[0]), dtype=np.bool)
+                    kept_edges[filtered] = True
+
+                    kept_edges_first_round = np.logical_or(kept_edges_first_round, kept_edges)
+
+
         kept_vertices_second_round = np.unique(np.concatenate((example.graph.edges[kept_edges_first_round][:,0], example.graph.edges[kept_edges_first_round][:,2], centroids)))
 
         kept_edges_second_round = np.logical_and(np.isin(example.graph.edges[:, 0], kept_vertices_second_round),
                                             np.isin(example.graph.edges[:, 2], kept_vertices_second_round))
+
+
 
         vertex_map = {kept_vertex: i for i,kept_vertex in enumerate(kept_vertices_second_round)}
         new_label_to_vertex_map = {label:vertex_map[index] for label, index in example.graph.vertex_label_to_index_map.items() if index in vertex_map}

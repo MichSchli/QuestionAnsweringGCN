@@ -22,6 +22,12 @@ class AddWordDummyExtender:
         word_edges = []
         graph_vertex_count = example.count_vertices()
 
+        sentence_dummy_index = graph_vertex_count
+        sentence_node = self.vertex_index.index("<sentence_dummy>")
+        example.graph.add_vertices(np.array([sentence_node]), np.array([[0, 0, 0, 0, 0, 1]], dtype=np.int32))
+        example.graph.sentence_vertex_index = sentence_dummy_index
+        graph_vertex_count += 1
+
         example.question.dummy_indexes = [None] * len(example.question.words)
         for i, word in enumerate(example.question.words):
             word_vertices[i] = self.vertex_index.index("<word_dummy>")
@@ -33,9 +39,13 @@ class AddWordDummyExtender:
                              self.relation_index.index("<dummy_to_word>"),
                              graph_vertex_count + word_index]
                 word_edges.append(word_edge)
+                word_edge_2 = [sentence_dummy_index,
+                             self.relation_index.index("<sentence_to_word>"),
+                             graph_vertex_count + word_index]
+                word_edges.append(word_edge_2)
 
         word_vertices = np.array(word_vertices)
-        word_vertex_types = np.array([[0,0,0,1,0] for _ in word_vertices], dtype=np.float32)
+        word_vertex_types = np.array([[0,0,0,1,0,0] for _ in word_vertices], dtype=np.float32)
         word_edges = np.array(word_edges)
 
         example.graph.add_vertices(word_vertices, word_vertex_types)

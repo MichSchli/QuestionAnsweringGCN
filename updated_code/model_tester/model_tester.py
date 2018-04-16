@@ -1,3 +1,6 @@
+from models.prediction import Prediction
+
+
 class ModelTester:
 
     example_generator = None
@@ -16,6 +19,12 @@ class ModelTester:
 
         for example in self.example_generator.iterate(dataset, shuffle=False):
             example = self.example_extender.extend(example)
+
+            if not self.validate_example(example):
+                self.add_dummy_prediction(example)
+                self.evaluator.add_prediction(example)
+                continue
+
             potential_batch = self.example_batcher.put_example(example)
 
             if potential_batch:
@@ -30,3 +39,15 @@ class ModelTester:
                 self.evaluator.add_prediction(example)
 
         return self.evaluator.final_scores()
+
+    def validate_example(self, example):
+        return len(example.mentions) > 0
+
+    def add_dummy_prediction(self, example):
+        prediction = Prediction()
+        vertex_indexes = []
+        vertex_labels = []
+
+        prediction.add_predictions(vertex_indexes, vertex_labels)
+
+        example.prediction = prediction

@@ -20,7 +20,7 @@ class AddDependencyEdgeExtender:
 
         root_node_index = example.count_vertices()
         root_node = self.vertex_index.index("<dependency_root>")
-        example.graph.add_vertices(np.array([root_node]), np.array([[0,0,0,0,1]], dtype=np.int32))
+        example.graph.add_vertices(np.array([root_node]), np.array([[0,0,0,0,1,0]], dtype=np.int32))
 
         dep_edges = [None] * len(example.question.dummy_indexes)
         i = 0

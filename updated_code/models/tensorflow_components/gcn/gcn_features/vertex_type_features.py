@@ -16,7 +16,7 @@ class VertexTypeFeatures:
         return tf.nn.embedding_lookup(vertex_type_list, target_indices)
 
     def get_width(self):
-        return 5
+        return 6
 
     def prepare_variables(self):
         pass

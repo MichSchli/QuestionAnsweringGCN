@@ -96,6 +96,9 @@ class Graph:
     def count_vertices(self):
         return self.vertices.shape[0]
 
+    def count_entity_vertices(self):
+        return self.entity_vertex_indexes.shape[0]
+
     def get_entity_vertices(self):
         return self.entity_vertex_indexes
 
@@ -116,3 +119,6 @@ class Graph:
 
     def get_vertex_types(self):
         return self.vertex_types
+
+    def get_sentence_vertex_index(self):
+        return self.sentence_vertex_index

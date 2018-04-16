@@ -30,7 +30,7 @@ class AddMentionDummyExtender:
                                 mention.entity_index]
 
         mention_vertices = np.array(mention_vertices)
-        mention_vertex_types = np.array([[0, 0, 1, 0, 0] for _ in mention_vertices], dtype=np.float32)
+        mention_vertex_types = np.array([[0, 0, 1, 0, 0, 0] for _ in mention_vertices], dtype=np.float32)
         mention_edges = np.array(mention_edges)
 
         example.graph.add_vertices(mention_vertices, mention_vertex_types)
