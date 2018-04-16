@@ -12,4 +12,10 @@ class MentionReaderFactory:
         else:
             prefix = ""
 
-        return MentionReader(prefix)
+        mention_reader = MentionReader(prefix)
+
+        if "transform_mention_scores" in experiment_configuration["dataset"] \
+                and experiment_configuration["dataset"]["transform_mention_scores"] == "log":
+            mention_reader.set_score_transform("log")
+
+        return mention_reader
