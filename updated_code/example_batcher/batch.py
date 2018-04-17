@@ -88,7 +88,7 @@ class Batch:
 
         for i,example in enumerate(self.examples):
             for gold_answer in example.gold_answers:
-                if gold_answer.entity_indexes >=0:
+                if gold_answer.entity_indexes.shape[0] >=0:
                     vertex_lists[i][gold_answer.entity_indexes] = 1
 
         return np.concatenate(vertex_lists)
