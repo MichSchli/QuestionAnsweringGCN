@@ -87,9 +87,9 @@ class Batch:
         vertex_lists = [np.zeros_like(example.get_entity_vertex_indexes(), dtype=np.float32) for example in self.examples]
 
         for i,example in enumerate(self.examples):
-            for gold_answer in example.gold_answers:
-                if gold_answer.entity_indexes.shape[0] >=0:
-                    vertex_lists[i][gold_answer.entity_indexes] = 1
+            for gold_index in example.get_gold_indexes():
+                if gold_index >=0:
+                    vertex_lists[i][gold_index] = 1
 
         return np.concatenate(vertex_lists)
 
@@ -106,6 +106,16 @@ class Batch:
                         vertex_lists[i][gold_index] *= weight
 
         return np.concatenate(vertex_lists)
+
+    def get_word_indexes_in_padded_sentence_matrix(self):
+        max_word_count = max(example.count_words() for example in self.examples)
+        matrix = np.zeros((self.count_examples(), max_word_count), dtype=np.int32)
+
+        for i, example in enumerate(self.examples):
+            matrix[i][:example.count_words()] = np.arange(1, example.count_words()+1)
+
+        return matrix
+
 
     def get_word_indexes_in_flattened_sentence_matrix(self):
         max_word_count = max(example.count_words() for example in self.examples)

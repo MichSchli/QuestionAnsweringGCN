@@ -15,6 +15,8 @@ with open(args.input_file) as data_file:
 
         if line and reading_sentence:
             parts = line.split("\t")
+            if not parts[1]:
+                parts[1] = "<NaN>"
             sentence.append(parts[1])
         elif not line and reading_sentence:
             print(" ".join(sentence))

@@ -1,35 +1,35 @@
-0	where	_	_	_
+0	Where	_	_	_
 1	does	_	_	_
-2	bob	_	_	_
+2	Bob	_	_	_
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 berlin	berlin
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
 2	davidcorp	_	_	_
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	davidcorp	1.0
+2	2	davidcorp	1.0	0
 
 2005	2005
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	invest	_	_	_
 4	in	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 alicecorp	alicecorp
 
-0	who	_	_	_
+0	Who	_	_	_
 1	was	_	_	_
 2	born	_	_	_
 3	in	_	_	_
@@ -39,37 +39,37 @@ alicecorp	alicecorp
 
 carl	carl
 
-0	where	_	_	_
+0	Where	_	_	_
 1	does	_	_	_
-2	david	_	_	_
+2	David	_	_	_
 3	work	_	_	_
 4	?	_	_	_
 
-2	2	david	1.0
+2	2	david	1.0	0
 
 alicecorp	alicecorp
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 1974	1974
 
-0	where	_	_	_
+0	Where	_	_	_
 1	does	_	_	_
-2	carl	_	_	_
+2	Carl	_	_	_
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 berlin	berlin
 
-0	who	_	_	_
+0	Who	_	_	_
 1	was	_	_	_
 2	born	_	_	_
 3	in	_	_	_
@@ -79,153 +79,153 @@ berlin	berlin
 
 bob	bob
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	work	_	_	_
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 ceo	ceo
 
-0	who	_	_	_
+0	Who	_	_	_
 1	did	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	meet	_	_	_
 4	in	_	_	_
 5	2001	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 bob	bob
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
 2	alicecorp	_	_	_
 3	founded	_	_	_
 4	?	_	_	_
 
-2	2	alicecorp	1.0
+2	2	alicecorp	1.0	0
 
 1997	1997
 
-0	who	_	_	_
+0	Who	_	_	_
 1	does	_	_	_
-2	carl	_	_	_
+2	Carl	_	_	_
 3	live	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 alice	alice
 bob	bob
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
-2	bob	_	_	_
+2	Bob	_	_	_
 3	work	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 nlp	nlp
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
 2	davidcorp	_	_	_
 3	work	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	davidcorp	1.0
+2	2	davidcorp	1.0	0
 
 consultancy	consultancy
 
-0	who	_	_	_
+0	Who	_	_	_
 1	does	_	_	_
-2	carl	_	_	_
+2	Carl	_	_	_
 3	work	_	_	_
 4	for	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 davidcorp	davidcorp
 
-0	who	_	_	_
+0	Who	_	_	_
 1	did	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	marry	_	_	_
 4	in	_	_	_
 5	2003	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 bob	bob
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	as	_	_	_
 3	developer	_	_	_
 4	?	_	_	_
 
-4	4	developer	1.0
+4	4	developer	1.0	0
 
 carl	carl
 bob	bob
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	with	_	_	_
 3	consultancy	_	_	_
 4	?	_	_	_
 
-4	4	consultancy	1.0
+4	4	consultancy	1.0	0
 
 davidcorp	davidcorp
 
-0	who	_	_	_
+0	Who	_	_	_
 1	is	_	_	_
 2	the	_	_	_
 3	son	_	_	_
 4	of	_	_	_
-5	alice	_	_	_
+5	Alice	_	_	_
 6	?	_	_	_
 
-5	5	alice	1.0
+5	5	alice	1.0	0
 
 carl	carl
 
-0	who	_	_	_
+0	Who	_	_	_
 1	does	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	live	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 carl	carl
 bob	bob
 
-0	who	_	_	_
+0	Who	_	_	_
 1	founded	_	_	_
 2	alicecorp	_	_	_
 3	in	_	_	_
 4	1997	_	_	_
 5	?	_	_	_
 
-3	3	alicecorp	1.0
+3	3	alicecorp	1.0	0
 
 alice	alice
 
-0	who	_	_	_
+0	Who	_	_	_
 1	was	_	_	_
 2	born	_	_	_
 3	in	_	_	_
@@ -235,262 +235,262 @@ alice	alice
 
 alice	alice
 
-0	who	_	_	_
+0	Who	_	_	_
 1	lives	_	_	_
 2	with	_	_	_
-3	alice	_	_	_
+3	Alice	_	_	_
 4	?	_	_	_
 
-4	4	alice	1.0
+4	4	alice	1.0	0
 
 carl	carl
 bob	bob
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
-2	carl	_	_	_
+2	Carl	_	_	_
 3	work	_	_	_
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 developer	developer
 
-0	who	_	_	_
+0	Who	_	_	_
 1	invests	_	_	_
 2	in	_	_	_
 3	davidcorp	_	_	_
 4	?	_	_	_
 
-4	4	davidcorp	1.0
+4	4	davidcorp	1.0	0
 
 bob	bob
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
-2	carl	_	_	_
+2	Carl	_	_	_
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	carl	1.0
+2	2	carl	1.0	0
 
 2004	2004
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	in	_	_	_
 3	alicecorp	_	_	_
 4	?	_	_	_
 
-4	4	alicecorp	1.0
+4	4	alicecorp	1.0	0
 
 alice	alice
 david	david
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
 2	alicecorp	_	_	_
 3	work	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	alicecorp	1.0
+2	2	alicecorp	1.0	0
 
 nlp	nlp
 
-0	when	_	_	_
+0	When	_	_	_
 1	did	_	_	_
-2	david	_	_	_
+2	David	_	_	_
 3	found	_	_	_
 4	davidcorp	_	_	_
 5	?	_	_	_
 
-2	2	david	1.0
-4	4	davidcorp	1.0
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
 
 2005	2005
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	as	_	_	_
-3	ceo	_	_	_
+3	CEO	_	_	_
 4	?	_	_	_
 
-4	4	ceo	1.0
+4	4	ceo	1.0	0
 
 alice	alice
 
-0	who	_	_	_
+0	Who	_	_	_
 1	founded	_	_	_
 2	alicecorp	_	_	_
 3	?	_	_	_
 
-3	3	alicecorp	1.0
+3	3	alicecorp	1.0	0
 
 alice	alice
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
-2	bob	_	_	_
+2	Bob	_	_	_
 3	born	_	_	_
 4	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 1975	1975
 
-0	who	_	_	_
+0	Who	_	_	_
 1	founded	_	_	_
 2	davidcorp	_	_	_
 3	in	_	_	_
 4	2005	_	_	_
 5	?	_	_	_
 
-3	3	davidcorp	1.0
+3	3	davidcorp	1.0	0
 
 david	david
 
-0	who	_	_	_
+0	Who	_	_	_
 1	does	_	_	_
-2	bob	_	_	_
+2	Bob	_	_	_
 3	live	_	_	_
 4	with	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 carl	carl
 alice	alice
 
-0	when	_	_	_
+0	When	_	_	_
 1	did	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	found	_	_	_
 4	alicecorp	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-4	4	alicecorp	1.0
+2	2	alice	1.0	0
+4	4	alicecorp	1.0	1
 
 1997	1997
 
-0	where	_	_	_
+0	Where	_	_	_
 1	does	_	_	_
-2	david	_	_	_
+2	David	_	_	_
 3	live	_	_	_
 4	?	_	_	_
 
-2	2	david	1.0
+2	2	david	1.0	0
 
 berlin	berlin
 
-0	who	_	_	_
+0	Who	_	_	_
 1	is	_	_	_
 2	the	_	_	_
 3	child	_	_	_
 4	of	_	_	_
-5	alice	_	_	_
+5	Alice	_	_	_
 6	?	_	_	_
 
-5	5	alice	1.0
+5	5	alice	1.0	0
 
 carl	carl
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	for	_	_	_
 3	alicecorp	_	_	_
 4	?	_	_	_
 
-4	4	alicecorp	1.0
+4	4	alicecorp	1.0	0
 
 bob	bob
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	with	_	_	_
-3	nlp	_	_	_
+3	NLP	_	_	_
 4	?	_	_	_
 
-4	4	nlp	1.0
+4	4	nlp	1.0	0
 
 carl	carl
 alicecorp	alicecorp
 bob	bob
 
-0	who	_	_	_
+0	Who	_	_	_
 1	is	_	_	_
 2	the	_	_	_
 3	husband	_	_	_
 4	of	_	_	_
-5	alice	_	_	_
+5	Alice	_	_	_
 6	?	_	_	_
 
-5	5	alice	1.0
+5	5	alice	1.0	0
 
 bob	bob
 
-0	when	_	_	_
+0	When	_	_	_
 1	did	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	meet	_	_	_
-4	bob	_	_	_
+4	Bob	_	_	_
 5	?	_	_	_
 
-2	2	alice	1.0
-4	4	bob	1.0
+2	2	alice	1.0	0
+4	4	bob	1.0	1
 
 2001	2001
 
-0	who	_	_	_
+0	Who	_	_	_
 1	is	_	_	_
 2	the	_	_	_
 3	wife	_	_	_
 4	of	_	_	_
-5	bob	_	_	_
+5	Bob	_	_	_
 6	?	_	_	_
 
-5	5	bob	1.0
+5	5	bob	1.0	0
 
 alice	alice
 
-0	what	_	_	_
+0	What	_	_	_
 1	did	_	_	_
-2	alice	_	_	_
+2	Alice	_	_	_
 3	found	_	_	_
 4	in	_	_	_
 5	1997	_	_	_
 6	?	_	_	_
 
-2	2	alice	1.0
+2	2	alice	1.0	0
 
 alicecorp	alicecorp
 
-0	who	_	_	_
+0	Who	_	_	_
 1	works	_	_	_
 2	for	_	_	_
 3	davidcorp	_	_	_
 4	?	_	_	_
 
-4	4	davidcorp	1.0
+4	4	davidcorp	1.0	0
 
 carl	carl
 
-0	what	_	_	_
+0	What	_	_	_
 1	does	_	_	_
-2	bob	_	_	_
+2	Bob	_	_	_
 3	work	_	_	_
 4	as	_	_	_
 5	?	_	_	_
 
-2	2	bob	1.0
+2	2	bob	1.0	0
 
 developer	developer
 
-0	who	_	_	_
+0	Who	_	_	_
 1	did	_	_	_
-2	david	_	_	_
+2	David	_	_	_
 3	sell	_	_	_
 4	davidcorp	_	_	_
 5	to	_	_	_
@@ -498,47 +498,47 @@ developer	developer
 7	2008	_	_	_
 8	?	_	_	_
 
-2	2	david	1.0
-4	4	davidcorp	1.0
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
 
 emma	emma
 
-0	who	_	_	_
+0	Who	_	_	_
 1	sold	_	_	_
 2	davidcorp	_	_	_
 3	to	_	_	_
-4	emma	_	_	_
+4	Emma	_	_	_
 5	?	_	_	_
 
-3	3	davidcorp	1.0
-5	5	emma	1.0
+3	3	davidcorp	1.0	0
+5	5	emma	1.0	1
 
 david	david
 
-0	when	_	_	_
+0	When	_	_	_
 1	did	_	_	_
-2	david	_	_	_
+2	David	_	_	_
 3	sell	_	_	_
 4	davidcorp	_	_	_
 5	to	_	_	_
-6	emma	_	_	_
+6	Emma	_	_	_
 7	?	_	_	_
 
-2	2	david	1.0
-4	4	davidcorp	1.0
-6	6	emma	1.0
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
+6	6	emma	1.0	2
 
 2008	2008
 
-0	when	_	_	_
+0	When	_	_	_
 1	was	_	_	_
 2	davidcorp	_	_	_
 3	sold	_	_	_
 4	to	_	_	_
-5	emma	_	_	_
+5	Emma	_	_	_
 6	?	_	_	_
 
-2	2	davidcorp	1.0
-6	6	emma	1.0
+2	2	davidcorp	1.0	0
+6	6	emma	1.0	1
 
 2008	2008

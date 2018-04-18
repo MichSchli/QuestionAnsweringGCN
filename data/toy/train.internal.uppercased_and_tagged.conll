@@ -1,0 +1,544 @@
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+berlin	berlin
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	davidcorp	davidcorp	NN	nsubjpass	3
+3	founded	found	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	davidcorp	1.0	0
+
+2005	2005
+
+0	What	what	WP	pobj	3
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	invest	invest	VB	ROOT	0
+4	in	in	IN	prt	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	2004	2004	CD	pobj	3
+5	?	?	.	punct	2
+
+
+carl	carl
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	David	david	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	david	1.0	0
+
+alicecorp	alicecorp
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Alice	alice	NNP	nsubjpass	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+1974	1974
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+berlin	berlin
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	1975	1975	CD	pobj	3
+5	?	?	.	punct	2
+
+
+bob	bob
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+ceo	ceo
+
+0	Who	who	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2001	2001	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+bob	bob
+
+0	When	when	WRB	advmod	1
+1	was	be	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	nsubj	1
+3	founded	found	VBN	acl	2
+4	?	?	.	punct	1
+
+2	2	alicecorp	1.0	0
+
+1997	1997
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+alice	alice
+bob	bob
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+nlp	nlp
+
+0	What	what	WP	nsubj	2
+1	does	do	VBZ	aux	2
+2	davidcorp	davidcorp	VB	ROOT	0
+3	work	work	VB	dobj	2
+4	with	with	IN	prep	2
+5	?	?	.	punct	2
+
+2	2	davidcorp	1.0	0
+
+consultancy	consultancy
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	for	for	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+davidcorp	davidcorp
+
+0	Who	who	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	marry	marry	VB	ROOT	0
+4	in	in	IN	prep	3
+5	2003	2003	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	as	as	IN	prep	1
+3	developer	developer	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	developer	1.0	0
+
+carl	carl
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	consultancy	consultancy	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	consultancy	1.0	0
+
+davidcorp	davidcorp
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	son	son	NN	attr	1
+4	of	of	IN	prep	3
+5	Alice	alice	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	alice	1.0	0
+
+carl	carl
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+carl	carl
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	dobj	1
+3	in	in	IN	prep	1
+4	1997	1997	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	alicecorp	1.0	0
+
+alice	alice
+
+0	Who	who	WP	nsubjpass	2
+1	was	be	VBD	auxpass	2
+2	born	bear	VBN	ROOT	0
+3	in	in	IN	prep	2
+4	1974	1974	CD	pobj	3
+5	?	?	.	punct	2
+
+
+alice	alice
+
+0	Who	who	WP	nsubj	1
+1	lives	live	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	Alice	alice	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	alice	1.0	0
+
+carl	carl
+bob	bob
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Carl	carl	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+developer	developer
+
+0	Who	who	WP	nsubj	1
+1	invests	invest	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	davidcorp	davidcorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	davidcorp	1.0	0
+
+bob	bob
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Carl	carl	NNP	nsubjpass	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	carl	1.0	0
+
+2004	2004
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	in	in	IN	prep	1
+3	alicecorp	alicecorp	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	alicecorp	1.0	0
+
+alice	alice
+david	david
+
+0	What	what	WP	nsubj	2
+1	does	do	VBZ	aux	2
+2	alicecorp	alicecorp	VB	ROOT	0
+3	work	work	VB	dobj	2
+4	with	with	IN	prep	2
+5	?	?	.	punct	2
+
+2	2	alicecorp	1.0	0
+
+nlp	nlp
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	David	david	NNP	nsubj	3
+3	found	find	VBD	ROOT	0
+4	davidcorp	davidcorp	NN	dobj	3
+5	?	?	.	punct	3
+
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
+
+2005	2005
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	as	as	IN	prep	1
+3	CEO	ceo	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	ceo	1.0	0
+
+alice	alice
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	alicecorp	alicecorp	NN	dobj	1
+3	?	?	.	punct	1
+
+3	3	alicecorp	1.0	0
+
+alice	alice
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	Bob	bob	NNP	nsubj	3
+3	born	bear	VBN	ROOT	0
+4	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+1975	1975
+
+0	Who	who	WP	nsubj	1
+1	founded	found	VBD	ROOT	0
+2	davidcorp	davidcorp	NN	dobj	1
+3	in	in	IN	prep	1
+4	2005	2005	CD	pobj	3
+5	?	?	.	punct	1
+
+3	3	davidcorp	1.0	0
+
+david	david
+
+0	Who	who	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	with	with	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+carl	carl
+alice	alice
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	found	find	VBD	ROOT	0
+4	alicecorp	alicecorp	JJ	dobj	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+4	4	alicecorp	1.0	1
+
+1997	1997
+
+0	Where	where	WRB	advmod	3
+1	does	do	VBZ	aux	3
+2	David	david	NNP	nsubj	3
+3	live	live	VB	ROOT	0
+4	?	?	.	punct	3
+
+2	2	david	1.0	0
+
+berlin	berlin
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	child	child	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Alice	alice	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	alice	1.0	0
+
+carl	carl
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	for	for	IN	prep	1
+3	alicecorp	alicecorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	alicecorp	1.0	0
+
+bob	bob
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	with	with	IN	prep	1
+3	NLP	nlp	NNP	pobj	2
+4	?	?	.	punct	1
+
+4	4	nlp	1.0	0
+
+carl	carl
+alicecorp	alicecorp
+bob	bob
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	husband	husband	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Alice	alice	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	alice	1.0	0
+
+bob	bob
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	meet	meet	VB	ROOT	0
+4	Bob	bob	NNP	dobj	3
+5	?	?	.	punct	3
+
+2	2	alice	1.0	0
+4	4	bob	1.0	1
+
+2001	2001
+
+0	Who	who	WP	attr	1
+1	is	be	VBZ	ROOT	0
+2	the	the	DT	det	3
+3	wife	wife	NN	nsubj	1
+4	of	of	IN	prep	3
+5	Bob	bob	NNP	pobj	4
+6	?	?	.	punct	1
+
+5	5	bob	1.0	0
+
+alice	alice
+
+0	What	what	WP	dobj	3
+1	did	do	VBD	aux	3
+2	Alice	alice	NNP	nsubj	3
+3	found	find	VBD	ROOT	0
+4	in	in	IN	prep	3
+5	1997	1997	CD	pobj	4
+6	?	?	.	punct	3
+
+2	2	alice	1.0	0
+
+alicecorp	alicecorp
+
+0	Who	who	WP	nsubj	1
+1	works	work	VBZ	ROOT	0
+2	for	for	IN	prep	1
+3	davidcorp	davidcorp	NN	pobj	2
+4	?	?	.	punct	1
+
+4	4	davidcorp	1.0	0
+
+carl	carl
+
+0	What	what	WP	pobj	4
+1	does	do	VBZ	aux	3
+2	Bob	bob	NNP	nsubj	3
+3	work	work	VB	ROOT	0
+4	as	as	IN	prep	3
+5	?	?	.	punct	3
+
+2	2	bob	1.0	0
+
+developer	developer
+
+0	Who	who	WP	pobj	6
+1	did	do	VBD	aux	3
+2	David	david	NNP	nsubj	3
+3	sell	sell	VB	ROOT	0
+4	davidcorp	davidcorp	NN	dobj	3
+5	to	to	IN	dative	3
+6	in	in	IN	prep	3
+7	2008	2008	CD	pobj	6
+8	?	?	.	punct	3
+
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
+
+emma	emma
+
+0	Who	who	WP	nsubj	1
+1	sold	sell	VBD	ROOT	0
+2	davidcorp	davidcorp	NN	dobj	1
+3	to	to	IN	dative	1
+4	Emma	emma	NNP	pobj	3
+5	?	?	.	punct	1
+
+3	3	davidcorp	1.0	0
+5	5	emma	1.0	1
+
+david	david
+
+0	When	when	WRB	advmod	3
+1	did	do	VBD	aux	3
+2	David	david	NNP	nsubj	3
+3	sell	sell	VB	ROOT	0
+4	davidcorp	davidcorp	NN	dobj	3
+5	to	to	IN	dative	3
+6	Emma	emma	NNP	pobj	5
+7	?	?	.	punct	3
+
+2	2	david	1.0	0
+4	4	davidcorp	1.0	1
+6	6	emma	1.0	2
+
+2008	2008
+
+0	When	when	WRB	advmod	3
+1	was	be	VBD	auxpass	3
+2	davidcorp	davidcorp	NN	nsubjpass	3
+3	sold	sell	VBN	ROOT	0
+4	to	to	IN	prep	3
+5	Emma	emma	NNP	pobj	4
+6	?	?	.	punct	3
+
+2	2	davidcorp	1.0	0
+6	6	emma	1.0	1
+
+2008	2008

@@ -1,7 +1,7 @@
 import argparse
 import spacy
 
-parser = argparse.ArgumentParser(description='Flattens a conll file to individual sentences.')
+parser = argparse.ArgumentParser(description='Adds pos and dep to a conll file.')
 parser.add_argument('--input_file', type=str, help='The location of the .conll-file to be parsed')
 args = parser.parse_args()
 

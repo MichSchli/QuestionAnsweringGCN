@@ -60,4 +60,5 @@ for sentence, entities, link in zip(open(args.input_file), open(args.entity_file
     if len(entity_matrix) > 0:
         print("\n".join(["\t".join(line) for line in entity_matrix]))
     print("")
-    print("\n".join(["\t".join(line) for line in answer_matrix]))
+    if len(answer_matrix) > 0:
+        print("\n".join(["\t".join(line) for line in answer_matrix]))

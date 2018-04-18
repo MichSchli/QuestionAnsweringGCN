@@ -27,6 +27,10 @@ class DummyTensorflowModel(AbstractTensorflowModel):
         entity_embeddings = self.graph.get_target_vertex_embeddings()
         final_sentence_embedding = self.graph.get_sentence_embeddings()
 
+        final_word_embeddings = self.graph.get_word_vertex_embeddings()
+        padded_final_word_embeddings = self.word_padder.pad(final_word_embeddings)
+        final_sentence_embedding = self.final_attention.attend(padded_final_word_embeddings, mode)
+
         entity_embeddings = self.sentence_to_entity_mapper.map(final_sentence_embedding, entity_embeddings)
         entity_embeddings = self.mlp.transform(entity_embeddings, mode)
 

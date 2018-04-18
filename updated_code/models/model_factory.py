@@ -7,6 +7,7 @@ from models.tensorflow_components.loss_functions.sigmoid_loss import SigmoidLoss
 from models.tensorflow_components.sentence.lstm import BiLstm
 from models.tensorflow_components.sentence.multihead_attention import MultiheadAttention
 from models.tensorflow_components.sentence.sentence_batch_component import SentenceBatchComponent
+from models.tensorflow_components.sentence.word_padder import WordPadder
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
 
@@ -27,6 +28,8 @@ class ModelFactory:
         model.add_component(model.graph)
         model.add_component(model.graph.mention_dummy_assignment_view)
         model.add_component(model.graph.word_assignment_view)
+        model.word_padder = WordPadder()
+        model.add_component(model.word_padder)
 
         model.dummy_mlp = MultilayerPerceptronComponent([1, int(experiment_configuration["gcn"]["embedding_dimension"])], "dummy_mlp")
         model.add_component(model.dummy_mlp)
@@ -83,11 +86,13 @@ class ModelFactory:
     def add_final_transform(self, experiment_configuration, model):
         lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
         gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+
+        in_dim = gcn_dim + lstm_dim
         hidden_dims = [int(d) for d in experiment_configuration["other"]["final_hidden_dimensions"].split("|")]
         dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
         l2_rate = float(experiment_configuration["regularization"]["final_l2"])
 
-        hidden_dims = [2 * gcn_dim] + hidden_dims + [1]
+        hidden_dims = [in_dim] + hidden_dims + [1]
 
         model.mlp = MultilayerPerceptronComponent(hidden_dims,
                                                   "mlp",
