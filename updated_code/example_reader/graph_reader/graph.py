@@ -57,14 +57,13 @@ class Graph:
             else:
                 self.vertex_name_to_index_map[name].append(index)
 
-    def map_name_indexes(self, label_to_index_map):
+    def map_name_indexes(self, index_map):
         new_vertex_index_to_name_map = {}
-        for k,v in self.vertex_index_to_name_map.items():
-            if k in label_to_index_map:
-                new_vertex_index_to_name_map[label_to_index_map[k]] = v
+        for old_index, new_index in index_map.items():
+            if old_index in self.vertex_index_to_name_map:
+                new_vertex_index_to_name_map[new_index] = self.vertex_index_to_name_map[old_index]
 
         self.set_index_to_name_map(new_vertex_index_to_name_map)
-
 
     def map_from_label(self, label):
         if label in self.vertex_label_to_index_map:

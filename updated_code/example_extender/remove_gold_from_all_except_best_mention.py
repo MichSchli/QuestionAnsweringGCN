@@ -31,4 +31,6 @@ class RemoveGoldFromAllExceptBestMention:
                 if mention_gold_counts[j] == max_count and mention_gold_lists[j][i] == True and gold_answer not in new_gold_list:
                     new_gold_list.append(gold_answer)
 
+        example.gold_answers = new_gold_list
+
         return example

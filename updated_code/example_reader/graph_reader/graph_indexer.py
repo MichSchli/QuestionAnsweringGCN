@@ -37,7 +37,6 @@ class GraphIndexer:
             for j, index in enumerate(relation_bags[i]):
                 graph.padded_edge_bow_matrix[i][j] = index
 
-
         for j,edge in enumerate(graph.edges):
             graph.edges[j][0] = local_vertex_indexes[graph.edges[j][0]]
             graph.edges[j][1] = self.relation_indexer.index(graph.edges[j][1])
@@ -46,7 +45,7 @@ class GraphIndexer:
         graph.edges = np.array(graph.edges, dtype=np.int32)
         graph.set_label_to_index_map(local_vertex_indexes)
 
-        graph.map_name_indexes(local_vertex_indexes)
+        #graph.map_name_indexes(local_vertex_indexes)
 
         graph.nearby_centroid_map = [[local_vertex_indexes[v] for v in vertex] for vertex in graph.nearby_centroid_map]
 
