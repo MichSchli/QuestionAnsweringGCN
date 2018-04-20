@@ -77,3 +77,9 @@ class Example:
 
     def has_mentions(self):
         return len(self.mentions) > 0
+
+    def test_retrieved_gold_answers(self):
+        gold_labels = []
+        for gold_answer in self.gold_answers:
+            gold_labels.append([self.graph.map_to_name_or_label(i) for i in gold_answer.entity_indexes])
+        return gold_labels
