@@ -57,7 +57,7 @@ class AbstractTensorflowModel:
 
             prediction = Prediction()
             vertex_indexes = example.graph.get_entity_vertices()
-            vertex_labels = [example.graph.map_to_label(v) for v in vertex_indexes]
+            vertex_labels = [example.graph.map_to_name_or_label(v) for v in vertex_indexes]
 
             prediction.add_predictions(vertex_labels, scores)
             example.prediction = prediction
