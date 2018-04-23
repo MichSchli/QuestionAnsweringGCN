@@ -36,6 +36,8 @@ class Example:
             else:
                 gold_answer.entity_indexes = np.array(self.graph.map_from_name_or_label(gold_answer.entity_name_or_label))
 
+            gold_answer.entity_indexes = gold_answer.entity_indexes[np.where(gold_answer.entity_indexes >= 0)]
+
     def get_centroid_indexes(self):
         centroid_indexes = []
         for mention in self.mentions:
