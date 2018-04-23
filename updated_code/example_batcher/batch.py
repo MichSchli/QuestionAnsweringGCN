@@ -99,7 +99,7 @@ class Batch:
         for i,example in enumerate(self.examples):
             vertex_lists[i] /= (example.count_entities() * self.count_examples())
 
-            if weight_positives:
+            if weight_positives and example.get_gold_indexes().shape[0] > 0:
                 weight = example.count_entities() / example.get_gold_indexes().shape[0]
                 for gold_index in example.get_gold_indexes():
                     if gold_index >=0:
