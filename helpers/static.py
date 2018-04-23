@@ -1,3 +1,0 @@
-class Static:
-
-    logger = None

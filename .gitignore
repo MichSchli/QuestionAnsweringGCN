@@ -5,6 +5,9 @@ text_parsing/models/
 stored_models/
 logs/
 
+# Ignore cached indexes
+indexing/cache/
+
 # Don't upload Siva's parser
 siva-parser/
 
