@@ -26,7 +26,7 @@ class GraphConverter:
                                       hypergraph.event_to_entity_edges,
                                      hypergraph.entity_to_event_edges))
 
-        vertex_name_map = hypergraph.name_map.feature_map
+        vertex_name_map = {hypergraph.to_index(k):v for k,v in hypergraph.name_map.feature_map.items()}
         graph.set_index_to_name_map(vertex_name_map)
 
         entity_vertex_types = np.array([[1,0,0,0,0,0] for _ in range(hypergraph.entity_vertices.shape[0])], dtype=np.float32)

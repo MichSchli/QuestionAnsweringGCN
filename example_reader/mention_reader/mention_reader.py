@@ -23,7 +23,6 @@ class MentionReader:
 
             mentions.append(mention)
 
-
         return mentions
 
     def set_score_transform(self, transform_type):
