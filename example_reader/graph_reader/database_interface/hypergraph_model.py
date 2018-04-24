@@ -235,7 +235,11 @@ class HypergraphModel:
         else:
             return self.from_index(index)
 
+
     def to_index(self, entity):
+        if self.inverse_entity_map is None:
+            self.inverse_entity_map = {entity:i for i,entity in enumerate(self.entity_vertices)}
+
         return self.inverse_entity_map[entity]
 
     def has_index(self, entity):
