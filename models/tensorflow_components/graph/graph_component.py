@@ -23,6 +23,7 @@ class GraphComponent:
         self.variables["vertex_types"] = tf.placeholder(tf.float32)
         self.variables["sentence_vertex_indices"] = tf.placeholder(tf.int32)
         self.variables["word_vertex_indices"] = tf.placeholder(tf.int32)
+        self.variables["vertex_max_scores"] = tf.placeholder(tf.float32)
 
         self.mention_dummy_assignment_view = AssignmentView()
         self.word_assignment_view = AssignmentView()
@@ -49,6 +50,9 @@ class GraphComponent:
 
     def get_dummy_counts(self):
         return self.get_variable("mention_scores")
+
+    def get_vertex_max_scores(self):
+        return self.get_variable("vertex_max_scores")
 
     def get_embeddings(self):
         return self.vertex_embeddings
@@ -92,6 +96,7 @@ class GraphComponent:
         self.variable_assignments["vertex_types"] = batch.get_combined_vertex_types()
         self.variable_assignments["sentence_vertex_indices"] = batch.get_combined_sentence_vertex_indices()
         self.variable_assignments["word_vertex_indices"] = batch.get_combined_word_vertex_indices()
+        self.variable_assignments["vertex_max_scores"] = batch.get_max_score_by_vertex()
 
         mention_dummy_indices = batch.get_combined_mention_dummy_indices()
         total_vertices = batch.count_all_vertices()

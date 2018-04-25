@@ -1,4 +1,5 @@
 from models.tensorflow_components.gcn.gcn import Gcn
+from models.tensorflow_components.gcn.gcn_features.max_score_features import VertexScoreFeatures
 from models.tensorflow_components.gcn.gcn_features.relation_features import RelationFeatures
 from models.tensorflow_components.gcn.gcn_features.relation_part_features import RelationPartFeatures
 from models.tensorflow_components.gcn.gcn_features.sentence_batch_features import SentenceBatchFeatures
@@ -35,6 +36,8 @@ class GcnFactory:
         receiver_features = VertexFeatures(graph, "receivers", gcn_dim)
         sender_type_features = VertexTypeFeatures(graph, "sender")
         receiver_type_features = VertexTypeFeatures(graph, "receiver")
+        sender_score_features = VertexScoreFeatures(graph, "sender")
+        receiver_score_features = VertexScoreFeatures(graph, "receiver")
         relation_features = RelationFeatures(graph, relation_index_width, relation_index)
         relation_part_features = RelationPartFeatures(graph, relation_part_index_width, relation_part_index)
 
@@ -45,14 +48,18 @@ class GcnFactory:
                             receiver_type_features,
                             relation_features,
                             relation_part_features,
-                            sentence_batch_features]
+                            sentence_batch_features,
+                            sender_score_features,
+                            receiver_score_features]
         gate_features = [sender_features,
                          receiver_features,
                          sender_type_features,
                          receiver_type_features,
                          relation_features,
                          relation_part_features,
-                         sentence_batch_features]
+                         sentence_batch_features,
+                         sender_score_features,
+                         receiver_score_features]
 
         message_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
         gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]

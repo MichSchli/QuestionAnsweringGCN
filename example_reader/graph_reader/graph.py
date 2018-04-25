@@ -20,10 +20,13 @@ class Graph:
 
     vertex_types = None
 
+    vertex_max_scores = None
+
     def copy(self):
         graph = Graph()
 
         graph.vertices = np.copy(self.vertices)
+        graph.vertex_max_scores = np.copy(self.vertex_max_scores) if self.vertex_max_scores is not None else np.zeros(self.vertices.shape[0], dtype=np.float32)
         graph.edges = np.copy(self.edges)
         graph.entity_vertex_indexes = np.copy(self.entity_vertex_indexes)
 
@@ -40,8 +43,14 @@ class Graph:
 
         return graph
 
+    def __init__(self):
+        self.vertex_max_scores = np.zeros(0, dtype=np.int32)
+
     def __str__(self):
         return str(self.edges)
+
+    def get_max_scores(self):
+        return self.vertex_max_scores
 
     def set_label_to_index_map(self, label_to_index_map):
         self.vertex_label_to_index_map = label_to_index_map
@@ -115,6 +124,8 @@ class Graph:
     def add_vertices(self, vertices, vertex_types):
         self.vertices = np.concatenate((self.vertices, vertices))
         self.vertex_types = np.concatenate((self.vertex_types, vertex_types))
+
+        self.vertex_max_scores = np.concatenate((self.vertex_max_scores, np.zeros(vertices.shape[0], dtype=np.float32)))
 
     def get_vertex_types(self):
         return self.vertex_types

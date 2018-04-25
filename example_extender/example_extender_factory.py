@@ -1,4 +1,5 @@
 from example_extender.add_inverse_edge_extender import AddInverseEdgeExtender
+from example_extender.add_max_score_extender import AddMaxScoreExtender
 from example_extender.empty_extender import EmptyExtender
 from example_extender.remove_gold_from_all_except_best_mention import RemoveGoldFromAllExceptBestMention
 from example_extender.vertex_subsampler import VertexSubsampler
@@ -29,6 +30,8 @@ class ExampleExtenderFactory:
 
         relation_index = self.index_factory.get("relations", experiment_configuration)
         entity_index = self.index_factory.get("vertices", experiment_configuration)
+
+        extender = AddMaxScoreExtender(extender)
 
         extender = AddMentionDummyExtender(extender, relation_index, entity_index)
         extender = AddWordDummyExtender(extender, relation_index, entity_index)

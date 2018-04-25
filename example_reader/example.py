@@ -38,6 +38,9 @@ class Example:
 
             gold_answer.entity_indexes = gold_answer.entity_indexes[np.where(gold_answer.entity_indexes >= 0)]
 
+    def get_vertex_max_scores(self):
+        return self.graph.get_max_scores()
+
     def get_centroid_indexes(self):
         centroid_indexes = []
         for mention in self.mentions:

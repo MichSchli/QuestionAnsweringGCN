@@ -48,6 +48,11 @@ class Batch:
 
         return np.concatenate(index_lists)
 
+    def get_max_score_by_vertex(self):
+        index_lists = [example.get_vertex_max_scores() for example in self.examples]
+
+        return np.concatenate(index_lists).astype(np.float32)
+
     def get_combined_entity_vertex_map_indexes(self):
         index_lists = [np.copy(example.get_entity_vertex_indexes()) for example in self.examples]
 
