@@ -2,6 +2,54 @@ import tensorflow as tf
 import numpy as np
 
 
+class CellStateGcnInitializer:
+
+    def __init__(self, prefix, in_dimension, out_dimension, graph):
+        self.in_dimension = in_dimension
+        self.out_dimension = out_dimension
+
+        self.variable_prefix = prefix
+        self.graph = graph
+
+        self.prepare_tensorflow_variables()
+
+    def initialize(self, initial_evidence):
+        write_gate = tf.nn.sigmoid(tf.matmul(initial_evidence, self.W_write_gate) + self.b_write_gate)
+        cell_update = tf.nn.tanh(tf.matmul(initial_evidence, self.W_cell_update) + self.b_cell_update)
+        read_gate = tf.nn.sigmoid(tf.matmul(initial_evidence, self.W_read_gate) + self.b_read_gate)
+
+        cell_state = write_gate * cell_update
+
+        output = read_gate * tf.nn.tanh(cell_state)
+
+        self.graph.update_vertex_embeddings(output)
+
+        return cell_state
+
+    def prepare_tensorflow_variables(self):
+        initializer_v = np.random.normal(0, 0.01,
+                                         size=(self.in_dimension, self.out_dimension)).astype(
+            np.float32)
+        self.W_cell_update = tf.Variable(initializer_v, name=self.variable_prefix + "W_cell_update")
+        self.b_cell_update = tf.Variable(np.zeros(self.out_dimension).astype(np.float32),
+                                         name=self.variable_prefix + "b_cell_update")
+
+        initializer_v = np.random.normal(0, 0.01,
+                                         size=(self.in_dimension, self.out_dimension)).astype(
+            np.float32)
+        self.W_write_gate = tf.Variable(initializer_v, name=self.variable_prefix + "W_write_gate")
+        self.b_write_gate = tf.Variable(np.zeros(self.out_dimension).astype(np.float32),
+                                         name=self.variable_prefix + "b_write_gate")
+
+        initializer_v = np.random.normal(0, 0.01,
+                                         size=(self.in_dimension, self.out_dimension)).astype(
+            np.float32)
+        self.W_read_gate = tf.Variable(initializer_v, name=self.variable_prefix + "W_read_gate")
+        self.b_read_gate = tf.Variable(np.zeros(self.out_dimension).astype(np.float32),
+                                         name=self.variable_prefix + "b_read_gate")
+
+
+
 class CellStateGcnUpdater:
     def __init__(self, prefix, in_dimension, out_dimension, graph):
         self.in_dimension = in_dimension

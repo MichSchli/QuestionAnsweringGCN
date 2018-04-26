@@ -54,6 +54,13 @@ class GraphComponent:
     def get_vertex_max_scores(self):
         return self.get_variable("vertex_max_scores")
 
+    def get_full_vertex_embeddings(self):
+        features = [self.get_embeddings(),
+                    self.get_vertex_types(),
+                    tf.expand_dims(self.get_vertex_max_scores(), -1)]
+
+        return tf.concat(features, -1)
+
     def get_embeddings(self):
         return self.vertex_embeddings
 

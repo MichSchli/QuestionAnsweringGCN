@@ -51,7 +51,7 @@ class ModelFactory:
         model.learning_rate = learning_rate
         model.gradient_clipping = gradient_clipping
 
-        model.gcn_layers, model.sentence_batch_features = self.gcn_factory.get_dummy_gcn(model.graph, experiment_configuration)
+        model.initial_cell_updater, model.gcn_layers, model.sentence_batch_features = self.gcn_factory.get_dummy_gcn(model.graph, experiment_configuration)
         for gcn in model.gcn_layers:
             model.add_component(gcn)
         model.add_component(model.sentence_batch_features)

@@ -6,7 +6,8 @@ from models.tensorflow_components.gcn.gcn_features.sentence_batch_features impor
 from models.tensorflow_components.gcn.gcn_features.vertex_features import VertexFeatures
 from models.tensorflow_components.gcn.gcn_gates.gcn_gates import GcnGates
 from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessages
-from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater
+from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater, \
+    CellStateGcnInitializer
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
 from models.tensorflow_components.gcn.gcn_features.vertex_type_features import VertexTypeFeatures
@@ -64,6 +65,9 @@ class GcnFactory:
         message_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
         gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
 
+        initial_input_dim = gcn_dim + 6 + 1
+        initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
+
         gcn_layers = [None]*layers
         for layer in range(layers):
             vertex_input_dim = gcn_dim if layer == 0 else gcn_dim
@@ -94,4 +98,4 @@ class GcnFactory:
             sender_features.width = gcn_dim
             receiver_features.width = gcn_dim
 
-        return gcn_layers, sentence_batch_features
+        return initial_cell_updater, gcn_layers, sentence_batch_features

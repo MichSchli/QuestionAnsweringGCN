@@ -9,7 +9,7 @@ class AddMaxScoreExtender:
         self.inner = inner
 
     def extend(self, example):
-        example = self.inner.extend(example) 
+        example = self.inner.extend(example)
 
         for i in range(example.graph.vertices.shape[0]):
             max_score = max([example.mentions[j].score for j in example.graph.nearby_centroid_map[i]])
