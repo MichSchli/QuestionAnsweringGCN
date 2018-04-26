@@ -26,7 +26,7 @@ class Graph:
         graph = Graph()
 
         graph.vertices = np.copy(self.vertices)
-        graph.vertex_max_scores = np.copy(self.vertex_max_scores) if self.vertex_max_scores is not None else np.zeros(self.vertices.shape[0], dtype=np.float32)
+        graph.vertex_max_scores = np.zeros(self.vertices.shape[0], dtype=np.float32)
         graph.edges = np.copy(self.edges)
         graph.entity_vertex_indexes = np.copy(self.entity_vertex_indexes)
 
