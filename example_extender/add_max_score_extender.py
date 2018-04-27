@@ -15,7 +15,11 @@ class AddMaxScoreExtender:
             return example
 
         for i in range(example.graph.vertices.shape[0]):
-            max_score = max([example.mentions[j].score for j in example.graph.nearby_centroid_map[i]])
+            max_score = None
+            for j in example.graph.nearby_centroid_map[i]:
+                for mention in example.mentions:
+                    if mention.entity_index == j and (max_score is None or mention.score > max_score):
+                        max_score = mention.score
             example.graph.vertex_max_scores[i] = max_score
 
         return example
