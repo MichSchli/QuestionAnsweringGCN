@@ -16,54 +16,56 @@ class IndexFactory:
         self.cached_indexes = {}
 
     def get(self, index_label, experiment_settings):
-        if index_label == "relations":
-            index_string = experiment_settings["indexes"]["relation_index_type"]
-            if index_string in self.cached_indexes:
-                return self.cached_indexes[index_string]
+        index_choice, _, cache_label = self.read_index_settings(index_label, experiment_settings)
 
-            relation_index_type, dimension = index_string.split(":")
-            dimension = int(dimension)
+        if cache_label not in self.cached_indexes:
+            self.cached_indexes[cache_label] = self.make_index(index_label, experiment_settings)
 
-            if relation_index_type == "freebase_limited":
-                self.cached_indexes[index_string] = LimitedFreebaseRelationIndex(relation_index_type, dimension)
-            else:
-                self.cached_indexes[index_string] = RelationIndex(relation_index_type, dimension)
+        return self.cached_indexes[cache_label]
 
-            return self.cached_indexes[index_string]
-
-        elif index_label == "relation_parts":
-            index_string = experiment_settings["indexes"]["relation_part_index_type"]
-            if index_string not in self.cached_indexes:
-                relation_index_type, dimension = index_string.split(":")
-                dimension = int(dimension)
-                self.cached_indexes[index_string] = RelationPartIndex(relation_index_type, dimension)
-
-            return self.cached_indexes[index_string]
-
+    def read_index_settings(self, index_label, experiment_settings):
+        setting_location = None
+        if index_label == "pos":
+            setting_location = "pos"
         elif index_label == "vertices":
-            vertex_index_type, dimension = experiment_settings["indexes"]["vertex_index_type"].split(":")
-            dimension = int(dimension)
-            return EntityIndex(vertex_index_type, dimension)
+            setting_location = "vertex"
         elif index_label == "words":
-            word_index_type, dimension = experiment_settings["indexes"]["word_index_type"].split(":")
-            dimension = int(dimension)
+            setting_location = "word"
+        elif index_label == "relations":
+            setting_location = "relation"
+        elif index_label == "relation_parts":
+            setting_location = "relation_part"
 
-            if word_index_type.startswith("glove"):
-                if "glove_"+str(dimension) not in self.cached_indexes:
-                    self.cached_indexes["glove_" + str(dimension)] = GloveIndex(dimension)
+        index_choice, dimension = experiment_settings["indexes"][setting_location + "_index_type"].split(":")
 
-                return self.cached_indexes["glove_"+str(dimension)]
-            elif word_index_type == "dep":
-                if "dep" not in self.cached_indexes:
-                    self.cached_indexes["dep"] = DepIndex()
+        cache_label = index_choice
+        if index_choice == "glove":
+            cache_label += "_" + dimension
 
-                return self.cached_indexes["dep"]
-            else:
-                return WordIndex(word_index_type, dimension)
-        elif index_label == "pos":
-            pos_index_type, dimension = experiment_settings["indexes"]["pos_index_type"].split(":")
-            dimension = int(dimension)
-            return PosIndex(pos_index_type, dimension)
+        dimension = int(dimension)
+
+        return index_choice, dimension, cache_label
+
+    def make_index(self, index_label, experiment_settings):
+        index_choice, dimension, _ = self.read_index_settings(index_label, experiment_settings)
+
+        if index_label == "pos":
+            return PosIndex(index_choice, dimension)
+        elif index_label == "vertices":
+            return EntityIndex(index_choice, dimension)
+        elif index_label == "words" and index_choice == "glove":
+            return DepIndex()
+        elif index_label == "words" and index_choice == "dep":
+            return GloveIndex(dimension)
+        elif index_label == "words":
+            return WordIndex(index_choice, dimension)
+        elif index_label == "relations" and index_choice == "freebase_limited":
+            return LimitedFreebaseRelationIndex(index_choice, dimension)
+        elif index_label == "relations":
+            return RelationIndex(index_choice, dimension)
+        elif index_label == "relation_parts":
+            return RelationPartIndex(index_choice, dimension)
         else:
             print("ERROR: index \""+index_label+"\" not defined.")
             exit()
+
