@@ -1,6 +1,7 @@
 from indexing.indexes.dep_embedding_index import DepIndex
 from indexing.indexes.entity_index import EntityIndex
 from indexing.indexes.glove_index import GloveIndex
+from indexing.indexes.limited_freebase_relation_index import LimitedFreebaseRelationIndex
 from indexing.indexes.pos_index import PosIndex
 from indexing.indexes.relation_index import RelationIndex
 from indexing.indexes.relation_part_index import RelationPartIndex
@@ -17,9 +18,15 @@ class IndexFactory:
     def get(self, index_label, experiment_settings):
         if index_label == "relations":
             index_string = experiment_settings["indexes"]["relation_index_type"]
-            if index_string not in self.cached_indexes:
-                relation_index_type, dimension = index_string.split(":")
-                dimension = int(dimension)
+            if index_string in self.cached_indexes:
+                return self.cached_indexes[index_string]
+
+            relation_index_type, dimension = index_string.split(":")
+            dimension = int(dimension)
+
+            if relation_index_type == "freebase_limited":
+                self.cached_indexes[index_string] = LimitedFreebaseRelationIndex(relation_index_type, dimension)
+            else:
                 self.cached_indexes[index_string] = RelationIndex(relation_index_type, dimension)
 
             return self.cached_indexes[index_string]
@@ -47,7 +54,9 @@ class IndexFactory:
 
                 return self.cached_indexes["glove_"+str(dimension)]
             elif word_index_type == "dep":
-                return DepIndex()
+                if "dep" not in self.cached_indexes:
+                    self.cached_indexes["dep"] = DepIndex()
+                    return self.cached_indexes["dep"]
             else:
                 return WordIndex(word_index_type, dimension)
         elif index_label == "pos":

@@ -4,4 +4,4 @@ import numpy as np
 
 class RelationPartIndex(AbstractIndex):
 
-    vector_count = 500
+    vector_count = 2000
