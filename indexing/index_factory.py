@@ -1,3 +1,4 @@
+from indexing.indexes.dep_embedding_index import DepIndex
 from indexing.indexes.entity_index import EntityIndex
 from indexing.indexes.glove_index import GloveIndex
 from indexing.indexes.pos_index import PosIndex
@@ -45,6 +46,8 @@ class IndexFactory:
                     self.cached_indexes["glove_" + str(dimension)] = GloveIndex(dimension)
 
                 return self.cached_indexes["glove_"+str(dimension)]
+            elif word_index_type == "dep":
+                return DepIndex()
             else:
                 return WordIndex(word_index_type, dimension)
         elif index_label == "pos":
