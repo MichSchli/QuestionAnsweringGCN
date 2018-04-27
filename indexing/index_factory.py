@@ -56,7 +56,8 @@ class IndexFactory:
             elif word_index_type == "dep":
                 if "dep" not in self.cached_indexes:
                     self.cached_indexes["dep"] = DepIndex()
-                    return self.cached_indexes["dep"]
+
+                return self.cached_indexes["dep"]
             else:
                 return WordIndex(word_index_type, dimension)
         elif index_label == "pos":
