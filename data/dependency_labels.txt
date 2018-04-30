@@ -53,3 +53,5 @@ xcomp
 relcl
 dative
 acl
+ROOT
+compound
