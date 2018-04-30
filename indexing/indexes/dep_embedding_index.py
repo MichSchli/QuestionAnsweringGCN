@@ -22,6 +22,10 @@ class DepIndex(AbstractIndex):
     def get_file_string(self):
         return "data/embeddings/deps.words"
 
+    def index(self, element):
+        element = element.lower()
+        return AbstractIndex.index(self, element)
+
     def get_vocab_size(self):
         return sum(1 for _ in open(self.get_file_string(), encoding="utf8"))
 

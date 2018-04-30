@@ -28,6 +28,7 @@ class AbstractIndex:
 
     def index(self, element):
         if element not in self.forward_map:
+            print(element)
             if self.is_frozen:
                 return self.forward_map["<unknown>"]
             
@@ -48,3 +49,9 @@ class AbstractIndex:
 
     def from_index(self, index):
         return self.backward_map[index]
+
+    def index_dependency_labels(self):
+        filename = "data/dependency_labels.txt"
+
+        for line in open(filename, "r"):
+            self.index("<dep:"+line.strip()+">")

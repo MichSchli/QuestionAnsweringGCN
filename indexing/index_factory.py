@@ -53,9 +53,9 @@ class IndexFactory:
             return PosIndex(index_choice, dimension)
         elif index_label == "vertices":
             return EntityIndex(index_choice, dimension)
-        elif index_label == "words" and index_choice == "glove":
-            return DepIndex()
         elif index_label == "words" and index_choice == "dep":
+            return DepIndex()
+        elif index_label == "words" and index_choice == "glove":
             return GloveIndex(dimension)
         elif index_label == "words":
             return WordIndex(index_choice, dimension)
@@ -68,4 +68,3 @@ class IndexFactory:
         else:
             print("ERROR: index \""+index_label+"\" not defined.")
             exit()
-

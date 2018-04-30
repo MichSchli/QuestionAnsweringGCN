@@ -12,3 +12,6 @@ class RelationIndex(AbstractIndex):
         self.index("<dummy_to_mention>")
         self.index("<dummy_to_word>")
         self.index("<word_to_word>")
+        self.index("<sentence_to_word>")
+
+        self.index_dependency_labels()
