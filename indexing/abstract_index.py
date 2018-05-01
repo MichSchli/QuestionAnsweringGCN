@@ -12,8 +12,8 @@ class AbstractIndex:
     def __init__(self, index_cache_name, dimension):
         if index_cache_name is not None:
             index_cache_path = "indexing/cache/"+index_cache_name
-            self.forward_map = Cache(index_cache_path + "/forward")
-            self.backward_map = Cache(index_cache_path + "/backward")
+            self.forward_map = Cache(index_cache_path + "/forward", size_limit=2 ** 42)
+            self.backward_map = Cache(index_cache_path + "/backward", size_limit=2 ** 42)
             self.element_counter = len(self.forward_map)
         else:
             self.forward_map = {}
@@ -28,6 +28,7 @@ class AbstractIndex:
 
     def index(self, element):
         if element not in self.forward_map:
+            print(element)
             if self.is_frozen:
                 return self.forward_map["<unknown>"]
             

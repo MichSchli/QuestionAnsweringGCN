@@ -60,7 +60,7 @@ class IndexFactory:
         elif index_label == "words":
             return WordIndex(index_choice, dimension)
         elif index_label == "relations" and index_choice == "freebase_limited":
-            return LimitedFreebaseRelationIndex(index_choice, dimension)
+            return LimitedFreebaseRelationIndex(dimension)
         elif index_label == "relations":
             return RelationIndex(index_choice, dimension)
         elif index_label == "relation_parts":

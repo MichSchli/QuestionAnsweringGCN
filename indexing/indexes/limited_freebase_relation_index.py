@@ -7,8 +7,8 @@ class LimitedFreebaseRelationIndex(AbstractIndex):
     additional_vector_count = 100
     cutoff = 20
 
-    def __init__(self, index_cache_name, dimension):
-        AbstractIndex.__init__(self, index_cache_name, dimension)
+    def __init__(self, dimension):
+        AbstractIndex.__init__(self, None, dimension)
         self.index("<dummy_to_mention>")
         self.index("<dummy_to_word>")
         self.index("<word_to_word>")
