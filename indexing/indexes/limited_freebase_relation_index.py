@@ -19,7 +19,7 @@ class LimitedFreebaseRelationIndex(AbstractIndex):
         self.load_file()
 
     def get_file_string(self):
-        return "data/webquestions/filtered_edge_count.txt"
+        return "data/webquestions/edge_count.txt"
 
     def load_file(self):
         file_string = self.get_file_string()
@@ -27,8 +27,11 @@ class LimitedFreebaseRelationIndex(AbstractIndex):
         for line in open(file_string, encoding="utf8"):
             parts = line.strip().split("\t")
 
-            if int(parts[1]) > self.cutoff:
-                self.index(parts[0])
+            count = int(parts[0].strip())
+            label = parts[1].strip()
+
+            if count > self.cutoff:
+                self.index(label)
 
         self.vector_count = (self.additional_vector_count + self.element_counter) * 2
         self.inverse_edge_delimiter = self.additional_vector_count + self.element_counter
