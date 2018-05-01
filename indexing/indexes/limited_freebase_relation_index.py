@@ -25,7 +25,7 @@ class LimitedFreebaseRelationIndex(AbstractIndex):
         file_string = self.get_file_string()
 
         for line in open(file_string, encoding="utf8"):
-            parts = line.strip().split("\t")
+            parts = line.strip().split(" ")
 
             count = int(parts[0].strip())
             label = parts[1].strip()
