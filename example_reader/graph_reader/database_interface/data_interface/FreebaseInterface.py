@@ -74,6 +74,7 @@ class FreebaseInterface:
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/type.type.instance\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/type.object.type\" )"
         query_string += "\n&& !strstarts(str(?r), \"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\" )"
+        query_string += "\n&& !strstarts(str(?r), \"http://rdf.freebase.com/ns/kg.object_profile.prominent_type\" )"
         query_string += " )\n"
 
         query_string += "}"

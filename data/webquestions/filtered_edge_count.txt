@@ -327,6 +327,7 @@ http://rdf.freebase.com/ns/basketball.basketball_player_stats.defensive_rebounds
 http://rdf.freebase.com/ns/basketball.basketball_player_stats.offensive_rebounds	22089
 http://rdf.freebase.com/ns/freebase.flag_judgment.item	22046
 http://rdf.freebase.com/ns/location.location.partially_contains	22029
+http://rdf.freebase.com/ns/location.location.partiallycontains	22019
 http://rdf.freebase.com/ns/dataworld.gardening_hint.replaced_by	21626
 http://rdf.freebase.com/ns/education.education.major_field_of_study	21361
 http://rdf.freebase.com/ns/location.adjoining_relationship.adjoins	21012
@@ -400,6 +401,7 @@ http://rdf.freebase.com/ns/soccer.football_player_match_participation.shirt_numb
 http://rdf.freebase.com/ns/soccer.football_player_match_participation.part_of_starting_lineup	16046
 http://rdf.freebase.com/ns/organization.organization_membership.member	15949
 http://rdf.freebase.com/ns/basketball.basketball_player_stats.three_point_percentage	15685
+http://rdf.freebase.com/ns/award.award_ceremony.nominees 15612
 http://rdf.freebase.com/ns/wine.wine_region.wines	15503
 http://rdf.freebase.com/ns/wine.wine.region	15503
 http://rdf.freebase.com/ns/common.phone_number.note	15469
@@ -423,7 +425,8 @@ http://rdf.freebase.com/ns/award.award_honor.honored_for	13621
 http://rdf.freebase.com/ns/sports.sports_team_location.teams	13607
 http://rdf.freebase.com/ns/people.family.country	13428
 http://rdf.freebase.com/ns/american_football.player_rushing_statistics.player	13321
-http://rdf.freebase.com/ns/location.location.partially_containedby	13080
+http://rdf.freebase.com/ns/location.location.partially_contained_by	13080
+http://rdf.freebase.com/ns/location.location.partially_containedby	11080
 http://rdf.freebase.com/ns/periodicals.newspaper_circulation_area.newspapers	13010
 http://rdf.freebase.com/ns/film.personal_film_appearance_type.film_appearances	12946
 http://rdf.freebase.com/ns/film.personal_film_appearance.type_of_appearance	12946
