@@ -401,7 +401,7 @@ http://rdf.freebase.com/ns/soccer.football_player_match_participation.shirt_numb
 http://rdf.freebase.com/ns/soccer.football_player_match_participation.part_of_starting_lineup	16046
 http://rdf.freebase.com/ns/organization.organization_membership.member	15949
 http://rdf.freebase.com/ns/basketball.basketball_player_stats.three_point_percentage	15685
-http://rdf.freebase.com/ns/award.award_ceremony.nominees 15612
+http://rdf.freebase.com/ns/award.award_ceremony.nominees	15612
 http://rdf.freebase.com/ns/wine.wine_region.wines	15503
 http://rdf.freebase.com/ns/wine.wine.region	15503
 http://rdf.freebase.com/ns/common.phone_number.note	15469
