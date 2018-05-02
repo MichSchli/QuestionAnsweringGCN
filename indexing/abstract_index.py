@@ -28,7 +28,6 @@ class AbstractIndex:
 
     def index(self, element):
         if element not in self.forward_map:
-            print(element)
             if self.is_frozen:
                 return self.forward_map["<unknown>"]
             
