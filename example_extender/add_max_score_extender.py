@@ -20,6 +20,10 @@ class AddMaxScoreExtender:
                 for mention in example.mentions:
                     if mention.entity_index == j and (max_score is None or mention.score > max_score):
                         max_score = mention.score
+
+            if max_score is None:
+                print(example)
+                exit()
             example.graph.vertex_max_scores[i] = max_score
 
         return example
