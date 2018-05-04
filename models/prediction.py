@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Prediction():
 
     label_list = None
@@ -17,4 +20,4 @@ class Prediction():
             if score >= cutoff:
                 predictions.append(label)
 
-        return predictions
+        return np.unique(predictions)

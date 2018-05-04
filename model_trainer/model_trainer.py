@@ -26,10 +26,13 @@ class ModelTrainer:
 
             if iteration % self.validate_every_n == 0:
                 self.logger.write("Validation at iteration "+str(iteration) + ":", area="training", subject="validation_start")
-                evaluation = self.validation_evaluator.test(model, "valid")
-                self.logger.write(evaluation.summary(), area="training", subject="validation_performance")
+                evaluations = self.validation_evaluator.test(model, "valid")
 
-                score = evaluation.macro_f1
+                for threshold, evaluation in evaluations:
+                    self.logger.write(threshold, area="training", subject="validation_performance")
+                    self.logger.write(evaluation.summary(), area="training", subject="validation_performance")
+
+                score = max(e.macro_f1 for t, e in evaluations)
 
                 if self.early_stopping and score <= previous_score:
                     self.logger.write("Stopping early at " + str(iteration) + ".", area="training",
