@@ -72,6 +72,7 @@ class VertexSubsampler:
         example.index_gold_answers()
 
         example.graph.entity_vertex_indexes = np.array([vertex_map[v] for v in example.graph.entity_vertex_indexes if v in vertex_map])
+        example.graph.update_general_vertex_to_entity_index_map()
 
         example.graph.nearby_centroid_map = [[vertex_map[centroid] for centroid in example.graph.nearby_centroid_map[kept_vertex]] for kept_vertex,i in vertex_map.items()]
 

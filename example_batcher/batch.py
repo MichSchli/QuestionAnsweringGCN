@@ -94,6 +94,19 @@ class Batch:
         for i,example in enumerate(self.examples):
             for gold_index in example.get_gold_indexes():
                 if gold_index >=0:
+                    # GOLD INDEX: Vertex
+                    # Vertex list: Entity
+                    entity_vertex_list_index = example.graph.map_general_vertex_to_entity_index(gold_index)
+                    vertex_lists[i][entity_vertex_list_index] = 1
+
+        return np.concatenate(vertex_lists)
+
+    def get_gold_vector_use_all_vertices(self):
+        vertex_lists = [np.zeros_like(example.graph.vertices, dtype=np.float32) for example in self.examples]
+
+        for i,example in enumerate(self.examples):
+            for gold_index in example.get_gold_indexes():
+                if gold_index >=0:
                     vertex_lists[i][gold_index] = 1
 
         return np.concatenate(vertex_lists)

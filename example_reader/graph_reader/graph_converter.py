@@ -14,6 +14,7 @@ class GraphConverter:
         graph = Graph()
         graph.vertices = np.concatenate((hypergraph.entity_vertices, hypergraph.event_vertices))
         graph.entity_vertex_indexes = np.arange(hypergraph.entity_vertices.shape[0], dtype=np.int32)
+        graph.update_general_vertex_to_entity_index_map()
 
         #graph.nearby_centroid_map = []
 

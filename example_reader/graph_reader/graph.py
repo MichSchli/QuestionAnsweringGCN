@@ -29,6 +29,7 @@ class Graph:
         graph.vertex_max_scores = np.zeros(self.vertices.shape[0], dtype=np.float32)
         graph.edges = np.copy(self.edges)
         graph.entity_vertex_indexes = np.copy(self.entity_vertex_indexes)
+        graph.general_vertex_to_entity_index_map = copy.deepcopy(self.general_vertex_to_entity_index_map)
 
         graph.vertex_label_to_index_map = copy.deepcopy(self.vertex_label_to_index_map)
         graph.vertex_index_to_label_map = copy.deepcopy(self.vertex_index_to_label_map)
@@ -42,6 +43,9 @@ class Graph:
         graph.vertex_types = np.copy(self.vertex_types)
 
         return graph
+
+    def map_general_vertex_to_entity_index(self, general_index):
+        return self.general_vertex_to_entity_index_map[general_index]
 
     def __init__(self):
         self.vertex_max_scores = np.zeros(0, dtype=np.int32)
@@ -132,3 +136,6 @@ class Graph:
 
     def get_sentence_vertex_index(self):
         return self.sentence_vertex_index
+
+    def update_general_vertex_to_entity_index_map(self):
+        self.general_vertex_to_entity_index_map = {k:i for i,k in enumerate(self.entity_vertex_indexes)}

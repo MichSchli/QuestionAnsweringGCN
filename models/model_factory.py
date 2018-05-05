@@ -9,6 +9,7 @@ from models.tensorflow_components.sentence.multihead_attention import MultiheadA
 from models.tensorflow_components.sentence.sentence_batch_component import SentenceBatchComponent
 from models.tensorflow_components.sentence.word_padder import WordPadder
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
+from models.tensorflow_models.separate_lstm_vs_gcn import SeparateLstmVsGcn
 
 
 class ModelFactory:
@@ -19,7 +20,37 @@ class ModelFactory:
         self.index_factory = index_factory
         self.gcn_factory = GcnFactory(index_factory)
 
+    def get_separate_lstm_vs_gcn(self, experiment_configuration):
+        word_index = self.index_factory.get("words", experiment_configuration)
+        pos_index = self.index_factory.get("pos", experiment_configuration)
+
+        model = SeparateLstmVsGcn()
+        learning_rate = float(experiment_configuration["training"]["learning_rate"])
+        gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
+        model.learning_rate = learning_rate
+        model.gradient_clipping = gradient_clipping
+
+        model.graph = GraphComponent()
+        model.add_component(model.graph)
+
+        model.sentence = SentenceBatchComponent(word_index,
+                                                pos_index,
+                                                word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
+        self.add_lstms(experiment_configuration, model)
+
+        self.add_final_transform(experiment_configuration, model)
+
+        model.loss = SigmoidLoss()
+        model.add_component(model.loss)
+
+        return model
+
     def get(self, experiment_configuration):
+        model_type = experiment_configuration["general"]["model_type"]
+
+        if model_type == "separate_lstm_vs_gcn":
+            return self.get_separate_lstm_vs_gcn(experiment_configuration)
+
         word_index = self.index_factory.get("words", experiment_configuration)
         pos_index = self.index_factory.get("pos", experiment_configuration)
 
