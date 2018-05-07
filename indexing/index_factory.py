@@ -48,6 +48,8 @@ class IndexFactory:
 
     def make_index(self, index_label, experiment_settings):
         index_choice, dimension, _ = self.read_index_settings(index_label, experiment_settings)
+        keep_space_for_inverse = "inverse_relations" in experiment_settings["architecture"] and experiment_settings["architecture"]["inverse_relations"] == "features"
+
 
         if index_label == "pos":
             return PosIndex(index_choice, dimension)
@@ -60,9 +62,9 @@ class IndexFactory:
         elif index_label == "words":
             return WordIndex(index_choice, dimension)
         elif index_label == "relations" and index_choice == "freebase_limited":
-            return LimitedFreebaseRelationIndex(dimension)
+            return LimitedFreebaseRelationIndex(dimension, keep_space_for_inverse=keep_space_for_inverse)
         elif index_label == "relations":
-            return RelationIndex(index_choice, dimension)
+            return RelationIndex(index_choice, dimension, keep_space_for_inverse=keep_space_for_inverse)
         elif index_label == "relation_parts":
             return RelationPartIndex(index_choice, dimension)
         else:

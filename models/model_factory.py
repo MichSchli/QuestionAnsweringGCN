@@ -10,6 +10,12 @@ from models.tensorflow_components.sentence.sentence_batch_component import Sente
 from models.tensorflow_components.sentence.word_padder import WordPadder
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 from models.tensorflow_models.separate_lstm_vs_gcn import SeparateLstmVsGcn
+from models.tensorflow_part_handler.final_sentence_embedding_handlers.dummy_vertex_final_sentence_embedding import \
+    DummyVertexFinalSentenceEmbedding
+from models.tensorflow_part_handler.final_sentence_embedding_handlers.sentence_attention_final_sentence_embedding import \
+    SentenceAttentionFinalSentenceEmbedding
+from models.tensorflow_part_handler.final_sentence_embedding_handlers.word_dummy_attention_final_sentence_embedding import \
+    WordDummyAttentionFinalSentenceEmbedding
 
 
 class ModelFactory:
@@ -46,7 +52,7 @@ class ModelFactory:
         return model
 
     def get(self, experiment_configuration):
-        model_type = experiment_configuration["general"]["model_type"]
+        model_type = experiment_configuration["architecture"]["model_type"]
 
         if model_type == "separate_lstm_vs_gcn":
             return self.get_separate_lstm_vs_gcn(experiment_configuration)
@@ -64,6 +70,12 @@ class ModelFactory:
 
         model.dummy_mlp = MultilayerPerceptronComponent([1, int(experiment_configuration["gcn"]["embedding_dimension"])], "dummy_mlp")
         model.add_component(model.dummy_mlp)
+
+        model.word_node_init_mlp = MultilayerPerceptronComponent(
+            [int(experiment_configuration["lstm"]["embedding_dimension"])*2,
+             int(experiment_configuration["gcn"]["embedding_dimension"])],
+            "word_node_init_mlp")
+        model.add_component(model.word_node_init_mlp)
 
         model.sentence = SentenceBatchComponent(word_index, pos_index, word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
         model.add_component(model.sentence)
@@ -88,6 +100,16 @@ class ModelFactory:
 
         self.add_lstms(experiment_configuration, model)
 
+        if experiment_configuration["architecture"]["final_sentence_embedding"] == "sentence_attention":
+            model.final_sentence_embedding = SentenceAttentionFinalSentenceEmbedding(model.sentence, experiment_configuration)
+            model.add_component(model.final_sentence_embedding)
+        elif experiment_configuration["architecture"]["final_sentence_embedding"] == "dummy_attention":
+            model.final_sentence_embedding = WordDummyAttentionFinalSentenceEmbedding(model.graph, experiment_configuration)
+            model.add_component(model.final_sentence_embedding)
+            model.add_component(model.final_sentence_embedding.word_padder)
+        elif experiment_configuration["architecture"]["final_sentence_embedding"] == "dummy_vertex":
+            model.final_sentence_embedding = DummyVertexFinalSentenceEmbedding(model.graph, experiment_configuration)
+
         return model
 
     def add_lstms(self, experiment_configuration, model):
@@ -96,7 +118,6 @@ class ModelFactory:
         lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
         lstm_layers = int(experiment_configuration["lstm"]["layers"])
         attention_heads = int(experiment_configuration["lstm"]["attention_heads"])
-
 
         model.lstms = []
         for layer in range(lstm_layers):
@@ -114,10 +135,17 @@ class ModelFactory:
         model.add_component(model.final_attention)
 
     def add_final_transform(self, experiment_configuration, model):
-        lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+
+        if experiment_configuration["architecture"]["final_sentence_embedding"] == "sentence_attention":
+            word_in_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        elif experiment_configuration["architecture"]["final_sentence_embedding"] == "dummy_attention":
+            word_in_dim = int(int(experiment_configuration["gcn"]["embedding_dimension"])/2)
+        elif experiment_configuration["architecture"]["final_sentence_embedding"] == "dummy_vertex":
+            word_in_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+
         gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
 
-        in_dim = gcn_dim + lstm_dim
+        in_dim = gcn_dim + word_in_dim
         hidden_dims = [int(d) for d in experiment_configuration["other"]["final_hidden_dimensions"].split("|")]
         dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
         l2_rate = float(experiment_configuration["regularization"]["final_l2"])

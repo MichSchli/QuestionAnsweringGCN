@@ -38,9 +38,11 @@ class GraphComponent:
     def set_dummy_embeddings(self, embeddings):
         self.vertex_embeddings += self.mention_dummy_assignment_view.get_all_vectors(embeddings)
 
-    def set_word_embeddings(self, embeddings):
-        shape = embeddings.get_shape().as_list()
-        self.vertex_embeddings += self.word_assignment_view.get_all_vectors(tf.reshape(embeddings, [-1, shape[-1]]))
+    def set_word_embeddings(self, embeddings, reshape=True):
+        if reshape:
+            shape = embeddings.get_shape().as_list()
+            embeddings = tf.reshape(embeddings, [-1, shape[-1]])
+        self.vertex_embeddings += self.word_assignment_view.get_all_vectors(embeddings)
 
     def get_sentence_embeddings(self):
         return tf.nn.embedding_lookup(self.vertex_embeddings, self.get_variable("sentence_vertex_indices"))

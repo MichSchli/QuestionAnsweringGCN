@@ -10,6 +10,8 @@ class SentenceBatchComponent:
     variable_assignments = None
     index = None
 
+    current_word_embeddings = None
+
     def __init__(self, word_index, pos_index, word_dropout_rate=0.0, is_static=False):
         self.variables = {}
         self.word_index = word_index
@@ -30,6 +32,9 @@ class SentenceBatchComponent:
 
         initializer = self.pos_index.get_all_vectors()
         self.pos_embeddings = tf.Variable(initializer)
+
+    def get_word_embeddings(self):
+        return self.current_word_embeddings
 
     def get_embedding(self, mode="train"):
         word_embedding = tf.nn.embedding_lookup(self.word_embeddings, self.variables["word_indices"])

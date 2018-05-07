@@ -69,6 +69,9 @@ class GcnFactory:
 
         gcn_layers = [None]*layers
         updaters = [None]*layers
+
+        add_backward_gcn = "inverse_relations" in experiment_configuration["architecture"] \
+                    and experiment_configuration["architecture"]["inverse_relations"] == "separate"
         for layer in range(layers):
             f_propagator = self.get_propagator(gate_features,
                                              message_features,
@@ -76,17 +79,19 @@ class GcnFactory:
                                              gcn_dim,
                                              experiment_configuration,
                                              direction="forward")
+            gcn_layers[layer] = [f_propagator]
 
-            b_propagator = self.get_propagator(gate_features,
-                                             message_features,
-                                             graph,
-                                             gcn_dim,
-                                             experiment_configuration,
-                                             direction="backward")
+            if add_backward_gcn:
+                b_propagator = self.get_propagator(gate_features,
+                                                   message_features,
+                                                   graph,
+                                                   gcn_dim,
+                                                   experiment_configuration,
+                                                   direction="backward")
+                gcn_layers[layer].append(b_propagator)
 
             updaters[layer] = CellStateGcnUpdater("cell_state_"+str(layer), gcn_dim, gcn_dim, graph)
 
-            gcn_layers[layer] = [f_propagator, b_propagator]
             sender_features.width = gcn_dim
             receiver_features.width = gcn_dim
 

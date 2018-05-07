@@ -37,6 +37,8 @@ class ExampleExtenderFactory:
         extender = AddWordDummyExtender(extender, relation_index, entity_index)
         extender = AddWordSequenceEdgeExtender(extender, relation_index)
         extender = AddDependencyEdgeExtender(extender, relation_index, entity_index)
-        #extender = AddInverseEdgeExtender(extender, relation_index)
+
+        if "inverse_relations" in experiment_configuration["architecture"] and experiment_configuration["architecture"]["inverse_relations"] == "features":
+            extender = AddInverseEdgeExtender(extender, relation_index)
 
         return extender
