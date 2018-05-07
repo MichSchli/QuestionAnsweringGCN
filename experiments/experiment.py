@@ -16,5 +16,5 @@ class Experiment:
         self.logger.write("Training...", area="training", subject="start")
         self.model_trainer.train(self.model)
         self.logger.write("Testing...", area="testing", subject="start")
-        summary = self.model_tester.test(self.model, "test").summary()
-        print(summary)
+        for evaluation in self.model_tester.test(self.model, "test"):
+            print(evaluation.summary)

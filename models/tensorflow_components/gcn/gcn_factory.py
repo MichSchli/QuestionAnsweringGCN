@@ -63,8 +63,6 @@ class GcnFactory:
                          sender_score_features,
                          receiver_score_features]
 
-        message_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
-        gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
 
         initial_input_dim = gcn_dim + 6 + 1
         initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
@@ -72,34 +70,55 @@ class GcnFactory:
         gcn_layers = [None]*layers
         updaters = [None]*layers
         for layer in range(layers):
-            vertex_input_dim = gcn_dim if layer == 0 else gcn_dim
-            message_feature_dimension = sum(m.get_width() for m in message_features)
-            gate_feature_dimension = sum(g.get_width() for g in gate_features)
+            f_propagator = self.get_propagator(gate_features,
+                                             message_features,
+                                             graph,
+                                             gcn_dim,
+                                             experiment_configuration,
+                                             direction="forward")
 
-            message_dims = [message_feature_dimension] + message_hidden_dims + [gcn_dim]
-            gate_dims = [gate_feature_dimension] + gate_hidden_dims + [1]
+            b_propagator = self.get_propagator(gate_features,
+                                             message_features,
+                                             graph,
+                                             gcn_dim,
+                                             experiment_configuration,
+                                             direction="backward")
 
-            message_perceptron = MultilayerPerceptronComponent(message_dims,
-                                                               "message_mlp",
-                                                               dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
-                                                               l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
-            gate_perceptron = MultilayerPerceptronComponent(gate_dims,
-                                                            "gate_mlp",
-                                                            dropout_rate=float(experiment_configuration["regularization"]["gcn_dropout"]),
-                                                            l2_scale=float(experiment_configuration["regularization"]["gcn_l2"]))
+            updaters[layer] = CellStateGcnUpdater("cell_state_"+str(layer), gcn_dim, gcn_dim, graph)
 
-            messages = GcnMessages(message_features,
-                                   message_perceptron)
-            gates = GcnGates(gate_features,
-                             gate_perceptron,
-                             l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
-
-            updaters[layer] = CellStateGcnUpdater("cell_state_"+str(layer), vertex_input_dim, gcn_dim, graph)
-
-            gcn_layers[layer] = [GcnPropagator(messages, gates, None, graph)]
+            gcn_layers[layer] = [f_propagator, b_propagator]
             sender_features.width = gcn_dim
             receiver_features.width = gcn_dim
 
         gcn = Gcn(initial_cell_updater, gcn_layers, updaters)
 
         return gcn, sentence_batch_features
+
+    def get_propagator(self, gate_features, message_features, graph, gcn_dim, experiment_configuration, direction="forward"):
+        message_feature_dimension = sum(m.get_width() for m in message_features)
+        gate_feature_dimension = sum(g.get_width() for g in gate_features)
+        message_hidden_dims = [int(e) for e in
+                               experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
+        gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
+        message_dims = [message_feature_dimension] + message_hidden_dims + [gcn_dim]
+        gate_dims = [gate_feature_dimension] + gate_hidden_dims + [1]
+        message_perceptron = MultilayerPerceptronComponent(message_dims,
+                                                           "message_mlp",
+                                                           dropout_rate=float(
+                                                               experiment_configuration["regularization"][
+                                                                   "gcn_dropout"]),
+                                                           l2_scale=float(
+                                                               experiment_configuration["regularization"]["gcn_l2"]))
+        gate_perceptron = MultilayerPerceptronComponent(gate_dims,
+                                                        "gate_mlp",
+                                                        dropout_rate=float(
+                                                            experiment_configuration["regularization"]["gcn_dropout"]),
+                                                        l2_scale=float(
+                                                            experiment_configuration["regularization"]["gcn_l2"]))
+        messages = GcnMessages(message_features,
+                               message_perceptron)
+        gates = GcnGates(gate_features,
+                         gate_perceptron,
+                         l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
+        propagator = GcnPropagator(messages, gates, graph, direction)
+        return propagator
