@@ -1,20 +1,18 @@
 import tensorflow as tf
 
 
-class Gcn:
+class GcnPropagator:
 
     def __init__(self, messages, gates, updater, graph):
         self.variables = {}
         self.messages = messages
         self.gates = gates
-        self.updater = updater
         self.graph = graph
 
-    def propagate(self, mode, previous_carry_over):
+    def propagate(self, mode):
         message_sums = self.compute_message_sums(mode)
-        carry_over = self.updater.update(message_sums, previous_carry_over)
 
-        return carry_over
+        return message_sums
 
     def compute_message_sums(self, mode):
         sender_indices, receiver_indices = self.graph.get_edges()
@@ -46,4 +44,4 @@ class Gcn:
         pass
 
     def get_regularization(self):
-        return self.messages.get_regularization() + self.gates.get_regularization() + self.updater.get_regularization()
+        return self.messages.get_regularization() + self.gates.get_regularization()

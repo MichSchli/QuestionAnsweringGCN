@@ -13,7 +13,9 @@ class CellStateGcnInitializer:
 
         self.prepare_tensorflow_variables()
 
-    def initialize(self, initial_evidence):
+    def initialize(self, mode):
+        initial_evidence = self.graph.get_full_vertex_embeddings()
+
         write_gate = tf.nn.sigmoid(tf.matmul(initial_evidence, self.W_write_gate) + self.b_write_gate)
         cell_update = tf.nn.tanh(tf.matmul(initial_evidence, self.W_cell_update) + self.b_cell_update)
         read_gate = tf.nn.sigmoid(tf.matmul(initial_evidence, self.W_read_gate) + self.b_read_gate)

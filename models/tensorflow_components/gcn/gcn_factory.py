@@ -1,4 +1,4 @@
-from models.tensorflow_components.gcn.gcn import Gcn
+from models.tensorflow_components.gcn.gcn_propagator import GcnPropagator
 from models.tensorflow_components.gcn.gcn_features.max_score_features import VertexScoreFeatures
 from models.tensorflow_components.gcn.gcn_features.relation_features import RelationFeatures
 from models.tensorflow_components.gcn.gcn_features.relation_part_features import RelationPartFeatures
@@ -8,6 +8,7 @@ from models.tensorflow_components.gcn.gcn_gates.gcn_gates import GcnGates
 from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessages
 from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater, \
     CellStateGcnInitializer
+from models.tensorflow_components.gcn.gcns.gcn import Gcn
 from models.tensorflow_components.transformations.multilayer_perceptron import MultilayerPerceptronComponent
 
 from models.tensorflow_components.gcn.gcn_features.vertex_type_features import VertexTypeFeatures
@@ -69,6 +70,7 @@ class GcnFactory:
         initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
 
         gcn_layers = [None]*layers
+        updaters = [None]*layers
         for layer in range(layers):
             vertex_input_dim = gcn_dim if layer == 0 else gcn_dim
             message_feature_dimension = sum(m.get_width() for m in message_features)
@@ -92,10 +94,12 @@ class GcnFactory:
                              gate_perceptron,
                              l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
 
-            updater = CellStateGcnUpdater("cell_state_"+str(layer), vertex_input_dim, gcn_dim, graph)
+            updaters[layer] = CellStateGcnUpdater("cell_state_"+str(layer), vertex_input_dim, gcn_dim, graph)
 
-            gcn_layers[layer] = Gcn(messages, gates, updater, graph)
+            gcn_layers[layer] = [GcnPropagator(messages, gates, None, graph)]
             sender_features.width = gcn_dim
             receiver_features.width = gcn_dim
 
-        return initial_cell_updater, gcn_layers, sentence_batch_features
+        gcn = Gcn(initial_cell_updater, gcn_layers, updaters)
+
+        return gcn, sentence_batch_features

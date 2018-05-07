@@ -20,9 +20,7 @@ class DummyTensorflowModel(AbstractTensorflowModel):
         gate_sentence_embedding = self.gate_attention.attend(word_embeddings, mode)
         self.sentence_batch_features.set_batch_features(gate_sentence_embedding)
 
-        gcn_cell_state = self.initial_cell_updater.initialize(self.graph.get_full_vertex_embeddings())
-        for gcn in self.gcn_layers:
-            gcn_cell_state = gcn.propagate(mode, gcn_cell_state)
+        self.gcn.run(mode)
 
         entity_embeddings = self.graph.get_target_vertex_embeddings()
         final_sentence_embedding = self.graph.get_sentence_embeddings()
