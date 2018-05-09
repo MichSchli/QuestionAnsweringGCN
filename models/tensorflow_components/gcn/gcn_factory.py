@@ -78,6 +78,7 @@ class GcnFactory:
                                              graph,
                                              gcn_dim,
                                              experiment_configuration,
+                                             str(layer),
                                              direction="forward")
             gcn_layers[layer] = [f_propagator]
 
@@ -87,6 +88,7 @@ class GcnFactory:
                                                    graph,
                                                    gcn_dim,
                                                    experiment_configuration,
+                                                   str(layer),
                                                    direction="backward")
                 gcn_layers[layer].append(b_propagator)
 
@@ -99,7 +101,7 @@ class GcnFactory:
 
         return gcn, sentence_batch_features
 
-    def get_propagator(self, gate_features, message_features, graph, gcn_dim, experiment_configuration, direction="forward"):
+    def get_propagator(self, gate_features, message_features, graph, gcn_dim, experiment_configuration, name, direction="forward"):
         message_feature_dimension = sum(m.get_width() for m in message_features)
         gate_feature_dimension = sum(g.get_width() for g in gate_features)
         message_hidden_dims = [int(e) for e in
@@ -108,14 +110,14 @@ class GcnFactory:
         message_dims = [message_feature_dimension] + message_hidden_dims + [gcn_dim]
         gate_dims = [gate_feature_dimension] + gate_hidden_dims + [1]
         message_perceptron = MultilayerPerceptronComponent(message_dims,
-                                                           "message_mlp",
+                                                           "message_mlp_"+direction+name,
                                                            dropout_rate=float(
                                                                experiment_configuration["regularization"][
                                                                    "gcn_dropout"]),
                                                            l2_scale=float(
                                                                experiment_configuration["regularization"]["gcn_l2"]))
         gate_perceptron = MultilayerPerceptronComponent(gate_dims,
-                                                        "gate_mlp",
+                                                        "gate_mlp_"+direction+name,
                                                         dropout_rate=float(
                                                             experiment_configuration["regularization"]["gcn_dropout"]),
                                                         l2_scale=float(

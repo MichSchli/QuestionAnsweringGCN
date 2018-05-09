@@ -156,7 +156,7 @@ class ModelFactory:
         hidden_dims = [in_dim] + hidden_dims + [1]
 
         model.mlp = MultilayerPerceptronComponent(hidden_dims,
-                                                  "mlp",
+                                                  "final_mlp",
                                                   dropout_rate=dropout_rate,
                                                   l2_scale=l2_rate)
         model.add_component(model.mlp)
