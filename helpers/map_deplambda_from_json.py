@@ -9,12 +9,11 @@ args = parser.parse_args()
 dep_dict = {}
 
 for dep_file in args.json_files.split("|"):
-    with open(dep_file) as data_file:
+    with open(dep_file, "r") as data_file:
         for line in data_file:
             json_line = json.loads(line)
             key = json_line["original"].replace(" ", "")
-            print([x["dependency_lambda"] for x in json_line["forest"]])
-            break
+            dep_dict[key] = ([(x["entities"], x["dependency_lambda"]) for x in json_line["forest"]])
 
 with open(args.input_file) as data_file:
     reading_sentence = True
@@ -29,8 +28,36 @@ with open(args.input_file) as data_file:
                 parts[1] = "<NaN>"
             sentence.append(parts[1])
         elif not line and reading_sentence:
-            print("".join(sentence))
-            break
+
+            print("")
+            print("SENTENCE: " + " ".join(sentence) + "\n")
+
+            entities_and_graphs = dep_dict["".join(sentence).lower()]
+
+            for entities, graph in entities_and_graphs:
+                for entity in entities:
+                    if "score" in entity:
+                        entity_parts = [str(entity["index"]), str(entity["end"]), entity["entity"], str(entity["score"])]
+                        print("\t".join(entity_parts))
+
+                print("")
+
+                for clause in graph[0]:
+                    clause_parts = [None, None, None]
+                    clause_parts[0] = clause.split("(")[0].strip()
+                    subject = clause.split("(")[1].split(",")
+
+                    if len(subject) == 1:
+                        clause_parts[1] = subject[0].strip()
+                        clause_parts[2] = subject[0].strip()[:-1]
+                    else:
+                        clause_parts[1] = subject[0].strip()
+                        clause_parts[2] = subject[1].strip()[:-1]
+
+                    print("\t".join(clause_parts))
+
+                print("")
+
             sentence = []
             reading_sentence = False
             reading_entities = True
@@ -38,6 +65,3 @@ with open(args.input_file) as data_file:
             reading_entities = False
         elif not line and not reading_sentence and not reading_entities:
             reading_sentence = True
-
-    if len(sentence) > 0:
-        print("".join(sentence))

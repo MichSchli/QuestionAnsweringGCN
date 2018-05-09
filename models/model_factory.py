@@ -77,7 +77,10 @@ class ModelFactory:
             "word_node_init_mlp")
         model.add_component(model.word_node_init_mlp)
 
-        model.sentence = SentenceBatchComponent(word_index, pos_index, word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]))
+        model.sentence = SentenceBatchComponent(word_index,
+                                                pos_index,
+                                                word_dropout_rate=float(experiment_configuration["regularization"]["word_dropout"]),
+                                                is_static=experiment_configuration["lstm"]["static_word_embeddings"] == "True")
         model.add_component(model.sentence)
 
         self.add_final_transform(experiment_configuration, model)
