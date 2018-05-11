@@ -27,10 +27,23 @@ class Evaluation:
         self.micro_recall = 0
         self.micro_f1 = 0
 
+        self.n_samples = 0
+
         self.default_method=default_method
 
     def get_average_positives(self):
         return (self.total_false_positives + self.total_true_positives)/self.n_samples
+
+    def temporary_summary(self):
+        string = "Final results (macro-averaged):\n"
+        string += "===============================\n"
+        string += "Precision: " + str(self.macro_precision/self.n_samples) + "\n"
+        string += "Recall: " + str(self.macro_recall/self.n_samples) + "\n"
+        string += "F1: " + str(self.macro_f1/self.n_samples) + "\n"
+        string += "Average positives: " + str(self.get_average_positives()) + "\n"
+        string += "Count: " + str(self.n_samples) + "\n"
+
+        return string
 
     def summary(self, method=None):
         if method is None:

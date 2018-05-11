@@ -60,6 +60,8 @@ class Evaluator:
         evaluation.macro_f1 += inner_f1
         evaluation.n_samples += 1
 
+        print(evaluation.temporary_summary())
+
     def compute_final_scores(self, evaluation):
         if np.sum(evaluation.total_true_positives) + np.sum(evaluation.total_false_positives) == 0:
             evaluation.micro_precision = 1.0
