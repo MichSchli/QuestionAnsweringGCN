@@ -49,19 +49,19 @@ class GcnFactory:
                             sender_type_features,
                             receiver_type_features,
                             relation_features,
-                            relation_part_features,
-                            sentence_batch_features,
-                            sender_score_features,
-                            receiver_score_features]
+                            relation_part_features] #,
+                            #sentence_batch_features,
+                            #sender_score_features,
+                            #receiver_score_features]
         gate_features = [sender_features,
                          receiver_features,
                          sender_type_features,
                          receiver_type_features,
                          relation_features,
                          relation_part_features,
-                         sentence_batch_features,
-                         sender_score_features,
-                         receiver_score_features]
+                         sentence_batch_features]#,
+                         #sender_score_features,
+                         #receiver_score_features]
 
 
         initial_input_dim = gcn_dim + 6 + 1
@@ -107,8 +107,9 @@ class GcnFactory:
         message_hidden_dims = [int(e) for e in
                                experiment_configuration["gcn"]["message_hidden_dimension"].split("|")]
         gate_hidden_dims = [int(e) for e in experiment_configuration["gcn"]["gate_hidden_dimension"].split("|")]
-        message_dims = [message_feature_dimension] + message_hidden_dims + [gcn_dim]
+        message_dims = [message_feature_dimension]  + [gcn_dim]#[message_feature_dimension] + message_hidden_dims + [gcn_dim]
         gate_dims = [gate_feature_dimension] + gate_hidden_dims + [1]
+
         message_perceptron = MultilayerPerceptronComponent(message_dims,
                                                            "message_mlp_"+direction+name,
                                                            dropout_rate=float(

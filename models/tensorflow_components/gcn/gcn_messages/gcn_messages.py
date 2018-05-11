@@ -13,7 +13,7 @@ class GcnMessages:
             message_features = tf.concat([f.get() for f in self.features], -1)
         else:
             message_features = 0
-        transformed_messages = self.transform.transform(message_features, mode)
+        transformed_messages = tf.nn.relu(self.transform.transform(message_features, mode))
 
         return transformed_messages
 
