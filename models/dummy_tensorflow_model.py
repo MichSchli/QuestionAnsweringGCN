@@ -22,7 +22,7 @@ class DummyTensorflowModel(AbstractTensorflowModel):
         word_node_init_embeddings = tf.reshape(self.sentence.current_word_embeddings, [-1, word_embedding_shape[-1]])
         word_node_init_embeddings = self.word_node_init_mlp.transform(word_node_init_embeddings, mode)
 
-        self.graph.set_word_embeddings(word_node_init_embeddings, reshape=False)
+        #self.graph.set_word_embeddings(word_node_init_embeddings, reshape=False)
 
         gate_sentence_embedding = self.gate_attention.attend(word_embeddings, mode)
         self.sentence_batch_features.set_batch_features(gate_sentence_embedding)

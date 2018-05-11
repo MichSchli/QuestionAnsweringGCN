@@ -59,9 +59,9 @@ class GcnFactory:
                          receiver_type_features,
                          relation_features,
                          relation_part_features,
-                         sentence_batch_features]#,
-                         #sender_score_features,
-                         #receiver_score_features]
+                         sentence_batch_features,
+                         sender_score_features,
+                         receiver_score_features]
 
 
         initial_input_dim = gcn_dim + 6 + 1

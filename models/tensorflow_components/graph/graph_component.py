@@ -61,7 +61,8 @@ class GraphComponent:
                     self.get_vertex_types(),
                     tf.expand_dims(self.get_vertex_max_scores(), -1)]
 
-        return tf.concat(features, -1)
+        features = tf.concat(features, -1)
+        return features
 
     def get_embeddings(self):
         return self.vertex_embeddings

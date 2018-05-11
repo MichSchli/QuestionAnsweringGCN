@@ -17,4 +17,5 @@ class Experiment:
         self.model_trainer.train(self.model)
         self.logger.write("Testing...", area="testing", subject="start")
         for evaluation in self.model_tester.test(self.model, "test"):
-            print(evaluation.summary)
+            print(evaluation[0])
+            print(evaluation[1].summary())
