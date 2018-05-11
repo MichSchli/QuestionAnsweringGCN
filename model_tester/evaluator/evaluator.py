@@ -7,8 +7,8 @@ class Evaluator:
 
     evaluation = None
 
-    def __init__(self):
-        pass
+    def __init__(self, relation_index):
+        self.relation_index = relation_index
 
     def begin_evaluation(self, steps=[0.5]):
         self.evaluations = [(step, Evaluation(default_method="macro")) for step in steps]
@@ -26,8 +26,10 @@ class Evaluator:
             exit()
 
         print(example)
-        indexes = sorted(range(len(example.prediction.score_list)), key=lambda x: example.prediction.score_list[x])
-        print([example.prediction.label_list[i] for i in indexes[:min(len(indexes), 5)]])
+        indexes = sorted(range(len(example.prediction.score_list)), key=lambda x: example.prediction.score_list[x], reverse=True)
+        for pred_index in indexes[:min(len(predicted_labels), 5)]:
+            print(example.prediction.label_list[pred_index]+ " | score=" + str(example.prediction.score_list[pred_index]))
+            print(example.graph.get_entity_path_to_centroid(pred_index, self.relation_index))
 
         true_positives = np.isin(predicted_labels, true_labels)
         false_positives = np.logical_not(true_positives)

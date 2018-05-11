@@ -22,6 +22,7 @@ class GraphCache:
         if key not in self.cache:
             print("retrieve")
             neighborhood_graph = self.inner.get_neighborhood_graph(mention_entities)
+
             self.cache[key] = neighborhood_graph
 
             graph = neighborhood_graph

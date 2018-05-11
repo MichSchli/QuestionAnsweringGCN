@@ -10,11 +10,11 @@ class ModelTesterFactory:
     example_batcher_factory = None
     evaluator = None
 
-    def __init__(self, example_reader_factory, example_extender_factory, example_batcher_factory):
+    def __init__(self, example_reader_factory, example_extender_factory, example_batcher_factory, index_factory):
         self.example_reader_factory = example_reader_factory
         self.example_extender_factory = example_extender_factory
         self.example_batcher_factory = example_batcher_factory
-        self.evaluator_factory = EvaluatorFactory()
+        self.evaluator_factory = EvaluatorFactory(index_factory)
 
     def get(self, experiment_configuration):
         example_reader = self.example_reader_factory.get(experiment_configuration)

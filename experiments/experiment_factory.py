@@ -23,7 +23,7 @@ class ExperimentFactory:
         self.example_extender_factory = ExampleExtenderFactory(self.index_factory)
         self.example_batcher_factory = ExampleBatcherFactory()
         self.model_factory = ModelFactory(self.index_factory)
-        self.model_tester_factory = ModelTesterFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory)
+        self.model_tester_factory = ModelTesterFactory(self.example_reader_factory, self.example_extender_factory, self.example_batcher_factory, self.index_factory)
         self.model_trainer_factory = ModelTrainerFactory(self.example_reader_factory,
                                                          self.example_extender_factory,
                                                          self.example_batcher_factory,

@@ -29,6 +29,8 @@ class Graph:
         graph.vertex_max_scores = np.zeros(self.vertices.shape[0], dtype=np.float32)
         graph.edges = np.copy(self.edges)
         graph.entity_vertex_indexes = np.copy(self.entity_vertex_indexes)
+        graph.centroid_indexes = np.copy(self.centroid_indexes)
+
         graph.general_vertex_to_entity_index_map = copy.deepcopy(self.general_vertex_to_entity_index_map)
 
         graph.vertex_label_to_index_map = copy.deepcopy(self.vertex_label_to_index_map)
@@ -43,6 +45,35 @@ class Graph:
         graph.vertex_types = np.copy(self.vertex_types)
 
         return graph
+
+    def get_entity_path_to_centroid(self, index, relation_index):
+        real_index = self.entity_vertex_indexes[index]
+        forward_entity_edges = self.edges[np.where(self.edges[:,0] == real_index)[0]]
+        backward_entity_edges = self.edges[np.where(self.edges[:,2] == real_index)[0]]
+        forward_entity_edges = np.array([forward_entity_edges[:,0], [relation_index.from_index(i) for i in forward_entity_edges[:,1]], forward_entity_edges[:,2]]).transpose()
+        backward_entity_edges = np.array([backward_entity_edges[:,2], [relation_index.from_index(i)+"-reverse" for i in backward_entity_edges[:,1]], backward_entity_edges[:,0]]).transpose()
+
+        entity_edges = np.concatenate((forward_entity_edges, backward_entity_edges))
+
+        direct_centroid_links = np.isin(entity_edges[:, 2], [str(x) for x in self.centroid_indexes])
+
+        output = ["|".join([self.vertices[int(edge[0])], edge[1], self.vertices[int(edge[2])]]) for edge in entity_edges[direct_centroid_links]]
+
+        for edge in self.edges:
+            if edge[0] in self.centroid_indexes and str(edge[2]) in entity_edges[:,2]:
+                connectors = entity_edges[np.where(entity_edges[:,2] == str(edge[2]))[0]]
+                for connector in connectors:
+                    connector_string = "|".join([self.vertices[int(connector[0])], connector[1], self.vertices[int(connector[2])]])
+                    connector_string += "|" + relation_index.from_index(edge[1]) + "-reverse|" + self.vertices[edge[0]]
+                    output.append(connector_string)
+            elif edge[2] in self.centroid_indexes and str(edge[0]) in entity_edges[:, 2]:
+                connectors = entity_edges[np.where(entity_edges[:,2] == str(edge[0]))[0]]
+                for connector in connectors:
+                    connector_string = "|".join([self.vertices[int(connector[0])], connector[1], self.vertices[int(connector[2])]])
+                    connector_string += "|" + relation_index.from_index(edge[1]) + "|" + self.vertices[edge[2]]
+                    output.append(connector_string)
+
+        return output
 
     def map_general_vertex_to_entity_index(self, general_index):
         return self.general_vertex_to_entity_index_map[general_index]

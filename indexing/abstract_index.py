@@ -47,7 +47,7 @@ class AbstractIndex:
         self.is_frozen = True
 
     def from_index(self, index):
-        return self.backward_map[index]
+        return self.backward_map[int(index)]
 
     def index_dependency_labels(self):
         filename = "data/dependency_labels.txt"

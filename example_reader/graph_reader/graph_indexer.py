@@ -14,6 +14,7 @@ class GraphIndexer:
         self.relation_part_indexer = relation_part_indexer
 
     def get_neighborhood_graph(self, mention_entities):
+
         graph = self.inner.get_neighborhood_graph(mention_entities)
 
         local_vertex_indexes = {}
