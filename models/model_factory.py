@@ -97,7 +97,7 @@ class ModelFactory:
         model.learning_rate = learning_rate
         model.gradient_clipping = gradient_clipping
 
-        model.gcn, model.sentence_batch_features = self.gcn_factory.get_dummy_gcn(model.graph, experiment_configuration)
+        model.gcn, model.sentence_batch_features = self.gcn_factory.get_message_bias_only_gcn(model.graph, experiment_configuration)
         model.add_component(model.gcn)
         model.add_component(model.sentence_batch_features)
 

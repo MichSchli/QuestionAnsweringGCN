@@ -1,3 +1,5 @@
+from models.tensorflow_components.gcn.gcn_gates.gcn_no_gates import GcnNoGates
+from models.tensorflow_components.gcn.gcn_messages.gcn_bias_only_messages import GcnBiasOnlyMessages
 from models.tensorflow_components.gcn.gcn_propagator import GcnPropagator
 from models.tensorflow_components.gcn.gcn_features.max_score_features import VertexScoreFeatures
 from models.tensorflow_components.gcn.gcn_features.relation_features import RelationFeatures
@@ -20,6 +22,38 @@ class GcnFactory:
 
     def __init__(self, index_factory):
         self.index_factory = index_factory
+
+    def get_message_bias_only_gcn(self, graph, experiment_configuration):
+        layers = int(experiment_configuration["gcn"]["layers"])
+        relation_index = self.index_factory.get("relations", experiment_configuration)
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+
+        initial_input_dim = gcn_dim + 6 + 1
+        initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
+
+        gcn_layers = [None] * layers
+        updaters = [None] * layers
+
+        sentence_embedding_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        sentence_batch_features = SentenceBatchFeatures(graph, sentence_embedding_dim)
+
+        add_backward_gcn = "inverse_relations" in experiment_configuration["architecture"] \
+                           and experiment_configuration["architecture"]["inverse_relations"] == "separate"
+        for layer in range(layers):
+            message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+            f_propagator = self.get_message_bias_only_propagator(message_bias, graph, direction="forward")
+            gcn_layers[layer] = [f_propagator]
+
+            if add_backward_gcn:
+                b_message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+                b_propagator = self.get_message_bias_only_propagator(b_message_bias, graph, direction="backward")
+                gcn_layers[layer].append(b_propagator)
+
+            updaters[layer] = CellStateGcnUpdater("cell_state_" + str(layer), gcn_dim, gcn_dim, graph)
+
+        gcn = Gcn(initial_cell_updater, gcn_layers, updaters)
+
+        return gcn, sentence_batch_features
 
     def get_dummy_gcn(self, graph, experiment_configuration):
         layers = int(experiment_configuration["gcn"]["layers"])
@@ -62,6 +96,8 @@ class GcnFactory:
                          sentence_batch_features,
                          sender_score_features,
                          receiver_score_features]
+
+        message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
 
 
         initial_input_dim = gcn_dim + 6 + 1
@@ -128,5 +164,11 @@ class GcnFactory:
         gates = GcnGates(gate_features,
                          gate_perceptron,
                          l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
+        propagator = GcnPropagator(messages, gates, graph, direction)
+        return propagator
+
+    def get_message_bias_only_propagator(self, message_bias, graph, direction="forward"):
+        messages = GcnBiasOnlyMessages(message_bias)
+        gates = GcnNoGates()
         propagator = GcnPropagator(messages, gates, graph, direction)
         return propagator

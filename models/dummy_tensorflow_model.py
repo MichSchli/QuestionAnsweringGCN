@@ -31,6 +31,8 @@ class DummyTensorflowModel(AbstractTensorflowModel):
 
         entity_embeddings = self.graph.get_target_vertex_embeddings()
 
+        #entity_embeddings = tf.Print(entity_embeddings, [entity_embeddings], message="entities: ", summarize=200)
+
         final_sentence_embedding = self.final_sentence_embedding.run(mode)
 
         entity_embeddings = self.sentence_to_entity_mapper.map(final_sentence_embedding, entity_embeddings)

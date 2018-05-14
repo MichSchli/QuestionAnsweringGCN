@@ -85,7 +85,7 @@ class CellStateGcnUpdater:
 
         output = read_gate * tf.nn.tanh(new_cell_state)
 
-        return output, new_cell_state
+        return context_vectors, None #output, new_cell_state
 
     def prepare_tensorflow_variables(self):
         initializer_v = np.random.normal(0, 0.01,
