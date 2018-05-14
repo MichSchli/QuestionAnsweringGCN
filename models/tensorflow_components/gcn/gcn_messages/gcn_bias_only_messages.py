@@ -10,10 +10,9 @@ class GcnBiasOnlyMessages:
         self.prepare_variables()
 
     def get_messages(self, mode):
-        if len(self.biases) > 0:
-            biases = tf.concat([f.get() for f in self.biases], -1)
-        else:
-            biases = 0
+        biases = 0
+        for b in self.biases:
+            biases += b.get()
 
         return biases
 

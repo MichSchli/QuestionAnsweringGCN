@@ -1,3 +1,4 @@
+from models.tensorflow_components.gcn.gcn_gates.gcn_bias_and_feature_gates import GcnBiasAndFeatureGates
 from models.tensorflow_components.gcn.gcn_gates.gcn_no_gates import GcnNoGates
 from models.tensorflow_components.gcn.gcn_messages.gcn_bias_only_messages import GcnBiasOnlyMessages
 from models.tensorflow_components.gcn.gcn_propagator import GcnPropagator
@@ -47,6 +48,42 @@ class GcnFactory:
             if add_backward_gcn:
                 b_message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
                 b_propagator = self.get_message_bias_only_propagator(b_message_bias, graph, direction="backward")
+                gcn_layers[layer].append(b_propagator)
+
+            updaters[layer] = CellStateGcnUpdater("cell_state_" + str(layer), gcn_dim, gcn_dim, graph)
+
+        gcn = Gcn(initial_cell_updater, gcn_layers, updaters)
+
+        return gcn, sentence_batch_features
+
+    def get_gated_message_bias_gcn(self, graph, experiment_configuration):
+        layers = int(experiment_configuration["gcn"]["layers"])
+        relation_index = self.index_factory.get("relations", experiment_configuration)
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+
+        sentence_embedding_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
+        sentence_batch_features = SentenceBatchFeatures(graph, sentence_embedding_dim)
+
+        gate_features = [sentence_batch_features]
+
+        initial_input_dim = gcn_dim + 6 + 1
+        initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
+
+        gcn_layers = [None] * layers
+        updaters = [None] * layers
+
+        add_backward_gcn = "inverse_relations" in experiment_configuration["architecture"] \
+                           and experiment_configuration["architecture"]["inverse_relations"] == "separate"
+        for layer in range(layers):
+            message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+            gate_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+            f_propagator = self.get_gated_message_bias_propagator(message_bias, gate_features, gate_bias, graph, experiment_configuration, str(layer),direction="forward")
+            gcn_layers[layer] = [f_propagator]
+
+            if add_backward_gcn:
+                b_message_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+                b_gate_bias = [RelationFeatures(graph, gcn_dim, relation_index)]
+                b_propagator = self.get_gated_message_bias_propagator(b_message_bias, gate_features, b_gate_bias, graph, experiment_configuration, str(layer),direction="backward")
                 gcn_layers[layer].append(b_propagator)
 
             updaters[layer] = CellStateGcnUpdater("cell_state_" + str(layer), gcn_dim, gcn_dim, graph)
@@ -170,5 +207,27 @@ class GcnFactory:
     def get_message_bias_only_propagator(self, message_bias, graph, direction="forward"):
         messages = GcnBiasOnlyMessages(message_bias)
         gates = GcnNoGates()
+        propagator = GcnPropagator(messages, gates, graph, direction)
+        return propagator
+
+    def get_gated_message_bias_propagator(self, message_bias, gate_features, gate_bias, graph, experiment_configuration, name, direction="forward"):
+        gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+        gate_feature_dimension = sum(g.get_width() for g in gate_features)
+        gate_dims_1 = [gate_feature_dimension, gcn_dim]
+        gate_dims_2 = [gcn_dim, 1]
+        gate_perceptron_1 = MultilayerPerceptronComponent(gate_dims_1,
+                                                        "gate_mlp_"+direction+name,
+                                                        dropout_rate=float(
+                                                            experiment_configuration["regularization"]["gcn_dropout"]),
+                                                        l2_scale=float(
+                                                            experiment_configuration["regularization"]["gcn_l2"]))
+        gate_perceptron_2 = MultilayerPerceptronComponent(gate_dims_2,
+                                                        "gate_mlp_"+direction+name,
+                                                        dropout_rate=float(
+                                                            experiment_configuration["regularization"]["gcn_dropout"]),
+                                                        l2_scale=float(
+                                                            experiment_configuration["regularization"]["gcn_l2"]))
+        messages = GcnBiasOnlyMessages(message_bias)
+        gates = GcnBiasAndFeatureGates(gate_bias, gate_features, gate_perceptron_1, gate_perceptron_2, l1_scale=float(experiment_configuration["regularization"]["gate_l1"]))
         propagator = GcnPropagator(messages, gates, graph, direction)
         return propagator
