@@ -11,8 +11,9 @@ class WordDummyAttentionFinalSentenceEmbedding:
         self.variables = {}
 
         gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
+        attention_dropout = float(experiment_configuration["regularization"]["attention_dropout"])
         attention_heads = 1
-        self.attention_component = MultiheadAttention(gcn_dim, attention_heads=attention_heads, variable_prefix="attention2")
+        self.attention_component = MultiheadAttention(gcn_dim, attention_heads=attention_heads, variable_prefix="attention2", attention_dropout=attention_dropout)
         self.word_padder = WordPadder()
 
     def run(self, mode):

@@ -23,8 +23,6 @@ class GcnBiasAndFeatureGates:
         transformed_gates = self.transform_2.transform(transformed_gates, mode)
         gates = tf.nn.sigmoid(transformed_gates)
 
-        gates = tf.Print(gates, [gates], summarize=100)
-
         self.gate_sum = tf.reduce_sum(gates)
 
         return gates

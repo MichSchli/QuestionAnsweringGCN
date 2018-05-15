@@ -121,6 +121,7 @@ class ModelFactory:
         lstm_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
         lstm_layers = int(experiment_configuration["lstm"]["layers"])
         attention_heads = int(experiment_configuration["lstm"]["attention_heads"])
+        attention_dropout = float(experiment_configuration["regularization"]["attention_dropout"])
 
         model.lstms = []
         for layer in range(lstm_layers):
@@ -131,8 +132,8 @@ class ModelFactory:
 
         input_dim = word_dim + pos_dim if lstm_layers == 0 else lstm_dim * 2
 
-        model.gate_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention1")
-        model.final_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention2")
+        model.gate_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention1", attention_dropout=attention_dropout)
+        model.final_attention = MultiheadAttention(input_dim, attention_heads=attention_heads, variable_prefix="attention2", attention_dropout=attention_dropout)
 
         model.add_component(model.gate_attention)
         model.add_component(model.final_attention)
