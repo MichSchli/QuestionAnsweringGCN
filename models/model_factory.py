@@ -125,7 +125,7 @@ class ModelFactory:
 
         model.lstms = []
         for layer in range(lstm_layers):
-            input_dim = word_dim + pos_dim if layer == 0 else lstm_dim * 2
+            input_dim = word_dim + pos_dim + 1 if layer == 0 else lstm_dim * 2
             lstm = BiLstm(input_dim, lstm_dim*2, "bi_lstm_"+str(layer))
             model.lstms.append(lstm)
             model.add_component(lstm)

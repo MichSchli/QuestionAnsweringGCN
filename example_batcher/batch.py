@@ -158,6 +158,15 @@ class Batch:
 
         return sentence_matrix
 
+    def get_padded_mention_indicators(self):
+        max_word_count = max(example.count_words() for example in self.examples)
+        sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.float32)
+        for i,example in enumerate(self.examples):
+            for m in example.mentions:
+                sentence_matrix[i][m.word_indexes] = 1.0
+
+        return sentence_matrix
+
     def get_padded_pos_indices(self):
         max_word_count = max(example.count_words() for example in self.examples)
         sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.int32)

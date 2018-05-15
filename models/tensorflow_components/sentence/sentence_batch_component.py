@@ -24,6 +24,7 @@ class SentenceBatchComponent:
 
     def prepare_tensorflow_variables(self):
         self.variables["word_indices"] = tf.placeholder(tf.int32, [None, None])
+        self.variables["is_mention"] = tf.placeholder(tf.float32, [None, None])
         self.variables["pos_indices"] = tf.placeholder(tf.int32, [None, None])
         self.variables["word_mask"] = tf.placeholder(tf.float32, [None, None])
 
@@ -40,12 +41,13 @@ class SentenceBatchComponent:
         word_embedding = tf.nn.embedding_lookup(self.word_embeddings, self.variables["word_indices"])
         pos_embedding = tf.nn.embedding_lookup(self.pos_embeddings, self.variables["pos_indices"])
 
-        embedding = tf.concat([word_embedding, pos_embedding], axis=-1)
+        embedding = tf.concat([word_embedding, pos_embedding, tf.expand_dims(self.variables["is_mention"], -1)], axis=-1)
 
         if mode == "train" and self.word_dropout_rate > 0.0:
             embedding_shape = tf.shape(embedding)
             noise_shape = [embedding_shape[0], embedding_shape[1], 1]
             embedding = tf.nn.dropout(embedding, 1 - self.word_dropout_rate, noise_shape=noise_shape)
+
         return embedding * tf.expand_dims(self.variables["word_mask"], -1)
 
     def get_variable(self, name):
@@ -58,5 +60,6 @@ class SentenceBatchComponent:
         self.variable_assignments = {}
 
         self.variable_assignments["word_indices"] = batch.get_padded_word_indices()
+        self.variable_assignments["is_mention"] = batch.get_padded_mention_indicators()
         self.variable_assignments["pos_indices"] = batch.get_padded_pos_indices()
         self.variable_assignments["word_mask"] = batch.get_word_padding_mask()
