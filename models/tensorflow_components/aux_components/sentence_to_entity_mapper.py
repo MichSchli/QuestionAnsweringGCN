@@ -21,7 +21,7 @@ class SentenceToEntityMapper:
         elif self.comparison_type == "sum":
             comparison = distributed_sentence_embeddings + word_embeddings
         elif self.comparison_type == "concat":
-            comparison = tf.concat([distributed_sentence_embeddings, word_embeddings], axis=1)
+            comparison = tf.concat([distributed_sentence_embeddings, word_embeddings, tf.cast(tf.expand_dims(self.variables["target_indices"], -1), tf.float32)], axis=1)
 
         return comparison
 
