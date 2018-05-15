@@ -11,6 +11,8 @@ from models.tensorflow_components.gcn.gcn_gates.gcn_gates import GcnGates
 from models.tensorflow_components.gcn.gcn_messages.gcn_messages import GcnMessages
 from models.tensorflow_components.gcn.gcn_updaters.cell_state_updater import CellStateGcnUpdater, \
     CellStateGcnInitializer
+from models.tensorflow_components.gcn.gcn_updaters.copy_context_updater import CopyContextGcnInitializer, \
+    CopyContextGcnUpdater
 from models.tensorflow_components.gcn.gcn_updaters.simple_self_loop_updater import SimpleSelfLoopGcnInitializer, \
     SimpleSelfLoopGcnUpdater
 from models.tensorflow_components.gcn.gcns.gcn import Gcn
@@ -32,7 +34,7 @@ class GcnFactory:
         gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
 
         initial_input_dim = gcn_dim + 6 + 1
-        initial_cell_updater = SimpleSelfLoopGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
+        initial_cell_updater = CopyContextGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
 
         gcn_layers = [None] * layers
         updaters = [None] * layers
@@ -52,7 +54,7 @@ class GcnFactory:
                 b_propagator = self.get_message_bias_only_propagator(b_message_bias, graph, direction="backward")
                 gcn_layers[layer].append(b_propagator)
 
-            updaters[layer] = SimpleSelfLoopGcnUpdater("cell_state_" + str(layer), gcn_dim, gcn_dim, graph)
+            updaters[layer] = CopyContextGcnUpdater("cell_state_" + str(layer), gcn_dim, gcn_dim, graph)
 
         gcn = Gcn(initial_cell_updater, gcn_layers, updaters)
 
