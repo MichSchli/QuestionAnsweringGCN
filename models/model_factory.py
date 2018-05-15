@@ -85,7 +85,7 @@ class ModelFactory:
 
         self.add_final_transform(experiment_configuration, model)
 
-        model.sentence_to_entity_mapper = SentenceToEntityMapper(comparison_type="dot_product")
+        model.sentence_to_entity_mapper = SentenceToEntityMapper(comparison_type="multiple")
         model.add_component(model.sentence_to_entity_mapper)
 
         model.loss = SigmoidLoss()
@@ -149,7 +149,7 @@ class ModelFactory:
 
         gcn_dim = int(experiment_configuration["gcn"]["embedding_dimension"])
 
-        in_dim = gcn_dim + word_in_dim + 1
+        in_dim = gcn_dim * 3
         hidden_dims = [int(d) for d in experiment_configuration["other"]["final_hidden_dimensions"].split("|")]
         dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
         l2_rate = float(experiment_configuration["regularization"]["final_l2"])

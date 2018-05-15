@@ -13,7 +13,7 @@ class SentenceToEntityMapper:
         self.variables["target_indices"] = tf.placeholder(tf.int32)
         self.comparison_type = comparison_type
 
-    def map(self, sentence_embeddings, word_embeddings):
+    def map(self, sentence_embeddings, word_embeddings, mode):
         distributed_sentence_embeddings = tf.nn.embedding_lookup(sentence_embeddings, self.variables["target_indices"])
 
         if self.comparison_type == "dot_product":
@@ -22,6 +22,8 @@ class SentenceToEntityMapper:
             comparison = distributed_sentence_embeddings + word_embeddings
         elif self.comparison_type == "concat":
             comparison = tf.concat([distributed_sentence_embeddings, word_embeddings, tf.cast(tf.expand_dims(self.variables["target_indices"], -1), tf.float32)], axis=1)
+        elif self.comparison_type == "multiple":
+            comparison = tf.concat([distributed_sentence_embeddings, word_embeddings, distributed_sentence_embeddings * word_embeddings], axis=-1)
 
         return comparison
 
