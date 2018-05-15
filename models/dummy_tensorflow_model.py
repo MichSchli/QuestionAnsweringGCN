@@ -36,6 +36,6 @@ class DummyTensorflowModel(AbstractTensorflowModel):
         final_sentence_embedding = self.final_sentence_embedding.run(mode)
 
         entity_embeddings = self.sentence_to_entity_mapper.map(final_sentence_embedding, entity_embeddings)
-        entity_embeddings = self.mlp.transform(entity_embeddings, mode)
+        #entity_embeddings = self.mlp.transform(entity_embeddings, mode)
 
         return tf.squeeze(entity_embeddings)

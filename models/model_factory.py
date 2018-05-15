@@ -85,7 +85,7 @@ class ModelFactory:
 
         self.add_final_transform(experiment_configuration, model)
 
-        model.sentence_to_entity_mapper = SentenceToEntityMapper()
+        model.sentence_to_entity_mapper = SentenceToEntityMapper(comparison_type="dot_product")
         model.add_component(model.sentence_to_entity_mapper)
 
         model.loss = SigmoidLoss()
