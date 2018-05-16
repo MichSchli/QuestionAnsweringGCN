@@ -21,6 +21,7 @@ class HypergraphInterface:
         hypergraph.add_vertices(vertices, type="entities")
         hypergraph.populate_discovered("entities")
         hypergraph.set_centroids(vertices)
+        hypergraph.initialize_centroid_paths()
         hypergraph.centroid_indexes = np.arange(len(vertices))
 
         hypergraph.nearby_centroid_map = {c: np.array([c]) for c in vertices}

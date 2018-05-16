@@ -55,18 +55,18 @@ class SigmoidLoss:
         # positive_losses = tf.Print(positive_losses, data=[positive_losses], summarize=100, message="losses")
 
         #positive_losses = tf.Print(positive_losses, [positive_losses], summarize=100)
-        positive_losses = tf.nn.dropout(positive_losses, keep_prob=0.8)
+        #positive_losses = tf.nn.dropout(positive_losses, keep_prob=0.8)
 
         #negative_losses = tf.Print(negative_losses, [negative_losses], summarize=100)
 
-        losses = positive_losses + negative_losses
-        normalized_losses = losses * self.get_variable("loss_normalization")
-        total_loss = tf.reduce_sum(normalized_losses)
+        #losses = positive_losses + negative_losses
+        #normalized_losses = losses * self.get_variable("loss_normalization")
+        #total_loss = tf.reduce_sum(normalized_losses)
 
-        #total_negative_loss = tf.reduce_mean(negative_losses)
-        #total_positive_loss = tf.reduce_mean(positive_losses)
+        total_negative_loss = tf.reduce_mean(negative_losses)
+        total_positive_loss = tf.reduce_mean(positive_losses)
 
-        #total_loss = total_negative_loss + total_positive_loss
+        total_loss = total_negative_loss + total_positive_loss
 
         return total_loss
 

@@ -44,6 +44,8 @@ class Graph:
 
         graph.vertex_types = np.copy(self.vertex_types)
 
+        graph.entity_centroid_paths = copy.deepcopy(self.entity_centroid_paths)
+
         return graph
 
     def get_entity_path_to_centroid(self, index, relation_index):

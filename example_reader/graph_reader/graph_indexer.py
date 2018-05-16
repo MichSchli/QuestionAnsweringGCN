@@ -49,5 +49,6 @@ class GraphIndexer:
         #graph.map_name_indexes(local_vertex_indexes)
 
         graph.nearby_centroid_map = [[local_vertex_indexes[v] for v in vertex] for vertex in graph.nearby_centroid_map]
+        graph.entity_centroid_paths = {local_vertex_indexes[c] : l for c,l in graph.entity_centroid_paths.items()}
 
         return graph

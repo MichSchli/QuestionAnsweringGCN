@@ -505,6 +505,8 @@ class HypergraphModel:
         if backward_edges.shape[0] > 0:
             self.add_vertices(backward_edges[:,0], type=type)
 
+    def initialize_centroid_paths(self):
+        self.centroid_paths = {c : [c] for c in self.centroids}
 
     """
     Expand a set of (source->target) edges from the sources. Allows edges within the frontier.
@@ -523,6 +525,11 @@ class HypergraphModel:
         #unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
         for edge in edges[unseen_or_frontier_targets]:
+            if edge[2] not in self.centroid_paths:
+                self.centroid_paths[edge[2]] = []
+
+            self.centroid_paths[edge[2]].extend([c + ">" + edge[1] for c in self.centroid_paths[edge[0]]])
+
             if edge[2] not in self.nearby_centroid_map:
                 self.nearby_centroid_map[edge[2]] = np.array(self.nearby_centroid_map[edge[0]])
             else:
@@ -541,6 +548,11 @@ class HypergraphModel:
         unseen_targets = np.isin(target, self.get_vertices(targets), invert=True)
 
         for edge in edges[unseen_targets]:
+            if edge[0] not in self.centroid_paths:
+                self.centroid_paths[edge[0]] = []
+
+            self.centroid_paths[edge[0]].extend([c + "<" + edge[1] for c in self.centroid_paths[edge[2]]])
+
             if edge[0] not in self.nearby_centroid_map:
                 self.nearby_centroid_map[edge[0]] = np.array(self.nearby_centroid_map[edge[2]])
             else:

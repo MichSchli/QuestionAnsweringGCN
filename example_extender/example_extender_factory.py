@@ -1,3 +1,4 @@
+from example_extender.add_golds_with_similar_path_bags import AddGoldsWithSimilarPathBags
 from example_extender.add_inverse_edge_extender import AddInverseEdgeExtender
 from example_extender.add_max_score_extender import AddMaxScoreExtender
 from example_extender.empty_extender import EmptyExtender
@@ -20,6 +21,9 @@ class ExampleExtenderFactory:
     def get(self, experiment_configuration, mode):
         if mode == "train":
             extender = EmptyExtender()
+
+            extender = AddGoldsWithSimilarPathBags(extender, 0.8, project_names=experiment_configuration["endpoint"]["project_names"] == "True")
+
             if "filter_gold_labels" in experiment_configuration["training"] and experiment_configuration["training"]["filter_gold_labels"] == "maximize_f1":
                 extender = RemoveGoldFromAllExceptBestMention(extender)
 
