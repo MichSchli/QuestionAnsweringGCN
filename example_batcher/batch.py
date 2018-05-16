@@ -23,6 +23,9 @@ class Batch:
     def count_all_vertices(self):
         return sum(example.count_vertices() for example in self.examples)
 
+    def get_entity_counts(self):
+        return [example.count_entities() for example in self.examples]
+
     def get_combined_mention_scores(self):
         index_lists = [np.copy([m.score for m in example.mentions]) for example in self.examples]
 
@@ -166,6 +169,26 @@ class Batch:
                 sentence_matrix[i][m.word_indexes] = 1.0
 
         return sentence_matrix
+
+    def get_padded_entity_indexes(self):
+        max_entity_count = max(example.count_entities() for example in self.examples)
+        matrix = np.ones((len(self.examples), max_entity_count), dtype=np.int32) * -1
+        running_count = 0
+        for i,example in enumerate(self.examples):
+            matrix[i][:example.count_entities()] = np.arange(example.count_entities(), dtype=np.int32) + running_count
+            running_count += example.count_entities()
+
+        return matrix
+
+    def get_padded_gold_matrix(self):
+        max_entity_count = max(example.count_entities() for example in self.examples)
+        matrix = np.zeros((len(self.examples), max_entity_count), dtype=np.int32) * -1
+        for i,example in enumerate(self.examples):
+            for gold_index in example.get_gold_indexes():
+                if gold_index >=0:
+                    matrix[i][gold_index] = 1
+
+        return matrix
 
     def get_padded_pos_indices(self):
         max_word_count = max(example.count_words() for example in self.examples)

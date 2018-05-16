@@ -3,6 +3,7 @@ from models.dummy_tensorflow_model import DummyTensorflowModel
 from models.tensorflow_components.aux_components.sentence_to_entity_mapper import SentenceToEntityMapper
 from models.tensorflow_components.gcn.gcn_factory import GcnFactory
 from models.tensorflow_components.graph.graph_component import GraphComponent
+from models.tensorflow_components.loss_functions.max_pred_sigmoid_loss import MaxPredSigmoidLoss
 from models.tensorflow_components.loss_functions.sigmoid_loss import SigmoidLoss
 from models.tensorflow_components.sentence.lstm import BiLstm
 from models.tensorflow_components.sentence.multihead_attention import MultiheadAttention
@@ -88,7 +89,7 @@ class ModelFactory:
         model.sentence_to_entity_mapper = SentenceToEntityMapper(comparison_type="multiple")
         model.add_component(model.sentence_to_entity_mapper)
 
-        model.loss = SigmoidLoss()
+        model.loss = MaxPredSigmoidLoss()
         model.add_component(model.loss)
 
         learning_rate = float(experiment_configuration["training"]["learning_rate"])
