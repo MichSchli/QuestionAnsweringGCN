@@ -89,8 +89,7 @@ class ModelFactory:
         model.sentence_to_entity_mapper = SentenceToEntityMapper(comparison_type="multiple")
         model.add_component(model.sentence_to_entity_mapper)
 
-        model.loss = MaxPredSigmoidLoss()
-        model.add_component(model.loss)
+        self.add_loss(experiment_configuration, model)
 
         learning_rate = float(experiment_configuration["training"]["learning_rate"])
         gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
@@ -115,6 +114,16 @@ class ModelFactory:
             model.final_sentence_embedding = DummyVertexFinalSentenceEmbedding(model.graph, experiment_configuration)
 
         return model
+
+    def add_loss(self, experiment_configuration, model):
+        loss_type = experiment_configuration["architecture"]["loss_type"]
+
+        if loss_type == "fancy":
+            model.loss = MaxPredSigmoidLoss()
+        else:
+            model.loss = SigmoidLoss()
+
+        model.add_component(model.loss)
 
     def add_lstms(self, experiment_configuration, model):
         word_dim = int(experiment_configuration["indexes"]["word_index_type"].split(":")[1])

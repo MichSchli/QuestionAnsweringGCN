@@ -22,7 +22,9 @@ class ExampleExtenderFactory:
         if mode == "train":
             extender = EmptyExtender()
 
-            extender = AddGoldsWithSimilarPathBags(extender, 0.8, project_names=experiment_configuration["endpoint"]["project_names"] == "True")
+            if "additional_matching_golds" in experiment_configuration["training"]:
+                threshold = float(experiment_configuration["training"]["additional_matching_golds"])
+                extender = AddGoldsWithSimilarPathBags(extender, threshold, project_names=experiment_configuration["endpoint"]["project_names"] == "True")
 
             if "filter_gold_labels" in experiment_configuration["training"] and experiment_configuration["training"]["filter_gold_labels"] == "maximize_f1":
                 extender = RemoveGoldFromAllExceptBestMention(extender)

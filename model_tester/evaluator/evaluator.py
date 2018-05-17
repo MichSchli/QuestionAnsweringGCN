@@ -29,7 +29,7 @@ class Evaluator:
         indexes = sorted(range(len(example.prediction.score_list)), key=lambda x: example.prediction.score_list[x], reverse=True)
         for pred_index in indexes[:min(len(predicted_labels), 5)]:
             print(example.prediction.label_list[pred_index]+ " | score=" + str(example.prediction.score_list[pred_index]))
-            print(example.graph.get_entity_path_to_centroid(pred_index, self.relation_index))
+            print(example.graph.entity_centroid_paths[pred_index])
 
         true_positives = np.isin(predicted_labels, true_labels)
         false_positives = np.logical_not(true_positives)

@@ -47,6 +47,7 @@ class MaxPredSigmoidLoss:
         negative_losses = array_ops.where(tf.logical_not(positive_cond), losses, zeros)
 
         positive_losses = array_ops.where(positive_cond, losses, tf.ones_like(logits) * 3000)
+        positive_losses_2 = array_ops.where(positive_cond, losses, zeros)
 
         #positive_losses = tf.Print(positive_losses, data=[labels], summarize=100, message="labels")
         #positive_losses = tf.Print(positive_losses, data=[logits], summarize=100, message="logits")
@@ -54,8 +55,8 @@ class MaxPredSigmoidLoss:
         #positive_losses = tf.Print(positive_losses, data=[positive_losses], summarize=100, message="pos")
         #positive_losses = tf.Print(positive_losses, data=[negative_losses], summarize=100, message="neg")
 
-        total_negative_loss = tf.reduce_max(negative_losses)
-        total_positive_loss = tf.reduce_min(positive_losses)
+        total_negative_loss = tf.reduce_max(negative_losses) + tf.reduce_mean(negative_losses)
+        total_positive_loss = tf.reduce_min(positive_losses) + tf.reduce_mean(positive_losses_2)
 
         total_loss = total_negative_loss + total_positive_loss
 

@@ -16,7 +16,7 @@ class AddGoldsWithSimilarPathBags:
 
     def extend(self, example):
         example = self.inner.extend(example)
-        print(example)
+        #print(example)
 
         additional_gold_answers = []
 
@@ -49,7 +49,7 @@ class AddGoldsWithSimilarPathBags:
                             np.where(gold_answer.entity_indexes >= 0)]
 
         example.gold_answers.extend(additional_gold_answers)
-        print(example)
-        print("====================================")
+        #print(example)
+        #print("====================================")
 
         return example
