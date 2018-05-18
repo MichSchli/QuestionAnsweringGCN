@@ -22,15 +22,15 @@ class ExampleExtenderFactory:
         if mode == "train":
             extender = EmptyExtender()
 
-            if "additional_matching_golds" in experiment_configuration["training"]:
-                threshold = float(experiment_configuration["training"]["additional_matching_golds"])
-                extender = AddGoldsWithSimilarPathBags(extender, threshold, project_names=experiment_configuration["endpoint"]["project_names"] == "True")
-
             if "filter_gold_labels" in experiment_configuration["training"] and experiment_configuration["training"]["filter_gold_labels"] == "maximize_f1":
                 extender = RemoveGoldFromAllExceptBestMention(extender)
 
             if "subsampling" in experiment_configuration["training"] and experiment_configuration["training"]["subsampling"] != "None":
                 extender = VertexSubsampler(extender, int(experiment_configuration["training"]["subsampling"]))
+
+            if "additional_matching_golds" in experiment_configuration["training"]:
+                threshold = float(experiment_configuration["training"]["additional_matching_golds"])
+                extender = AddGoldsWithSimilarPathBags(extender, threshold, project_names=experiment_configuration["endpoint"]["project_names"] == "True")
         else:
             extender = EmptyExtender()
 

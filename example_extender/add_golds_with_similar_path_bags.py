@@ -34,7 +34,7 @@ class AddGoldsWithSimilarPathBags:
                     overlap_rate = np.sum(overlap) / len(gold_path_bag)
 
                     if overlap_rate > self.similarity:
-                        print(gold_path_bag[overlap])
+                        # NOTE: MAybe score according to overlap
                         add = True
 
             if add:
