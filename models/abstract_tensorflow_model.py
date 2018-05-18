@@ -45,22 +45,11 @@ class AbstractTensorflowModel:
 
         return loss
 
-    def predict(self, batch):
+    def predict_batch(self, batch):
         model_prediction = self.get_prediction_graph()
         self.handle_variable_assignment(batch, "test")
         predictions = self.sess.run(model_prediction, feed_dict=self.get_assignment_dict())
-
-        example_begin_index = 0
-        for example in batch.examples:
-            scores = predictions[example_begin_index:example_begin_index + example.count_entities()]
-            example_begin_index += example.count_entities()
-
-            prediction = Prediction()
-            vertex_indexes = example.graph.get_entity_vertices()
-            vertex_labels = [example.graph.map_to_name_or_label(v) for v in vertex_indexes]
-
-            prediction.add_predictions(vertex_labels, scores)
-            example.prediction = prediction
+        return predictions
 
     def get_assignment_dict(self):
         assignment_dict = {}

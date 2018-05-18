@@ -28,17 +28,32 @@ class ModelTester:
             potential_batch = self.example_batcher.put_example(example)
 
             if potential_batch:
-                model.predict(potential_batch)
+                self.predict(model, potential_batch)
                 for example in potential_batch.get_examples():
                     self.evaluator.add_prediction(example)
 
         last_batch = self.example_batcher.get_batch()
         if last_batch.has_examples():
-            model.predict(last_batch)
+            self.predict(model, last_batch)
             for example in last_batch.get_examples():
                 self.evaluator.add_prediction(example)
 
         return self.evaluator.final_scores()
+
+    def predict(self, model, batch):
+        predictions = model.predict_batch(batch)
+
+        example_begin_index = 0
+        for example in batch.examples:
+            scores = predictions[example_begin_index:example_begin_index + example.count_entities()]
+            example_begin_index += example.count_entities()
+
+            prediction = Prediction()
+            vertex_indexes = example.graph.get_entity_vertices()
+            vertex_labels = [example.graph.map_to_name_or_label(v) for v in vertex_indexes]
+
+            prediction.add_predictions(vertex_labels, scores)
+            example.prediction = prediction
 
     def validate_example(self, example):
         return len(example.mentions) > 0

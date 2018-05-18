@@ -13,20 +13,23 @@ class GraphComponent:
 
     def __init__(self):
         self.variables = {}
-        self.variables["n_vertices"] = tf.placeholder(tf.int32)
-        self.variables["entity_vertex_indexes"] = tf.placeholder(tf.int32)
-        self.variables["sender_indices"] = tf.placeholder(tf.int32)
-        self.variables["receiver_indices"] = tf.placeholder(tf.int32)
-        self.variables["edge_type_indices"] = tf.placeholder(tf.int32)
-        self.variables["edge_bow_matrix"] = tf.placeholder(tf.int32)
-        self.variables["mention_scores"] = tf.placeholder(tf.float32)
-        self.variables["vertex_types"] = tf.placeholder(tf.float32)
-        self.variables["sentence_vertex_indices"] = tf.placeholder(tf.int32)
-        self.variables["word_vertex_indices"] = tf.placeholder(tf.int32)
-        self.variables["vertex_max_scores"] = tf.placeholder(tf.float32)
+        self.define_variable(tf.int32, "n_vertices")
+        self.define_variable(tf.int32, "entity_vertex_indexes")
+        self.define_variable(tf.int32, "sender_indices")
+        self.define_variable(tf.int32, "receiver_indices")
+        self.define_variable(tf.int32, "edge_type_indices")
+        self.define_variable(tf.int32, "edge_bow_matrix")
+        self.define_variable(tf.float32, "mention_scores")
+        self.define_variable(tf.float32, "vertex_types")
+        self.define_variable(tf.int32, "sentence_vertex_indices")
+        self.define_variable(tf.int32, "word_vertex_indices")
+        self.define_variable(tf.float32, "vertex_max_scores")
 
         self.mention_dummy_assignment_view = AssignmentView()
         self.word_assignment_view = AssignmentView()
+
+    def define_variable(self, type, name):
+        self.variables[name] = tf.placeholder(type, name=name)
 
     def initialize_zero_embeddings(self, dimension):
         self.vertex_embeddings = tf.zeros((self.get_variable("n_vertices"), dimension))

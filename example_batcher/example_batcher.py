@@ -2,12 +2,16 @@ from example_batcher.batch import Batch
 
 
 class ExampleBatcher:
+    """
+    Divides examples into batches for training
+    """
 
     batch_size = None
     current_batch = None
 
-    def __init__(self):
+    def __init__(self, batch_size):
         self.current_batch = Batch()
+        self.batch_size = batch_size
 
     def put_example(self, example):
         self.current_batch.examples.append(example)

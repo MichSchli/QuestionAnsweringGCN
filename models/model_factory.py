@@ -1,4 +1,3 @@
-from models.dummy_model import DummyModel
 from models.dummy_tensorflow_model import DummyTensorflowModel
 from models.tensorflow_components.aux_components.sentence_to_entity_mapper import SentenceToEntityMapper
 from models.tensorflow_components.gcn.gcn_factory import GcnFactory
@@ -62,6 +61,10 @@ class ModelFactory:
         pos_index = self.index_factory.get("pos", experiment_configuration)
 
         model = DummyTensorflowModel()
+        learning_rate = float(experiment_configuration["training"]["learning_rate"])
+        gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
+        model.learning_rate = learning_rate
+        model.gradient_clipping = gradient_clipping
         model.graph = GraphComponent()
         model.add_component(model.graph)
         model.add_component(model.graph.mention_dummy_assignment_view)
@@ -91,11 +94,6 @@ class ModelFactory:
 
         self.add_loss(experiment_configuration, model)
 
-        learning_rate = float(experiment_configuration["training"]["learning_rate"])
-        gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
-
-        model.learning_rate = learning_rate
-        model.gradient_clipping = gradient_clipping
 
         model.gcn, model.sentence_batch_features = self.gcn_factory.get_gated_message_bias_gcn(model.graph, experiment_configuration)
         model.add_component(model.gcn)

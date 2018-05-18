@@ -1,21 +1,43 @@
 import numpy as np
 
+from example_batcher.batch_function_objects.edge_feature_combiner import EdgeFeatureCombiner
+from example_batcher.batch_function_objects.entity_normalization_handler import EntityNormalizationHandler
+from example_batcher.batch_function_objects.entity_reshaping_utils import EntityReshapingUtils
+from example_batcher.batch_function_objects.gold_label_handler import GoldLabelHandler
+from example_batcher.batch_function_objects.sentence_feature_combiner import SentenceFeatureCombiner
+from example_batcher.batch_function_objects.sentence_rehaping_utils import SentenceReshapingUtils
+from example_batcher.batch_function_objects.vertex_feature_combiner import VertexFeatureCombiner
+from example_batcher.batch_function_objects.vertex_index_combiner import VertexIndexCombiner
+
 
 class Batch:
 
     examples = None
+    vertex_index_combiner = None
 
     def __init__(self):
         self.examples = []
+        self.vertex_index_combiner = VertexIndexCombiner(self)
+        self.sentence_feature_combiner = SentenceFeatureCombiner(self)
+        self.gold_label_handler = GoldLabelHandler(self)
+        self.sentence_reshaping_utils = SentenceReshapingUtils(self)
+        self.edge_feature_combiner = EdgeFeatureCombiner(self)
+        self.entity_normalization_handler = EntityNormalizationHandler(self)
+        self.entity_reshaping_utils = EntityReshapingUtils(self)
+        self.vertex_feature_combiner = VertexFeatureCombiner(self)
+
+    def get_examples(self):
+        return self.examples
+
+    """
+    Counts:
+    """
 
     def count_examples(self):
         return len(self.examples)
 
     def has_examples(self):
         return len(self.examples) > 0
-
-    def get_examples(self):
-        return self.examples
 
     def count_all_entities(self):
         return sum(example.count_entities() for example in self.examples)
@@ -26,212 +48,113 @@ class Batch:
     def get_entity_counts(self):
         return [example.count_entities() for example in self.examples]
 
+    def get_sentence_lengths(self):
+        return np.array([example.question.count_words() for example in self.examples], dtype=np.int32)
+
+    """
+    Index list getters:
+    """
+
+    def get_combined_mention_dummy_indices(self):
+        return self.vertex_index_combiner.get_combined_mention_dummy_indices()
+
+    def get_combined_word_vertex_indices(self):
+        return self.vertex_index_combiner.get_combined_word_vertex_indices()
+
+    def get_combined_entity_vertex_map_indexes(self):
+        return self.vertex_index_combiner.get_combined_entity_vertex_map_indexes()
+
+    def get_combined_sender_indices(self):
+        return self.vertex_index_combiner.get_combined_sender_indices()
+
+    def get_combined_receiver_indices(self):
+        return self.vertex_index_combiner.get_combined_receiver_indices()
+
+    def get_combined_sentence_vertex_indices(self):
+        return self.vertex_index_combiner.get_combined_sentence_vertex_indices()
+
+    """
+    Sentence feature getters:
+    """
+
+    def get_padded_word_indices(self):
+        return self.sentence_feature_combiner.get_padded_word_indices()
+
+    def get_padded_pos_indices(self):
+        return self.sentence_feature_combiner.get_padded_pos_indices()
+
+    def get_padded_mention_indicators(self):
+        return self.sentence_feature_combiner.get_padded_mention_indicators()
+
+    def get_word_padding_mask(self):
+        return self.sentence_feature_combiner.get_word_padding_mask()
+
+    """
+    Gold handlers:
+    """
+
+    def get_gold_vector(self):
+        return self.gold_label_handler.get_gold_vector_use_only_entities()
+
+    def get_gold_vector_use_all_vertices(self):
+        return self.gold_label_handler.get_gold_vector_use_all_vertices()
+
+    def get_padded_gold_matrix(self):
+        return self.gold_label_handler.get_padded_gold_matrix()
+
+    """
+    Sentence reshaping:
+    """
+
+    def get_word_indexes_in_padded_sentence_matrix(self):
+        return self.sentence_reshaping_utils.get_flat_word_indexes_arranged_in_padded_matrix()
+
+    def get_word_indexes_in_flattened_sentence_matrix(self):
+        return self.sentence_reshaping_utils.get_word_matrix_indexes_arranged_flat()
+
+    """
+    Entity reshaping:
+    """
+
+    def get_padded_entity_indexes(self):
+        return self.entity_reshaping_utils.get_padded_entity_indexes()
+
+    """
+    Edge features:
+    """
+
+    def get_combined_edge_type_indices(self):
+        return self.edge_feature_combiner.get_combined_edge_type_indices()
+
+    def get_padded_edge_part_type_matrix(self):
+        return self.edge_feature_combiner.get_padded_edge_part_type_matrix()
+
+    """
+    Vertex features:
+    """
+
+    def get_max_score_by_vertex(self):
+        return self.vertex_feature_combiner.get_max_score_by_vertex()
+
+    def get_combined_vertex_types(self):
+        return self.vertex_feature_combiner.get_combined_vertex_types()
+
+    """
+    Entity normalization:
+    """
+
+    def get_normalization_by_vertex_count(self, weight_positives):
+        return self.entity_normalization_handler.get_normalization_by_vertex_count(weight_positives=weight_positives)
+
+    """
+    Mention features:
+    """
+
     def get_combined_mention_scores(self):
         index_lists = [np.copy([m.score for m in example.mentions]) for example in self.examples]
 
         return np.concatenate(index_lists).astype(np.float32)
 
-    def get_combined_mention_dummy_indices(self):
-        index_lists = [np.copy([m.dummy_index for m in example.mentions]) for example in self.examples]
-
-        accumulator = 0
-        for i,example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += example.count_vertices()
-
-        return np.concatenate(index_lists)
-
-    def get_combined_word_vertex_indices(self):
-        index_lists = [np.copy(example.question.dummy_indexes) for example in self.examples]
-
-        accumulator = 0
-        for i,example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += example.count_vertices()
-
-        return np.concatenate(index_lists)
-
-    def get_max_score_by_vertex(self):
-        index_lists = [example.get_vertex_max_scores() for example in self.examples]
-
-        return np.concatenate(index_lists).astype(np.float32)
-
-    def get_combined_entity_vertex_map_indexes(self):
-        index_lists = [np.copy(example.get_entity_vertex_indexes()) for example in self.examples]
-
-        accumulator = 0
-        for i,example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += example.count_vertices()
-
-        return np.concatenate(index_lists)
-
-    def get_combined_sender_indices(self):
-        index_lists = [np.copy(example.graph.edges[:,0]) for example in self.examples]
-
-        accumulator = 0
-        for i,example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += example.count_vertices()
-
-        return np.concatenate(index_lists)
-
-    def get_combined_receiver_indices(self):
-        index_lists = [np.copy(example.graph.edges[:,2]) for example in self.examples]
-
-        accumulator = 0
-        for i,example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += example.count_vertices()
-
-        return np.concatenate(index_lists)
-
-    def get_combined_edge_type_indices(self):
-        index_lists = [np.copy(example.graph.edges[:,1]) for example in self.examples]
-
-        return np.concatenate(index_lists)
-
-    def get_gold_vector(self):
-        vertex_lists = [np.zeros_like(example.get_entity_vertex_indexes(), dtype=np.float32) for example in self.examples]
-
-        for i,example in enumerate(self.examples):
-            for gold_index in example.get_gold_indexes():
-                if gold_index >=0:
-                    # GOLD INDEX: Vertex
-                    # Vertex list: Entity
-                    entity_vertex_list_index = example.graph.map_general_vertex_to_entity_index(gold_index)
-                    vertex_lists[i][entity_vertex_list_index] = 1
-
-        return np.concatenate(vertex_lists)
-
-    def get_gold_vector_use_all_vertices(self):
-        vertex_lists = [np.zeros_like(example.graph.vertices, dtype=np.float32) for example in self.examples]
-
-        for i,example in enumerate(self.examples):
-            for gold_index in example.get_gold_indexes():
-                if gold_index >=0:
-                    vertex_lists[i][gold_index] = 1
-
-        return np.concatenate(vertex_lists)
-
-    def get_normalization_by_vertex_count(self, weight_positives):
-        vertex_lists = [np.ones_like(example.get_entity_vertex_indexes(), dtype=np.float32) for example in self.examples]
-
-        for i,example in enumerate(self.examples):
-            vertex_lists[i] /= (example.count_entities() * self.count_examples())
-
-            if weight_positives and example.get_gold_indexes().shape[0] > 0:
-                weight = example.count_entities() / example.get_gold_indexes().shape[0]
-                for gold_index in example.get_gold_indexes():
-                    if gold_index >=0:
-                        vertex_lists[i][gold_index] *= weight
-
-        return np.concatenate(vertex_lists)
-
-    def get_word_indexes_in_padded_sentence_matrix(self):
-        max_word_count = max(example.count_words() for example in self.examples)
-        matrix = np.zeros((self.count_examples(), max_word_count), dtype=np.int32)
-
-        for i, example in enumerate(self.examples):
-            matrix[i][:example.count_words()] = np.arange(1, example.count_words()+1)
-
-        return matrix
 
 
-    def get_word_indexes_in_flattened_sentence_matrix(self):
-        max_word_count = max(example.count_words() for example in self.examples)
 
-        index_lists = [np.arange(len(example.question.dummy_indexes)) for example in self.examples]
-
-        accumulator = 0
-        for i, example in enumerate(self.examples):
-            index_lists[i] += accumulator
-            accumulator += max_word_count
-
-        full = np.concatenate(index_lists)
-        return full
-
-    def get_padded_word_indices(self):
-        max_word_count = max(example.count_words() for example in self.examples)
-        sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.int32)
-
-        for i,example in enumerate(self.examples):
-            for j, word_index in enumerate(example.question.get_word_indexes()):
-                sentence_matrix[i][j] = word_index
-
-        return sentence_matrix
-
-    def get_padded_mention_indicators(self):
-        max_word_count = max(example.count_words() for example in self.examples)
-        sentence_matrix = np.ones((len(self.examples), max_word_count), dtype=np.float32) * -1
-        for i,example in enumerate(self.examples):
-            for m in example.mentions:
-                sentence_matrix[i][m.word_indexes] = 1.0
-
-        return sentence_matrix
-
-    def get_padded_entity_indexes(self):
-        max_entity_count = max(example.count_entities() for example in self.examples)
-        matrix = np.ones((len(self.examples), max_entity_count), dtype=np.int32) * -1
-        running_count = 0
-        for i,example in enumerate(self.examples):
-            matrix[i][:example.count_entities()] = np.arange(example.count_entities(), dtype=np.int32) + running_count
-            running_count += example.count_entities()
-
-        return matrix
-
-    def get_padded_gold_matrix(self):
-        max_entity_count = max(example.count_entities() for example in self.examples)
-        matrix = np.zeros((len(self.examples), max_entity_count), dtype=np.int32) * -1
-        for i,example in enumerate(self.examples):
-            for gold_index in example.get_gold_indexes():
-                if gold_index >=0:
-                    matrix[i][gold_index] = 1
-
-        return matrix
-
-    def get_padded_pos_indices(self):
-        max_word_count = max(example.count_words() for example in self.examples)
-        sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.int32)
-
-        for i,example in enumerate(self.examples):
-            for j, word_index in enumerate(example.question.get_pos_indexes()):
-                sentence_matrix[i][j] = word_index
-
-        return sentence_matrix
-
-    def get_word_padding_mask(self):
-        max_word_count = max(example.count_words() for example in self.examples)
-        sentence_matrix = np.zeros((len(self.examples), max_word_count), dtype=np.float32)
-
-        for i,example in enumerate(self.examples):
-            for j, word_index in enumerate(example.question.get_word_indexes()):
-                sentence_matrix[i][j] = 1.0
-
-        return sentence_matrix
-
-    def get_padded_edge_part_type_matrix(self):
-        pad_to = max(example.get_padded_edge_part_type_matrix().shape[1] for example in self.examples)
-        index_lists = []
-
-        for i,example in enumerate(self.examples):
-            example_bags = example.get_padded_edge_part_type_matrix()
-            padding_needed = pad_to - example_bags.shape[1]
-
-            if padding_needed > 0:
-                example_bags = np.pad(example_bags, ((0,0), (0,padding_needed)), mode='constant')
-
-            index_lists.append(example_bags)
-
-        return np.concatenate(index_lists)
-
-    def get_sentence_lengths(self):
-        return np.array([example.question.count_words() for example in self.examples], dtype=np.int32)
-
-    def get_combined_vertex_types(self):
-        lists = [example.graph.get_vertex_types() for example in self.examples]
-
-        return np.concatenate(lists)
-
-    def get_combined_sentence_vertex_indices(self):
-        return np.array([example.graph.get_sentence_vertex_index() for example in self.examples], dtype=np.int32)
