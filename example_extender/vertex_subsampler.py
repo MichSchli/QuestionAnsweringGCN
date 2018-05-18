@@ -75,6 +75,7 @@ class VertexSubsampler:
         example.graph.update_general_vertex_to_entity_index_map()
 
         example.graph.nearby_centroid_map = [[vertex_map[centroid] for centroid in example.graph.nearby_centroid_map[kept_vertex]] for kept_vertex,i in vertex_map.items()]
+        example.graph.entity_centroid_paths = {vertex_map[k]: v for k,v in example.graph.entity_centroid_paths.items() if k in vertex_map}
 
         example.graph.vertex_max_scores = np.array([example.graph.vertex_max_scores[kept_vertex] for kept_vertex,i in vertex_map.items()]).astype(np.float32) \
             if example.graph.vertex_max_scores is not None else np.zeros(example.graph.vertices.shape[0], dtype=np.float32)
