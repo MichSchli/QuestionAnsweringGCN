@@ -16,7 +16,7 @@ class AddGoldsWithSimilarPathBags:
 
     def extend(self, example):
         example = self.inner.extend(example)
-        #print(example)
+        has_printed = False
 
         additional_gold_answers = []
 
@@ -34,6 +34,11 @@ class AddGoldsWithSimilarPathBags:
                     overlap_rate = np.sum(overlap) / len(gold_path_bag)
 
                     if overlap_rate > self.similarity:
+                        if not has_printed:
+                            print(example)
+                            has_printed = True
+
+                        print(overlap_rate)
                         # NOTE: MAybe score according to overlap
                         add = True
 
@@ -55,7 +60,6 @@ class AddGoldsWithSimilarPathBags:
                 example.gold_answers.append(gold_answer)
 
         if len(additional_gold_answers) > 0:
-            print(example)
             print(example)
             print("====================================")
 
