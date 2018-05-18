@@ -28,7 +28,7 @@ class AddGoldsWithSimilarPathBags:
 
             for i, gold_answer in enumerate(example.gold_answers):
                 for index in gold_answer.entity_indexes:
-                    gold_path_bag = example.graph.entity_centroid_paths[index]
+                    gold_path_bag = np.array(example.graph.entity_centroid_paths[index])
                     j_path_bag = np.array(example.graph.entity_centroid_paths[j])
                     overlap = np.in1d(gold_path_bag, j_path_bag)
                     overlap_rate = np.sum(overlap) / len(gold_path_bag)
