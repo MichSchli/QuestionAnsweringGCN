@@ -47,14 +47,15 @@ class AddGoldsWithSimilarPathBags:
                     gold_answer.entity_name_or_label = example.graph.map_to_label(j)
                     gold_answer.entity_indexes = np.array(
                         [example.graph.map_from_label(gold_answer.entity_name_or_label)])
-                additional_gold_answers.append(gold_answer)
 
                 gold_answer.entity_indexes = gold_answer.entity_indexes[
                     np.where(gold_answer.entity_indexes >= 0)]
 
+                additional_gold_answers.append(gold_answer)
+                example.gold_answers.append(gold_answer)
+
         if len(additional_gold_answers) > 0:
             print(example)
-            example.gold_answers.extend(additional_gold_answers)
             print(example)
             print("====================================")
 
