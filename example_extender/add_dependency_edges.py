@@ -1,5 +1,7 @@
 import numpy as np
 
+from example_reader.graph_reader.edge_type_utils import EdgeTypeUtils
+
 
 class AddDependencyEdgeExtender:
 
@@ -11,6 +13,7 @@ class AddDependencyEdgeExtender:
         self.inner = inner
         self.relation_index = relation_index
         self.vertex_index = vertex_index
+        self.edge_type_utils = EdgeTypeUtils()
 
     def extend(self, example):
         example = self.inner.extend(example)
@@ -34,6 +37,7 @@ class AddDependencyEdgeExtender:
             i += 1
 
         dep_edges = np.array(dep_edges)
+        example.graph.edge_types[self.edge_type_utils.index_of("dependency")] = np.arange(len(dep_edges), dtype=np.int32) + example.graph.edges.shape[0]
         example.graph.add_edges(dep_edges)
 
         return example

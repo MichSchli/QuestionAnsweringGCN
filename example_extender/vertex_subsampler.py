@@ -56,6 +56,10 @@ class VertexSubsampler:
 
         new_label_to_vertex_map = {label:vertex_map[index] for label, index in example.graph.vertex_label_to_index_map.items() if index in vertex_map}
 
+
+        edge_map = {kept_edge: i for i, kept_edge in
+                      enumerate(np.arange(example.graph.edges.shape[0], dtype=np.int32)[kept_edges_second_round])}
+
         example.graph.map_name_indexes(vertex_map)
 
         example.graph.set_label_to_index_map(new_label_to_vertex_map)
@@ -79,5 +83,8 @@ class VertexSubsampler:
 
         example.graph.vertex_max_scores = np.array([example.graph.vertex_max_scores[kept_vertex] for kept_vertex,i in vertex_map.items()]).astype(np.float32) \
             if example.graph.vertex_max_scores is not None else np.zeros(example.graph.vertices.shape[0], dtype=np.float32)
+
+
+        example.graph.edge_types = [np.array([edge_map[idx] for idx in v if kept_edges_second_round[idx]], dtype=np.int32) for v in example.graph.edge_types]
 
         return example

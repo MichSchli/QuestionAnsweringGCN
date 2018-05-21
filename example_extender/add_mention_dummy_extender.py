@@ -1,5 +1,7 @@
 import numpy as np
 
+from example_reader.graph_reader.edge_type_utils import EdgeTypeUtils
+
 
 class AddMentionDummyExtender:
 
@@ -11,6 +13,7 @@ class AddMentionDummyExtender:
         self.inner = inner
         self.relation_index = relation_index
         self.vertex_index = vertex_index
+        self.edge_type_utils = EdgeTypeUtils()
 
     def extend(self, example):
         example = self.inner.extend(example)
@@ -34,6 +37,7 @@ class AddMentionDummyExtender:
         mention_edges = np.array(mention_edges)
 
         example.graph.add_vertices(mention_vertices, mention_vertex_types)
+        example.graph.edge_types[self.edge_type_utils.index_of("mention_dummy")] = np.arange(len(mention_edges), dtype=np.int32) + example.graph.edges.shape[0]
         example.graph.add_edges(mention_edges)
 
         return example

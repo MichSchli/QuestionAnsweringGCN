@@ -3,12 +3,13 @@ import tensorflow as tf
 
 class GcnPropagator:
 
-    def __init__(self, messages, gates, graph, direction):
+    def __init__(self, messages, gates, graph, direction, edge_type=None):
         self.variables = {}
         self.messages = messages
         self.gates = gates
         self.graph = graph
         self.direction = direction
+        self.edge_type = edge_type
 
     def propagate(self, mode):
         message_sums = self.compute_message_sums(mode)
@@ -16,7 +17,7 @@ class GcnPropagator:
         return message_sums
 
     def compute_message_sums(self, mode):
-        sender_indices, receiver_indices = self.graph.get_edges()
+        sender_indices, receiver_indices = self.graph.get_edges(edge_type=self.edge_type)
 
         message_in_indices = receiver_indices if self.direction == "forward" else sender_indices
         incidence_matrix = self.get_unnormalized_incidence_matrix(message_in_indices)

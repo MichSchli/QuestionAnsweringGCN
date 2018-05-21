@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy as np
+
+from example_reader.graph_reader.edge_type_utils import EdgeTypeUtils
 from models.tensorflow_components.graph.assignment_view import AssignmentView
 
 
@@ -24,6 +26,10 @@ class GraphComponent:
         self.define_variable(tf.int32, "sentence_vertex_indices")
         self.define_variable(tf.int32, "word_vertex_indices")
         self.define_variable(tf.float32, "vertex_max_scores")
+
+        self.edge_type_utils = EdgeTypeUtils()
+        for i in range(self.edge_type_utils.count_types()):
+            self.variables["gcn_types_"+str(i)] = tf.placeholder(tf.int32, name="gcn_types_"+str(i))
 
         self.mention_dummy_assignment_view = AssignmentView()
         self.word_assignment_view = AssignmentView()
@@ -82,14 +88,27 @@ class GraphComponent:
     def get_variable(self, name):
         return self.variables[name]
 
-    def get_edges(self):
-        return self.variables["sender_indices"], self.variables["receiver_indices"]
+    def get_edges(self, edge_type):
+        if edge_type is None:
+            return self.variables["sender_indices"], self.variables["receiver_indices"]
+        else:
+            return tf.nn.embedding_lookup(self.variables["sender_indices"], self.variables["gcn_types_"+str(edge_type)]), \
+                   tf.nn.embedding_lookup(self.variables["receiver_indices"], self.variables["gcn_types_"+str(edge_type)])
 
-    def get_edge_types(self):
-        return self.variables["edge_type_indices"]
+    def get_gcn_type_edge_indices(self, edge_type):
+        return self.variables["gcn_types_"+str(edge_type)]
 
-    def get_edge_word_bows(self):
-        return self.variables["edge_bow_matrix"]
+    def get_edge_types(self, edge_type):
+        if edge_type is None:
+            return self.variables["edge_type_indices"]
+        else:
+            return tf.nn.embedding_lookup(self.variables["edge_type_indices"], self.variables["gcn_types_"+str(edge_type)])
+
+    def get_edge_word_bows(self, edge_type):
+        if edge_type is None:
+            return self.variables["edge_bow_matrix"]
+        else:
+            return tf.nn.embedding_lookup(self.variables["edge_bow_matrix"], self.variables["gcn_types_"+str(edge_type)])
 
     def count_vertices(self):
         return self.variables["n_vertices"]
@@ -110,6 +129,9 @@ class GraphComponent:
         self.variable_assignments["sentence_vertex_indices"] = batch.get_combined_sentence_vertex_indices()
         self.variable_assignments["word_vertex_indices"] = batch.get_combined_word_vertex_indices()
         self.variable_assignments["vertex_max_scores"] = batch.get_max_score_by_vertex()
+
+        for i in range(self.edge_type_utils.count_types()):
+            self.variable_assignments["gcn_types_"+str(i)] = batch.get_combined_gcn_type_edge_indices(i)
 
         mention_dummy_indices = batch.get_combined_mention_dummy_indices()
         total_vertices = batch.count_all_vertices()

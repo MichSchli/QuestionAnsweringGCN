@@ -1,5 +1,7 @@
 import numpy as np
 
+from example_reader.graph_reader.edge_type_utils import EdgeTypeUtils
+
 
 class AddWordDummyExtender:
 
@@ -11,6 +13,7 @@ class AddWordDummyExtender:
         self.inner = inner
         self.relation_index = relation_index
         self.vertex_index = vertex_index
+        self.edge_type_utils = EdgeTypeUtils()
 
     def extend(self, example):
         example = self.inner.extend(example)
@@ -47,6 +50,10 @@ class AddWordDummyExtender:
         word_vertices = np.array(word_vertices)
         word_vertex_types = np.array([[0,0,0,1,0,0] for _ in word_vertices], dtype=np.float32)
         word_edges = np.array(word_edges)
+
+        example.graph.edge_types[self.edge_type_utils.index_of("mention_dummy")] = np.concatenate((example.graph.edge_types[self.edge_type_utils.index_of("mention_dummy")],
+                                                                                                   np.arange(word_edges.shape[0]/2, dtype=np.int32) * 2 + example.graph.edges.shape[0]))
+        example.graph.edge_types[self.edge_type_utils.index_of("sentence_dummy")] = np.arange(word_edges.shape[0]/2, dtype=np.int32) * 2 + 1 + example.graph.edges.shape[0]
 
         example.graph.add_vertices(word_vertices, word_vertex_types)
         example.graph.add_edges(word_edges)

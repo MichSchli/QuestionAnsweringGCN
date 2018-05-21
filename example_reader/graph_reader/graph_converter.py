@@ -1,12 +1,15 @@
+from example_reader.graph_reader.edge_type_utils import EdgeTypeUtils
 from example_reader.graph_reader.graph import Graph
 import numpy as np
 
 class GraphConverter:
 
     hypergraph_interface = None
+    edge_type_utils = None
 
     def __init__(self, hypergraph_interface):
         self.hypergraph_interface = hypergraph_interface
+        self.edge_type_utils = EdgeTypeUtils()
 
     def get_neighborhood_graph(self, entities):
         hypergraph = self.hypergraph_interface.get_neighborhood_graph(entities)
@@ -28,6 +31,13 @@ class GraphConverter:
         graph.edges = np.concatenate((hypergraph.entity_to_entity_edges,
                                       hypergraph.event_to_entity_edges,
                                      hypergraph.entity_to_event_edges))
+
+        graph.edge_types = [np.array([], dtype=np.int32) for _ in range(self.edge_type_utils.count_types())]
+        graph.edge_types[0] = np.arange(hypergraph.entity_to_entity_edges.shape[0], dtype=np.int32)
+        acc = hypergraph.entity_to_entity_edges.shape[0]
+        graph.edge_types[1] = np.arange(hypergraph.event_to_entity_edges.shape[0], dtype=np.int32) + acc
+        acc += hypergraph.event_to_entity_edges.shape[0]
+        graph.edge_types[2] = np.arange(hypergraph.entity_to_event_edges.shape[0], dtype=np.int32) + acc
 
         vertex_name_map = {hypergraph.to_index(k):v for k,v in hypergraph.name_map.feature_map.items()}
         graph.set_index_to_name_map(vertex_name_map)

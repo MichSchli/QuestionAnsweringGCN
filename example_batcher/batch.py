@@ -126,6 +126,9 @@ class Batch:
     def get_combined_edge_type_indices(self):
         return self.edge_feature_combiner.get_combined_edge_type_indices()
 
+    def get_combined_gcn_type_edge_indices(self, i):
+        return self.edge_feature_combiner.get_combined_gcn_type_edge_indices(i)
+
     def get_padded_edge_part_type_matrix(self):
         return self.edge_feature_combiner.get_padded_edge_part_type_matrix()
 

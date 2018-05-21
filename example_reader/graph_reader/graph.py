@@ -22,6 +22,8 @@ class Graph:
 
     vertex_max_scores = None
 
+    edge_types = None
+
     def copy(self):
         graph = Graph()
 
@@ -45,6 +47,7 @@ class Graph:
         graph.vertex_types = np.copy(self.vertex_types)
 
         graph.entity_centroid_paths = copy.deepcopy(self.entity_centroid_paths)
+        graph.edge_types = copy.deepcopy(self.edge_types)
 
         return graph
 

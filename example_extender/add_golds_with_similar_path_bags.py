@@ -35,10 +35,8 @@ class AddGoldsWithSimilarPathBags:
 
                     if overlap_rate > self.similarity:
                         if not has_printed:
-                            print(example)
                             has_printed = True
 
-                        print(overlap_rate)
                         # NOTE: MAybe score according to overlap
                         add = True
 
@@ -58,9 +56,5 @@ class AddGoldsWithSimilarPathBags:
 
                 additional_gold_answers.append(gold_answer)
                 example.gold_answers.append(gold_answer)
-
-        if len(additional_gold_answers) > 0:
-            print(example)
-            print("====================================")
 
         return example

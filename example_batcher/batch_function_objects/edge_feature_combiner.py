@@ -27,3 +27,13 @@ class EdgeFeatureCombiner:
             index_lists.append(example_bags)
 
         return np.concatenate(index_lists)
+
+    def get_combined_gcn_type_edge_indices(self, i):
+        index_lists = [np.copy(example.graph.edge_types[i]) for example in self.batch.examples]
+
+        acc = 0
+        for i,example in enumerate(self.batch.examples):
+            index_lists[i] += acc
+            acc += example.count_edges()
+
+        return np.concatenate(index_lists)

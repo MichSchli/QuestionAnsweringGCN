@@ -31,6 +31,9 @@ class ExperimentFactory:
                                                          self.logger)
 
     def get(self, experiment_configuration):
+        self.logger.write("Building experiment:", area="context", subject="configuration")
+        self.logger.write_configuration(experiment_configuration, area="context", subject="configuration")
+
         model_trainer = self.model_trainer_factory.get(experiment_configuration)
         model_tester = self.model_tester_factory.get(experiment_configuration)
 

@@ -28,6 +28,12 @@ class Logger:
     def should_log(self, area, subject):
         return area in self.logger_settings and subject in self.logger_settings[area]
 
+    def write_configuration(self, configuration, area, subject):
+        for header, items in configuration.items():
+            self.write("["+header+"]", area, subject)
+            for key, value in items.items():
+                self.write("\t" + key + " = " + value, area, subject)
+
     def write(self, message, area, subject):
         if self.should_log(area, subject):
             methods = self.logger_settings[area][subject].split(",")
