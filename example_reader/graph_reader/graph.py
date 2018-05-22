@@ -51,6 +51,9 @@ class Graph:
 
         return graph
 
+    def summarize(self):
+        return str(self.padded_edge_bow_matrix)
+
     def get_entity_path_to_centroid(self, index, relation_index):
         real_index = self.entity_vertex_indexes[index]
         forward_entity_edges = self.edges[np.where(self.edges[:,0] == real_index)[0]]
