@@ -11,7 +11,7 @@ class ExampleReader:
     deplambda = None
     deplambda_map = {"train": "data/webquestions/siva.train.split.deplambda.conll"}
 
-    def __init__(self, question_reader, graph_reader, mention_reader, gold_answer_reader, dataset_map, deplambda_map = None, deplambda=False):
+    def __init__(self, question_reader, graph_reader, mention_reader, gold_answer_reader, gold_path_reader, dataset_map, deplambda_map = None, deplambda=False):
         self.question_reader = question_reader
         self.graph_reader = graph_reader
         self.dataset_map = dataset_map
@@ -19,6 +19,7 @@ class ExampleReader:
         self.gold_answer_reader = gold_answer_reader
         self.dataset = {}
         self.deplambda = deplambda
+        self.gold_path_reader = gold_path_reader
         #self.deplambda_map = deplambda_map
 
     def iterate(self, dataset, shuffle=False):
@@ -43,6 +44,8 @@ class ExampleReader:
             example.index_mentions()
             example.gold_answers = self.gold_answer_reader.build(data[2][i])
             example.index_gold_answers()
+
+            example.gold_path = self.gold_path_reader.find(example)
 
             yield example
 

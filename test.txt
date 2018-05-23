@@ -1,0 +1,4073 @@
+
+SENTENCE: What is the Timezone in Vancouver ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: Who is the prime minister of Ethiopia now ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.33333333333333337
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: Which island in Greece ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	1.0
+location.country.first_level_divisions.1	location.country.first_level_divisions.2	0.13333333333333333
+location.location.contains.1	location.location.contains.2	0.020408163265306124
+
+
+SENTENCE: Who owns the Toronto Maple Leafs ?
+
+sports.professional_sports_team.owner_s.1	sports.professional_sports_team.owner_s.2	1.0
+
+
+SENTENCE: What is the currency in France ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What is there to do in Laredo TX ?
+
+location.location.contains.1	location.location.contains.2	0.7200000000000001
+
+
+SENTENCE: What language do the people in Ghana speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.15384615384615385
+
+
+SENTENCE: What does Shawn Johnson do ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What does Duffy sing ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.3636363636363636
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.recording.artist.2	music.recording.artist.1	0.3076923076923077
+music.album.artist.2	music.album.artist.1	0.28571428571428575
+music.track_contribution.contributor	music.track_contribution.track	0.21621621621621623
+
+
+SENTENCE: Who is Lamar Odom playing for in 2012 ?
+
+basketball.basketball_player_stats.player	basketball.basketball_player_stats.team	0.5
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: What government did Japan have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: What type of money do Japanese use ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What films has Kristen Stewart starred in ?
+
+film.performance.actor	film.performance.film	0.5128205128205129
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.2727272727272727
+
+
+SENTENCE: Where GM cars are built ?
+
+
+
+SENTENCE: Who is Clint Eastwood dating ?
+
+people.marriage.spouse	people.marriage.spouse	0.4
+
+
+SENTENCE: What kind of cancer did Bob Marley died from ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: Where is the cruise ship terminal in Vancouver BC ?
+
+travel.transportation.travel_destination	travel.transportation.transport_terminus	0.4
+
+
+SENTENCE: Who played Mickey on Days of Our Lives ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+tv.tv_guest_role.character	tv.tv_guest_role.actor	1.0
+film.performance.character	film.performance.actor	0.5
+
+
+SENTENCE: Who played the voice of Aladdin ?
+
+film.performance.film	film.performance.actor	0.15384615384615385
+
+
+SENTENCE: When did Shawn Johnson won the gold medal ?
+
+olympics.olympic_athlete_affiliation.athlete	olympics.olympic_athlete_affiliation.olympics	1.0
+olympics.olympic_medal_honor.medalist	olympics.olympic_medal_honor.olympics	1.0
+tv.tv_regular_personal_appearance.person	tv.tv_regular_personal_appearance.program	0.6666666666666666
+
+
+SENTENCE: Who was the queen of The Iceni tribe ?
+
+military.military_command.military_combatant	military.military_command.military_commander	1.0
+people.ethnicity.people.1	people.ethnicity.people.2	0.6666666666666666
+
+
+SENTENCE: What time is it in Japan 24 hour clock ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: What language do Cyprus speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.4
+
+
+SENTENCE: Who was the vice president during George W Bush ?
+
+government.us_president.vice_president.1	government.us_president.vice_president.2	1.0
+
+
+SENTENCE: What is Jonathan Swift famous for ?
+
+people.person.profession.1	people.person.profession.2	0.2857142857142857
+
+
+SENTENCE: What team does Terrell Owens play for this year ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.2857142857142857
+
+
+SENTENCE: What form of government does Czech Republic have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: Where did Gareth Southgate play ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: Who owns the New England Patriots football team ?
+
+sports.professional_sports_team.owner_s.1	sports.professional_sports_team.owner_s.2	1.0
+
+
+SENTENCE: Who does the Islamic worship ?
+
+religion.religion.deities.1	religion.religion.deities.2	0.6666666666666666
+
+
+SENTENCE: Where is Riley 's farm located ?
+
+fictional_universe.fictional_character.places_lived.1	fictional_universe.fictional_character.places_lived.2	1.0
+
+
+SENTENCE: Where in Oklahoma are Scorpions found ?
+
+location.administrative_division_capital_relationship.administrative_division	location.administrative_division_capital_relationship.capital	1.0
+location.us_state.capital.1	location.us_state.capital.2	1.0
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+location.mailing_address.state_province_region	location.mailing_address.citytown	0.019801980198019802
+
+
+SENTENCE: What kind of music did Michael Jackson sing ?
+
+music.artist.genre.1	music.artist.genre.2	0.8333333333333333
+
+
+SENTENCE: What state is Barack Obama Senator for ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	0.5
+
+
+SENTENCE: What channel does Anderson Cooper come on ?
+
+business.employment_tenure.person	business.employment_tenure.company	0.6666666666666666
+
+
+SENTENCE: What places can you visit in France ?
+
+location.country.first_level_divisions.1	location.country.first_level_divisions.2	0.45454545454545453
+location.administrative_division.country.2	location.administrative_division.country.1	0.1090909090909091
+location.location.contains.1	location.location.contains.2	0.0925925925925926
+
+
+SENTENCE: Where did Pres Clinton go to college ?
+
+education.education.student	education.education.institution	0.923076923076923
+
+
+SENTENCE: What language is spoken in Singapore ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+
+
+SENTENCE: Where to stay in Bermuda TripAdvisor ?
+
+government.government_agency.jurisdiction.2	government.government_agency.jurisdiction.1	1.0
+organization.organization.geographic_scope.2	organization.organization.geographic_scope.1	0.2857142857142857
+
+
+SENTENCE: What age do Scottish people go to university ?
+
+fictional_universe.fictional_character.ethnicity.2	fictional_universe.fictional_character.ethnicity.1	1.0
+
+
+SENTENCE: What is the state flag of Colorado called ?
+
+symbols.flag_use.flag_user	symbols.flag_use.flag	1.0
+
+
+SENTENCE: Where is the Boeing Company ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+organization.organization.place_founded.1	organization.organization.place_founded.2	0.6666666666666666
+
+
+SENTENCE: Where does the St. Joe River start ?
+
+geography.river.mouth.1	geography.river.mouth.2	1.0
+
+
+SENTENCE: What was Henry Ford best known for ?
+
+people.person.profession.1	people.person.profession.2	0.2857142857142857
+
+
+SENTENCE: What countries does Canada export wheat to ?
+
+location.imports_and_exports.imported_from	location.imports_and_exports.exported_to	0.5
+location.imports_and_exports.exported_to	location.imports_and_exports.imported_from	0.5
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.05128205128205127
+
+
+SENTENCE: Where does Portuguese language come from ?
+
+language.language_writing_system.languages.2	language.language_writing_system.languages.1	0.6666666666666666
+
+
+SENTENCE: Where did Pavlova originate ?
+
+food.dish.cuisine.1	food.dish.cuisine.2	1.0
+
+
+SENTENCE: Which Jane Austen books are movies ?
+
+film.film.story_by.2	film.film.story_by.1	0.125
+book.author.works_written.1	book.author.works_written.2	0.020202020202020204
+
+
+SENTENCE: Where did Kurt Cobain die ?
+
+music.artist.origin.1	music.artist.origin.2	1.0
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+people.place_lived.person	people.place_lived.location	0.6666666666666666
+
+
+SENTENCE: Who was the voice of Nemo 's dad ?
+
+film.performance.film	film.performance.actor	0.07999999999999999
+
+
+SENTENCE: Where did L Frank Baum die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: Who plays Sarah wittle in jumanji ?
+
+film.performance.film	film.performance.actor	0.06060606060606061
+
+
+SENTENCE: What country is the name Natalie from ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: Where does Bill Richardson live ?
+
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	0.6666666666666666
+people.place_lived.person	people.place_lived.location	0.5
+
+
+SENTENCE: What college did Joe Montana play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: What did Mozart do to become famous ?
+
+people.person.profession.1	people.person.profession.2	0.33333333333333337
+
+
+SENTENCE: What is the episode of Family Guy when Peter makes his own country ?
+
+visual_art.art_subject.artwork_on_the_subject.1	visual_art.art_subject.artwork_on_the_subject.2	0.25
+
+
+SENTENCE: What was the name of the original Seattle baseball team ?
+
+sports.sports_team.location.2	sports.sports_team.location.1	0.16666666666666669
+
+
+SENTENCE: What did Einstein do ?
+
+people.person.profession.1	people.person.profession.2	0.2222222222222222
+
+
+SENTENCE: What are the official languages of the Dominican Republic ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.5
+
+
+SENTENCE: What was one of Benjamin Franklin 's inventions ?
+
+law.invention.inventor.2	law.invention.inventor.1	0.4
+
+
+SENTENCE: What airport is closest to downtown Toronto ?
+
+travel.transportation.travel_destination	travel.transportation.transport_terminus	0.4
+aviation.airport.serves.2	aviation.airport.serves.1	0.2857142857142857
+
+
+SENTENCE: What type of poetry does John Donne write ?
+
+book.school_or_movement.associated_authors.2	book.school_or_movement.associated_authors.1	1.0
+
+
+SENTENCE: Who does David James play for 2011 ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: Where did Carmen Electra grow up ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What continent Does the Amazon river flow through ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Who is number 5 on the Boston Celtics ?
+
+sports.sports_team_roster.team	sports.sports_team_roster.player	0.03773584905660378
+
+
+SENTENCE: What currency does Senegal use ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What time zone am I in Missouri ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: Where was ancient Carthage located ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where is the NASCAR Hall of Fame ?
+
+location.location.contains.2	location.location.contains.1	1.0
+travel.travel_destination.tourist_attractions.2	travel.travel_destination.tourist_attractions.1	0.6666666666666666
+
+
+SENTENCE: What did the scientist Thomson discover ?
+
+
+
+SENTENCE: Where did the Loma Prieta earthquake occur ?
+
+time.event.locations.1	time.event.locations.2	1.0
+
+
+SENTENCE: Where did Jennifer Hudson go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did Martin Luther King Jr get shot ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: Who did Deborah Sampson married ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: Who plays the new Michael Myers ?
+
+film.performance.character	film.performance.actor	0.2222222222222222
+
+
+SENTENCE: What car companies does Ford Motor Company own ?
+
+organization.organization_relationship.parent	organization.organization_relationship.child	0.2222222222222222
+
+
+SENTENCE: What kind of voting system does Japan have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: Where was Kennedy when he got shot ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: What did Coolidge believe with regards to the role of government ?
+
+media_common.quotation.author.2	media_common.quotation.author.1	0.0392156862745098
+
+
+SENTENCE: What is the world 's tallest building in Dubai called ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	0.10526315789473684
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+
+
+SENTENCE: What religion in Thailand ?
+
+location.statistical_region.religions.inverse	location.religion_percentage.religion	1.0
+
+
+SENTENCE: Where is German an official language ?
+
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.7692307692307693
+
+
+SENTENCE: Where do you fly into for Destin ?
+
+aviation.airport.serves.2	aviation.airport.serves.1	1.0
+travel.transportation.travel_destination	travel.transportation.mode_of_transportation	0.6666666666666666
+
+
+SENTENCE: What do Catholics call their god ?
+
+religion.religion.deities.1	religion.religion.deities.2	1.0
+
+
+SENTENCE: What are the holidays of Islam ?
+
+religion.religion.holidays.1	religion.religion.holidays.2	0.8571428571428571
+
+
+SENTENCE: Where Donald Trump went to college ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What countries are in the Baltic region ?
+
+location.location.contains.1	location.location.contains.2	1.0
+
+
+SENTENCE: Where is made Kia car ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: Where did Jeff Dunham go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did Chef Chuck Hughes go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where is South Carolina located ?
+
+location.mailing_address.state_province_region	location.mailing_address.country	1.0
+location.country.first_level_divisions.2	location.country.first_level_divisions.1	1.0
+location.administrative_division.country.1	location.administrative_division.country.2	1.0
+government.government_position_held.district_represented	government.government_position_held.jurisdiction_of_office	1.0
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: What District does John Cornyn represent ?
+
+government.government_position_held.office_holder	government.government_position_held.district_represented	1.0
+
+
+SENTENCE: What kind of money does Chile use ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What 's the Egyptian currency ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: When did NY Giants win the Superbowl ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What do you say after a sneeze in German ?
+
+language.human_language.dialects.1	language.human_language.dialects.2	0.1
+
+
+SENTENCE: What are the 5 countries in the United Kingdom ?
+
+location.country.first_level_divisions.1	location.country.first_level_divisions.2	1.0
+location.location.contains.1	location.location.contains.2	0.07692307692307693
+location.location.contains.1	location.location.contains.2	0.07692307692307693
+location.administrative_division.country.2	location.administrative_division.country.1	0.07692307692307693
+
+
+SENTENCE: Who voiced Darth Vader in Revenge of the Sith ?
+
+film.performance.character	film.performance.actor	0.25
+
+
+SENTENCE: Who is the president of Cuba in 2009 ?
+
+military.military_command.military_combatant	military.military_command.military_commander	0.5
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.33333333333333337
+book.written_work.subjects.2	book.written_work.subjects.1	0.04545454545454545
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: What is Tibetan language ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	1.0
+
+
+SENTENCE: What types of government does France have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: Where does Dr. Sanjay Gupta practice ?
+
+business.employment_tenure.person	business.employment_tenure.company	0.33333333333333337
+
+
+SENTENCE: Who was Judy Collins Married to ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What to do at Fairfield CA ?
+
+location.location.contains.1	location.location.contains.2	1.0
+
+
+SENTENCE: What contribution did Maurice Wilkins make to DNA ?
+
+award.award_honor.award_winner	award.award_honor.award	0.6666666666666666
+
+
+SENTENCE: How Much Did Adriana Lima gain during pregnancy ?
+
+tv.regular_tv_appearance.actor	tv.regular_tv_appearance.series	0.6666666666666666
+
+
+SENTENCE: What time zone is Oklahoma State ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: Who Is democritus and what did he discover ?
+
+people.person.profession.1	people.person.profession.2	0.6666666666666666
+
+
+SENTENCE: Who did Elvis Presley really love ?
+
+celebrities.romantic_relationship.celebrity	celebrities.romantic_relationship.celebrity	1.0
+
+
+SENTENCE: What county is Sacramento located in ?
+
+location.us_county.county_seat.2	location.us_county.county_seat.1	1.0
+location.hud_county_place.county.1	location.hud_county_place.county.2	1.0
+location.administrative_division_capital_relationship.capital	location.administrative_division_capital_relationship.administrative_division	0.6666666666666666
+location.location.contains.2	location.location.contains.1	0.33333333333333337
+
+
+SENTENCE: What 5 countries border Ethiopia ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	1.0
+
+
+SENTENCE: Who all has Steve Nash played for ?
+
+basketball.basketball_player_stats.player	basketball.basketball_player_stats.team	1.0
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.8
+sports.sports_award.award_winner	sports.sports_award.team	0.6666666666666666
+
+
+SENTENCE: What inventions did da Vinci made ?
+
+law.invention.inventor.2	law.invention.inventor.1	1.0
+
+
+SENTENCE: When is the last time the Chicago Bulls won a championship ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	0.2857142857142857
+
+
+SENTENCE: What is Benedict Arnold famous for ?
+
+
+
+SENTENCE: Who are the players on the Toronto Maple Leafs ?
+
+sports.sports_team_roster.team	sports.sports_team_roster.player	0.022988505747126436
+
+
+SENTENCE: Who is the leader of Japan ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.05714285714285715
+
+
+SENTENCE: What team did Kobe Bryant Play for First ?
+
+basketball.basketball_player_stats.player	basketball.basketball_player_stats.team	1.0
+sports.sports_team_roster.player	sports.sports_team_roster.team	1.0
+business.employment_tenure.person	business.employment_tenure.company	1.0
+
+
+SENTENCE: What movies did Howard Shore wrote the music for ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.3448275862068966
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.3448275862068966
+award.award_honor.award_winner	award.award_honor.honored_for	0.2727272727272727
+film.film.music.2	film.film.music.1	0.22727272727272727
+music.album.artist.2	music.album.artist.1	0.22222222222222224
+
+
+SENTENCE: Who played Dumbledore in the first movie ?
+
+film.performance.character	film.performance.actor	0.4
+
+
+SENTENCE: What episode did Kate leave NCIS ?
+
+tv.tv_guest_role.character	tv.tv_guest_role.episodes_appeared_in	1.0
+
+
+SENTENCE: What currency is best to take to Dominican Republic ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What is the currency of Germany in 2010 ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+location.country.gdp_nominal.inverse	measurement_unit.dated_money_value.currency	1.0
+location.country.gdp_nominal_per_capita.inverse	measurement_unit.dated_money_value.currency	0.6666666666666666
+
+
+SENTENCE: What year did the Cleveland Indians go to the World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What is the money called in Peru ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who won the governor election in Puerto Rico ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.33333333333333337
+
+
+SENTENCE: What sort of government does Canada have ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.governmental_body	1.0
+government.governmental_jurisdiction.government_bodies.1	government.governmental_jurisdiction.government_bodies.2	0.4
+
+
+SENTENCE: Who is Henry David Thoreau ?
+
+people.person.profession.1	people.person.profession.2	0.5
+
+
+SENTENCE: Who created English alphabet ?
+
+fictional_universe.fictional_language.where_spoken.1	fictional_universe.fictional_language.where_spoken.2	0.09523809523809523
+
+
+SENTENCE: Where Did Barack Obama went to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did the Hopi Indians live ?
+
+language.human_language.region.1	language.human_language.region.2	1.0
+
+
+SENTENCE: What are two countries in South America ?
+
+location.location.contains.1	location.location.contains.2	0.14545454545454545
+
+
+SENTENCE: What university did Bill Clinton graduated from ?
+
+education.education.student	education.education.institution	0.2857142857142857
+
+
+SENTENCE: Who are famous people from Spain ?
+
+people.person.place_of_birth.2	people.person.place_of_birth.1	0.01818181818181818
+
+
+SENTENCE: What is the currency in England 2012 ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Where does Peter King Live ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What did Hitler do bad ?
+
+
+
+SENTENCE: What team did Mike Piazza retire with ?
+
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.team	1.0
+baseball.batting_statistics.player	baseball.batting_statistics.team	0.33333333333333337
+
+
+SENTENCE: Who does Hank Baskett play for now Nov 2010 ?
+
+american_football.game_receiving_statistics.player	american_football.game_receiving_statistics.team	0.6666666666666666
+american_football.player_receiving_statistics.player	american_football.player_receiving_statistics.team	0.6666666666666666
+american_football.player_game_statistics.player	american_football.player_game_statistics.team	0.6666666666666666
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: Who were demeter 's brothers and sisters ?
+
+fictional_universe.romantic_involvement.partner	fictional_universe.romantic_involvement.partner	1.0
+fictional_universe.sibling_relationship_of_fictional_characters.siblings	fictional_universe.sibling_relationship_of_fictional_characters.siblings	1.0
+fictional_universe.sibling_relationship_of_fictional_characters.siblings	fictional_universe.sibling_relationship_of_fictional_characters.siblings	1.0
+
+
+SENTENCE: What years have the Dallas Cowboys won the Superbowl ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What country is Singapore next to ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: What language do u speak in Egypt ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+
+
+SENTENCE: When is Portland marathon ?
+
+fictional_universe.fictional_character.place_of_birth.2	fictional_universe.fictional_character.place_of_birth.1	1.0
+
+
+SENTENCE: What did Abraham Lincoln do before he was president ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: Where did the massive Allied invasion of northern France take place in June 1944 ?
+
+location.location.partially_contains.1	location.location.partially_contains.2	0.16666666666666669
+
+
+SENTENCE: What is Shakira 's nationality ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+music.artist.origin.1	music.artist.origin.2	1.0
+
+
+SENTENCE: Where are you from in Egyptian Arabic ?
+
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	1.0
+
+
+SENTENCE: Who does Avril Lavigne play in over the hedge ?
+
+film.performance.actor	film.performance.character	0.5
+
+
+SENTENCE: Who was Reese Witherspoon married too ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What kind of money does the UK use ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who is the leader of the Dominican Republic 2011 ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.04878048780487806
+people.place_lived.location	people.place_lived.person	0.046511627906976744
+
+
+SENTENCE: What website did Mark Zuckerberg co founder ?
+
+internet.website.owner.2	internet.website.owner.1	1.0
+
+
+SENTENCE: What country is Barack Obama from ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+government.government_position_held.appointed_by	government.government_position_held.jurisdiction_of_office	1.0
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	0.6666666666666666
+
+
+SENTENCE: What movies has Chris Colfer been in ?
+
+film.performance.actor	film.performance.film	1.0
+
+
+SENTENCE: What type of art does Wassily Kandinsky do ?
+
+visual_art.visual_artist.art_forms.1	visual_art.visual_artist.art_forms.2	1.0
+
+
+SENTENCE: Who speaks Farsi ?
+
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.9333333333333333
+
+
+SENTENCE: What type of monarchy did England have during the Glorious Revolution ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.6666666666666666
+
+
+SENTENCE: What are the names of Harry Potter books in order ?
+
+book.written_work.part_of_series.2	book.written_work.part_of_series.1	1.0
+
+
+SENTENCE: Which airport is best to fly into Milan ?
+
+aviation.airport.serves.2	aviation.airport.serves.1	1.0
+travel.transportation.travel_destination	travel.transportation.transport_terminus	0.6666666666666666
+
+
+SENTENCE: Where Did James Franco study acting ?
+
+education.education.student	education.education.institution	0.9411764705882353
+
+
+SENTENCE: What is language in Argentina ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+
+
+SENTENCE: What do Israeli people speak ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	1.0
+
+
+SENTENCE: What school did Sergio Romo go to ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where is Kentucky located ?
+
+location.location.contains.2	location.location.contains.1	0.5
+
+
+SENTENCE: What has Barack Obama done wrong ?
+
+
+
+SENTENCE: What is the postcode for London ?
+
+location.citytown.postal_codes.1	location.citytown.postal_codes.2	0.9523809523809523
+location.mailing_address.citytown	location.mailing_address.postal_code	0.04347826086956522
+
+
+SENTENCE: Where is Colombia the country ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where Great Britain on the world map ?
+
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+
+
+SENTENCE: Who are senators from New Jersey ?
+
+government.government_position_held.district_represented	government.government_position_held.office_holder	0.2807017543859649
+
+
+SENTENCE: What jobs did Harriet Tubman have ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: Who was the emperor before Nero ?
+
+
+
+SENTENCE: Who was the real Erin Brockovich ?
+
+people.person.profession.1	people.person.profession.2	0.4444444444444445
+
+
+SENTENCE: Who did King Tut married ?
+
+people.sibling_relationship.sibling	people.sibling_relationship.sibling	1.0
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: Where does the Spanish language come from ?
+
+language.human_language.main_country.1	language.human_language.main_country.2	1.0
+location.country.official_language.2	location.country.official_language.1	0.07407407407407407
+
+
+SENTENCE: Who was Carrie Underwood in soul surfer ?
+
+film.performance.actor	film.performance.character	0.6666666666666666
+
+
+SENTENCE: What is the name of the Pittsburgh Steelers head coach ?
+
+sports.sports_team_coach_tenure.team	sports.sports_team_coach_tenure.coach	1.0
+american_football.football_team.current_head_coach.1	american_football.football_team.current_head_coach.2	1.0
+
+
+SENTENCE: Where is Spain exactly located ?
+
+location.location.contains_major_portion_of.2	location.location.contains_major_portion_of.1	1.0
+location.location.partially_contains.2	location.location.partially_contains.1	0.25
+
+
+SENTENCE: What language do Egyptians use ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	1.0
+
+
+SENTENCE: What other movies is Liam Hemsworth in ?
+
+film.performance.actor	film.performance.film	0.9090909090909091
+
+
+SENTENCE: What currency is used in Switzerland 2012 ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What is the name of the main train station in San Francisco ?
+
+travel.transportation.travel_destination	travel.transportation.transport_terminus	0.2857142857142857
+
+
+SENTENCE: Where does Liz McClarnon live ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: What is Atlanta GA famous for ?
+
+olympics.olympic_games.host_city.2	olympics.olympic_games.host_city.1	1.0
+time.event.locations.2	time.event.locations.1	0.019801980198019802
+
+
+SENTENCE: Where do most immigrants in the United States come from today ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.33333333333333337
+location.imports_and_exports.imported_from	location.imports_and_exports.exported_to	0.0909090909090909
+location.imports_and_exports.exported_to	location.imports_and_exports.imported_from	0.07692307692307693
+military.military_combatant_group.combatants	military.military_combatant_group.combatants	0.04878048780487806
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.034482758620689655
+
+
+SENTENCE: What are 2 inventions Benjamin Franklin is credited with creating ?
+
+law.invention.inventor.2	law.invention.inventor.1	1.0
+
+
+SENTENCE: Where did Kaiser Wilhelm fled to ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: What form of government does Australia ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.6666666666666666
+
+
+SENTENCE: What group is Aubrey O'Day in ?
+
+music.group_membership.member	music.group_membership.group	1.0
+
+
+SENTENCE: Who is Lleyton Hewitt ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What movie is Angelina Jolie directing ?
+
+film.film.written_by.2	film.film.written_by.1	1.0
+film.film.produced_by.2	film.film.produced_by.1	0.6666666666666666
+film.film.directed_by.2	film.film.directed_by.1	0.6666666666666666
+award.award_honor.award_winner	award.award_honor.honored_for	0.25
+
+
+SENTENCE: Who did Tebow get traded to ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: Who plays Marvin Eriksen ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: Where Did James Baldwin go to school ?
+
+education.education.student	education.education.institution	0.6666666666666666
+
+
+SENTENCE: What college did Joakim Noah attend ?
+
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.school	1.0
+education.education.student	education.education.institution	0.5
+
+
+SENTENCE: What is Charles Darwin famous for ?
+
+
+
+SENTENCE: Who was Sam Houston answers ?
+
+people.person.profession.1	people.person.profession.2	0.75
+
+
+SENTENCE: Who controls Panama ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	1.0
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: What are some important events in ancient Egypt ?
+
+time.event.locations.2	time.event.locations.1	0.33333333333333337
+
+
+SENTENCE: What kind of economy does China has ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.5
+
+
+SENTENCE: What country is the Mekong River located in ?
+
+location.location.contains.2	location.location.contains.1	1.0
+geography.river.basin_countries.1	geography.river.basin_countries.2	0.888888888888889
+
+
+SENTENCE: What is the most practiced religion in the United States ?
+
+location.statistical_region.religions.inverse	location.religion_percentage.religion	0.25
+
+
+SENTENCE: What time zone is Anaheim CA ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: When does the Russian league start ?
+
+location.country.internet_tld.1	location.country.internet_tld.2	1.0
+
+
+SENTENCE: What kind of money do the Netherlands use ?
+
+location.statistical_region.minimum_wage.inverse	measurement_unit.recurring_money_value.currency	1.0
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who wore the Darth Vader suit in Revenge of the Sith ?
+
+film.performance.character	film.performance.actor	0.25
+
+
+SENTENCE: What degree did Martin Luther King get ?
+
+education.education.student	education.education.degree	1.0
+
+
+SENTENCE: What does Beth Tweddle compete in ?
+
+olympics.olympic_athlete_affiliation.athlete	olympics.olympic_athlete_affiliation.sport	1.0
+
+
+SENTENCE: Where does Sam Shepard live ?
+
+people.place_lived.person	people.place_lived.location	1.0
+people.person.place_of_birth.1	people.person.place_of_birth.2	0.4
+
+
+SENTENCE: What team does Luis Suarez play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.33333333333333337
+
+
+SENTENCE: Who did Russians descend from ?
+
+people.ethnicity.included_in_group.1	people.ethnicity.included_in_group.2	0.6666666666666666
+
+
+SENTENCE: What language does people in Netherlands speak ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.25
+
+
+SENTENCE: Where was John Lennon standing when he was shot ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+people.place_lived.person	people.place_lived.location	0.6666666666666666
+music.recording.producer.2	music.recording.producer.1	0.03508771929824561
+
+
+SENTENCE: What kind of government does Vietnam have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.5
+
+
+SENTENCE: Who is the present President of China ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.14285714285714288
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: Who won governor in Connecticut 2010 ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.02531645569620253
+
+
+SENTENCE: What did Robin Gibb died from ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: What branch is made up of the House of Representatives ?
+
+government.legislative_session.legislature.2	government.legislative_session.legislature.1	1.0
+
+
+SENTENCE: What wars did Ulysses S Grant served in ?
+
+book.written_work.subjects.2	book.written_work.subjects.1	0.8000000000000002
+
+
+SENTENCE: What continent do the Falkland Islands belong to ?
+
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: Where did Pablo Picasso die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: What type of government does the Nigeria have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.8
+
+
+SENTENCE: What political party was Adolf Hitler from ?
+
+government.political_party_tenure.politician	government.political_party_tenure.party	1.0
+
+
+SENTENCE: What position does Ray Allen ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.position	1.0
+basketball.basketball_player.position_s.1	basketball.basketball_player.position_s.2	1.0
+
+
+SENTENCE: What time zone is Colorado Springs CO ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: Who created the character of Sherlock Holmes ?
+
+fictional_universe.fictional_character.character_created_by.1	fictional_universe.fictional_character.character_created_by.2	1.0
+
+
+SENTENCE: Who was general Cornwallis American Revolution ?
+
+military.military_service.military_person	military.military_service.military_force	1.0
+
+
+SENTENCE: What happened to Farrah and her baby daddy ?
+
+people.marriage.spouse	people.marriage.type_of_union	0.6666666666666666
+
+
+SENTENCE: Which Asian country has the biggest population ?
+
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+
+
+SENTENCE: Where are you if you re in Zagreb ?
+
+location.administrative_division.country.1	location.administrative_division.country.2	1.0
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+location.country.capital.2	location.country.capital.1	0.6666666666666666
+
+
+SENTENCE: Who will play Clary in City of bones ?
+
+people.person.parents.1	people.person.parents.2	0.6666666666666666
+
+
+SENTENCE: What county is Plainfield IL in ?
+
+location.hud_county_place.county.1	location.hud_county_place.county.2	1.0
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: Who is Ronaldo playing for now ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.25
+
+
+SENTENCE: Who Juan Ponce de Leon ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What did George W Bush do before becoming president ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	0.6666666666666666
+
+
+SENTENCE: What state in Chicago in ?
+
+location.mailing_address.citytown	location.mailing_address.state_province_region	0.6666666666666666
+location.location.contains.2	location.location.contains.1	0.4
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.33333333333333337
+
+
+SENTENCE: Where did Martin Luther live in ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: Where is Glastonbury UK ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Who plays Stacey in Zoey 101 ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: What did George Washington Carver make with peanuts ?
+
+law.invention.inventor.2	law.invention.inventor.1	1.0
+
+
+SENTENCE: Where did Jane Mansfield die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: Who did Magellan sail for ?
+
+people.person.profession.1	people.person.profession.2	0.5
+
+
+SENTENCE: What two countries is the US at war with ?
+
+
+
+SENTENCE: What shows are on in London at the moment ?
+
+time.event.locations.2	time.event.locations.1	0.2608695652173913
+
+
+SENTENCE: Where did Lee Corso go to college ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What movies has Taylor Lautner ?
+
+film.performance.actor	film.performance.film	0.7407407407407407
+award.award_honor.award_winner	award.award_honor.honored_for	0.37499999999999994
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.3529411764705882
+
+
+SENTENCE: What was Alice Walker famous for ?
+
+people.person.profession.1	people.person.profession.2	0.4
+
+
+SENTENCE: What battles did Canada win in WW2 ?
+
+olympics.olympic_athlete_affiliation.country	olympics.olympic_athlete_affiliation.athlete	0.0196078431372549
+
+
+SENTENCE: What show does Tamera Mowry play on ?
+
+tv.regular_tv_appearance.actor	tv.regular_tv_appearance.series	1.0
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.4444444444444445
+award.award_honor.award_winner	award.award_honor.honored_for	0.25
+
+
+SENTENCE: What kind of guitar does Lindsey Buckingham play ?
+
+music.group_member.instruments_played.1	music.group_member.instruments_played.2	0.33333333333333337
+
+
+SENTENCE: Where did Bob Dylan live ?
+
+music.artist.origin.1	music.artist.origin.2	0.6666666666666666
+
+
+SENTENCE: Where is USC from ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where did the Houston Oilers football team go ?
+
+
+
+SENTENCE: What was Van Gogh famous for ?
+
+people.person.profession.1	people.person.profession.2	0.6666666666666666
+
+
+SENTENCE: What are the name of Mitt Romney sons ?
+
+people.person.parents.2	people.person.parents.1	1.0
+
+
+SENTENCE: What religion is King Henry VIII ?
+
+people.person.religion.1	people.person.religion.2	1.0
+
+
+SENTENCE: What movies has Taylor Momsen been in ?
+
+film.performance.actor	film.performance.film	0.9473684210526316
+
+
+SENTENCE: Where was the first Ford Motor Company located ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: Who influenced Arthur Conan Doyle ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	1.0
+
+
+SENTENCE: What has Ian Somerhalder played in ?
+
+film.performance.actor	film.performance.film	0.6896551724137931
+
+
+SENTENCE: Who is Susan St James ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: Where did Frank Baum live ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: What types of government does China have ?
+
+government.governmental_jurisdiction.government_positions.1	government.governmental_jurisdiction.government_positions.2	0.4
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_position_or_title	0.2222222222222222
+
+
+SENTENCE: What is the zip code of New York City ?
+
+location.mailing_address.citytown	location.mailing_address.postal_code	0.21739130434782605
+location.citytown.postal_codes.1	location.citytown.postal_codes.2	0.18181818181818182
+
+
+SENTENCE: Who was governor of Texas in 2003 ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.appointed_by	0.6666666666666666
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.03773584905660378
+
+
+SENTENCE: What language do they speak in Spain Wikipedia ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.09523809523809523
+
+
+SENTENCE: What do the symbols in the Illinois flag represent ?
+
+location.location_symbol_relationship.administrative_division	location.location_symbol_relationship.symbol	0.19999999999999998
+
+
+SENTENCE: What college did Steve Nash play basketball for ?
+
+education.education.student	education.education.institution	0.6666666666666666
+
+
+SENTENCE: Where is Glastonbury Connecticut ?
+
+location.mailing_address.citytown	location.mailing_address.state_province_region	1.0
+location.location.contains.2	location.location.contains.1	0.5
+
+
+SENTENCE: What college did Joe Namath go to ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What books has Elie Wiesel written ?
+
+book.author.works_written.1	book.author.works_written.2	0.1851851851851852
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.1176470588235294
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.1176470588235294
+
+
+SENTENCE: Where did Michael Jackson went to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Who plays Noah Bennet ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: Who is Kobe Bryant wife bio ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: Who Was King Tut 's wife ?
+
+people.sibling_relationship.sibling	people.sibling_relationship.sibling	1.0
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What years have the Giants won the World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: Where is Universal Studios California theme park ?
+
+travel.travel_destination.tourist_attractions.2	travel.travel_destination.tourist_attractions.1	1.0
+
+
+SENTENCE: Which states share borders with Virginia ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.2222222222222222
+
+
+SENTENCE: Where is Victoria Beckham from ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: How many major dialects are there in China ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.9
+
+
+SENTENCE: What are popular sports in Spain ?
+
+sports.sports_team.location.2	sports.sports_team.location.1	1.0
+
+
+SENTENCE: What movies does Leo Howard play in ?
+
+film.performance.actor	film.performance.film	0.9090909090909091
+
+
+SENTENCE: Who played Bilbo Baggins ?
+
+film.performance.character	film.performance.actor	1.0
+
+
+SENTENCE: Where did Hammurabi come from ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	1.0
+
+
+SENTENCE: What was the cause of death for Edgar Allan Poe ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: Who Killed Vincent chin film ?
+
+
+
+SENTENCE: What year was Peyton Manning 's rookie year ?
+
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.draft	1.0
+
+
+SENTENCE: What form of government is Israel ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.6666666666666666
+
+
+SENTENCE: What language is spoken in Basque ?
+
+
+
+SENTENCE: What to do in Hong Kong for a week ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	1.0
+
+
+SENTENCE: What type of music is Tchaikovsky ?
+
+music.artist.genre.1	music.artist.genre.2	1.0
+
+
+SENTENCE: What music did Robert Pattinson do for Twilight ?
+
+music.recording.artist.2	music.recording.artist.1	1.0
+
+
+SENTENCE: Who plays Princess Padme in Star Wars ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+film.performance.character	film.performance.actor	0.6666666666666666
+
+
+SENTENCE: Who 's Betty White ?
+
+people.person.profession.1	people.person.profession.2	0.8571428571428571
+
+
+SENTENCE: Who is engaged to John Legend ?
+
+celebrities.romantic_relationship.celebrity	celebrities.romantic_relationship.celebrity	1.0
+
+
+SENTENCE: Who Is Gilbert Gottfried SNL ?
+
+people.person.profession.1	people.person.profession.2	0.5
+
+
+SENTENCE: Where was Battle of Verdun located ?
+
+time.event.locations.1	time.event.locations.2	1.0
+
+
+SENTENCE: What continent is Syria located in ?
+
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: Where is the Spratly islands located ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where is Kia cars made ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What currency does Thailand accept ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who is Angelina Jolie 's husband ?
+
+celebrities.romantic_relationship.celebrity	celebrities.romantic_relationship.celebrity	0.6666666666666666
+award.award_nomination.award_nominee	award.award_nomination.award_nominee	0.6666666666666666
+people.marriage.spouse	people.marriage.spouse	0.5
+award.award_honor.award_winner	award.award_honor.award_winner	0.1
+
+
+SENTENCE: Who is the current governor of Georgia 2011 ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.25
+
+
+SENTENCE: Who is playing Hawkeye In The Avengers movie ?
+
+film.performance.character	film.performance.actor	1.0
+
+
+SENTENCE: What year did the Mets win their first World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	0.6666666666666666
+
+
+SENTENCE: What did Thomson Discover with his cathode ray tube experiment ?
+
+
+
+SENTENCE: What time zone is Fresno CA ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	0.6666666666666666
+
+
+SENTENCE: What country is located in the Balkan Peninsula ?
+
+location.location.contains.1	location.location.contains.2	0.5882352941176471
+
+
+SENTENCE: Who is Paul Revere and what did he do ?
+
+people.person.profession.1	people.person.profession.2	0.4
+
+
+SENTENCE: Where did Darfur happen ?
+
+location.location.contains.2	location.location.contains.1	1.0
+location.administrative_division.country.1	location.administrative_division.country.2	1.0
+
+
+SENTENCE: Who did Mario Lopez just marry ?
+
+people.marriage.spouse	people.marriage.spouse	0.6666666666666666
+
+
+SENTENCE: What dialects are spoken in the UK ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.2222222222222222
+language.human_language.main_country.2	language.human_language.main_country.1	0.11764705882352941
+
+
+SENTENCE: What was the political system in Libya ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: When did the Orioles win the pennant ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What kind of insurance does Geico offer ?
+
+business.business_operation.industry.1	business.business_operation.industry.2	1.0
+
+
+SENTENCE: When was the last time the Oakland Raiders were in the Super Bowl ?
+
+sports.sports_team_season_record.team	sports.sports_team_season_record.season	0.13333333333333333
+
+
+SENTENCE: Who does Marion Barber play 4 ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	1.0
+
+
+SENTENCE: What are the two major religions in Canada ?
+
+location.statistical_region.religions.inverse	location.religion_percentage.religion	1.0
+
+
+SENTENCE: Where is the country of Armenia ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	1.0
+
+
+SENTENCE: When did the Christchurch quake happened ?
+
+time.event.locations.2	time.event.locations.1	0.33333333333333337
+
+
+SENTENCE: What year was the New York blackout ?
+
+time.event.locations.2	time.event.locations.1	0.019801980198019802
+
+
+SENTENCE: What continent is Belize located in ?
+
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: What movies does Taylor Lautner play in ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.8333333333333333
+award.award_honor.award_winner	award.award_honor.honored_for	0.5454545454545454
+film.performance.actor	film.performance.film	0.45454545454545453
+
+
+SENTENCE: Where Did Lauren Conrad live ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: What college did Kerry Collins ?
+
+education.education.student	education.education.institution	0.6666666666666666
+
+
+SENTENCE: Who created the Chinese Communist Party ?
+
+book.written_work.subjects.2	book.written_work.subjects.1	1.0
+
+
+SENTENCE: Where is the battle of Verdun located ?
+
+time.event.locations.1	time.event.locations.2	1.0
+
+
+SENTENCE: Who is the actor that plays Rico in Hannah Montana ?
+
+tv.regular_tv_appearance.series	tv.regular_tv_appearance.actor	0.2857142857142857
+
+
+SENTENCE: Where Did Brad Paisley graduate from college ?
+
+education.education.student	education.education.institution	0.5
+
+
+SENTENCE: What are the mountains in Peru called ?
+
+location.location.partially_contains.1	location.location.partially_contains.2	0.6666666666666666
+
+
+SENTENCE: Who is the head coach of the Indianapolis Colts ?
+
+american_football.football_team.current_head_coach.1	american_football.football_team.current_head_coach.2	1.0
+
+
+SENTENCE: What happened to Adolf Hitler at the end of the war ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	0.6666666666666666
+
+
+SENTENCE: Where are Sunbeam appliances made ?
+
+
+
+SENTENCE: What was Liam Neeson 's character in Star Wars ?
+
+tv.regular_tv_appearance.actor	tv.regular_tv_appearance.character	0.16666666666666669
+film.performance.actor	film.performance.character	0.028169014084507043
+
+
+SENTENCE: Where are the headquarters of the United Nations organization found ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: Who does Russia trade with the most ?
+
+location.imports_and_exports.imported_from	location.imports_and_exports.exported_to	1.0
+location.imports_and_exports.exported_to	location.imports_and_exports.imported_from	1.0
+
+
+SENTENCE: Who does Mark Sanchez play for ?
+
+american_football.player_passing_statistics.player	american_football.player_passing_statistics.team	1.0
+american_football.player_game_statistics.player	american_football.player_game_statistics.team	1.0
+american_football.game_rushing_statistics.player	american_football.game_rushing_statistics.team	1.0
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.team	1.0
+american_football.player_rushing_statistics.player	american_football.player_rushing_statistics.team	1.0
+american_football.game_passing_statistics.player	american_football.game_passing_statistics.team	1.0
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.6666666666666666
+
+
+SENTENCE: What ball does Rickie Fowler play ?
+
+sports.pro_sports_played.athlete	sports.pro_sports_played.sport	1.0
+
+
+SENTENCE: What Timezone is Tennessee Nashville ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: What time zone is London in right now ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: Who does Kris Humphries play for in the NBA ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.4
+
+
+SENTENCE: Where did Kevin Hart go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What does Bill Gates own ?
+
+architecture.ownership.owner	architecture.ownership.structure	1.0
+
+
+SENTENCE: What money does Jamaica use ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Where was the earthquake in Christchurch ?
+
+location.mailing_address.citytown	location.mailing_address.state_province_region	0.6666666666666666
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: What are major exports of the USA ?
+
+location.statistical_region.major_exports.inverse	location.imports_exports_by_industry.industry	0.75
+
+
+SENTENCE: What things did Thomas Edison invent ?
+
+law.invention.inventor.2	law.invention.inventor.1	1.0
+
+
+SENTENCE: Which is faster AMD dual core or Intel dual core ?
+
+book.written_work.subjects.2	book.written_work.subjects.1	1.0
+
+
+SENTENCE: What team does Diego Forlan currently play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.25
+
+
+SENTENCE: Who is Kurt Busch driving for now ?
+
+business.sponsorship.sponsored_recipient	business.sponsorship.sponsored_by	1.0
+
+
+SENTENCE: When is the last time Chicago Bulls won a championship ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What kind of government does Italy have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.6666666666666666
+
+
+SENTENCE: Where did Mitt Romney go to elementary school ?
+
+education.education.student	education.education.institution	0.2857142857142857
+
+
+SENTENCE: What is the Atlanta Braves mascot ?
+
+sports.sports_team.team_mascot.1	sports.sports_team.team_mascot.2	0.6666666666666666
+
+
+SENTENCE: Who is Ellen Albertini Dow ?
+
+people.person.profession.1	people.person.profession.2	0.5
+
+
+SENTENCE: Where do most of the people live in Japan ?
+
+location.country.capital.1	location.country.capital.2	1.0
+location.mailing_address.state_province_region	location.mailing_address.citytown	1.0
+location.mailing_address.country	location.mailing_address.citytown	1.0
+location.administrative_division.country.2	location.administrative_division.country.1	0.04081632653061225
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.029411764705882353
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_regional_debut_venue	0.019801980198019802
+
+
+SENTENCE: When was the last time the NY Giants were in the Super Bowl ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	0.19999999999999998
+
+
+SENTENCE: Where is Oceania on a map ?
+
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+
+
+SENTENCE: What children 's books did Suzanne Collins wrote ?
+
+book.author.works_written.1	book.author.works_written.2	0.8695652173913044
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.45161290322580644
+
+
+SENTENCE: What to do around Krabi Thailand ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	1.0
+
+
+SENTENCE: What kind of political system does Iran have ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.basic_title	1.0
+
+
+SENTENCE: What book did Jacob Riis wrote ?
+
+book.author.works_written.1	book.author.works_written.2	1.0
+
+
+SENTENCE: What movies does Zac Efron star in ?
+
+film.performance.actor	film.performance.film	0.625
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.4285714285714285
+
+
+SENTENCE: What language does people from Denmark speak ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+
+
+SENTENCE: What school did Sir Isaac Newton go to ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What was Vietnam war fought for ?
+
+
+
+SENTENCE: What kind of language do Irish speak ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	0.8333333333333334
+
+
+SENTENCE: Who owns the Chrysler Corporation ?
+
+business.employment_tenure.company	business.employment_tenure.person	0.45161290322580644
+
+
+SENTENCE: What does the Dutch word Boer mean ?
+
+people.ethnicity.people.1	people.ethnicity.people.2	0.02
+
+
+SENTENCE: What UTC time zone is Arizona ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: What was Malcolm X trying to accomplish ?
+
+
+
+SENTENCE: Where is Burundi located on a map ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where are John Deere snow blowers made ?
+
+organization.organization.place_founded.1	organization.organization.place_founded.2	1.0
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What highschool did Khloe Kardashian go to ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What do they speak Iceland ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.6666666666666666
+
+
+SENTENCE: What books did Jules Verne Wright ?
+
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.12307692307692307
+book.author.works_written.1	book.author.works_written.2	0.1090909090909091
+
+
+SENTENCE: Where does the UN get its funding ?
+
+organization.organization_relationship.parent	organization.organization_relationship.child	0.11764705882352941
+
+
+SENTENCE: Where does Nick Diaz fight ?
+
+film.performance.actor	film.performance.film	1.0
+
+
+SENTENCE: What was Matthias schleiden known for ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: Who was Judy Garland married to ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What country Christopher Columbus from ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What year did spudd Webb won the dunk contest ?
+
+
+
+SENTENCE: Who are Iran 's major trading partners ?
+
+location.imports_and_exports.imported_from	location.imports_and_exports.exported_to	1.0
+
+
+SENTENCE: What instruments does Katy Perry play ?
+
+music.track_contribution.contributor	music.track_contribution.role	1.0
+
+
+SENTENCE: Who are the famous athletes in Kenya ?
+
+sports.competitor_competition_relationship.country	sports.competitor_competition_relationship.competitors	0.6956521739130435
+olympics.olympic_athlete_affiliation.country	olympics.olympic_athlete_affiliation.athlete	0.1643835616438356
+people.person.nationality.2	people.person.nationality.1	0.01818181818181818
+
+
+SENTENCE: Who are Paul Revere 's parents ?
+
+people.person.parents.1	people.person.parents.2	1.0
+
+
+SENTENCE: Who was the president of Indian National Congress ?
+
+government.political_party_tenure.party	government.political_party_tenure.politician	0.01818181818181818
+
+
+SENTENCE: What made Jimi Hendrix great ?
+
+
+
+SENTENCE: Who played Elle Greenaway ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: What did Anton van Leeuwenhoek discover ?
+
+
+
+SENTENCE: What countries does Queen Elizabeth II reign ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	0.6923076923076924
+royalty.noble_title_tenure.noble_person	royalty.noble_title_tenure.noble_title	0.5925925925925926
+
+
+SENTENCE: Where is American Express located ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What is Michael Buble 's style of music ?
+
+music.artist.genre.1	music.artist.genre.2	0.9523809523809523
+
+
+SENTENCE: What awards has Louis Sachar won ?
+
+award.award_honor.award_winner	award.award_honor.award	1.0
+award.award_nomination.award_nominee	award.award_nomination.award	0.22222222222222224
+
+
+SENTENCE: What was the name of Tecumseh brother ?
+
+people.sibling_relationship.sibling	people.sibling_relationship.sibling	1.0
+
+
+SENTENCE: Where did Caroline Kennedy go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What influenced Vincent van Gogh work ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	1.0
+
+
+SENTENCE: What do most Nigerians speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.10526315789473684
+
+
+SENTENCE: What do Michelle Obama do for a living ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: Where is the Fukushima Daiichi located ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: When did Sherlock Holmes live ?
+
+symbols.name_source.namesakes.1	symbols.name_source.namesakes.2	1.0
+
+
+SENTENCE: What city was Ronald Reagan born in ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What did Nixon do when he was president ?
+
+event.speech_or_presentation.speaker_s	event.speech_or_presentation.speech_topic	1.0
+
+
+SENTENCE: Who is Nina Dobrev playing in perks of being a wallflower ?
+
+film.performance.actor	film.performance.character	0.10526315789473684
+
+
+SENTENCE: Who did Plaxico Burress sign with 2012 ?
+
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.team	1.0
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: What is the last movie Brittany Murphy made ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.2857142857142857
+film.performance.actor	film.performance.film	0.044444444444444446
+
+
+SENTENCE: Who plays Miley Cyrus brother ?
+
+people.person.profession.1	people.person.profession.2	0.33333333333333337
+
+
+SENTENCE: What is the capital city of West Germany ?
+
+location.country.capital.1	location.country.capital.2	1.0
+
+
+SENTENCE: What is Martin Cooper doing now ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What type of music was Scott Joplin noted for ?
+
+music.artist.genre.1	music.artist.genre.2	1.0
+book.author.works_written.1	book.author.works_written.2	0.10526315789473684
+
+
+SENTENCE: What did Maria Theresa rule ?
+
+royalty.monarch.kingdom.1	royalty.monarch.kingdom.2	1.0
+
+
+SENTENCE: What country speak English as native language ?
+
+language.human_language.main_country.1	language.human_language.main_country.2	1.0
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.10869565217391305
+location.country.official_language.2	location.country.official_language.1	0.09345794392523366
+
+
+SENTENCE: What language do most Native Americans speak ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	0.5
+
+
+SENTENCE: Where did Walt Disney live before he died ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: Who was Arthur Miller influenced by ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	0.5
+
+
+SENTENCE: Who invented Facebook Wikipedia ?
+
+internet.website.owner.1	internet.website.owner.2	0.6666666666666666
+
+
+SENTENCE: What state was John Adams elected from ?
+
+government.government_position_held.office_holder	government.government_position_held.district_represented	1.0
+people.place_lived.person	people.place_lived.location	0.6666666666666666
+
+
+SENTENCE: What state Toronto located ?
+
+location.administrative_division_capital_relationship.capital	location.administrative_division_capital_relationship.administrative_division	1.0
+location.province.capital.2	location.province.capital.1	1.0
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+location.mailing_address.citytown	location.mailing_address.state_province_region	0.5
+
+
+SENTENCE: Where is Alexandria located ?
+
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+
+
+SENTENCE: What is Chris Paul 's son name ?
+
+people.person.parents.2	people.person.parents.1	0.6666666666666666
+
+
+SENTENCE: What year did Scottie Pippen come into the NBA ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.from	1.0
+sports.pro_athlete.career_start.1	sports.pro_athlete.career_start.2	1.0
+sports.pro_sports_played.athlete	sports.pro_sports_played.career_start	1.0
+
+
+SENTENCE: Who plays Hermione Granger ?
+
+film.performance.character	film.performance.actor	1.0
+
+
+SENTENCE: What languages do Scottish people speak ?
+
+people.ethnicity.languages_spoken.1	people.ethnicity.languages_spoken.2	1.0
+
+
+SENTENCE: What did Susan Atkins die of ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: What is a King Charles cavalier dog ?
+
+biology.breed_registration.breed	biology.breed_registration.breed_group	1.0
+
+
+SENTENCE: What did Kellie Martin play on ?
+
+film.performance.actor	film.performance.film	0.4651162790697675
+
+
+SENTENCE: What are Taylor Swift 's albums ?
+
+music.album.artist.2	music.album.artist.1	0.45454545454545453
+
+
+SENTENCE: Who was Cleopatra married too ?
+
+film.performance.film	film.performance.character	0.1111111111111111
+
+
+SENTENCE: Where is Washington D.C. at ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.33333333333333337
+
+
+SENTENCE: Where did C.S. Lewis go to college ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What movie did Rihanna play in ?
+
+film.performance.actor	film.performance.film	1.0
+
+
+SENTENCE: What nationality is Jermaine Paul ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: What made Angela Davis famous ?
+
+
+
+SENTENCE: What is the Laguna Beach theme song ?
+
+tv.tv_program.theme_song.1	tv.tv_program.theme_song.2	1.0
+
+
+SENTENCE: Which wife did King Henry behead ?
+
+film.film.subjects.2	film.film.subjects.1	0.33333333333333337
+
+
+SENTENCE: Where is Port St Johns Florida ?
+
+location.location.contains.2	location.location.contains.1	1.0
+location.mailing_address.citytown	location.mailing_address.state_province_region	1.0
+
+
+SENTENCE: Who played Laura Ingalls mother ?
+
+fictional_universe.fictional_character.based_on.2	fictional_universe.fictional_character.based_on.1	1.0
+
+
+SENTENCE: What language does the country Italy speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.33333333333333337
+language.human_language.main_country.2	language.human_language.main_country.1	0.052631578947368425
+
+
+SENTENCE: What countries was the Vietnam War between ?
+
+military.military_combatant_group.conflict	military.military_combatant_group.combatants	1.0
+military.force_strength.military_conflict	military.force_strength.combatant	0.7857142857142858
+military.casualties.military_conflict	military.casualties.combatant	0.7586206896551724
+military.military_command.military_conflict	military.military_command.military_combatant	0.21052631578947367
+time.event.locations.1	time.event.locations.2	0.1739130434782609
+
+
+SENTENCE: What continent does Israel belong to ?
+
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: What type of political system does Russia have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.5
+
+
+SENTENCE: Who did Hermione Granger marry ?
+
+fictional_universe.marriage_of_fictional_characters.spouses	fictional_universe.marriage_of_fictional_characters.spouses	1.0
+
+
+SENTENCE: What famous book did Benjamin Franklin wrote ?
+
+book.book_edition.publisher.2	book.book_edition.publisher.1	1.0
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.09302325581395349
+
+
+SENTENCE: Who was the vice president when Bill Clinton was in office ?
+
+government.us_president.vice_president.1	government.us_president.vice_president.2	1.0
+
+
+SENTENCE: Where was Obama educated ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What language do people speak in Turkey ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+
+
+SENTENCE: What is the Timezone in England called ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	0.6666666666666666
+
+
+SENTENCE: What team did Deion Sanders play for in baseball ?
+
+
+
+SENTENCE: Where was Brad Paisley born and raised ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+music.artist.origin.1	music.artist.origin.2	1.0
+
+
+SENTENCE: What year did Allen Iverson get married ?
+
+people.marriage.spouse	people.marriage.from	1.0
+
+
+SENTENCE: What country do they speak Farsi ?
+
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.9333333333333333
+
+
+SENTENCE: Where was John F Kennedy raised ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: What city did Obama grow up in ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+people.place_lived.person	people.place_lived.location	0.2857142857142857
+
+
+SENTENCE: What blood disease does Robin Roberts have ?
+
+medicine.disease.notable_people_with_this_condition.2	medicine.disease.notable_people_with_this_condition.1	0.6666666666666666
+
+
+SENTENCE: Where are Dell products manufactured ?
+
+organization.organization.headquarters.inverse	location.mailing_address.state_province_region	1.0
+
+
+SENTENCE: What is the money currency in Switzerland ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who was Lincoln 's vice president when he died ?
+
+government.us_president.vice_president.1	government.us_president.vice_president.2	0.6666666666666666
+
+
+SENTENCE: Who was the secretary of state when Richard Nixon was president ?
+
+government.government_position_held.appointed_by	government.government_position_held.office_holder	0.07407407407407407
+
+
+SENTENCE: What did Michael Faraday accomplish ?
+
+book.author.works_written.1	book.author.works_written.2	0.4
+
+
+SENTENCE: What movies did Sally Field win an Oscar for ?
+
+award.award_honor.award_winner	award.award_honor.honored_for	0.7142857142857143
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.5833333333333334
+film.performance.actor	film.performance.film	0.16326530612244897
+
+
+SENTENCE: Where to go in Florida for vacation ?
+
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+location.mailing_address.state_province_region	location.mailing_address.citytown	0.019801980198019802
+book.written_work.subjects.2	book.written_work.subjects.1	0.019801980198019802
+
+
+SENTENCE: Where was Abraham buried ?
+
+people.deceased_person.place_of_burial.1	people.deceased_person.place_of_burial.2	1.0
+
+
+SENTENCE: What time period did Jesus live in ?
+
+
+
+SENTENCE: On which river is Paris ?
+
+geography.river.cities.2	geography.river.cities.1	1.0
+location.location.partially_contains.1	location.location.partially_contains.2	0.6666666666666666
+
+
+SENTENCE: What was Omar Epps first movie ?
+
+film.performance.actor	film.performance.film	0.07999999999999999
+
+
+SENTENCE: Where did Richard Arkwright die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: What did Henry Kissinger do ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	1.0
+
+
+SENTENCE: Where 's the Hudson River ?
+
+geography.river.cities.1	geography.river.cities.2	0.14285714285714288
+
+
+SENTENCE: Where does the FDA get its authority ?
+
+business.employment_tenure.company	business.employment_tenure.title	0.5
+
+
+SENTENCE: Who wrote Luke Bryan 's drunk on you ?
+
+award.award_nomination.award_nominee	award.award_nomination.award_nominee	0.25
+
+
+SENTENCE: What team did Tim Tebow play for in college ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.5
+
+
+SENTENCE: What county is Novato California in ?
+
+location.hud_county_place.county.1	location.hud_county_place.county.2	1.0
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: Where did Rihanna come from ?
+
+music.artist.origin.1	music.artist.origin.2	1.0
+people.person.place_of_birth.1	people.person.place_of_birth.2	0.6666666666666666
+
+
+SENTENCE: Where is pyramids located in Egypt ?
+
+
+
+SENTENCE: Who won 2012 presidential election in France ?
+
+business.employment_tenure.company	business.employment_tenure.person	1.0
+government.government_position_held.jurisdiction_of_office	government.government_position_held.appointed_by	0.5
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.04878048780487806
+
+
+SENTENCE: What airport is closest to Sandals Grande in St Lucia ?
+
+aviation.airport.serves.2	aviation.airport.serves.1	1.0
+location.location.contains.1	location.location.contains.2	0.038461538461538464
+
+
+SENTENCE: What type of language does China speak ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.9
+
+
+SENTENCE: What did Anna Nicole Smith died from ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: What is the currency in the Dominican Republic 2010 ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What year did William McKinley became president ?
+
+government.government_position_held.appointed_by	government.government_position_held.from	0.33333333333333337
+
+
+SENTENCE: Who plays Mary Jane in Spiderman 3 ?
+
+film.performance.character	film.performance.actor	0.5
+
+
+SENTENCE: What state did Obama win ?
+
+government.government_position_held.office_holder	government.government_position_held.district_represented	1.0
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	0.6666666666666666
+
+
+SENTENCE: What did Kate Winslet get an Oscar for ?
+
+award.award_honor.award_winner	award.award_honor.honored_for	0.2222222222222222
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.11764705882352941
+film.performance.actor	film.performance.film	0.05714285714285715
+
+
+SENTENCE: Where did Saki live ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: Where does the Panama Canal run through ?
+
+location.location.contains.1	location.location.contains.2	0.02
+
+
+SENTENCE: Who Is Samantha Gibb ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What does Rupert Murdoch own 2012 ?
+
+organization.organization.founders.2	organization.organization.founders.1	1.0
+
+
+SENTENCE: What movies were Michael Clarke Duncan ?
+
+film.performance.actor	film.performance.film	0.3125
+
+
+SENTENCE: What drugs were in Whitney Houston when she died ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	0.5
+
+
+SENTENCE: What films did Patrick Swayze star in ?
+
+film.performance.actor	film.performance.film	0.4347826086956522
+
+
+SENTENCE: Where did John Muir die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: Where did the Navajo Tribe live ?
+
+people.ethnicity.geographic_distribution.1	people.ethnicity.geographic_distribution.2	1.0
+
+
+SENTENCE: What type of government does Iraq have 2012 ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.888888888888889
+
+
+SENTENCE: What does Jennifer Lopez do ?
+
+people.person.profession.1	people.person.profession.2	0.14285714285714288
+
+
+SENTENCE: What did Johannes Kepler accomplish ?
+
+people.person.profession.1	people.person.profession.2	0.888888888888889
+
+
+SENTENCE: What disease did Abe Lincoln have ?
+
+medicine.disease.notable_people_with_this_condition.2	medicine.disease.notable_people_with_this_condition.1	1.0
+
+
+SENTENCE: What equipment does Porter Robinson use ?
+
+
+
+SENTENCE: Where did Antoine Laurent lavoisier die ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: Who does Brandon Jacobs Play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.6666666666666666
+
+
+SENTENCE: What form of government does Canada have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.5
+
+
+SENTENCE: Who was Peter Frampton married to ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: Who is Kobe Bryant dad ?
+
+people.person.parents.1	people.person.parents.2	0.6666666666666666
+
+
+SENTENCE: What country did Ponce de Leon live in ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: What all did Michael Jackson own ?
+
+architecture.ownership.owner	architecture.ownership.structure	1.0
+business.asset_ownership.owner	business.asset_ownership.owned_asset	1.0
+people.place_lived.person	people.place_lived.location	0.33333333333333337
+
+
+SENTENCE: Where did Robert Hooke get his education ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Who did Megan Fox have a baby with ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What did Charles Babbage create in the 1800s ?
+
+law.invention.inventor.2	law.invention.inventor.1	1.0
+
+
+SENTENCE: What years did Andrew Jackson run for president ?
+
+government.government_position_held.office_holder	government.government_position_held.from	0.33333333333333337
+government.government_position_held.appointed_by	government.government_position_held.from	0.16666666666666669
+
+
+SENTENCE: Where did Queen Isabella live ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What is the political system of Nigeria ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.6666666666666666
+
+
+SENTENCE: What currency does Jamaica accept ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who was Ishmael 's mom ?
+
+people.person.parents.1	people.person.parents.2	0.5
+
+
+SENTENCE: What movies did Matt Bomer play in ?
+
+film.performance.actor	film.performance.film	1.0
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.25
+
+
+SENTENCE: What language does the New Zealand speak ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+
+
+SENTENCE: Who plays spike in Buffy the Vampire Slayer ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+tv.tv_guest_role.character	tv.tv_guest_role.actor	1.0
+cvg.game_performance.character	cvg.game_performance.voice_actor	1.0
+
+
+SENTENCE: What party was Andrew Jackson ?
+
+government.political_party_tenure.politician	government.political_party_tenure.party	1.0
+
+
+SENTENCE: What is the northeast of the United States ?
+
+film.film_film_distributor_relationship.region	film.film_film_distributor_relationship.region	1.0
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.33333333333333337
+location.imports_and_exports.imported_from	location.imports_and_exports.exported_to	0.0909090909090909
+location.imports_and_exports.exported_to	location.imports_and_exports.imported_from	0.07692307692307693
+military.military_combatant_group.combatants	military.military_combatant_group.combatants	0.04878048780487806
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.034482758620689655
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_regional_debut_venue	0.019801980198019802
+
+
+SENTENCE: What going on in Afghanistan right now ?
+
+time.event.locations.2	time.event.locations.1	0.05405405405405406
+
+
+SENTENCE: What instrument was Louis Armstrong famous for ?
+
+
+
+SENTENCE: What did Dr Carter G Woodson do ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What is Anderson Silva trained in ?
+
+people.person.profession.1	people.person.profession.2	0.6666666666666666
+
+
+SENTENCE: What are the New York Giants home colors ?
+
+sports.sports_team.colors.1	sports.sports_team.colors.2	0.4
+
+
+SENTENCE: What is the ZIP code for Morgantown in ?
+
+location.citytown.postal_codes.1	location.citytown.postal_codes.2	1.0
+location.mailing_address.citytown	location.mailing_address.postal_code	0.6666666666666666
+
+
+SENTENCE: Where is the Howard University located ?
+
+location.location.contains.2	location.location.contains.1	1.0
+organization.organization.headquarters.inverse	location.mailing_address.country	0.6666666666666666
+
+
+SENTENCE: What language do the Speak in Pakistan ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.3076923076923077
+
+
+SENTENCE: When last did Real Madrid win the Champions League ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	0.19999999999999998
+
+
+SENTENCE: What Timezone is Indianapolis Indiana in ?
+
+
+
+SENTENCE: Who is the governor of Colorado 2009 ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.05
+
+
+SENTENCE: What sea does the Yangtze River empty into ?
+
+geography.river.mouth.1	geography.river.mouth.2	1.0
+
+
+SENTENCE: What is St Francis patron saint of ?
+
+music.composition.lyricist.2	music.composition.lyricist.1	0.5
+
+
+SENTENCE: Who did Wayne Gretzky play 4 ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	1.0
+
+
+SENTENCE: Where is the Bank of America Pavilion ?
+
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+
+
+SENTENCE: Where was Brad Pitt born ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What years have the Cubs been in the World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What type of government does Nigeria have today ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.8
+
+
+SENTENCE: Who voices Anakin IN THE CLONE WARS ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+film.performance.character	film.performance.actor	0.25
+
+
+SENTENCE: Who plays the voice of Meg in Family Guy ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: Who plays Dante falconeri ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+
+
+SENTENCE: What state is Kaplan University Online located ?
+
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: Where Christopher Columbus was born ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: When was George W Bush sworn in ?
+
+
+
+SENTENCE: Where does Spencer Pratt go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did Willy Wonka take place ?
+
+fictional_universe.fictional_universe.characters.2	fictional_universe.fictional_universe.characters.1	0.6666666666666666
+
+
+SENTENCE: What is the currency of Mexico called ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Where did Gary Coleman live when he died ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+
+
+SENTENCE: What inspired Van Gogh work ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	1.0
+
+
+SENTENCE: What Bella name her baby ?
+
+fictional_universe.fictional_character.parents.2	fictional_universe.fictional_character.parents.1	1.0
+
+
+SENTENCE: What sports do people in France play ?
+
+sports.sports_team.location.2	sports.sports_team.location.1	0.5454545454545454
+sports.competitor_country_relationship.country	sports.competitor_country_relationship.competitor	0.10526315789473685
+
+
+SENTENCE: What team did Ronaldo play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.25
+
+
+SENTENCE: Where is Bergen Belsen concentration camp located ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where is Sony headquarters located ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	0.6666666666666666
+
+
+SENTENCE: What is the major language of Jamaica ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.6666666666666666
+
+
+SENTENCE: What money to take to Sri Lanka ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: Who is the new senator of Montana ?
+
+government.government_position_held.district_represented	government.government_position_held.office_holder	0.09523809523809523
+
+
+SENTENCE: Who plays Stewie Griffin 's voice Family Guy ?
+
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	1.0
+cvg.game_performance.character	cvg.game_performance.voice_actor	1.0
+
+
+SENTENCE: What two countries share a border with the Great Lakes ?
+
+location.location.partially_contains.2	location.location.partially_contains.1	1.0
+
+
+SENTENCE: What role did Tom Cruise play in Endless Love ?
+
+film.performance.actor	film.performance.character	0.052631578947368425
+
+
+SENTENCE: What are the major languages spoken in Italy ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.33333333333333337
+language.human_language.main_country.2	language.human_language.main_country.1	0.052631578947368425
+
+
+SENTENCE: Who are senators from Utah ?
+
+government.government_position_held.district_represented	government.government_position_held.office_holder	1.0
+people.place_lived.location	people.place_lived.person	0.019417475728155338
+
+
+SENTENCE: Where did Giovanni da Verrazano come from ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: What movies star Adam Sandler ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.47058823529411764
+film.performance.actor	film.performance.film	0.39215686274509803
+
+
+SENTENCE: What is Kevin Durant play style ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.position	1.0
+basketball.basketball_player.position_s.1	basketball.basketball_player.position_s.2	1.0
+
+
+SENTENCE: What country did Osama bin Laden live in ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: What is happening in Germany right now ?
+
+military.military_command.military_combatant	military.military_command.military_conflict	1.0
+
+
+SENTENCE: What was the last time the Pittsburgh Pirates had a winning season ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: Where does the Oklahoma City Thunder practice ?
+
+location.location.contains.1	location.location.contains.2	0.02
+
+
+SENTENCE: What to do in Nadi Fiji ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	1.0
+
+
+SENTENCE: What type of strings does Willie Nelson use ?
+
+music.group_member.instruments_played.1	music.group_member.instruments_played.2	0.6666666666666666
+
+
+SENTENCE: Where did Terrell Owens get traded to ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.2857142857142857
+
+
+SENTENCE: What movie does Natalie Portman play in ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.7058823529411764
+film.performance.actor	film.performance.film	0.4
+award.award_honor.award_winner	award.award_honor.honored_for	0.30769230769230765
+
+
+SENTENCE: Who is the present chief justice of the U.S. Supreme Court ?
+
+law.judicial_tenure.court	law.judicial_tenure.judge	0.019801980198019802
+
+
+SENTENCE: Where did Jackie Robinson go to school ?
+
+education.education.student	education.education.institution	0.8571428571428571
+
+
+SENTENCE: Where to get married in Jacksonville NC ?
+
+location.location.contains.1	location.location.contains.2	0.1090909090909091
+
+
+SENTENCE: What books did Lincoln write ?
+
+book.author.works_written.1	book.author.works_written.2	0.25641025641025644
+
+
+SENTENCE: What was Woodrow Wilson 's major accomplishments ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	1.0
+
+
+SENTENCE: What type of political system does Iran have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: Who did John Fox coach for ?
+
+american_football.football_team.current_head_coach.2	american_football.football_team.current_head_coach.1	1.0
+
+
+SENTENCE: Where does Kaka live ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+
+
+SENTENCE: Where is EU headquarters located ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: How old is the current president of North Korea ?
+
+military.military_command.military_combatant	military.military_command.military_commander	0.5
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.2857142857142857
+people.person.nationality.2	people.person.nationality.1	0.02
+
+
+SENTENCE: What language do Fiji people speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.36363636363636365
+
+
+SENTENCE: What war was Woodrow Wilson president for ?
+
+event.speech_or_presentation.speaker_s	event.speech_or_presentation.speech_topic	1.0
+
+
+SENTENCE: Who does Brandon Dubinsky play for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.6666666666666666
+
+
+SENTENCE: What happened after the invasion of Normandy ?
+
+time.event.locations.2	time.event.locations.1	0.04347826086956522
+
+
+SENTENCE: When did the Aurora Colorado shooting take place ?
+
+time.event.locations.2	time.event.locations.1	1.0
+
+
+SENTENCE: Where is Abraham Lincoln hometown ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What movies Johnny Depp is in ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.30303030303030304
+film.performance.actor	film.performance.film	0.28169014084507044
+
+
+SENTENCE: Who is married to Garth Brooks ?
+
+award.award_honor.award_winner	award.award_honor.award_winner	1.0
+people.marriage.spouse	people.marriage.spouse	0.6666666666666666
+award.award_nomination.award_nominee	award.award_nomination.award_nominee	0.2222222222222222
+
+
+SENTENCE: Where was Joe Biden a senator ?
+
+government.government_position_held.office_holder	government.government_position_held.district_represented	1.0
+
+
+SENTENCE: Who was Queen Victoria 's parents called ?
+
+people.person.parents.1	people.person.parents.2	1.0
+
+
+SENTENCE: Where is Merrell shoes headquarters ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What currency do I need in Cuba ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What was Sherlock Holmes famous for ?
+
+fictional_universe.fictional_character.occupation.1	fictional_universe.fictional_character.occupation.2	1.0
+
+
+SENTENCE: Where to get married in north Alabama ?
+
+location.statistical_region.religions.inverse	location.religion_percentage.religion	0.1111111111111111
+
+
+SENTENCE: What is Yale University mascot ?
+
+education.educational_institution.mascot.1	education.educational_institution.mascot.2	1.0
+
+
+SENTENCE: What are the Duggars kids full names ?
+
+tv.tv_regular_personal_appearance.program	tv.tv_regular_personal_appearance.person	0.1
+tv.regular_tv_appearance.series	tv.regular_tv_appearance.actor	0.09523809523809523
+
+
+SENTENCE: Who played Lois en Superman ?
+
+film.performance.character	film.performance.actor	0.625
+tv.regular_tv_appearance.character	tv.regular_tv_appearance.actor	0.20000000000000004
+
+
+SENTENCE: What county is Rihanna from ?
+
+music.artist.origin.1	music.artist.origin.2	1.0
+people.person.place_of_birth.1	people.person.place_of_birth.2	0.6666666666666666
+
+
+SENTENCE: What college is in Greeley Colorado ?
+
+location.location.contains.1	location.location.contains.2	0.18181818181818182
+location.mailing_address.citytown	organization.organization.headquarters.inverse	0.046511627906976744
+
+
+SENTENCE: What happened during William Henry Harrison presidency ?
+
+military.military_command.military_commander	military.military_command.military_conflict	0.2857142857142857
+
+
+SENTENCE: What book did Charles Darwin write on evolution ?
+
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.03076923076923077
+book.author.works_written.1	book.author.works_written.2	0.020202020202020204
+book.author.works_written.1	book.author.works_written.2	0.020202020202020204
+
+
+SENTENCE: What kind of language do they speak in China ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.019801980198019802
+
+
+SENTENCE: What years did Barry Bonds play ?
+
+sports.sports_award.award_winner	sports.sports_award.season	1.0
+baseball.batting_statistics.player	baseball.batting_statistics.season	0.5806451612903226
+
+
+SENTENCE: What is Molly Ringwald in ?
+
+film.performance.actor	film.performance.film	0.47619047619047616
+
+
+SENTENCE: What colleges did Alice Walker attend ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did France surrender WW2 ?
+
+location.location.partially_contains.2	location.location.partially_contains.1	0.18181818181818182
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.1111111111111111
+
+
+SENTENCE: Where is Jack Daniels factory ?
+
+distilled_spirits.distillery.region.1	distilled_spirits.distillery.region.2	1.0
+
+
+SENTENCE: What is the name of the Pittsburgh Steelers stadium ?
+
+sports.sports_team.arena_stadium.1	sports.sports_team.arena_stadium.2	1.0
+
+
+SENTENCE: What did Jean Jacques Rousseau write ?
+
+book.author.works_written.1	book.author.works_written.2	0.07272727272727272
+
+
+SENTENCE: What four countries are in the United Kingdom ?
+
+location.country.first_level_divisions.1	location.country.first_level_divisions.2	1.0
+location.location.contains.1	location.location.contains.2	0.07692307692307693
+location.location.contains.1	location.location.contains.2	0.07692307692307693
+location.administrative_division.country.2	location.administrative_division.country.1	0.07692307692307693
+
+
+SENTENCE: What books did Frances Hodgson Burnett wrote ?
+
+film.film.story_by.2	film.film.story_by.1	0.33333333333333337
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.02985074626865672
+book.author.works_written.1	book.author.works_written.2	0.02469135802469136
+book.author.works_written.1	book.author.works_written.2	0.02469135802469136
+
+
+SENTENCE: What is the king of Spain 's name ?
+
+royalty.monarch.kingdom.2	royalty.monarch.kingdom.1	0.6666666666666666
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.14285714285714288
+
+
+SENTENCE: What movies did Diana Ross play in ?
+
+film.performance.actor	film.performance.film	0.16666666666666669
+
+
+SENTENCE: What does Nick Cannon play in ?
+
+tv.regular_tv_appearance.actor	tv.regular_tv_appearance.series	1.0
+tv.tv_producer_term.producer	tv.tv_producer_term.program	0.6153846153846153
+tv.tv_program.program_creator.2	tv.tv_program.program_creator.1	0.5714285714285714
+
+
+SENTENCE: Who Was Kim Kardashian 's first husband ?
+
+people.marriage.spouse	people.marriage.spouse	0.5
+
+
+SENTENCE: When is the Gold Cup Cheltenham ?
+
+time.recurring_event.current_frequency.1	time.recurring_event.current_frequency.2	1.0
+
+
+SENTENCE: What was Theodore Roosevelt 's political party ?
+
+government.political_party_tenure.politician	government.political_party_tenure.party	1.0
+
+
+SENTENCE: What is the currency in the Republic of Congo ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What year LeBron James came to the NBA ?
+
+basketball.basketball_player_stats.player	basketball.basketball_player_stats.season	0.33333333333333337
+sports.sports_award.award_winner	sports.sports_award.season	0.33333333333333337
+
+
+SENTENCE: What is the capital city of Albania ?
+
+location.country.capital.1	location.country.capital.2	1.0
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+
+
+SENTENCE: What state is George Washington University located in ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+organization.organization.headquarters.inverse	location.mailing_address.state_province_region	1.0
+
+
+SENTENCE: Who was Andrew Johnson and what did he do ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	1.0
+
+
+SENTENCE: Where are Google headquarters located ?
+
+organization.organization.headquarters.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What to see in Vietnam in two weeks ?
+
+location.country.capital.1	location.country.capital.2	1.0
+location.mailing_address.state_province_region	location.mailing_address.citytown	1.0
+location.administrative_division.country.2	location.administrative_division.country.1	0.028169014084507043
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+
+
+SENTENCE: What years did the Atlanta Braves win the World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What happened to Madonna childhood home ?
+
+broadcast.content.artist.2	broadcast.content.artist.1	0.02531645569620253
+
+
+SENTENCE: What kind of books does Nicholas Sparks wrote ?
+
+book.author.works_written.1	book.author.works_written.2	0.32258064516129037
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.27586206896551724
+
+
+SENTENCE: What countries do people speak Portuguese ?
+
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.8333333333333333
+location.country.official_language.2	location.country.official_language.1	0.6666666666666666
+
+
+SENTENCE: What continent is Australia in ?
+
+location.location.contains.2	location.location.contains.1	0.5
+book.written_work.subjects.2	book.written_work.subjects.1	0.019801980198019802
+
+
+SENTENCE: What is the name of money in Brazil ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What character did Natalie Portman play in Star Wars ?
+
+film.performance.actor	film.performance.character	0.0625
+
+
+SENTENCE: What is Julia Gillard famous for ?
+
+government.government_position_held.office_holder	government.government_position_held.basic_title	0.5
+
+
+SENTENCE: What year did Johnny Cash die and how old was he ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: What time zones are there in the US ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	0.75
+
+
+SENTENCE: What songs did Mozart write ?
+
+symbols.name_source.namesakes.1	symbols.name_source.namesakes.2	0.4
+
+
+SENTENCE: Who won Golden Boot ?
+
+award.award_honor.award	award.award_honor.award_winner	0.5
+
+
+SENTENCE: What teams played in the 2010 Stanley Cup ?
+
+
+
+SENTENCE: What products are made in the USA ?
+
+location.statistical_region.major_exports.inverse	location.imports_exports_by_industry.industry	0.75
+
+
+SENTENCE: Where was Dr Luther King Jr born ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: Who won the Super Bowl XLIV 2010 ?
+
+sports.sports_championship_event.champion.1	sports.sports_championship_event.champion.2	1.0
+
+
+SENTENCE: Who did George Wendt play on cheers ?
+
+tv.regular_tv_appearance.actor	tv.regular_tv_appearance.character	1.0
+
+
+SENTENCE: Where Did Carrie Underwood live ?
+
+people.place_lived.person	people.place_lived.location	1.0
+music.artist.origin.1	music.artist.origin.2	1.0
+
+
+SENTENCE: What major landforms are located in Egypt ?
+
+location.location.partially_contains.1	location.location.partially_contains.2	1.0
+
+
+SENTENCE: What county is Tampa located in ?
+
+location.us_county.county_seat.2	location.us_county.county_seat.1	1.0
+location.administrative_division_capital_relationship.capital	location.administrative_division_capital_relationship.administrative_division	1.0
+location.hud_county_place.county.1	location.hud_county_place.county.2	1.0
+location.location.contains.2	location.location.contains.1	0.4
+
+
+SENTENCE: What currency to take to side Turkey ?
+
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+finance.currency.countries_formerly_used.2	finance.currency.countries_formerly_used.1	0.6666666666666666
+
+
+SENTENCE: What teams does Kroenke own ?
+
+sports.professional_sports_team.owner_s.2	sports.professional_sports_team.owner_s.1	1.0
+
+
+SENTENCE: What movies did Ron Howard do ?
+
+award.award_honor.award_winner	award.award_honor.honored_for	0.923076923076923
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.5217391304347826
+film.film.directed_by.2	film.film.directed_by.1	0.1818181818181818
+
+
+SENTENCE: Where did the Tutsi come from ?
+
+people.ethnicity.geographic_distribution.1	people.ethnicity.geographic_distribution.2	1.0
+
+
+SENTENCE: What is modern Egyptian language ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+
+
+SENTENCE: What did Isaac Newton discovered as a mathematician ?
+
+
+
+SENTENCE: What government system does North Korea have ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.4444444444444445
+
+
+SENTENCE: When is the next Geneva motor show ?
+
+travel.travel_destination_monthly_climate.travel_destination	travel.travel_destination_monthly_climate.month	0.15384615384615385
+
+
+SENTENCE: What did Roald Dahl write ?
+
+film.film.story_by.2	film.film.story_by.1	1.0
+book.author.book_editions_published.1	book.author.book_editions_published.2	0.19999999999999998
+book.author.works_written.1	book.author.works_written.2	0.11009174311926605
+
+
+SENTENCE: Which countries border the Baltic Sea ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	1.0
+
+
+SENTENCE: What did Farrah dad do ?
+
+people.person.profession.1	people.person.profession.2	1.0
+
+
+SENTENCE: What is the name of the first prophet of Islam ?
+
+religion.religion.founding_figures.1	religion.religion.founding_figures.2	1.0
+religion.religion.notable_figures.1	religion.religion.notable_figures.2	0.4
+book.written_work.subjects.2	book.written_work.subjects.1	0.020202020202020204
+book.written_work.subjects.2	book.written_work.subjects.1	0.020202020202020204
+people.person.religion.2	people.person.religion.1	0.02
+
+
+SENTENCE: What did Nick Clegg study at University ?
+
+education.education.student	education.education.major_field_of_study	1.0
+
+
+SENTENCE: In which state did the Santa Fe Trail begin ?
+
+location.mailing_address.citytown	location.mailing_address.state_province_region	1.0
+location.us_state.capital.2	location.us_state.capital.1	1.0
+location.administrative_division_capital_relationship.capital	location.administrative_division_capital_relationship.administrative_division	0.6666666666666666
+location.location.contains.2	location.location.contains.1	0.5
+
+
+SENTENCE: What state was Theodore Roosevelt from ?
+
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	0.6666666666666666
+book.author.works_written.1	book.author.works_written.2	0.020202020202020204
+book.author.works_written.1	book.author.works_written.2	0.020202020202020204
+
+
+SENTENCE: Who owns the Cleveland Browns ?
+
+sports.professional_sports_team.owner_s.1	sports.professional_sports_team.owner_s.2	1.0
+
+
+SENTENCE: Who invented Arabic alphabet ?
+
+language.human_language.main_country.1	language.human_language.main_country.2	0.4
+language.human_language.countries_spoken_in.1	language.human_language.countries_spoken_in.2	0.07142857142857142
+location.country.official_language.2	location.country.official_language.1	0.04878048780487806
+
+
+SENTENCE: What channel is Anderson Cooper talk show on ?
+
+business.employment_tenure.person	business.employment_tenure.company	0.6666666666666666
+
+
+SENTENCE: Where did Helen Keller go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Who is ruling Tunisia now ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.2857142857142857
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+people.person.place_of_birth.2	people.person.place_of_birth.1	0.019801980198019802
+
+
+SENTENCE: What jersey will the Packers wear in the Super Bowl ?
+
+sports.sports_team.colors.1	sports.sports_team.colors.2	0.6666666666666666
+
+
+SENTENCE: What did Theodore Roosevelt do that brought him to national prominence ?
+
+government.government_position_held.office_holder	government.government_position_held.office_position_or_title	0.33333333333333337
+
+
+SENTENCE: What is Jessica Ennis sport ?
+
+olympics.olympic_athlete_affiliation.athlete	olympics.olympic_athlete_affiliation.sport	1.0
+
+
+SENTENCE: What did Emily Bronte died of ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: When was Bill Clinton elected president ?
+
+
+
+SENTENCE: What prep school did Romney attend ?
+
+education.education.student	education.education.institution	0.2857142857142857
+
+
+SENTENCE: What landforms are found in Italy ?
+
+location.location.partially_contains.1	location.location.partially_contains.2	0.33333333333333337
+
+
+SENTENCE: What country did Truman lead ?
+
+people.person.nationality.1	people.person.nationality.2	1.0
+government.government_position_held.appointed_by	government.government_position_held.jurisdiction_of_office	1.0
+government.government_position_held.office_holder	government.government_position_held.jurisdiction_of_office	1.0
+government.government_position_held.appointed_by	government.government_position_held.district_represented	1.0
+business.employment_tenure.person	business.employment_tenure.company	1.0
+military.military_command.military_commander	military.military_command.military_combatant	1.0
+
+
+SENTENCE: Where are the Great Pyramid of Giza located ?
+
+travel.travel_destination.local_transportation.1	travel.travel_destination.local_transportation.2	0.6666666666666666
+
+
+SENTENCE: Who is playing Bilbo In The Hobbit movie ?
+
+film.performance.character	film.performance.actor	1.0
+
+
+SENTENCE: What college did Edgar Allan Poe go to ?
+
+education.education.student	education.education.institution	0.6666666666666666
+
+
+SENTENCE: When was the last time the Kansas City Chiefs won a SuperBowl ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: What Does Time Warner own ?
+
+broadcast.tv_station_owner.tv_stations.1	broadcast.tv_station_owner.tv_stations.2	1.0
+
+
+SENTENCE: What team does LaDainian Tomlinson play 4 ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	1.0
+american_football.game_receiving_statistics.player	american_football.game_receiving_statistics.team	0.6666666666666666
+american_football.player_passing_statistics.player	american_football.player_passing_statistics.team	0.6666666666666666
+american_football.player_receiving_statistics.player	american_football.player_receiving_statistics.team	0.6666666666666666
+american_football.player_game_statistics.player	american_football.player_game_statistics.team	0.6666666666666666
+american_football.game_rushing_statistics.player	american_football.game_rushing_statistics.team	0.6666666666666666
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.team	0.6666666666666666
+american_football.player_rushing_statistics.player	american_football.player_rushing_statistics.team	0.6666666666666666
+american_football.game_passing_statistics.player	american_football.game_passing_statistics.team	0.6666666666666666
+
+
+SENTENCE: What movies has Taylor Lautner been in 2011 ?
+
+award.award_honor.award_winner	award.award_honor.honored_for	1.0
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.7692307692307692
+film.performance.actor	film.performance.film	0.4347826086956522
+
+
+SENTENCE: What club did Aguero play for before Man City ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	0.4
+
+
+SENTENCE: Which countries border Lake Victoria ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	1.0
+geography.lake.basin_countries.1	geography.lake.basin_countries.2	1.0
+
+
+SENTENCE: What type of paintings did Marc Chagall do ?
+
+visual_art.art_period_movement.associated_artists.2	visual_art.art_period_movement.associated_artists.1	0.8
+
+
+SENTENCE: What date did the earthquake in Christchurch happen ?
+
+time.event.locations.2	time.event.locations.1	0.33333333333333337
+
+
+SENTENCE: What is the Dominican Republic 's capital ?
+
+location.country.capital.1	location.country.capital.2	1.0
+location.location.contains.1	location.location.contains.2	0.019801980198019802
+
+
+SENTENCE: What movies has Billy Burke been in ?
+
+film.performance.actor	film.performance.film	0.5
+
+
+SENTENCE: Where did Trey Songz go to high school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What character did Stan Lee create ?
+
+fictional_universe.fictional_character.character_created_by.2	fictional_universe.fictional_character.character_created_by.1	0.05454545454545455
+
+
+SENTENCE: What inspired Scott Fitzgerald ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	0.9333333333333333
+
+
+SENTENCE: What musical instruments did Duke Ellington play ?
+
+music.group_member.instruments_played.1	music.group_member.instruments_played.2	1.0
+music.recording_contribution.contributor	music.recording_contribution.performance_role	0.6666666666666666
+music.track_contribution.contributor	music.track_contribution.role	0.28571428571428575
+
+
+SENTENCE: Where is University of Auburn ?
+
+location.location.contains.2	location.location.contains.1	1.0
+organization.organization.headquarters.inverse	location.mailing_address.state_province_region	0.4
+
+
+SENTENCE: What books did Aristotle wrote ?
+
+book.author.works_written.1	book.author.works_written.2	0.037383177570093455
+
+
+SENTENCE: Who Does Obama look up to ?
+
+influence.influence_node.influenced_by.1	influence.influence_node.influenced_by.2	1.0
+
+
+SENTENCE: What should I visit in Venice ?
+
+visual_art.art_subject.artwork_on_the_subject.1	visual_art.art_subject.artwork_on_the_subject.2	1.0
+
+
+SENTENCE: Who all has Jason Kidd played for ?
+
+sports.sports_team_roster.player	sports.sports_team_roster.team	1.0
+
+
+SENTENCE: Where the Grimm brothers were born ?
+
+book.author.works_written.1	book.author.works_written.2	0.037037037037037035
+
+
+SENTENCE: What Timezone is Texas San Antonio in ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: What should I see in London England ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	0.22471910112359553
+location.location.contains.1	location.location.contains.2	0.01818181818181818
+
+
+SENTENCE: Where did Kobe Bryant attend high school ?
+
+sports.sports_league_draft_pick.player	sports.sports_league_draft_pick.school	1.0
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Who is Kristen Stewart parents ?
+
+people.person.parents.1	people.person.parents.2	1.0
+
+
+SENTENCE: Who is the current coach of the Chicago Bulls ?
+
+basketball.basketball_team.head_coach.1	basketball.basketball_team.head_coach.2	1.0
+
+
+SENTENCE: What condition does Michael J Fox have ?
+
+medicine.disease.notable_people_with_this_condition.2	medicine.disease.notable_people_with_this_condition.1	1.0
+
+
+SENTENCE: What happened to Mike Tyson ?
+
+medicine.disease.notable_people_with_this_condition.2	medicine.disease.notable_people_with_this_condition.1	1.0
+
+
+SENTENCE: What movies did Kristen Stewart act in ?
+
+award.award_nomination.award_nominee	award.award_nomination.nominated_for	0.6666666666666666
+award.award_honor.award_winner	award.award_honor.honored_for	0.42857142857142855
+film.performance.actor	film.performance.film	0.34285714285714286
+
+
+SENTENCE: What language do people speak in Brazil Wikipedia ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.019417475728155338
+
+
+SENTENCE: Who is the senator of Connecticut 2010 ?
+
+government.government_position_held.district_represented	government.government_position_held.office_holder	0.03773584905660378
+
+
+SENTENCE: Where did David Duke go to college ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where is greyton Western Cape ?
+
+location.location.contains.2	location.location.contains.1	1.0
+
+
+SENTENCE: Where are the NFL Redskins from ?
+
+
+
+SENTENCE: Where are you if you 're in Khartoum ?
+
+location.location.contains.2	location.location.contains.1	0.6666666666666666
+location.mailing_address.citytown	location.mailing_address.state_province_region	0.6666666666666666
+location.country.capital.2	location.country.capital.1	0.6666666666666666
+
+
+SENTENCE: Who is the leader of Cuba 2012 ?
+
+military.military_command.military_combatant	military.military_command.military_commander	0.5
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.33333333333333337
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: What is the speech I have a dream about Martin Luther King ?
+
+event.speech_or_presentation.speaker_s	event.speech_or_presentation.presented_work	0.5
+music.recording.artist.2	music.recording.artist.1	0.33333333333333337
+music.recording.artist.2	music.recording.artist.1	0.33333333333333337
+
+
+SENTENCE: What is the official language of China 2010 ?
+
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.18181818181818182
+language.human_language.main_country.2	language.human_language.main_country.1	0.019801980198019802
+
+
+SENTENCE: What is the money called in Spain ?
+
+location.statistical_region.minimum_wage.inverse	measurement_unit.recurring_money_value.currency	1.0
+finance.currency.countries_used.2	finance.currency.countries_used.1	1.0
+
+
+SENTENCE: What was Alexander Graham Bell known for ?
+
+law.us_patent.inventor.2	law.us_patent.inventor.1	1.0
+law.invention.inventor.2	law.invention.inventor.1	0.6666666666666666
+
+
+SENTENCE: What kind of economy was the Soviet Union ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.5
+
+
+SENTENCE: What form of government does North Korea ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	0.4
+
+
+SENTENCE: Where does T Boone Pickens live ?
+
+people.place_lived.person	people.place_lived.location	1.0
+
+
+SENTENCE: What country is Russia close to ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	0.8333333333333333
+film.film_regional_release_date.film_release_region	film.film_regional_release_date.film_release_region	0.15384615384615385
+
+
+SENTENCE: What time does independence center open on Sundays ?
+
+business.shopping_center.address.inverse	location.mailing_address.citytown	1.0
+
+
+SENTENCE: What was William Faulkner known for ?
+
+film.film.written_by.2	film.film.written_by.1	1.0
+
+
+SENTENCE: Where is Kia car from ?
+
+organization.organization.place_founded.1	organization.organization.place_founded.2	1.0
+
+
+SENTENCE: Who is the prime minister of Ethiopia ?
+
+government.government_position_held.jurisdiction_of_office	government.government_position_held.office_holder	0.33333333333333337
+people.person.nationality.2	people.person.nationality.1	0.019801980198019802
+
+
+SENTENCE: What time is the Melbourne Cup ?
+
+time.recurring_event.current_frequency.1	time.recurring_event.current_frequency.2	1.0
+
+
+SENTENCE: What language people speak in Afghanistan ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	1.0
+
+
+SENTENCE: Where is Art Smith from ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: Where was Tommy Steele born ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+
+
+SENTENCE: What TO DO Washington DC December ?
+
+travel.travel_destination.tourist_attractions.1	travel.travel_destination.tourist_attractions.2	0.2857142857142857
+location.location.contains.1	location.location.contains.2	0.09090909090909091
+
+
+SENTENCE: Who is Martin Luther King Jr wife ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: Where was Obama born ?
+
+
+
+SENTENCE: When was Blessed Kateri born ?
+
+people.person.date_of_birth.1	people.person.date_of_birth.2	1.0
+
+
+SENTENCE: Where is the Singapore Zoo ?
+
+
+
+SENTENCE: What did Jimmy Valvano die with ?
+
+people.deceased_person.cause_of_death.1	people.deceased_person.cause_of_death.2	1.0
+
+
+SENTENCE: Where did Morgan Freeman come from ?
+
+people.person.place_of_birth.1	people.person.place_of_birth.2	1.0
+people.place_lived.person	people.place_lived.location	0.2857142857142857
+
+
+SENTENCE: What form of government does Mexico ?
+
+location.country.form_of_government.1	location.country.form_of_government.2	1.0
+
+
+SENTENCE: What is the time zone in France ?
+
+time.time_zone.locations_in_this_time_zone.2	time.time_zone.locations_in_this_time_zone.1	1.0
+
+
+SENTENCE: When did Venus Williams win Wimbledon ?
+
+tennis.tennis_match.loser	tennis.tennis_match.event	0.4
+tennis.tennis_match.winner	tennis.tennis_match.event	0.14285714285714288
+tennis.tennis_tournament_championship.winner	tennis.tennis_tournament_championship.tournament	0.0689655172413793
+
+
+SENTENCE: What time is World Cup soccer ?
+
+
+
+SENTENCE: Who did Axl Rose marry ?
+
+people.marriage.spouse	people.marriage.spouse	1.0
+
+
+SENTENCE: What happened to the Battle of Shiloh ?
+
+book.written_work.subjects.2	book.written_work.subjects.1	0.33333333333333337
+
+
+SENTENCE: Where the Seneca Indians lived ?
+
+people.ethnicity.geographic_distribution.1	people.ethnicity.geographic_distribution.2	1.0
+
+
+SENTENCE: When did Baltimore Orioles win the World Series ?
+
+sports.sports_championship_event.champion.2	sports.sports_championship_event.champion.1	1.0
+
+
+SENTENCE: Which Paris airport is closest to the city center ?
+
+aviation.airport.serves.2	aviation.airport.serves.1	0.4
+travel.transportation.travel_destination	travel.transportation.transport_terminus	0.18181818181818182
+
+
+SENTENCE: Where did Thomas Jefferson died ?
+
+people.deceased_person.place_of_death.1	people.deceased_person.place_of_death.2	1.0
+people.place_lived.person	people.place_lived.location	0.5
+
+
+SENTENCE: What language they speak in Taiwan ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+
+
+SENTENCE: What albums did John Frusciante play on ?
+
+music.producer.releases_produced.1	music.producer.releases_produced.2	0.64
+music.album.artist.2	music.album.artist.1	0.5
+
+
+SENTENCE: Who did Cristina Yang 's husband cheated on her with ?
+
+fictional_universe.romantic_involvement.partner	fictional_universe.romantic_involvement.partner	1.0
+
+
+SENTENCE: What undergraduate school did Martin Luther King Jr. attend ?
+
+education.education.student	education.education.institution	0.4
+
+
+SENTENCE: What does Albania speak ?
+
+location.country.official_language.1	location.country.official_language.2	1.0
+language.human_language.main_country.2	language.human_language.main_country.1	0.5
+language.human_language.countries_spoken_in.2	language.human_language.countries_spoken_in.1	0.4
+
+
+SENTENCE: What is the Philadelphia Church of God ?
+
+
+
+SENTENCE: What college did Russell Wilson go to ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: Where did Eleanor Roosevelt go to school ?
+
+education.education.student	education.education.institution	1.0
+
+
+SENTENCE: What countries and seas border Ukraine ?
+
+location.adjoining_relationship.adjoins	location.adjoining_relationship.adjoins	1.0
+
+
+SENTENCE: Where did William McKinley go to high school ?
+
+education.education.student	education.education.institution	0.4
+
+
+SENTENCE: Who did Ben Stiller play in megamind ?
+
+film.performance.actor	film.performance.character	0.03508771929824561
+

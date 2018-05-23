@@ -29,6 +29,4 @@ class GraphCache:
         else:
             graph = self.cache[key]
 
-            print(graph.summarize())
-
         return graph.copy()

@@ -71,7 +71,6 @@ class GcnFactory:
         sentence_embedding_dim = int(experiment_configuration["lstm"]["embedding_dimension"])
         sentence_batch_features = SentenceBatchFeatures(graph, sentence_embedding_dim)
 
-
         initial_input_dim = gcn_dim + 6 + 1
         initial_cell_updater = CellStateGcnInitializer("cell_state_initializer", initial_input_dim, gcn_dim, graph)
 
@@ -84,8 +83,11 @@ class GcnFactory:
             if experiment_configuration["architecture"]["separate_gcns"] == "All":
                 gcn_layers[layer] = []
                 for i in range(self.edge_type_utils.count_types()):
-                    gate_features = [GcnTypeFeatureWrapper(sentence_batch_features, graph, i)]
+                    message_features = [VertexFeatures(graph, "senders", gcn_dim, edge_type=i),
+                                        VertexFeatures(graph, "receivers", gcn_dim, edge_type=i)]
                     message_bias = [RelationFeatures(graph, gcn_dim, relation_index, edge_type=i)]
+
+                    gate_features = [GcnTypeFeatureWrapper(sentence_batch_features, graph, i)]
                     gate_bias = [RelationFeatures(graph, gcn_dim, relation_index, edge_type=i)]
                     f_propagator = self.get_gated_message_bias_propagator(message_bias, gate_features, gate_bias, graph,
                                                                       experiment_configuration, str(layer),

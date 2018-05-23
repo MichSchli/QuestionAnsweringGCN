@@ -497,6 +497,7 @@ class HypergraphModel:
     def expand(self, forward_edges, backward_edges, sources="entities", targets="events"):
         self.expand_forward(forward_edges, sources=sources, targets=targets)
         self.expand_backward(backward_edges, sources=sources, targets=targets)
+        self.add_centroid_paths()
 
     def add_discovered_vertices(self, forward_edges, backward_edges, type="entities"):
         if forward_edges.shape[0] > 0:
@@ -507,6 +508,16 @@ class HypergraphModel:
 
     def initialize_centroid_paths(self):
         self.centroid_paths = {c : [c] for c in self.centroids}
+        self.temporary_centroid_paths = {}
+
+    def add_centroid_paths(self):
+        for id, pbag in self.temporary_centroid_paths.items():
+            if id not in self.centroid_paths:
+                self.centroid_paths[id] = []
+
+            self.centroid_paths[id].extend(pbag)
+
+        self.temporary_centroid_paths = {}
 
     """
     Expand a set of (source->target) edges from the sources. Allows edges within the frontier.
@@ -525,10 +536,10 @@ class HypergraphModel:
         #unseen_or_frontier_targets = np.isin(target, self.get_expanded_vertices(targets), invert=True)
 
         for edge in edges[unseen_or_frontier_targets]:
-            if edge[2] not in self.centroid_paths:
-                self.centroid_paths[edge[2]] = []
+            if edge[2] not in self.temporary_centroid_paths:
+                self.temporary_centroid_paths[edge[2]] = []
 
-            self.centroid_paths[edge[2]].extend([c + ">" + edge[1] for c in self.centroid_paths[edge[0]]])
+            self.temporary_centroid_paths[edge[2]].extend([c + ">" + edge[1] for c in self.centroid_paths[edge[0]]])
 
             if edge[2] not in self.nearby_centroid_map:
                 self.nearby_centroid_map[edge[2]] = np.array(self.nearby_centroid_map[edge[0]])
@@ -548,10 +559,10 @@ class HypergraphModel:
         unseen_targets = np.isin(target, self.get_vertices(targets), invert=True)
 
         for edge in edges[unseen_targets]:
-            if edge[0] not in self.centroid_paths:
-                self.centroid_paths[edge[0]] = []
+            if edge[0] not in self.temporary_centroid_paths:
+                self.temporary_centroid_paths[edge[0]] = []
 
-            self.centroid_paths[edge[0]].extend([c + "<" + edge[1] for c in self.centroid_paths[edge[2]]])
+            self.temporary_centroid_paths[edge[0]].extend([c + "<" + edge[1] for c in self.centroid_paths[edge[2]]])
 
             if edge[0] not in self.nearby_centroid_map:
                 self.nearby_centroid_map[edge[0]] = np.array(self.nearby_centroid_map[edge[2]])
