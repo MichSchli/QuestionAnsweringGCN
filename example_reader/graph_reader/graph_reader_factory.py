@@ -5,6 +5,7 @@ from example_reader.graph_reader.database_interface.expansion_strategies.all_thr
 from example_reader.graph_reader.database_interface.expansion_strategies.only_freebase_element_strategy import \
     OnlyFreebaseExpansionStrategy
 from example_reader.graph_reader.database_interface.hypergraph_interface import HypergraphInterface
+from example_reader.graph_reader.empty_graph_reader import EmptyGraphReader
 from example_reader.graph_reader.graph_cache import GraphCache
 from example_reader.graph_reader.graph_converter import GraphConverter
 from example_reader.graph_reader.graph_indexer import GraphIndexer
@@ -16,6 +17,9 @@ class GraphReaderFactory:
         self.index_factory = index_factory
 
     def get(self, experiment_configuration):
+        if "no_graph_features" in experiment_configuration["other"] and experiment_configuration["other"]["no_graph_features"] == "True":
+            return EmptyGraphReader()
+
         if "prefix" in experiment_configuration["endpoint"]:
             prefix = experiment_configuration["endpoint"]["prefix"]
         else:

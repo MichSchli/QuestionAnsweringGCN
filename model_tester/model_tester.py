@@ -8,6 +8,8 @@ class ModelTester:
     example_batcher = None
     evaluator = None
 
+    distribute_predictions = False
+
     def __init__(self, example_generator, example_extender, example_batcher, evaluator):
         self.example_generator = example_generator
         self.example_extender = example_extender
@@ -43,20 +45,25 @@ class ModelTester:
     def predict(self, model, batch):
         predictions = model.predict_batch(batch)
 
-        example_begin_index = 0
-        for example in batch.examples:
-            scores = predictions[example_begin_index:example_begin_index + example.count_entities()]
-            example_begin_index += example.count_entities()
+        if self.distribute_predictions:
+            example_begin_index = 0
+            for example in batch.examples:
+                scores = predictions[example_begin_index:example_begin_index + example.count_entities()]
+                example_begin_index += example.count_entities()
 
-            prediction = Prediction()
-            vertex_indexes = example.graph.get_entity_vertices()
-            vertex_labels = [example.graph.map_to_name_or_label(v) for v in vertex_indexes]
+                prediction = Prediction()
+                vertex_indexes = example.graph.get_entity_vertices()
+                vertex_labels = [example.graph.map_to_name_or_label(v) for v in vertex_indexes]
 
-            prediction.add_predictions(vertex_labels, scores)
-            example.prediction = prediction
+                prediction.add_predictions(vertex_labels, scores)
+                example.prediction = prediction
+        else:
+            for i, example in enumerate(batch.examples):
+                example.prediction = predictions[i]
+
 
     def validate_example(self, example):
-        return len(example.mentions) > 0
+        return not self.distribute_predictions or len(example.mentions) > 0
 
     def add_dummy_prediction(self, example):
         prediction = Prediction()

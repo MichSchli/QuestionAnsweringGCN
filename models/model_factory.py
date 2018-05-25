@@ -1,8 +1,10 @@
 from models.dummy_tensorflow_model import DummyTensorflowModel
+from models.relation_prediction_oracle import RelationPredictionOracle
 from models.tensorflow_components.aux_components.sentence_to_entity_mapper import SentenceToEntityMapper
 from models.tensorflow_components.gcn.gcn_factory import GcnFactory
 from models.tensorflow_components.graph.graph_component import GraphComponent
 from models.tensorflow_components.loss_functions.max_pred_sigmoid_loss import MaxPredSigmoidLoss
+from models.tensorflow_components.loss_functions.relation_softmax_loss import RelationSoftmaxLoss
 from models.tensorflow_components.loss_functions.sigmoid_loss import SigmoidLoss
 from models.tensorflow_components.sentence.lstm import BiLstm
 from models.tensorflow_components.sentence.multihead_attention import MultiheadAttention
@@ -16,6 +18,7 @@ from models.tensorflow_part_handler.final_sentence_embedding_handlers.sentence_a
     SentenceAttentionFinalSentenceEmbedding
 from models.tensorflow_part_handler.final_sentence_embedding_handlers.word_dummy_attention_final_sentence_embedding import \
     WordDummyAttentionFinalSentenceEmbedding
+from models.tensorflow_relation_prediction_model import TensorflowRelationPredictionModel
 
 
 class ModelFactory:
@@ -51,11 +54,54 @@ class ModelFactory:
 
         return model
 
+    def get_relation_prediction_oracle(self, experiment_configuration):
+        return RelationPredictionOracle()
+
+    def get_relation_prediction_model(self, experiment_configuration):
+        model = TensorflowRelationPredictionModel()
+        learning_rate = float(experiment_configuration["training"]["learning_rate"])
+        gradient_clipping = float(experiment_configuration["training"]["gradient_clipping"])
+        model.learning_rate = learning_rate
+        model.gradient_clipping = gradient_clipping
+
+        word_index = self.index_factory.get("words", experiment_configuration)
+        pos_index = self.index_factory.get("pos", experiment_configuration)
+
+        model.sentence = SentenceBatchComponent(word_index,
+                                                pos_index,
+                                                word_dropout_rate=float(
+                                                    experiment_configuration["regularization"]["word_dropout"]),
+                                                is_static=experiment_configuration["lstm"][
+                                                              "static_word_embeddings"] == "True")
+        model.add_component(model.sentence)
+
+        self.add_lstms(experiment_configuration, model)
+
+        in_dim = int(experiment_configuration["lstm"]["embedding_dimension"])*2
+        hidden_dims = [int(d) for d in experiment_configuration["other"]["final_hidden_dimensions"].split("|")]
+        dropout_rate = float(experiment_configuration["regularization"]["final_dropout"])
+        l2_rate = float(experiment_configuration["regularization"]["final_l2"])
+
+        hidden_dims = [in_dim] + hidden_dims + [1250]
+
+        model.mlp = MultilayerPerceptronComponent(hidden_dims,
+                                                  "final_mlp",
+                                                  dropout_rate=dropout_rate,
+                                                  l2_scale=l2_rate)
+        model.add_component(model.mlp)
+
+        model.relation_loss = RelationSoftmaxLoss()
+        model.add_component(model.relation_loss)
+
+        return model
+
     def get(self, experiment_configuration):
         model_type = experiment_configuration["architecture"]["model_type"]
 
         if model_type == "separate_lstm_vs_gcn":
             return self.get_separate_lstm_vs_gcn(experiment_configuration)
+        elif model_type == "relation_prediction":
+            return self.get_relation_prediction_model(experiment_configuration)
 
         word_index = self.index_factory.get("words", experiment_configuration)
         pos_index = self.index_factory.get("pos", experiment_configuration)

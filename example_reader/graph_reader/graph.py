@@ -24,6 +24,11 @@ class Graph:
 
     edge_types = None
 
+    def __init__(self):
+        self.vertices = np.empty((0,))
+        self.edges = np.empty((0,3), dtype=np.int32)
+        self.vertex_max_scores = np.zeros(0, dtype=np.int32)
+
     def copy(self):
         graph = Graph()
 
@@ -82,9 +87,6 @@ class Graph:
 
     def map_general_vertex_to_entity_index(self, general_index):
         return self.general_vertex_to_entity_index_map[general_index]
-
-    def __init__(self):
-        self.vertex_max_scores = np.zeros(0, dtype=np.int32)
 
     def __str__(self):
         return str(self.edges)
@@ -153,6 +155,9 @@ class Graph:
     def add_edges(self, edges, new_edge_bow_features=None):
         self.edges = np.concatenate((self.edges, edges))
 
+        if self.padded_edge_bow_matrix is None:
+            return
+
         if new_edge_bow_features is None:
             new_edge_bow_features = np.zeros((edges.shape[0],
                                               self.padded_edge_bow_matrix.shape[1]),
@@ -162,10 +167,17 @@ class Graph:
                                                       new_edge_bow_features))
 
     def add_vertices(self, vertices, vertex_types):
-        self.vertices = np.concatenate((self.vertices, vertices))
-        self.vertex_types = np.concatenate((self.vertex_types, vertex_types))
+        vertex_types = np.array(vertex_types)
+        vertices = np.array(vertices)
 
-        self.vertex_max_scores = np.concatenate((self.vertex_max_scores, np.zeros(vertices.shape[0], dtype=np.float32)))
+        if self.vertices.shape[0] == 0:
+            self.vertices = np.array(vertices)
+            self.vertex_types = np.array(vertex_types)
+            self.vertex_max_scores = np.zeros(vertices.shape[0], dtype=np.float32)
+        else:
+            self.vertices = np.concatenate((self.vertices, vertices))
+            self.vertex_types = np.concatenate((self.vertex_types, vertex_types))
+            self.vertex_max_scores = np.concatenate((self.vertex_max_scores, np.zeros(vertices.shape[0], dtype=np.float32)))
 
     def get_vertex_types(self):
         return self.vertex_types

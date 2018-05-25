@@ -17,7 +17,7 @@ class ExampleReaderFactory:
         self.graph_reader_factory = GraphReaderFactory(index_factory)
         self.mention_reader_factory = MentionReaderFactory()
         self.gold_answer_reader_factory = GoldAnswerReaderFactory()
-        self.gold_path_reader_factory = GoldPathReaderFactory()
+        self.gold_path_reader_factory = GoldPathReaderFactory(index_factory)
 
     def get(self, experiment_configuration):
         dataset_map = {'train': experiment_configuration['dataset']['train_file'],

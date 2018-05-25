@@ -41,6 +41,14 @@ class Example:
     def get_vertex_max_scores(self):
         return self.graph.get_max_scores()
 
+    def get_gold_relation_vector(self):
+        if len(self.gold_paths) > 0:
+            return self.gold_paths[0].vector
+        else:
+            v = np.zeros(1250, dtype=np.int32)
+            v[0] = 1
+            return v
+
     def get_centroid_indexes(self):
         centroid_indexes = []
         for mention in self.mentions:

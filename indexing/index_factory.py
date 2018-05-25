@@ -3,6 +3,7 @@ from indexing.indexes.entity_index import EntityIndex
 from indexing.indexes.glove_index import GloveIndex
 from indexing.indexes.limited_freebase_relation_index import LimitedFreebaseRelationIndex
 from indexing.indexes.pos_index import PosIndex
+from indexing.indexes.pure_freebase_relation_index import PureFreebaseRelationIndex
 from indexing.indexes.relation_index import RelationIndex
 from indexing.indexes.relation_part_index import RelationPartIndex
 from indexing.indexes.word_index import WordIndex
@@ -63,6 +64,8 @@ class IndexFactory:
             return WordIndex(index_choice, dimension)
         elif index_label == "relations" and index_choice == "freebase_limited":
             return LimitedFreebaseRelationIndex(dimension, keep_space_for_inverse=keep_space_for_inverse)
+        elif index_label == "relations" and index_choice == "freebase_greedy":
+            return PureFreebaseRelationIndex(index_choice, dimension)
         elif index_label == "relations":
             return RelationIndex(index_choice, dimension, keep_space_for_inverse=keep_space_for_inverse)
         elif index_label == "relation_parts":

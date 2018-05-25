@@ -1,21 +1,31 @@
 from example_reader.gold_path_reader.gold_path import GoldPath
+import numpy as np
 
 
 class GoldPathFinder:
 
     datasets = None
+    relation_index = None
 
-    def __init__(self, dataset_map):
+    def __init__(self, relation_index, dataset_map):
         self.datasets = {d : self.load(f) for d,f in dataset_map.items()}
+        self.relation_index = relation_index
 
-    def find(self, example):
-        gold_indexes = example.get_gold_indexes()
+    def find(self, index, dataset):
+        gold_paths = self.datasets[dataset][index]
 
-        gold_paths = [example.graph.entity_centroid_paths[i] for i in gold_indexes]
+        for g in gold_paths:
+            l_path = "http://rdf.freebase.com/ns/" + g.relation_mention + " | http://rdf.freebase.com/ns/" + g.relation_gold
+            l_index = self.relation_index.index(l_path)
 
-        print(example)
-        print(gold_paths)
-        exit()
+            #if g.relation_mention_inverse :
+            #    l_index += self.relation_index.vector_count
+
+            vector = np.zeros((self.relation_index.vector_count))
+            vector[l_index] = 1
+            g.vector = vector
+
+        return gold_paths
 
     def load(self, dataset):
         f = open(dataset, "r")
@@ -40,8 +50,8 @@ class GoldPathFinder:
                 gold_path.relation_mention_inverse = items[0].endswith(".inverse") if not gold_path.is_simple else items[0].endswith(".2")
                 gold_path.relation_gold_inverse = items[1].endswith(".inverse") if not gold_path.is_simple else items[0].endswith(".2")
 
-                gold_path.relation_mention = items[0].replace(".inverse", "") if not gold_path.is_simple else items[0][:-2]
-                gold_path.relation_gold = items[1].replace(".inverse", "") if not gold_path.is_simple else items[1][:-2]
+                gold_path.relation_mention = items[0]
+                gold_path.relation_gold = items[1]
 
                 gold_path.score = float(items[2])
 

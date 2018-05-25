@@ -158,6 +158,13 @@ class Batch:
 
         return np.concatenate(index_lists).astype(np.float32)
 
+    """
+    Gold relation class:
+    """
+
+    def get_relation_class_labels(self):
+        list = np.array([example.get_gold_relation_vector() for example in self.examples]).astype(np.int32)
+        return list
 
 
 

@@ -37,12 +37,13 @@ class ExampleExtenderFactory:
         relation_index = self.index_factory.get("relations", experiment_configuration)
         entity_index = self.index_factory.get("vertices", experiment_configuration)
 
-        extender = AddMaxScoreExtender(extender)
+        if "no_graph_features" not in experiment_configuration["other"] or experiment_configuration["other"]["no_graph_features"] != "True":
+            extender = AddMaxScoreExtender(extender)
 
-        extender = AddMentionDummyExtender(extender, relation_index, entity_index)
-        extender = AddWordDummyExtender(extender, relation_index, entity_index)
-        extender = AddWordSequenceEdgeExtender(extender, relation_index)
-        extender = AddDependencyEdgeExtender(extender, relation_index, entity_index)
+        #extender = AddMentionDummyExtender(extender, relation_index, entity_index)
+        #extender = AddWordDummyExtender(extender, relation_index, entity_index)
+        #extender = AddWordSequenceEdgeExtender(extender, relation_index)
+        #extender = AddDependencyEdgeExtender(extender, relation_index, entity_index)
 
         if "inverse_relations" in experiment_configuration["architecture"] and experiment_configuration["architecture"]["inverse_relations"] == "features":
             extender = AddInverseEdgeExtender(extender, relation_index)
