@@ -20,19 +20,10 @@ class RelationPredictionFreebaseEntityEvaluator:
             self.add_predictions_to_step(example, step, evaluation)
 
     def add_predictions_to_step(self, example, step, evaluation):
-        true_labels = example.get_gold_relation_vector()
+        true_labels = example.get_gold_labels()
+
         predicted_labels = example.prediction
-
-        target = np.argmax(true_labels)
         pred_target = np.argmax(predicted_labels)
-
-        print(example)
-        print([gp.relation_mention for gp in example.gold_paths])
-        print(self.relation_index.from_index(target))
-        print(predicted_labels[target])
-        print(self.relation_index.from_index(pred_target))
-        print(predicted_labels[pred_target])
-
         pred_edge = self.relation_index.from_index(pred_target)
 
         for c in example.mentions:
@@ -52,15 +43,14 @@ class RelationPredictionFreebaseEntityEvaluator:
                 forward = False
 
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
-            print(retrieved)
-            names = [self.freebase_interface.get_name(r) for r in retrieved]
 
-            print(names)
-
-            full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
+            if first_edge.endswith(".1") or first_edge.endswith(".2"):
+                names = [self.freebase_interface.get_name(r) for r in retrieved]
+                full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
             print(full_predictions)
+            print(true_labels)
 
-            true_positives = np.isin(predicted_labels, true_labels)
+            true_positives = np.isin(full_predictions, true_labels)
             false_positives = np.logical_not(true_positives)
             false_negatives = np.isin(true_labels, predicted_labels, invert=True)
 
