@@ -41,6 +41,7 @@ class RelationPredictionFreebaseEntityEvaluator:
                 first_edge = first_edge[:-2]
                 forward = False
             elif first_edge.endswith(".inverse"):
+                first_edge = first_edge[:-8]
                 forward = False
 
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
@@ -48,8 +49,18 @@ class RelationPredictionFreebaseEntityEvaluator:
             if singular:
                 names = [self.freebase_interface.get_name(r) for r in retrieved]
                 full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
-            print(full_predictions)
-            print(true_labels)
+            else:
+                second_edge = edge_parts[1].strip()
+                forward = True
+
+                if second_edge.endswith(".inverse"):
+                    second_edge = second_edge[:-8]
+                    forward = False
+
+                second_retrieved = self.freebase_interface.get_entities(retrieved, second_edge, forward)
+
+                names = [self.freebase_interface.get_name(r) for r in second_retrieved]
+                full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, second_retrieved)])
 
             true_positives = np.isin(full_predictions, true_labels)
             false_positives = np.logical_not(true_positives)
@@ -73,7 +84,8 @@ class RelationPredictionFreebaseEntityEvaluator:
             print(inner_precision)
             print(inner_recall)
             print(inner_f1)
-            exit()
+
+        exit()
 
         print(pred_edge)
 
