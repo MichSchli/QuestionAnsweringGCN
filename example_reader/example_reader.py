@@ -51,7 +51,7 @@ class ExampleReader:
 
     def read_data(self, dataset):
         data = [[[]], [], []]
-        with open(self.dataset_map[dataset]) as data_file:
+        with open(self.dataset_map[dataset], encoding="utf8") as data_file:
 
             mode = 0
 

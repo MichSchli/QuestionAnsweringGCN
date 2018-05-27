@@ -101,7 +101,7 @@ class ModelFactory:
         if model_type == "separate_lstm_vs_gcn":
             return self.get_separate_lstm_vs_gcn(experiment_configuration)
         elif model_type == "relation_prediction":
-            return self.get_relation_prediction_model(experiment_configuration)
+            return self.get_relation_prediction_oracle(experiment_configuration)
 
         word_index = self.index_factory.get("words", experiment_configuration)
         pos_index = self.index_factory.get("pos", experiment_configuration)

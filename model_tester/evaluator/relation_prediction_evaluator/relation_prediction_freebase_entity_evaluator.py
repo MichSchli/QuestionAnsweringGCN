@@ -1,5 +1,6 @@
 import numpy as np
 
+from example_reader.graph_reader.database_interface.data_interface.FreebaseInterface import FreebaseInterface
 from model_tester.evaluator.evaluation import Evaluation
 
 
@@ -9,6 +10,7 @@ class RelationPredictionFreebaseEntityEvaluator:
 
     def __init__(self, relation_index):
         self.relation_index = relation_index
+        self.freebase_interface = FreebaseInterface()
 
     def begin_evaluation(self, steps=[0.5]):
         self.evaluations = [(step, Evaluation(default_method="micro")) for step in steps]
@@ -32,6 +34,30 @@ class RelationPredictionFreebaseEntityEvaluator:
         print(predicted_labels[pred_target])
 
         pred_edge = self.relation_index.from_index(pred_target)
+
+        for c in example.mentions:
+            centroid = c.entity_label
+            edge_parts = pred_edge.split("|")
+
+            first_edge = edge_parts[0].strip()
+
+            forward = True
+
+            if first_edge.endswith(".1"):
+                first_edge = first_edge[:-2]
+            elif first_edge.endswith(".2"):
+                first_edge = first_edge[:-2]
+                forward = False
+            elif first_edge.endswith(".inverse"):
+                forward = False
+
+            retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
+            print(retrieved)
+            names = self.freebase_interface.get_names(retrieved)
+            print(names)
+            exit()
+
+        print(pred_edge)
 
         target_edges = ["http://rdf.freebase.com/ns/" + gp.relation_mention + " | http://rdf.freebase.com/ns/" + gp.relation_gold for gp in example.gold_paths]
 

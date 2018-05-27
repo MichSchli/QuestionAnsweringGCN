@@ -113,6 +113,40 @@ class FreebaseInterface:
         #print("done")
         return edge_query_result
 
+    """
+    Given (s,r,*) retrieve o
+    """
+
+    def get_entities(self, centroids, target_edge, forward):
+        db_interface = self.initialize_sparql_interface()
+
+        center = "s" if forward else "o"
+        other = "o" if forward else "s"
+
+        query_string = "PREFIX ns: <" + self.prefix + ">\n"
+        query_string += "select * where {\n"
+        query_string += "?s " + "ns:" + target_edge.split("/ns/")[-1] + " ?o .\n"
+        query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
+        query_string += "}"
+
+        print(query_string)
+
+        results = self.execute_query(db_interface, query_string)
+        return [r[other]["value"] for r in results]
+
+    def get_name(self, entity):
+        db_interface = self.initialize_sparql_interface()
+
+        query_string = "PREFIX ns: <" + self.prefix + ">\n"
+        query_string += "select * where {\n"
+        query_string += "ns:" + entity.split("/ns/")[-1] + " ns:type.object.name ?o .\n"
+        query_string += "filter ( "
+        query_string += "\nlang(?o) = 'en'"
+        query_string += " )\n"
+
+        query_string += "}"
+        results = self.execute_query(db_interface, query_string)
+        return [r["o"]["value"] for r in results]
 
     """
     Retrieve names and append the property to the hypergraph
