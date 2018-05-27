@@ -13,7 +13,7 @@ class RelationPredictionFreebaseEntityEvaluator:
         self.freebase_interface = FreebaseInterface()
 
     def begin_evaluation(self, steps=[0.5]):
-        self.evaluations = [(step, Evaluation(default_method="micro")) for step in steps]
+        self.evaluations = [(step, Evaluation(default_method="macro")) for step in steps]
 
     def add_prediction(self, example):
         for step, evaluation in self.evaluations:
@@ -25,6 +25,10 @@ class RelationPredictionFreebaseEntityEvaluator:
         predicted_labels = example.prediction
         pred_target = np.argmax(predicted_labels)
         pred_edge = self.relation_index.from_index(pred_target)
+
+        max_precision = 0
+        max_recall = 0
+        max_f1 = 0
 
         for c in example.mentions:
             centroid = c.entity_label
@@ -92,21 +96,14 @@ class RelationPredictionFreebaseEntityEvaluator:
             print(inner_recall)
             print(inner_f1)
 
-        exit()
+            if inner_f1 > max_f1:
+                max_precision = inner_precision
+                max_recall = inner_recall
+                max_f1 = inner_f1
 
-        print(pred_edge)
-
-        target_edges = ["http://rdf.freebase.com/ns/" + gp.relation_mention + " | http://rdf.freebase.com/ns/" + gp.relation_gold for gp in example.gold_paths]
-
-        if pred_edge not in target_edges:
-            evaluation.total_false_positives += 1
-
-        for target_edge in target_edges:
-            if target_edge == pred_edge:
-                evaluation.total_true_positives += 1
-            else:
-                evaluation.total_false_negatives += 1
-
+        evaluation.macro_precision += max_precision
+        evaluation.macro_recall += max_recall
+        evaluation.macro_f1 += max_f1
         evaluation.n_samples += 1
 
     def compute_final_scores(self, evaluation):
