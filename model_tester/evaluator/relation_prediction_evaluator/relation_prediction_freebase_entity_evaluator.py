@@ -59,7 +59,7 @@ class RelationPredictionFreebaseEntityEvaluator:
 
             if singular:
                 names = [self.freebase_interface.get_name(r) for r in retrieved]
-                full_predictions = [n if len(n) > 0 else r for n,r in zip(names, retrieved)]
+                full_predictions = [n if len(n) > 0 else [r] for n,r in zip(names, retrieved)]
                 if len(full_predictions) > 0:
                     full_predictions = np.concatenate(full_predictions)
             else:
@@ -73,7 +73,7 @@ class RelationPredictionFreebaseEntityEvaluator:
                 second_retrieved = self.freebase_interface.get_entities(retrieved, second_edge, forward)
 
                 names = [self.freebase_interface.get_name(r) for r in second_retrieved]
-                full_predictions = [n if len(n) > 0 else r for n,r in zip(names, second_retrieved)]
+                full_predictions = [n if len(n) > 0 else [r] for n,r in zip(names, second_retrieved)]
                 if len(full_predictions) > 0:
                     full_predictions = np.concatenate(full_predictions)
 
