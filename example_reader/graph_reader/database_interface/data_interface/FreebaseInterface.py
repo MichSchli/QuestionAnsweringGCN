@@ -132,7 +132,7 @@ class FreebaseInterface:
         print(query_string)
 
         results = self.execute_query(db_interface, query_string)
-        return [r[other]["value"] for r in results]
+        return [r[other]["value"] for r in results["results"]["bindings"]]
 
     def get_name(self, entity):
         db_interface = self.initialize_sparql_interface()
@@ -146,7 +146,7 @@ class FreebaseInterface:
 
         query_string += "}"
         results = self.execute_query(db_interface, query_string)
-        return [r["o"]["value"] for r in results]
+        return [r["o"]["value"] for r in results["results"]["bindings"]]
 
     """
     Retrieve names and append the property to the hypergraph
