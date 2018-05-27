@@ -70,6 +70,8 @@ class RelationPredictionFreebaseEntityEvaluator:
             else:
                 inner_f1 = 0
 
+            print(inner_precision)
+            print(inner_recall)
             print(inner_f1)
             exit()
 
