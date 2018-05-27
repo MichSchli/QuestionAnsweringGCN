@@ -54,7 +54,11 @@ class RelationPredictionFreebaseEntityEvaluator:
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
             print(retrieved)
             names = [self.freebase_interface.get_name(r) for r in retrieved]
+
             print(names)
+
+            full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
+            print(full_predictions)
             exit()
 
         print(pred_edge)
