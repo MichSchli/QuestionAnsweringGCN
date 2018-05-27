@@ -33,6 +33,7 @@ class RelationPredictionFreebaseEntityEvaluator:
             first_edge = edge_parts[0].strip()
 
             forward = True
+            singular = first_edge.endswith(".1") or first_edge.endswith(".2")
 
             if first_edge.endswith(".1"):
                 first_edge = first_edge[:-2]
@@ -44,7 +45,7 @@ class RelationPredictionFreebaseEntityEvaluator:
 
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
 
-            if first_edge.endswith(".1") or first_edge.endswith(".2"):
+            if singular:
                 names = [self.freebase_interface.get_name(r) for r in retrieved]
                 full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
             print(full_predictions)
