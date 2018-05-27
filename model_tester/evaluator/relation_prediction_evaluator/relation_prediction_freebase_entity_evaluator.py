@@ -53,7 +53,7 @@ class RelationPredictionFreebaseEntityEvaluator:
 
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
             print(retrieved)
-            names = self.freebase_interface.get_names(retrieved)
+            names = [self.freebase_interface.get_name(r) for r in retrieved]
             print(names)
             exit()
 
