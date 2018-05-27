@@ -59,6 +59,27 @@ class RelationPredictionFreebaseEntityEvaluator:
 
             full_predictions = np.concatenate([n if len(n) > 0 else r for n,r in zip(names, retrieved)])
             print(full_predictions)
+
+            true_positives = np.isin(predicted_labels, true_labels)
+            false_positives = np.logical_not(true_positives)
+            false_negatives = np.isin(true_labels, predicted_labels, invert=True)
+
+            if np.sum(true_positives) + np.sum(false_positives) == 0:
+                inner_precision = 1.0
+            else:
+                inner_precision = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_positives))
+
+            if np.sum(true_positives) + np.sum(false_negatives) == 0:
+                inner_recall = 1.0
+            else:
+                inner_recall = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_negatives))
+
+            if inner_precision + inner_recall > 0:
+                inner_f1 = 2 * (inner_precision * inner_recall) / (inner_precision + inner_recall)
+            else:
+                inner_f1 = 0
+
+            print(inner_f1)
             exit()
 
         print(pred_edge)
