@@ -26,6 +26,13 @@ class RelationPredictionFreebaseEntityEvaluator:
         pred_target = np.argmax(predicted_labels)
         pred_edge = self.relation_index.from_index(pred_target)
 
+        if pred_edge == "<unknown>":
+            evaluation.macro_precision += 1.0
+            evaluation.macro_recall += 0.0
+            evaluation.macro_f1 += 0.0
+            evaluation.n_samples += 1
+            return
+
         max_precision = 0
         max_recall = 0
         max_f1 = 0
