@@ -53,7 +53,7 @@ class RelationPredictionFreebaseEntityEvaluator:
 
             true_positives = np.isin(full_predictions, true_labels)
             false_positives = np.logical_not(true_positives)
-            false_negatives = np.isin(true_labels, predicted_labels, invert=True)
+            false_negatives = np.isin(true_labels, full_predictions, invert=True)
 
             if np.sum(true_positives) + np.sum(false_positives) == 0:
                 inner_precision = 1.0
