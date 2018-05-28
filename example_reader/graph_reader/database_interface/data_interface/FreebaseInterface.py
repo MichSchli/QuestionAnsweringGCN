@@ -119,6 +119,10 @@ class FreebaseInterface:
 
     def get_entities(self, centroids, target_edge, forward):
         result_list = []
+
+        if len(centroids) == 0:
+            return result_list
+
         number_of_batches = math.ceil(len(centroids) / self.max_entities_per_query)
         for i,center_vertex_batch in enumerate(np.array_split(centroids, number_of_batches)):
             db_interface = self.initialize_sparql_interface()
