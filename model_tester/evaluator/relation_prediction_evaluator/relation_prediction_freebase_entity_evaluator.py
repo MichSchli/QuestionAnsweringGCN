@@ -114,20 +114,7 @@ class RelationPredictionFreebaseEntityEvaluator:
         evaluation.n_samples += 1
 
     def compute_final_scores(self, evaluation):
-        if np.sum(evaluation.total_true_positives) + np.sum(evaluation.total_false_positives) == 0:
-            evaluation.micro_precision = 1.0
-        else:
-            evaluation.micro_precision = evaluation.total_true_positives / (
-                evaluation.total_true_positives + evaluation.total_false_positives)
-
-        evaluation.micro_recall = evaluation.total_true_positives / (
-            evaluation.total_true_positives + evaluation.total_false_negatives)
-
-        if evaluation.micro_precision + evaluation.micro_recall > 0:
-            evaluation.micro_f1 = 2 * (evaluation.micro_precision * evaluation.micro_recall) / (
-                evaluation.micro_precision + evaluation.micro_recall)
-        else:
-            evaluation.micro_f1 = 0.0
+        pass
 
     def final_scores(self):
         for step, evaluation in self.evaluations:
