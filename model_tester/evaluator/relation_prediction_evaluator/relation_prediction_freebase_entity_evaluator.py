@@ -53,6 +53,7 @@ class RelationPredictionFreebaseEntityEvaluator:
                 forward = False
             elif first_edge.endswith(".inverse"):
                 first_edge = first_edge[:-8]
+            else:
                 forward = False
 
             retrieved = self.freebase_interface.get_entities([centroid], first_edge, forward)
