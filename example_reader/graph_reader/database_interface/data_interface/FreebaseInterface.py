@@ -118,21 +118,26 @@ class FreebaseInterface:
     """
 
     def get_entities(self, centroids, target_edge, forward):
-        db_interface = self.initialize_sparql_interface()
+        result_list = []
+        number_of_batches = math.ceil(centroids.shape[0] / self.max_entities_per_query)
+        for i,center_vertex_batch in enumerate(np.array_split(centroids, number_of_batches)):
+            db_interface = self.initialize_sparql_interface()
 
-        center = "s" if forward else "o"
-        other = "o" if forward else "s"
+            center = "s" if forward else "o"
+            other = "o" if forward else "s"
 
-        query_string = "PREFIX ns: <" + self.prefix + ">\n"
-        query_string += "select * where {\n"
-        query_string += "?s " + "ns:" + target_edge.split("/ns/")[-1] + " ?o .\n"
-        query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
-        query_string += "}"
+            query_string = "PREFIX ns: <" + self.prefix + ">\n"
+            query_string += "select * where {\n"
+            query_string += "?s " + "ns:" + target_edge.split("/ns/")[-1] + " ?o .\n"
+            query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertex_batch]) + "}\n"
+            query_string += "}"
 
-        print(query_string)
+            print(query_string)
 
-        results = self.execute_query(db_interface, query_string)
-        return [r[other]["value"] for r in results["results"]["bindings"]]
+            results = self.execute_query(db_interface, query_string)
+            result_list.extend([r[other]["value"] for r in results["results"]["bindings"]])
+
+        return result_list
 
     def get_name(self, entity):
         db_interface = self.initialize_sparql_interface()
