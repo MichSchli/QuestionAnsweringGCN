@@ -346,7 +346,7 @@ def execute_query(db_interface, query_string):
         except:
             trial_counter += 1
             if trial_counter == 5:
-                return None
+                return {"results":{"bindings": []}}
 
             print("Query failed. Reattempting in 5 seconds...\n")
             print(query_string)
