@@ -229,8 +229,8 @@ def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
 
     db_interface = sparql
 
-    edge_1 = "?s ns:" + target_edge.split("/ns/")[-1] + "?e ." if forward else "?e ns:" + target_edge.split("/ns/")[-1] + "?s ."
-    edge_2 = "?e ns:" + target_edge_2.split("/ns/")[-1] + "?o ." if forward_2 else "?o ns:" + target_edge_2.split("/ns/")[-1] + "?e ."
+    edge_1 = "?s ns:" + target_edge.split("/ns/")[-1] + " ?e ." if forward else "?e ns:" + target_edge.split("/ns/")[-1] + " ?s ."
+    edge_2 = "?e ns:" + target_edge_2.split("/ns/")[-1] + " ?o ." if forward_2 else "?o ns:" + target_edge_2.split("/ns/")[-1] + " ?e ."
 
     query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
     query_string += "select * where {\n"
@@ -288,17 +288,17 @@ def get_best_relation_pair(entity, golds):
 
     for relation_1, relation_2 in two_relations:
         if relation_1.endswith(".inverse"):
-            actual_relation_1 = relation[:-8]
+            actual_relation_1 = relation_1[:-8]
             forward_1 = False
         else:
-            actual_relation_1 = relation
+            actual_relation_1 = relation_1
             forward_1 = True
 
         if relation_2.endswith(".inverse"):
-            actual_relation_2 = relation[:-8]
+            actual_relation_2 = relation_2[:-8]
             forward_2 = False
         else:
-            actual_relation_2 = relation
+            actual_relation_2 = relation_2
             forward_2 = True
 
         retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
