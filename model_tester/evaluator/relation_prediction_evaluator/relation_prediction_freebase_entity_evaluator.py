@@ -114,8 +114,11 @@ class RelationPredictionFreebaseEntityEvaluator:
         evaluation.macro_f1 += max_f1
         evaluation.n_samples += 1
 
+
     def compute_final_scores(self, evaluation):
-        pass
+        evaluation.macro_precision /= evaluation.n_samples
+        evaluation.macro_recall /= evaluation.n_samples
+        evaluation.macro_f1 /= evaluation.n_samples
 
     def final_scores(self):
         for step, evaluation in self.evaluations:
