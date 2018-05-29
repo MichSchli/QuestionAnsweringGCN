@@ -264,6 +264,28 @@ def get_name(entity):
     return [r["o"]["value"] for r in results["results"]["bindings"]]
 
 
+def get_f1(full_predictions, true_labels):
+    true_positives = np.isin(full_predictions, true_labels)
+    false_positives = np.logical_not(true_positives)
+    false_negatives = np.isin(true_labels, full_predictions, invert=True)
+
+    if np.sum(true_positives) + np.sum(false_positives) == 0:
+        inner_precision = 1.0
+    else:
+        inner_precision = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_positives))
+
+    if np.sum(true_positives) + np.sum(false_negatives) == 0:
+        inner_recall = 1.0
+    else:
+        inner_recall = np.sum(true_positives) / (np.sum(true_positives) + np.sum(false_negatives))
+
+    if inner_precision + inner_recall > 0:
+        inner_f1 = 2 * (inner_precision * inner_recall) / (inner_precision + inner_recall)
+    else:
+        inner_f1 = 0
+
+    return inner_f1
+
 def get_best_relation_pair(entity, golds):
     one_relations = list(get_1_paths(["ns:"+entity], golds))
     two_relations = list(get_2_paths(["ns:"+entity], golds))
@@ -283,9 +305,10 @@ def get_best_relation_pair(entity, golds):
         retrieved = get_1_entities([entity], actual_relation, forward)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-        full_predictions = np.concatenate(full_predictions)
+        full_predictions = np.unique(np.concatenate(full_predictions))
 
         print(full_predictions)
+        print(get_f1(full_predictions, golds))
 
     print("||||||")
 
@@ -307,9 +330,10 @@ def get_best_relation_pair(entity, golds):
         retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-        full_predictions = np.concatenate(full_predictions)
+        full_predictions = np.unique(np.concatenate(full_predictions))
 
         print(full_predictions)
+        print(get_f1(full_predictions, golds))
 
 
     print("@@@@@@@@@@@@@@@")
