@@ -78,6 +78,7 @@ class RelationPredictionFreebaseEntityEvaluator:
                 if len(full_predictions) > 0:
                     full_predictions = np.concatenate(full_predictions)
 
+            full_predictions = np.unique(full_predictions)
             print(full_predictions)
             print(true_labels)
 
