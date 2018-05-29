@@ -354,6 +354,9 @@ def execute_query(db_interface, query_string):
             time.sleep(5)
     return results
 
+average_f1 = 0
+count = 0
+
 with open(args.input_file) as data_file:
     reading_sentence = True
     reading_entities = False
@@ -398,5 +401,21 @@ with open(args.input_file) as data_file:
                     elif f1 == max_f1:
                         max_relation.append((entity, path))
 
-            print(max_relation)
-            print(max_f1)
+            for entity, path in max_relation:
+                string = entity
+
+                path = path.split("\t")
+
+                if len(path) > 1:
+                    string += "\t" + path[0] + "\t" + path[1] + "\t" + str(max_f1)
+                else:
+                    path = path[0]
+                    if path.endswith(".inverse"):
+                        string += "\t" + path[:-8] + ".2\t" + path[:-8] + ".1\t" + str(max_f1)
+                    else:
+                        string += "\t" + path[:-8] + ".1\t" + path[:-8] + ".2\t" + str(max_f1)
+
+            average_f1 += max_f1
+            count += 1
+
+print(average_f1 / count)
