@@ -43,7 +43,7 @@ def generate_1_query(centroids, golds, forward_edges=True):
 
     return query
 
-def generate_1_query_with_name(centroids, golds, forward_1_edges=True):
+def generate_1_query_with_name(centroids, golds, forward_edges=True):
     centroid_symbol = "s"
     gold_symbol = "o"
 
