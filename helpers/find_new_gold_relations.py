@@ -258,5 +258,3 @@ with open(args.input_file) as data_file:
                 best_relation_pair = get_best_relation_pair(entity, golds)
                 print(entity)
                 print(best_relation_pair)
-
-            exit()
