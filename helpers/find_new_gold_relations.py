@@ -413,7 +413,7 @@ with open(args.input_file) as data_file:
                     if path.endswith(".inverse"):
                         string += "\t" + path[:-8] + ".2\t" + path[:-8] + ".1\t" + str(max_f1)
                     else:
-                        string += "\t" + path[:-8] + ".1\t" + path[:-8] + ".2\t" + str(max_f1)
+                        string += "\t" + path + ".1\t" + path + ".2\t" + str(max_f1)
 
                 print(string)
 
