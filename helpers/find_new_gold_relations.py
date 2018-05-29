@@ -301,7 +301,7 @@ def get_best_relation_pair(entity, golds):
             actual_relation_2 = relation
             forward_2 = True
 
-        retrieved = get_1_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
+        retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
         full_predictions = np.concatenate(full_predictions)
