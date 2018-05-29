@@ -65,7 +65,7 @@ def get_1_paths(centroids, golds):
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
-        yield r["r"]
+        yield r["r"]["value"]
 
     query = generate_1_query(centroids, golds, forward_edges=False)
     results = execute_query(sparql, query)
@@ -77,7 +77,7 @@ def get_1_paths(centroids, golds):
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
-        yield r["r"]
+        yield r["r"]["value"]
 
     query = generate_1_query_with_name(centroids, golds, forward_edges=False)
     results = execute_query(sparql, query)
@@ -203,7 +203,6 @@ def get_best_relation_pair(entity, golds):
 
     print(one_relations)
     print(two_relations)
-    exit()
 
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
@@ -259,3 +258,5 @@ with open(args.input_file) as data_file:
                 best_relation_pair = get_best_relation_pair(entity, golds)
                 print(entity)
                 print(best_relation_pair)
+
+            exit()
