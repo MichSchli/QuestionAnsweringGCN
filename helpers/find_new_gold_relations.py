@@ -43,6 +43,23 @@ def generate_1_query(centroids, golds, forward_edges=True):
 
     return query
 
+def generate_1_query_with_name(centroids, golds, forward_1_edges=True):
+    centroid_symbol = "s"
+    gold_symbol = "o"
+
+    first_edge_string = "?s ?r1 ?i" if forward_1_edges else "?i ?r1 ?s"
+    second_edge_string = "?i ns:type.object.name ?o"
+
+    query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
+    query += "\n\nselect ?r1 where {"
+    query += "\n\t" + first_edge_string + " ."
+    query += "\n\t" + second_edge_string + " ."
+    query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
+    query += "\n}"
+
+    return query
+
 def get_1_paths(centroids, golds):
     query = generate_1_query(centroids, golds)
     results = execute_query(sparql, query)
@@ -51,6 +68,18 @@ def get_1_paths(centroids, golds):
         yield r["r"]
 
     query = generate_1_query(centroids, golds, forward_edges=False)
+    results = execute_query(sparql, query)
+
+    for r in results["results"]["bindings"]:
+        yield r["r"]["value"]
+
+    query = generate_1_query_with_name(centroids, golds)
+    results = execute_query(sparql, query)
+
+    for r in results["results"]["bindings"]:
+        yield r["r"]
+
+    query = generate_1_query_with_name(centroids, golds, forward_edges=False)
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
@@ -78,8 +107,44 @@ def generate_2_query_through_event(centroids, golds, forward_1_edges=True, forwa
     gold_symbol = "o"
 
     first_edge_string = "?s ?r1 ?e" if forward_1_edges else "?e ?r1 ?s"
+    third_edge_string = "?e ?r3 ?o" if forward_3_edges else "?o ?r3 ?e"
+
+    query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
+    query += "\n\nselect ?r1 ?r2 ?r3 where {"
+    query += "\n\t" + first_edge_string + " ."
+    query += "\n\t" + third_edge_string + " ."
+    query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
+
+    query += "filter ( "
+    query += "( not exists { ?e ns:type.object.name ?name } && !isLiteral(?e) && strstarts(str(?e), \"http://rdf.freebase.com/ns/\") )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/base.schemastaging\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/key/wikipedia\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/common.topic.webpage\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/type.object.key\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
+    query += "\n\t&& !strstarts(str(?r1), \"http://rdf.freebase.com/ns/common.topic.description\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/base.schemastaging\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/key/wikipedia\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/common.topic.topic_equivalent_webpage\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/common.topic.webpage\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/type.object.key\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/base.yupgrade.user.topics\" )"
+    query += "\n\t&& !strstarts(str(?r2), \"http://rdf.freebase.com/ns/common.topic.description\" )"
+    query += "\n\t)"
+
+    query += "\n}"
+
+    return query
+
+def generate_2_query_through_event_with_name(centroids, golds, forward_1_edges=True, forward_2_edges=True, forward_3_edges=True):
+    centroid_symbol = "s"
+    gold_symbol = "o"
+
+    first_edge_string = "?s ?r1 ?e" if forward_1_edges else "?e ?r1 ?s"
     second_edge_string = "?e ?r2 ?i" if forward_2_edges else "?i ?r2 ?e"
-    third_edge_string = "?i ?r3 ?o" if forward_3_edges else "?o ?r3 ?i"
+    third_edge_string = "?i ns:type.object.name ?o"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
     query += "\n\nselect ?r1 ?r2 ?r3 where {"
@@ -111,28 +176,6 @@ def generate_2_query_through_event(centroids, golds, forward_1_edges=True, forwa
 
     return query
 
-def generate_4_query(centroids, golds, forward_1_edges=True, forward_2_edges=True, forward_3_edges=True, forward_4_edges=True):
-    centroid_symbol = "s"
-    gold_symbol = "o"
-
-    first_edge_string = "?s ?r1 ?e" if forward_1_edges else "?e ?r1 ?s"
-    second_edge_string = "?e ?r2 ?i" if forward_2_edges else "?i ?r2 ?e"
-    third_edge_string = "?i ?r3 ?e2" if forward_3_edges else "?e2 ?r3 ?i"
-    fourth_edge_string = "?e2 ?r4 ?o" if forward_4_edges else "?o ?r4 ?e2"
-
-    query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect * where {"
-    query += "\n\t" + first_edge_string + " ."
-    query += "\n\t" + second_edge_string + " ."
-    query += "\n\t" + third_edge_string + " ."
-    query += "\n\t" + fourth_edge_string + " ."
-    query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
-    query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
-
-    query += "\n}"
-
-    return query
-
 def get_2_paths(centroids, golds):
     yield from get_2_paths_internal(centroids, golds, True, True)
     yield from get_2_paths_internal(centroids, golds, True, False)
@@ -141,7 +184,13 @@ def get_2_paths(centroids, golds):
 
 
 def get_2_paths_internal(centroids, golds, forward_1, forward_2):
-    query = generate_2_query(centroids, golds, forward_1, forward_2)
+    query = generate_2_query_through_event(centroids, golds, forward_1, forward_2)
+    results = execute_query(sparql, query)
+
+    for r in results["results"]["bindings"]:
+        yield r["r1"]["value"], r["r2"]["value"]
+
+    query = generate_2_query_through_event_with_name(centroids, golds, forward_1, forward_2)
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
