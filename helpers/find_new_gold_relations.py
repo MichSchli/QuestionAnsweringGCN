@@ -286,6 +286,31 @@ def get_best_relation_pair(entity, golds):
 
     print("||||||")
 
+    for relation_1, relation_2 in two_relations:
+        if relation_1.endswith(".inverse"):
+            actual_relation_1 = relation[:-8]
+            forward_1 = False
+        else:
+            actual_relation_1 = relation
+            forward_1 = True
+
+        if relation_2.endswith(".inverse"):
+            actual_relation_2 = relation[:-8]
+            forward_2 = False
+        else:
+            actual_relation_2 = relation
+            forward_2 = True
+
+        retrieved = get_1_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
+        names = [get_name(r) for r in retrieved]
+        full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
+        full_predictions = np.concatenate(full_predictions)
+
+        print(full_predictions)
+
+
+    print("@@@@@@@@@@@@@@@")
+
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
     retrieved = False
