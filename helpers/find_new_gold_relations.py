@@ -246,7 +246,10 @@ def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
 
     return result_list
 
-def get_name( entity):
+def get_name(entity):
+    if not entity.startswith("http://rdf.freebase.com/ns/"):
+        return []
+
     db_interface = sparql
 
     query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
