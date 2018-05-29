@@ -178,9 +178,9 @@ def generate_2_query_through_event_with_name(centroids, golds, forward_1_edges=T
 
 def get_2_paths(centroids, golds):
     yield from get_2_paths_internal(centroids, golds, True, True)
-    yield from get_2_paths_internal(centroids, golds, True, False)
+    yield from [(x[0], x[1]+".inverse") for x in get_2_paths_internal(centroids, golds, True, False)]
     yield from get_2_paths_internal(centroids, golds, False, True)
-    yield from get_2_paths_internal(centroids, golds, False, False)
+    yield from [(x[0]+".inverse", x[1]+".inverse") for x in get_2_paths_internal(centroids, golds, False, False)]
 
 
 def get_2_paths_internal(centroids, golds, forward_1, forward_2):
