@@ -385,7 +385,18 @@ with open(args.input_file) as data_file:
         elif not line and not reading_sentence and not reading_entities:
             reading_sentence = True
 
+            max_relation = []
+            max_f1 = 0
+
             for entity in entities:
                 best_relation_pair = get_best_relation_pair(entity, golds)
-                print(entity)
-                print(best_relation_pair)
+
+                for path, f1 in best_relation_pair.items():
+                    if f1 > max_f1:
+                        max_f1 = f1
+                        max_relation = [(entity,path)]
+                    elif f1 == max_f1:
+                        max_relation.append((entity, path))
+
+            print(max_relation)
+            print(max_f1)
