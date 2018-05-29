@@ -149,8 +149,8 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
 
 
 def get_best_relation_pair(entity, golds):
-    one_relations = list(get_1_paths([entity], golds))
-    two_relations = list(get_2_paths([entity], golds))
+    one_relations = list(get_1_paths(["ns:"+entity], golds))
+    two_relations = list(get_2_paths(["ns:"+entity], golds))
 
     print(one_relations)
     print(two_relations)
