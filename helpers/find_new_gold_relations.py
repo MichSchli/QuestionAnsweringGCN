@@ -71,7 +71,7 @@ def get_1_paths(centroids, golds):
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
-        yield r["r"]["value"]
+        yield r["r"]["value"] + ".inverse"
 
     query = generate_1_query_with_name(centroids, golds)
     results = execute_query(sparql, query)
@@ -83,7 +83,7 @@ def get_1_paths(centroids, golds):
     results = execute_query(sparql, query)
 
     for r in results["results"]["bindings"]:
-        yield r["r"]["value"]
+        yield r["r"]["value"] + ".inverse"
 
 def generate_2_query(centroids, golds, forward_1_edges=True, forward_2_edges=True):
     centroid_symbol = "s"
@@ -179,7 +179,7 @@ def generate_2_query_through_event_with_name(centroids, golds, forward_1_edges=T
 def get_2_paths(centroids, golds):
     yield from get_2_paths_internal(centroids, golds, True, True)
     yield from [(x[0], x[1]+".inverse") for x in get_2_paths_internal(centroids, golds, True, False)]
-    yield from get_2_paths_internal(centroids, golds, False, True)
+    yield from [(x[0]+".inverse", x[1]) for x in get_2_paths_internal(centroids, golds, False, True)]
     yield from [(x[0]+".inverse", x[1]+".inverse") for x in get_2_paths_internal(centroids, golds, False, False)]
 
 
@@ -196,6 +196,69 @@ def get_2_paths_internal(centroids, golds, forward_1, forward_2):
     for r in results["results"]["bindings"]:
         yield r["r1"]["value"], r["r2"]["value"]
 
+def get_1_entities(centroids, target_edge, forward):
+    result_list = []
+
+    if len(centroids) == 0:
+        return result_list
+
+    db_interface = sparql
+
+    center = "s" if forward else "o"
+    other = "o" if forward else "s"
+
+    query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
+    query_string += "select * where {\n"
+    query_string += "?s " + "ns:" + target_edge.split("/ns/")[-1] + " ?o .\n"
+    query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
+    query_string += "}"
+
+    print(query_string)
+
+    results = execute_query(db_interface, query_string)
+    result_list.extend([r[other]["value"] for r in results["results"]["bindings"]])
+
+    return result_list
+
+def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
+    result_list = []
+
+    if len(centroids) == 0:
+        return result_list
+
+    db_interface = sparql
+
+    edge_1 = "?s ns:" + target_edge.split("/ns/")[-1] + "?e ." if forward else "?e ns:" + target_edge.split("/ns/")[-1] + "?s ."
+    edge_2 = "?e ns:" + target_edge_2.split("/ns/")[-1] + "?o ." if forward_2 else "?o ns:" + target_edge_2.split("/ns/")[-1] + "?e ."
+
+    query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
+    query_string += "select * where {\n"
+    query_string += edge_1
+    query_string += edge_2
+    query_string += "values ?s {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
+    query_string += "}"
+
+    print(query_string)
+
+    results = execute_query(db_interface, query_string)
+    result_list.extend([r["o"]["value"] for r in results["results"]["bindings"]])
+
+    return result_list
+
+def get_name( entity):
+    db_interface = sparql
+
+    query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
+    query_string += "select * where {\n"
+    query_string += "ns:" + entity.split("/ns/")[-1] + " ns:type.object.name ?o .\n"
+    query_string += "filter ( "
+    query_string += "\nlang(?o) = 'en'"
+    query_string += " )\n"
+
+    query_string += "}"
+    results = execute_query(db_interface, query_string)
+    return [r["o"]["value"] for r in results["results"]["bindings"]]
+
 
 def get_best_relation_pair(entity, golds):
     one_relations = list(get_1_paths(["ns:"+entity], golds))
@@ -203,6 +266,23 @@ def get_best_relation_pair(entity, golds):
 
     print(one_relations)
     print(two_relations)
+
+    print("===")
+    for relation in one_relations:
+        if relation.endswith(".inverse"):
+            actual_relation = relation[:-8]
+            forward = False
+        else:
+            actual_relation = relation
+            forward = True
+
+        retrieved = get_1_entities([entity], actual_relation, forward)
+        names = [get_name(r) for r in retrieved]
+        full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
+
+        print(full_predictions)
+
+    print("||||||")
 
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
