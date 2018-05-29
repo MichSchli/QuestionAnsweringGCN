@@ -3,6 +3,7 @@ from dateutil.parser import parse as date_parse
 import json
 
 import time
+import numpy as np
 
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLWrapper
@@ -279,6 +280,7 @@ def get_best_relation_pair(entity, golds):
         retrieved = get_1_entities([entity], actual_relation, forward)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
+        full_predictions = np.concatenate(full_predictions)
 
         print(full_predictions)
 
