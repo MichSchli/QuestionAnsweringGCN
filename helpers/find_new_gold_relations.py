@@ -304,7 +304,8 @@ def get_best_relation_pair(entity, golds):
         retrieved = get_1_entities([entity], actual_relation, forward)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-        full_predictions = np.unique(np.concatenate(full_predictions))
+        full_predictions = np.concatenate(full_predictions) if len(full_predictions) > 0 else full_predictions
+        full_predictions = np.unique(full_predictions)
 
         f1s[key] = get_f1(full_predictions, golds)
 
@@ -330,7 +331,8 @@ def get_best_relation_pair(entity, golds):
         retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-        full_predictions = np.unique(np.concatenate(full_predictions))
+        full_predictions = np.concatenate(full_predictions) if len(full_predictions) > 0 else full_predictions
+        full_predictions = np.unique(full_predictions)
         f1s[key] = get_f1(full_predictions, golds)
 
     return f1s
@@ -348,8 +350,8 @@ def execute_query(db_interface, query_string):
             if trial_counter == 5:
                 return {"results":{"bindings": []}}
 
-            print("Query failed. Reattempting in 5 seconds...\n")
-            print(query_string)
+            #print("Query failed. Reattempting in 5 seconds...\n")
+            #print(query_string)
 
             time.sleep(5)
     return results
