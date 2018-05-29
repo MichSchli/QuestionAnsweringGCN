@@ -214,8 +214,6 @@ def get_1_entities(centroids, target_edge, forward):
     query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
     query_string += "}"
 
-    print(query_string)
-
     results = execute_query(db_interface, query_string)
     result_list.extend([r[other]["value"] for r in results["results"]["bindings"]])
 
@@ -238,8 +236,6 @@ def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
     query_string += edge_2
     query_string += "values ?s {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in centroids]) + "}\n"
     query_string += "}"
-
-    print(query_string)
 
     results = execute_query(db_interface, query_string)
     result_list.extend([r["o"]["value"] for r in results["results"]["bindings"]])
@@ -290,11 +286,6 @@ def get_best_relation_pair(entity, golds):
     one_relations = list(get_1_paths(["ns:"+entity], golds))
     two_relations = list(get_2_paths(["ns:"+entity], golds))
 
-    print(one_relations)
-    print(two_relations)
-
-    print("===")
-
     f1s = {}
 
     for relation in one_relations:
@@ -316,8 +307,6 @@ def get_best_relation_pair(entity, golds):
         full_predictions = np.unique(np.concatenate(full_predictions))
 
         f1s[key] = get_f1(full_predictions, golds)
-
-    print("||||||")
 
     for relation_1, relation_2 in two_relations:
         key = relation_1 + "|" + relation_2
@@ -344,9 +333,7 @@ def get_best_relation_pair(entity, golds):
         full_predictions = np.unique(np.concatenate(full_predictions))
         f1s[key] = get_f1(full_predictions, golds)
 
-    print("@@@@@@@@@@@@@@@")
-
-    print(f1s)
+    return f1s
 
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
