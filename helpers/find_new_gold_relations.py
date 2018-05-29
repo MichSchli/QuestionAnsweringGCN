@@ -51,7 +51,7 @@ def generate_1_query_with_name(centroids, golds, forward_1_edges=True):
     second_edge_string = "?i ns:type.object.name ?o"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
-    query += "\n\nselect ?r1 where {"
+    query += "\n\nselect ?r where {"
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
