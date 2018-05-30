@@ -280,7 +280,7 @@ def get_f1(full_predictions, true_labels):
     else:
         inner_f1 = 0
 
-    return inner_f1
+    return inner_precision, inner_recall, inner_f1
 
 def get_best_relation_pair(entity, golds):
     one_relations = list(get_1_paths(["ns:"+entity], golds))
@@ -356,6 +356,8 @@ def execute_query(db_interface, query_string):
             time.sleep(5)
     return results
 
+average_precision = 0
+average_recall = 0
 average_f1 = 0
 count = 0
 
@@ -392,15 +394,19 @@ with open(args.input_file) as data_file:
 
             max_relation = []
             max_f1 = 0
+            max_precision = 0
+            max_recall = 0
 
             for entity in entities:
                 best_relation_pair = get_best_relation_pair(entity, golds)
 
                 for path, f1 in best_relation_pair.items():
-                    if f1 > max_f1:
-                        max_f1 = f1
+                    if f1[2] > max_f1:
+                        max_f1 = f1[2]
+                        max_precision = f1[0]
+                        max_recall = f1[1]
                         max_relation = [(entity,path)]
-                    elif f1 == max_f1:
+                    elif f1[2] == max_f1:
                         max_relation.append((entity, path))
 
             for entity, path in max_relation:
@@ -420,6 +426,10 @@ with open(args.input_file) as data_file:
                 print(string)
 
             average_f1 += max_f1
+            average_precision += max_precision
+            average_recall += max_recall
             count += 1
 
+print(average_precision / count)
+print(average_recall / count)
 print(average_f1 / count)
