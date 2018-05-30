@@ -412,7 +412,7 @@ with open(args.input_file) as data_file:
             for entity, path in max_relation:
                 string = entity
 
-                path = path.split("\t")
+                path = path.split("|")
 
                 if len(path) > 1:
                     string += "\t" + path[0] + "\t" + path[1] + "\t" + str(max_f1)
