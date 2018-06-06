@@ -374,12 +374,12 @@ with open(args.input_file) as data_file:
             average_f1 += max_f1
             average_recall += max_r
             average_precision += max_p
+            print(max_f1)
 
             max_f1 = 0
             max_p = 1
             max_r = 0
 
-            print(max_f1)
 
 
 print(average_precision / count)
