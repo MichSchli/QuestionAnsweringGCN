@@ -361,9 +361,9 @@ with open(args.input_file) as data_file:
 
             if one_relation:
                 forward = parts[1].endswith(".1")
-                p, r, f1 = get_one_relation_prediction(parts[0], parts[1][:-2], parts[3].split(","), forward=forward)
+                p, r, f1 = get_one_relation_prediction(parts[0], parts[1][:-2], parts[3].split("||"), forward=forward)
             else:
-                p, r, f1 = get_two_relation_prediction(parts[0], parts[1], parts[2], parts[3].split(","))
+                p, r, f1 = get_two_relation_prediction(parts[0], parts[1], parts[2], parts[3].split("||"))
 
             if f1 > max_f1:
                 max_f1 = f1
