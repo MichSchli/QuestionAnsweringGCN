@@ -283,6 +283,8 @@ def get_f1(full_predictions, true_labels):
     return inner_precision, inner_recall, inner_f1
 
 def get_one_relation_prediction(entity, relation, golds, forward=False):
+    relation = "http://rdf.freebase.com/ns/" + relation
+
     retrieved = get_1_entities([entity], relation, forward)
     names = [get_name(r) for r in retrieved]
     full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
@@ -305,6 +307,9 @@ def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     else:
         actual_relation_2 = relation_2
         forward_2 = True
+
+    actual_relation_1 = "http://rdf.freebase.com/ns/" + actual_relation_1
+    actual_relation_2 = "http://rdf.freebase.com/ns/" + actual_relation_2
 
     retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
     names = [get_name(r) for r in retrieved]
@@ -353,6 +358,8 @@ with open(args.input_file) as data_file:
             if one_relation:
                 forward = parts[1].endswith(".1")
                 p, r, f1 = get_one_relation_prediction(parts[0], parts[1][:-2], parts[3].split(","), forward=forward)
+            else:
+                p, r, f1 = get_two_relation_prediction(parts[0], parts[1], parts[2], parts[3].split(","))
                 print(f1)
                 exit()
 
