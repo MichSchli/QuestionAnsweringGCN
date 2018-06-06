@@ -113,8 +113,8 @@ class ModelFactory:
         model.gradient_clipping = gradient_clipping
         model.graph = GraphComponent()
         model.add_component(model.graph)
-        model.add_component(model.graph.mention_dummy_assignment_view)
-        model.add_component(model.graph.word_assignment_view)
+        #model.add_component(model.graph.mention_dummy_assignment_view)
+        #model.add_component(model.graph.word_assignment_view)
         model.word_padder = WordPadder()
         model.add_component(model.word_padder)
 

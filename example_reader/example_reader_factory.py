@@ -28,7 +28,7 @@ class ExampleReaderFactory:
         mention_reader = self.mention_reader_factory.get(experiment_configuration)
         graph_reader = self.graph_reader_factory.get(experiment_configuration)
         gold_answer_reader = self.gold_answer_reader_factory.get(experiment_configuration)
-        gold_path_reader = self.gold_path_reader_factory.get(experiment_configuration)
+        gold_path_reader = None #self.gold_path_reader_factory.get(experiment_configuration)
 
         example_reader = ExampleReader(question_reader, graph_reader, mention_reader, gold_answer_reader, gold_path_reader, dataset_map)
         example_reader.project_names = experiment_configuration["endpoint"]["project_names"] == "True"

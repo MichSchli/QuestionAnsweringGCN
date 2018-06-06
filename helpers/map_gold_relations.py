@@ -8,30 +8,25 @@ args = parser.parse_args()
 
 dep_dict = {}
 
-seen_relations = {}
-
 for dep_file in args.json_files.split("|"):
     with open(dep_file, "r") as data_file:
         for line in data_file:
             json_line = json.loads(line)
             key = json_line["original"].replace(" ", "")
+            pairs = []
+
             relations = json_line["goldRelations"] if "goldRelations" in json_line else [None]
-            dep_dict[key] = relations
+            seen = {}
+            dep_dict[key] = []
+            for f in json_line["forest"]:
+                entities = f["entities"]
+                for entity in entities:
+                    if entity["entity"] in seen:
+                        continue
 
-            for relation_pair in relations:
-                if relation_pair is None:
-                    continue
+                    seen[entity["entity"]] = entity
 
-                left_relation = relation_pair["relationLeft"]
-                if left_relation not in seen_relations:
-                    seen_relations[left_relation] = True
-
-                if left_relation.endswith(".1") or left_relation.endswith(".2"):
-                    continue
-                else:
-                    right_relation = relation_pair["relationRight"]
-                    if right_relation not in seen_relations:
-                        seen_relations[right_relation] = True
+            dep_dict[key].append((list(seen.values()), relations))
 
 with open(args.input_file) as data_file:
     reading_sentence = True
@@ -52,14 +47,21 @@ with open(args.input_file) as data_file:
 
             entities_and_graphs = dep_dict["".join(sentence).lower()]
 
-            for relation_pair in entities_and_graphs:
-                if relation_pair is None:
-                    continue
+            for entities, relations in entities_and_graphs:
+                for entity in entities:
+                    if "score" in entity:
+                        print("\t".join([str(entity["start"]), str(entity["end"]), entity["entity"], str(entity["score"])]))
 
-                left_relation = relation_pair["relationLeft"]
-                right_relation = relation_pair["relationRight"]
+                print("")
 
-                print(left_relation + "\t" + right_relation + "\t" + str(relation_pair["score"]))
+                for relation_pair in relations:
+                    if relation_pair is None:
+                        continue
+
+                    left_relation = relation_pair["relationLeft"]
+                    right_relation = relation_pair["relationRight"]
+
+                    print(left_relation + "\t" + right_relation + "\t" + str(relation_pair["score"]))
 
             print("")
 

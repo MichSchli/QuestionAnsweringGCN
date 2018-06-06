@@ -9,6 +9,7 @@ from example_reader.graph_reader.empty_graph_reader import EmptyGraphReader
 from example_reader.graph_reader.graph_cache import GraphCache
 from example_reader.graph_reader.graph_converter import GraphConverter
 from example_reader.graph_reader.graph_indexer import GraphIndexer
+from example_reader.new_graph_reader.new_graph_reader import NewGraphReader
 
 
 class GraphReaderFactory:
@@ -17,6 +18,18 @@ class GraphReaderFactory:
         self.index_factory = index_factory
 
     def get(self, experiment_configuration):
+        if "prefix" in experiment_configuration["endpoint"]:
+            prefix = experiment_configuration["endpoint"]["prefix"]
+        else:
+            prefix = ""
+
+        if experiment_configuration["endpoint"]["type"] == "sparql":
+            database_interface = FreebaseInterface()
+        elif experiment_configuration["endpoint"]["type"] == "csv":
+            database_interface = CsvInterface(experiment_configuration["endpoint"]["file"])
+            expansion_strategy = AllThroughExpansionStrategy()
+            prefix = ""
+
         if "no_graph_features" in experiment_configuration["other"] and experiment_configuration["other"]["no_graph_features"] == "True":
             return EmptyGraphReader()
 

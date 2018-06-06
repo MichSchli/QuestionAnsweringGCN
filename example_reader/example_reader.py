@@ -45,7 +45,7 @@ class ExampleReader:
             example.gold_answers = self.gold_answer_reader.build(data[2][i])
             example.index_gold_answers()
 
-            example.gold_paths = self.gold_path_reader.find(i, dataset)
+            #example.gold_paths = self.gold_path_reader.find(i, dataset)
 
             yield example
 

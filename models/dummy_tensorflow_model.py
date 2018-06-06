@@ -15,12 +15,12 @@ class DummyTensorflowModel(AbstractTensorflowModel):
         dummy_embeddings = self.dummy_mlp.transform(tf.expand_dims(dummy_counts, -1), mode)
 
         self.graph.initialize_zero_embeddings(tf.shape(dummy_embeddings)[-1])
-        self.graph.set_dummy_embeddings(dummy_embeddings)
+        #self.graph.set_dummy_embeddings(dummy_embeddings)
 
         word_embedding_shape = tf.shape(self.sentence.current_word_embeddings)
 
-        word_node_init_embeddings = tf.reshape(self.sentence.current_word_embeddings, [-1, word_embedding_shape[-1]])
-        word_node_init_embeddings = self.word_node_init_mlp.transform(word_node_init_embeddings, mode)
+        #word_node_init_embeddings = tf.reshape(self.sentence.current_word_embeddings, [-1, word_embedding_shape[-1]])
+        #word_node_init_embeddings = self.word_node_init_mlp.transform(word_node_init_embeddings, mode)
 
         #self.graph.set_word_embeddings(word_node_init_embeddings, reshape=False)
 

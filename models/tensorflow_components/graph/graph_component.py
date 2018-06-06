@@ -23,16 +23,16 @@ class GraphComponent:
         self.define_variable(tf.int32, "edge_bow_matrix")
         self.define_variable(tf.float32, "mention_scores")
         self.define_variable(tf.float32, "vertex_types")
-        self.define_variable(tf.int32, "sentence_vertex_indices")
-        self.define_variable(tf.int32, "word_vertex_indices")
-        self.define_variable(tf.float32, "vertex_max_scores")
+        #self.define_variable(tf.int32, "sentence_vertex_indices")
+        #self.define_variable(tf.int32, "word_vertex_indices")
+        #self.define_variable(tf.float32, "vertex_max_scores")
 
         self.edge_type_utils = EdgeTypeUtils()
         for i in range(self.edge_type_utils.count_types()):
             self.variables["gcn_types_"+str(i)] = tf.placeholder(tf.int32, name="gcn_types_"+str(i))
 
-        self.mention_dummy_assignment_view = AssignmentView()
-        self.word_assignment_view = AssignmentView()
+        #self.mention_dummy_assignment_view = AssignmentView()
+        #self.word_assignment_view = AssignmentView()
 
     def define_variable(self, type, name):
         self.variables[name] = tf.placeholder(type, name=name)
@@ -66,9 +66,7 @@ class GraphComponent:
         return self.get_variable("vertex_max_scores")
 
     def get_full_vertex_embeddings(self):
-        features = [self.get_embeddings(),
-                    self.get_vertex_types(),
-                    tf.expand_dims(self.get_vertex_max_scores(), -1)]
+        features = [self.get_embeddings()]
 
         features = tf.concat(features, -1)
         return features
@@ -126,20 +124,20 @@ class GraphComponent:
         self.variable_assignments["edge_bow_matrix"] = batch.get_padded_edge_part_type_matrix()
         self.variable_assignments["mention_scores"] = batch.get_combined_mention_scores()
         self.variable_assignments["vertex_types"] = batch.get_combined_vertex_types()
-        self.variable_assignments["sentence_vertex_indices"] = batch.get_combined_sentence_vertex_indices()
-        self.variable_assignments["word_vertex_indices"] = batch.get_combined_word_vertex_indices()
+        #self.variable_assignments["sentence_vertex_indices"] = batch.get_combined_sentence_vertex_indices()
+        #self.variable_assignments["word_vertex_indices"] = batch.get_combined_word_vertex_indices()
         self.variable_assignments["vertex_max_scores"] = batch.get_max_score_by_vertex()
 
         for i in range(self.edge_type_utils.count_types()):
             self.variable_assignments["gcn_types_"+str(i)] = batch.get_combined_gcn_type_edge_indices(i)
 
-        mention_dummy_indices = batch.get_combined_mention_dummy_indices()
-        total_vertices = batch.count_all_vertices()
-        self.mention_dummy_assignment_view.assign(mention_dummy_indices, total_vertices, np.arange(mention_dummy_indices.shape[0], dtype=np.int32))
+        #mention_dummy_indices = batch.get_combined_mention_dummy_indices()
+        #total_vertices = batch.count_all_vertices()
+        #self.mention_dummy_assignment_view.assign(mention_dummy_indices, total_vertices, np.arange(mention_dummy_indices.shape[0], dtype=np.int32))
 
-        word_vertex_indices = batch.get_combined_word_vertex_indices()
-        word_row_vertices = batch.get_word_indexes_in_flattened_sentence_matrix()
-        self.word_assignment_view.assign(word_vertex_indices, total_vertices, word_row_vertices)
+        #word_vertex_indices = batch.get_combined_word_vertex_indices()
+        #word_row_vertices = batch.get_word_indexes_in_flattened_sentence_matrix()
+        #self.word_assignment_view.assign(word_vertex_indices, total_vertices, word_row_vertices)
 
     def get_regularization(self):
         return 0

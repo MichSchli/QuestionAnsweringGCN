@@ -136,8 +136,6 @@ class FreebaseInterface:
             query_string += "values ?" + center + " {" + " ".join(["ns:" + v.split("/ns/")[-1] for v in center_vertex_batch]) + "}\n"
             query_string += "}"
 
-            print(query_string)
-
             results = self.execute_query(db_interface, query_string)
             result_list.extend([r[other]["value"] for r in results["results"]["bindings"]])
 

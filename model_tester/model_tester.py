@@ -8,7 +8,7 @@ class ModelTester:
     example_batcher = None
     evaluator = None
 
-    distribute_predictions = False
+    distribute_predictions = True
 
     def __init__(self, example_generator, example_extender, example_batcher, evaluator):
         self.example_generator = example_generator
