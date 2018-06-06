@@ -296,10 +296,10 @@ def get_one_relation_prediction(entity, relation, golds, forward=False):
 def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     if relation_1.endswith(".inverse"):
         actual_relation_1 = relation_1[:-8]
-        forward_1 = False
+        forward_1 = True
     else:
         actual_relation_1 = relation_1
-        forward_1 = True
+        forward_1 = False
 
     if relation_2.endswith(".inverse"):
         actual_relation_2 = relation_2[:-8]
@@ -348,6 +348,10 @@ with open(args.input_file) as data_file:
     average_f1 = 0
     average_precision = 0
     average_recall = 0
+
+    max_f1 = 0.0
+    max_p = 1.0
+    max_r = 0.0
     for line in data_file:
         line = line.strip()
 
@@ -360,8 +364,22 @@ with open(args.input_file) as data_file:
                 p, r, f1 = get_one_relation_prediction(parts[0], parts[1][:-2], parts[3].split(","), forward=forward)
             else:
                 p, r, f1 = get_two_relation_prediction(parts[0], parts[1], parts[2], parts[3].split(","))
-                print(f1)
-                exit()
+
+            if f1 > max_f1:
+                max_f1 = f1
+                max_p = p
+                max_r = r
+        else:
+            count += 1
+            average_f1 += max_f1
+            average_recall += max_r
+            average_precision += max_p
+
+            max_f1 = 0
+            max_p = 1
+            max_r = 0
+
+            print(max_f1)
 
 
 print(average_precision / count)
