@@ -328,7 +328,10 @@ def get_one_relation_prediction(entity, relation, golds, forward=False):
     name_f1 = get_f1(full_predictions, golds)
     alias_f1 = get_f1(alias_predictions, golds)
 
-    return max(name_f1, alias_f1)
+    if name_f1[2] >= alias_f1[2]:
+        return name_f1
+    else:
+        return alias_f1
 
 def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     if relation_1.endswith(".inverse"):
@@ -371,7 +374,10 @@ def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     name_f1 = get_f1(full_predictions, golds)
     alias_f1 = get_f1(alias_predictions, golds)
 
-    return max(name_f1, alias_f1)
+    if name_f1[2] >= alias_f1[2]:
+        return name_f1
+    else:
+        return alias_f1
 
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
