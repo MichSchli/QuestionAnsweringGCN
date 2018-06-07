@@ -216,8 +216,9 @@ def get_1_entities(centroids, target_edge, forward):
 
     results = execute_query(db_interface, query_string)
     result_list.extend([r[other]["value"] for r in results["results"]["bindings"]])
+    type_list = [r[other]["type"] for r in results["results"]["bindings"]]
 
-    return result_list
+    return result_list, type_list
 
 def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
     result_list = []
@@ -239,8 +240,9 @@ def get_2_entities(centroids, target_edge, forward, target_edge_2, forward_2):
 
     results = execute_query(db_interface, query_string)
     result_list.extend([r["o"]["value"] for r in results["results"]["bindings"]])
+    type_list = [r["o"]["type"] for r in results["results"]["bindings"]]
 
-    return result_list
+    return result_list, type_list
 
 def get_name(entity):
     if not entity.startswith("http://rdf.freebase.com/ns/"):
@@ -285,10 +287,15 @@ def get_f1(full_predictions, true_labels):
 def get_one_relation_prediction(entity, relation, golds, forward=False):
     relation = "http://rdf.freebase.com/ns/" + relation
 
-    retrieved = get_1_entities([entity], relation, forward)
-    names = [get_name(r) for r in retrieved]
-    full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-    full_predictions = np.concatenate(full_predictions) if len(full_predictions) > 0 else full_predictions
+    retrieved, types = get_1_entities([entity], relation, forward)
+
+    full_predictions = []
+    for i in range(len(retrieved)):
+        if types[i] == "uri":
+            full_predictions.extend(get_name(retrieved[i]))
+        else:
+            full_predictions.append(retrieved[i])
+
     full_predictions = np.unique(full_predictions)
 
     return get_f1(full_predictions, golds)
@@ -311,10 +318,15 @@ def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     actual_relation_1 = "http://rdf.freebase.com/ns/" + actual_relation_1
     actual_relation_2 = "http://rdf.freebase.com/ns/" + actual_relation_2
 
-    retrieved = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
-    names = [get_name(r) for r in retrieved]
-    full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
-    full_predictions = np.concatenate(full_predictions) if len(full_predictions) > 0 else full_predictions
+    retrieved, types = get_2_entities([entity], actual_relation_1, forward_1, actual_relation_2, forward_2)
+
+    full_predictions = []
+    for i in range(len(retrieved)):
+        if types[i] == "uri":
+            full_predictions.extend(get_name(retrieved[i]))
+        else:
+            full_predictions.append(retrieved[i])
+
     full_predictions = np.unique(full_predictions)
     return get_f1(full_predictions, golds)
 
