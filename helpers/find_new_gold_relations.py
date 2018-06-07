@@ -261,6 +261,22 @@ def get_name(entity):
     results = execute_query(db_interface, query_string)
     return [r["o"]["value"] for r in results["results"]["bindings"]]
 
+def get_alias(entity):
+    if not entity.startswith("http://rdf.freebase.com/ns/"):
+        return []
+
+    db_interface = sparql
+
+    query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
+    query_string += "select * where {\n"
+    query_string += "ns:" + entity.split("/ns/")[-1] + " ns:common.topic.alias ?o .\n"
+    query_string += "filter ( "
+    query_string += "\nlang(?o) = 'en'"
+    query_string += " )\n"
+
+    query_string += "}"
+    results = execute_query(db_interface, query_string)
+    return [r["o"]["value"] for r in results["results"]["bindings"]]
 
 def get_f1(full_predictions, true_labels):
     true_positives = np.isin(full_predictions, true_labels)
@@ -307,9 +323,21 @@ def get_best_relation_pair(entity, golds):
         names = [get_name(r) for r in retrieved]
         full_predictions = [n if len(n) > 0 else [r] for n, r in zip(names, retrieved)]
         full_predictions = np.concatenate(full_predictions) if len(full_predictions) > 0 else full_predictions
-        full_predictions = np.unique(full_predictions)
 
-        f1s[key] = get_f1(full_predictions, golds)
+        alias = [get_alias(r) for r in retrieved]
+        alias_predictions = [n if len(n) > 0 else [r] for n, r in zip(alias, retrieved)]
+        alias_predictions = np.concatenate(alias_predictions) if len(alias_predictions) > 0 else alias_predictions
+
+        full_predictions = np.unique(full_predictions)
+        alias_predictions = np.unique(alias_predictions)
+
+        name_f1 = get_f1(full_predictions, golds)
+        alias_f1 = get_f1(alias_predictions, golds)
+
+        if name_f1[2] >= alias_f1[2]:
+            f1s[key] = name_f1
+        else:
+            f1s[key] = alias_f1
 
     for relation_1, relation_2 in two_relations:
         key = relation_1 + "|" + relation_2
