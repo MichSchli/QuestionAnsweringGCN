@@ -49,13 +49,14 @@ def generate_1_query_with_name(centroids, golds, forward_edges=True):
     gold_symbol = "o"
 
     first_edge_string = "?s ?r ?i" if forward_edges else "?i ?r ?s"
-    second_edge_string = "?i ns:type.object.name ?o"
+    second_edge_string = "?i ?r3 ?o"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
     query += "\n\nselect ?r where {"
     query += "\n\t" + first_edge_string + " ."
     query += "\n\t" + second_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?r3 { ns:type.object.name ns:common.topic.alias }"
     query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
     query += "\n}"
 
@@ -145,7 +146,7 @@ def generate_2_query_through_event_with_name(centroids, golds, forward_1_edges=T
 
     first_edge_string = "?s ?r1 ?e" if forward_1_edges else "?e ?r1 ?s"
     second_edge_string = "?e ?r2 ?i" if forward_2_edges else "?i ?r2 ?e"
-    third_edge_string = "?i ns:type.object.name ?o"
+    third_edge_string = "?i ?r3 ?o"
 
     query = "PREFIX ns: <http://rdf.freebase.com/ns/>"
     query += "\n\nselect ?r1 ?r2 ?r3 where {"
@@ -153,6 +154,7 @@ def generate_2_query_through_event_with_name(centroids, golds, forward_1_edges=T
     query += "\n\t" + second_edge_string + " ."
     query += "\n\t" + third_edge_string + " ."
     query += "\n\tvalues ?" + centroid_symbol + " { " + " ".join(centroids) + " }"
+    query += "\n\tvalues ?r3 { ns:type.object.name ns:common.topic.alias }"
     query += "\n\tvalues ?" + gold_symbol + " { " + " ".join([format_string_for_freebase(g) for g in golds]) + " }"
 
     query += "filter ( "
