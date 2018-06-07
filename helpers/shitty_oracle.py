@@ -262,6 +262,24 @@ def get_name(entity):
     return [r["o"]["value"] for r in results["results"]["bindings"]]
 
 
+def get_alias(entity):
+    if not entity.startswith("http://rdf.freebase.com/ns/"):
+        return []
+
+    db_interface = sparql
+
+    query_string = "PREFIX ns: <http://rdf.freebase.com/ns/>\n"
+    query_string += "select * where {\n"
+    query_string += "ns:" + entity.split("/ns/")[-1] + " ns:common.topic.alias ?o .\n"
+    query_string += "filter ( "
+    query_string += "\nlang(?o) = 'en'"
+    query_string += " )\n"
+
+    query_string += "}"
+    results = execute_query(db_interface, query_string)
+    return [r["o"]["value"] for r in results["results"]["bindings"]]
+
+
 def get_f1(full_predictions, true_labels):
     true_positives = np.isin(full_predictions, true_labels)
     false_positives = np.logical_not(true_positives)
@@ -298,7 +316,19 @@ def get_one_relation_prediction(entity, relation, golds, forward=False):
 
     full_predictions = np.unique(full_predictions)
 
-    return get_f1(full_predictions, golds)
+    alias_predictions = []
+    for i in range(len(retrieved)):
+        if types[i] == "uri":
+            alias_predictions.extend(get_alias(retrieved[i]))
+        else:
+            alias_predictions.append(retrieved[i])
+
+    alias_predictions = np.unique(alias_predictions)
+
+    name_f1 = get_f1(full_predictions, golds)
+    alias_f1 = get_f1(alias_predictions, golds)
+
+    return max(name_f1, alias_f1)
 
 def get_two_relation_prediction(entity, relation_1, relation_2, golds):
     if relation_1.endswith(".inverse"):
@@ -328,7 +358,20 @@ def get_two_relation_prediction(entity, relation_1, relation_2, golds):
             full_predictions.append(retrieved[i])
 
     full_predictions = np.unique(full_predictions)
-    return get_f1(full_predictions, golds)
+
+    alias_predictions = []
+    for i in range(len(retrieved)):
+        if types[i] == "uri":
+            alias_predictions.extend(get_alias(retrieved[i]))
+        else:
+            alias_predictions.append(retrieved[i])
+
+    alias_predictions = np.unique(alias_predictions)
+
+    name_f1 = get_f1(full_predictions, golds)
+    alias_f1 = get_f1(alias_predictions, golds)
+
+    return max(name_f1, alias_f1)
 
 def execute_query(db_interface, query_string):
     db_interface.setQuery(query_string)
